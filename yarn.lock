@@ -4318,6 +4318,11 @@ easy-stack@^1.0.0:
   resolved "https://registry.npm.taobao.org/easy-stack/download/easy-stack-1.0.0.tgz#12c91b3085a37f0baa336e9486eac4bf94e3e788"
   integrity sha1-EskbMIWjfwuqM26UhurEv5Tj54g=
 
+ec-flex@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.npm.taobao.org/ec-flex/download/ec-flex-1.1.0.tgz#7bb33344ad6c4546ffa9445dc44cec5233faa270"
+  integrity sha1-e7MzRK1sRUb/qURdxEzsUjP6onA=
+
 ecc-jsbn@~0.1.1:
   version "0.1.2"
   resolved "https://registry.npm.taobao.org/ecc-jsbn/download/ecc-jsbn-0.1.2.tgz#3a83a904e54353287874c564b7549386849a98c9"
@@ -8447,7 +8452,7 @@ optionator@^0.8.1, optionator@^0.8.2, optionator@^0.8.3:
 
 ora@^3.4.0:
   version "3.4.0"
-  resolved "https://registry.npm.taobao.org/ora/download/ora-3.4.0.tgz#bf0752491059a3ef3ed4c85097531de9fdbcd318"
+  resolved "https://registry.npm.taobao.org/ora/download/ora-3.4.0.tgz?cache=0&sync_timestamp=1594997563446&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fora%2Fdownload%2Fora-3.4.0.tgz#bf0752491059a3ef3ed4c85097531de9fdbcd318"
   integrity sha1-vwdSSRBZo+8+1MhQl1Md6f280xg=
   dependencies:
     chalk "^2.4.2"
@@ -9968,7 +9973,7 @@ relateurl@0.2.x:
 
 remark-parse@^4.0.0:
   version "4.0.0"
-  resolved "https://registry.npm.taobao.org/remark-parse/download/remark-parse-4.0.0.tgz#99f1f049afac80382366e2e0d0bd55429dd45d8b"
+  resolved "https://registry.npm.taobao.org/remark-parse/download/remark-parse-4.0.0.tgz?cache=0&sync_timestamp=1594993790938&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fremark-parse%2Fdownload%2Fremark-parse-4.0.0.tgz#99f1f049afac80382366e2e0d0bd55429dd45d8b"
   integrity sha1-mfHwSa+sgDgjZuLg0L1VQp3UXYs=
   dependencies:
     collapse-white-space "^1.0.2"
@@ -9988,9 +9993,9 @@ remark-parse@^4.0.0:
     xtend "^4.0.1"
 
 remark-parse@^8.0.0:
-  version "8.0.2"
-  resolved "https://registry.npm.taobao.org/remark-parse/download/remark-parse-8.0.2.tgz#5999bc0b9c2e3edc038800a64ff103d0890b318b"
-  integrity sha1-WZm8C5wuPtwDiACmT/ED0IkLMYs=
+  version "8.0.3"
+  resolved "https://registry.npm.taobao.org/remark-parse/download/remark-parse-8.0.3.tgz?cache=0&sync_timestamp=1594993790938&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fremark-parse%2Fdownload%2Fremark-parse-8.0.3.tgz#9c62aa3b35b79a486454c690472906075f40c7e1"
+  integrity sha1-nGKqOzW3mkhkVMaQRykGB19Ax+E=
   dependencies:
     ccount "^1.0.0"
     collapse-white-space "^1.0.2"
@@ -10011,7 +10016,7 @@ remark-parse@^8.0.0:
 
 remark-stringify@^4.0.0:
   version "4.0.0"
-  resolved "https://registry.npm.taobao.org/remark-stringify/download/remark-stringify-4.0.0.tgz?cache=0&sync_timestamp=1591639639882&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fremark-stringify%2Fdownload%2Fremark-stringify-4.0.0.tgz#4431884c0418f112da44991b4e356cfe37facd87"
+  resolved "https://registry.npm.taobao.org/remark-stringify/download/remark-stringify-4.0.0.tgz?cache=0&sync_timestamp=1594993791068&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fremark-stringify%2Fdownload%2Fremark-stringify-4.0.0.tgz#4431884c0418f112da44991b4e356cfe37facd87"
   integrity sha1-RDGITAQY8RLaRJkbTjVs/jf6zYc=
   dependencies:
     ccount "^1.0.0"
@@ -10030,9 +10035,9 @@ remark-stringify@^4.0.0:
     xtend "^4.0.1"
 
 remark-stringify@^8.0.0:
-  version "8.1.0"
-  resolved "https://registry.npm.taobao.org/remark-stringify/download/remark-stringify-8.1.0.tgz?cache=0&sync_timestamp=1591639639882&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fremark-stringify%2Fdownload%2Fremark-stringify-8.1.0.tgz#1e555f4402e445c364fb23d12fc5f5e0337ec8b7"
-  integrity sha1-HlVfRALkRcNk+yPRL8X14DN+yLc=
+  version "8.1.1"
+  resolved "https://registry.npm.taobao.org/remark-stringify/download/remark-stringify-8.1.1.tgz?cache=0&sync_timestamp=1594993791068&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fremark-stringify%2Fdownload%2Fremark-stringify-8.1.1.tgz#e2a9dc7a7bf44e46a155ec78996db896780d8ce5"
+  integrity sha1-4qncenv0TkahVex4mW24lngNjOU=
   dependencies:
     ccount "^1.0.0"
     is-alphanumeric "^1.0.0"
@@ -10050,9 +10055,9 @@ remark-stringify@^8.0.0:
     xtend "^4.0.1"
 
 remark@^12.0.0:
-  version "12.0.0"
-  resolved "https://registry.npm.taobao.org/remark/download/remark-12.0.0.tgz#d1c145c07341c9232f93b2f8539d56da15a2548c"
-  integrity sha1-0cFFwHNBySMvk7L4U51W2hWiVIw=
+  version "12.0.1"
+  resolved "https://registry.npm.taobao.org/remark/download/remark-12.0.1.tgz?cache=0&sync_timestamp=1594993790638&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fremark%2Fdownload%2Fremark-12.0.1.tgz#f1ddf68db7be71ca2bad0a33cd3678b86b9c709f"
+  integrity sha1-8d32jbe+ccorrQozzTZ4uGuccJ8=
   dependencies:
     remark-parse "^8.0.0"
     remark-stringify "^8.0.0"
@@ -10060,7 +10065,7 @@ remark@^12.0.0:
 
 remark@^8.0.0:
   version "8.0.0"
-  resolved "https://registry.npm.taobao.org/remark/download/remark-8.0.0.tgz#287b6df2fe1190e263c1d15e486d3fa835594d6d"
+  resolved "https://registry.npm.taobao.org/remark/download/remark-8.0.0.tgz?cache=0&sync_timestamp=1594993790638&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fremark%2Fdownload%2Fremark-8.0.0.tgz#287b6df2fe1190e263c1d15e486d3fa835594d6d"
   integrity sha1-KHtt8v4RkOJjwdFeSG0/qDVZTW0=
   dependencies:
     remark-parse "^4.0.0"

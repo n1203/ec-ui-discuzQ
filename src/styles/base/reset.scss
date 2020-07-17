@@ -2,6 +2,7 @@
 @import './variable/global.scss';
 @import './variable/color.scss'; // 里面包含主题样式
 @import '@/styles/base/theme/fn.scss';
+@import 'ec-flex/index.css';
 
 page,
 body {

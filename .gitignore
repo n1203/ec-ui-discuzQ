@@ -22,3 +22,6 @@ yarn-error.log*
 *.sw*
 .eslintcache
 .history
+
+yarn.lock
+package-lock.json

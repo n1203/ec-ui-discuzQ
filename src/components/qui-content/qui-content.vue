@@ -8,36 +8,42 @@
       lazy-load
     ></image>
     <view class="themeItem" @click="backgroundClick">
-      <view class="themeItem__header" @click="headClick" @click.stop="">
-        <view class="themeItem__header__img">
-          <qui-avatar :user="{ avatarUrl: themeImage, username: userName }" />
-        </view>
-        <view class="themeItem__header__title">
-          <view class="themeItem__header__title__top">
-            <text class="themeItem__header__title__username">
-              {{ userName }}
-            </text>
-            <text v-if="isAdmin && themeType == '1'" class="themeItem__header__title__isAdmin">
-              <text v-for="(item, index) in userGroups" :key="index">
-                {{ item.isDisplay ? `(${item.name})` : '' }}
-              </text>
-            </text>
-            <text v-if="themeType !== '1'" class="themeItem__header__title__isAdmin">
-              <!-- {{ themeType === '2' ? '回复了我' : '@了我' }} -->
-              {{ themeStatus }}
-            </text>
-            <view v-if="themeType !== '1'" class="themeItem__header__title__jumpBtn"></view>
-            <qui-icon
-              class="themeItem__header__title__deleteBtn"
-              :name="themeBtn"
-              size="28"
-              color="#AAA"
-              @click="deleteClick"
-              @tap.stop
-            ></qui-icon>
-            <view class="themeItem__header__title__reward">{{ themeReward }}</view>
+      <view class="fbh">
+        <view class="themeItem__header fb1" @click="headClick" @click.stop="">
+          <view class="themeItem__header__img">
+            <qui-avatar :user="{ avatarUrl: themeImage, username: userName }" />
           </view>
-          <view class="themeItem__header__title__time">{{ localTime }}</view>
+          <view class="themeItem__header__title">
+            <view class="themeItem__header__title__top">
+              <text class="themeItem__header__title__username">
+                {{ userName }}
+              </text>
+              <text v-if="isAdmin && themeType == '1'" class="themeItem__header__title__isAdmin">
+                <text v-for="(item, index) in userGroups" :key="index">
+                  {{ item.isDisplay ? `(${item.name})` : '' }}
+                </text>
+              </text>
+              <text v-if="themeType !== '1'" class="themeItem__header__title__isAdmin">
+                <!-- {{ themeType === '2' ? '回复了我' : '@了我' }} -->
+                {{ themeStatus }}
+              </text>
+              <view v-if="themeType !== '1'" class="themeItem__header__title__jumpBtn"></view>
+              <qui-icon
+                class="themeItem__header__title__deleteBtn"
+                :name="themeBtn"
+                size="28"
+                color="#AAA"
+                @click="deleteClick"
+                @tap.stop
+              ></qui-icon>
+              <view class="themeItem__header__title__reward">{{ themeReward }}</view>
+            </view>
+            <view class="themeItem__header__title__time">{{ localTime }}</view>
+          </view>
+        </view>
+
+        <view class="">
+          xxxx
         </view>
       </view>
 

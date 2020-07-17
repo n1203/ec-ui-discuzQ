@@ -25,6 +25,7 @@
       :cover-image="thread.threadVideo && thread.threadVideo.cover_url"
       :is-deleted="thread.isDeleted"
       :scroll-top="scrollTop"
+      :isAttentionVisible="false"
       @click="handleClickShare(thread._jv.id)"
       @handleIsGreat="
         handleIsGreat(

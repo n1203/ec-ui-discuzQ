@@ -42,8 +42,8 @@
           </view>
         </view>
 
-        <view class="">
-          xxxx
+        <view v-if="isAttentionVisible" class="themeItem__attention" @click="addFollow" @click.stop="">
+          关注
         </view>
       </view>
 
@@ -378,6 +378,11 @@ export default {
       type: Number,
       default: 0,
     },
+    // 关注按钮是否显示
+    isAttentionVisible: {
+      type: Boolean,
+      default: true,
+    }
   },
 
   data: () => {
@@ -406,6 +411,14 @@ export default {
     localTime() {
       return time2MorningOrAfternoon(this.themeTime);
     },
+    // 用户信息，获得用户的关注逻辑
+    // userInfo() {
+    //   const userInfo = this.$store.getters['jv/get'](`users/${this.userId}`);
+    //   console.log(userInfo)
+    //   userInfo.groupsName = userInfo.groups ? userInfo.groups[0].name : '';
+    //   // this.setNum(userInfo);
+    //   return userInfo;
+    // },
     ...mapState({
       getCategoryId: state => state.session.categoryId,
       getCategoryIndex: state => state.session.categoryIndex,
@@ -454,6 +467,30 @@ export default {
     // #endif
   },
   methods: {
+    // 添加关注
+    addFollow() {
+      // console.log(userInfo, 'userInfo')
+      // #ifdef H5
+      if (!this.$store.getters['session/get']('isLogin')) {
+        if (!this.handleLogin()) {
+          return;
+        }
+      }
+      // #endif
+      // const params = {
+      //   _jv: {
+      //     type: 'follow',
+      //   },
+      //   type: 'user_follow',
+      //   to_user_id: this._uid,
+      // };
+      // status
+      //   .run(() => this.$store.dispatch('jv/post', params))
+      //   .then(() => {
+      //     this.getUserInfo(this.userId);
+      //     if (this.$refs.followers) this.$refs.followers.getFollowerList('change');
+      //   });
+    },
     // 点击删除按钮
     deleteClick(evt) {
       this.$emit('deleteClick', evt);
@@ -536,7 +573,13 @@ export default {
   border-radius: 6rpx;
   box-shadow: 0rpx 4rpx 8rpx rgba(0, 0, 0, 0.05);
   box-sizing: border-box;
-
+  &__attention {
+    height: fit-content;
+    padding: 0 10px;
+    color: $uni-color-primary;
+    border: 1px solid $uni-color-primary;
+    border-radius: 4px;
+  }
   &__header {
     display: inline-flex;
     flex-direction: row;

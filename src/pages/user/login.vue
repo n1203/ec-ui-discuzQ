@@ -5,7 +5,7 @@
     <!-- #endif -->
     <view class="login-box">
       <view class="login-box-h">{{ i18n.t('user.login') }}</view>
-      <view class="login-box-con">a
+      <view class="login-box-con">
         <input
           class="input"
           maxlength="15"

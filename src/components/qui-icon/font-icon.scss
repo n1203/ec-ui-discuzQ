@@ -1,0 +1,375 @@
+@font-face {
+  font-family: 'quiicons'; /* project id 1741858 */
+  src: url('//at.alicdn.com/t/font_1741858_fr5cus2ih8d.eot');
+  src: url('//at.alicdn.com/t/font_1741858_fr5cus2ih8d.eot?#iefix') format('embedded-opentype'),
+    url('//at.alicdn.com/t/font_1741858_fr5cus2ih8d.woff2') format('woff2'),
+    url('//at.alicdn.com/t/font_1741858_fr5cus2ih8d.woff') format('woff'),
+    url('//at.alicdn.com/t/font_1741858_fr5cus2ih8d.ttf') format('truetype'),
+    url('//at.alicdn.com/t/font_1741858_fr5cus2ih8d.svg#quiicons') format('svg');
+}
+.qui-icon {
+  position: relative;
+  /* stylelint-disable-next-line */
+  font-family: 'quiicons';
+  font-size: 28rpx;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-unfold:before {
+  content: '\e68b';
+}
+
+.icon-fold:before {
+  content: '\e68a';
+}
+
+.icon-loading2:before {
+  content: '\e689';
+}
+
+.icon-loading1:before {
+  content: '\e687';
+}
+
+.icon-loading:before {
+  content: '\e687';
+}
+.icon-load:before {
+  content: '\e697';
+}
+.icon-rmb:before {
+  content: '\e684';
+}
+
+.icon-percent:before {
+  content: '\e683';
+}
+
+.icon-success:before {
+  content: '\e682';
+}
+
+.icon-fail:before {
+  content: '\e681';
+}
+
+.icon-mine:before {
+  content: '\e678';
+}
+
+.icon-search:before {
+  content: '\e677';
+}
+
+.icon-folding-r:before {
+  content: '\e675';
+}
+
+.icon-fill:before {
+  content: '\e674';
+}
+
+.icon-wx-pay:before {
+  content: '\e673';
+}
+
+.icon-wallet-pay:before {
+  content: '\e672';
+}
+
+.icon-reward:before {
+  content: '\e670';
+}
+
+.icon-pay:before {
+  content: '\e66f';
+}
+
+.icon-management:before {
+  content: '\e66e';
+}
+
+.icon-image:before {
+  content: '\e66d';
+}
+
+.icon-comments:before {
+  content: '\e66b';
+}
+
+.icon-collection:before {
+  content: '\e66a';
+}
+.icon-collectioned:before {
+  content: '\e68f';
+}
+
+.icon-waring:before {
+  content: '\e669';
+}
+
+.icon-follow:before {
+  content: '\e663';
+}
+
+.icon-each-follow:before {
+  content: '\e603';
+}
+
+.icon-cancel-follow:before {
+  content: '\e661';
+}
+
+.icon-selected:before {
+  content: '\e660';
+}
+
+.icon-play:before {
+  content: '\e65e';
+}
+
+.icon-oval:before {
+  content: '\e65c';
+}
+
+.icon-expression:before {
+  content: '\e65b';
+}
+
+.icon-call:before {
+  content: '\e65a';
+}
+
+.icon-add:before {
+  content: '\e659';
+}
+
+.icon-delete:before {
+  content: '\e658';
+}
+
+.icon-wx-friends:before {
+  content: '\e657';
+}
+
+.icon-word:before {
+  content: '\e656';
+}
+
+.icon-video:before {
+  content: '\e655';
+}
+
+.icon-share1:before {
+  content: '\e654';
+}
+
+.icon-share:before {
+  content: '\e653';
+}
+
+.icon-screen:before {
+  content: '\e652';
+}
+
+.icon-publish:before {
+  content: '\e651';
+}
+
+.icon-poster:before {
+  content: '\e650';
+}
+
+.icon-post:before {
+  content: '\e64f';
+}
+
+.icon-message:before {
+  content: '\e64e';
+}
+
+.icon-message1:before {
+  content: '\e68d';
+}
+
+.icon-link:before {
+  content: '\e64c';
+}
+
+.icon-like:before {
+  content: '\e64b';
+}
+.icon-liked:before {
+  content: '\e68e';
+}
+
+.icon-img:before {
+  content: '\e64a';
+}
+
+.icon-home:before {
+  content: '\e647';
+}
+
+.icon-close:before {
+  content: '\e601';
+}
+
+.icon-wxPay:before {
+  content: '\e691';
+}
+
+.icon-walletPay:before {
+  content: '\e690';
+}
+
+.icon-message-n:before {
+  content: '\e606';
+}
+
+.icon-noData:before {
+  content: '\e602';
+}
+
+.icon-circle:before {
+  content: '\e65c';
+}
+
+.icon-back:before {
+  content: '\e604';
+}
+.icon-close1:before {
+  content: '\e605';
+}
+.icon-wei:before {
+  content: '\e696';
+}
+.icon-more:before {
+  content: '\e698';
+}
+.icon-resources:before {
+  content: '\e6ae';
+}
+
+.icon-ZIP:before {
+  content: '\e6ad';
+}
+
+.icon-XLSX:before { 
+  content: '\e6ac';
+}
+
+.icon-XLS:before {
+  content: '\e6ac';
+}
+
+.icon-TXT:before {
+  content: '\e6ab';
+}
+
+.icon-RAR:before {
+  content: '\e6a9';
+}
+
+.icon-PSD:before {
+  content: '\e6a8';
+}
+
+.icon-PPT:before {
+  content: '\e6a7';
+}
+
+.icon-PDF:before {
+  content: '\e6a6';
+}
+
+.icon-MP4:before {
+  content: '\e6a5';
+}
+
+.icon-MP3:before {
+  content: '\e6a4';
+}
+
+.icon-LINK:before {
+  content: '\e6a3';
+}
+
+.icon-IPA:before {
+  content: '\e6a1';
+}
+
+.icon-EXE:before {
+  content: '\e6a0';
+}
+
+.icon-EPS:before {
+  content: '\e69f';
+}
+
+.icon-DOC:before {
+  content: '\e69e';
+}
+
+.icon-DOCX:before {
+  content: '\e69e';
+}
+
+.icon-CDR:before {
+  content: '\e69d';
+}
+
+.icon-CAD:before {
+  content: '\e69c';
+}
+
+.icon-APK:before {
+  content: '\e69b';
+}
+
+.icon-AI:before {
+  content: '\e69a';
+}
+
+.icon-7ZIP:before {
+  content: '\e699';
+}
+.icon-sort:before {
+  content: '\e6b9';
+}
+.icon-bold:before {
+  content: '\e6af';
+}
+
+.icon-title:before {
+  content: '\e6b0';
+}
+.icon-italic:before {
+  content: '\e6b1';
+}
+.icon-quote:before {
+  content: '\e6b4';
+}
+.icon-code:before {
+  content: '\e6b5';
+}
+.icon-link1:before {
+  content: '\e6b6';
+}
+.icon-unordered-list:before {
+  content: '\e6b7';
+}
+.icon-ordered-list:before {
+  content: '\e6b8';
+}
+.icon-fujian:before {
+  content: '\e607';
+}
+.icon-undeline:before {
+  content: '\e6bc';
+}
+.icon-strikethrough:before {
+  content: '\e6bd';
+}

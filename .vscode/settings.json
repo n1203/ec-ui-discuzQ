@@ -1,0 +1,50 @@
+{
+  "path-intellisense.mappings": {
+    "@": "${workspaceRoot}/src"
+  },
+  "prettier.htmlWhitespaceSensitivity": "ignore",
+  // 使用单引号替代双引号
+  "prettier.singleQuote": true,
+  "prettier.jsxBracketSameLine": true,
+  "prettier.trailingComma": "all", // 尽可能控制尾随逗号的打印
+  "prettier.bracketSpacing": true,
+  "eslint.enable": true,
+  "vetur.validation.template": true,
+  // 对于.vue文件,关闭prettier,交给eslint fix
+  "vetur.format.defaultFormatter.css": "none",
+  "vetur.format.defaultFormatter.js": "prettier-eslint",
+  "vetur.format.defaultFormatter.less": "none",
+  "vetur.format.defaultFormatter.postcss": "none",
+  "vetur.format.defaultFormatter.scss": "none",
+  "vetur.format.defaultFormatter.ts": "none",
+  // .vue文件template格式化支持，并使用js-beautify-html插件
+  "vetur.format.defaultFormatter.html": "js-beautify-html",
+  // js-beautify-html格式化配置，属性强制换行
+  "vetur.format.defaultFormatterOptions": {
+    "js-beautify-html": {
+      "wrap_attributes": "force-aligned"
+    }
+  },
+  // 根据文件后缀名定义 vue 文件类型
+  "files.associations": {
+    "*.vue": "vue"
+  },
+  // 配置 ESLint 检查的文件类型
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    {
+      "language": "vue",
+      "autoFix": false
+    }
+  ],
+  // 保存自动格式化
+  "editor.formatOnSave": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true,
+    "source.fixAll.eslint": false,
+    "source.fixAll.stylelint": false
+  },
+  "stylelint.enable": true,
+  "stylelint.configOverrides": null
+}

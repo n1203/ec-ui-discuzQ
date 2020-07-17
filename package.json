@@ -1,0 +1,147 @@
+{
+  "name": "discuz-uniapp",
+  "version": "1.0.1",
+  "private": true,
+  "scripts": {
+    "serve": "npm run dev:h5",
+    "build": "npm run build:h5",
+    "build:app-plus": "cross-env NODE_ENV=production UNI_PLATFORM=app-plus vue-cli-service uni-build --mode production",
+    "build:custom": "cross-env NODE_ENV=production uniapp-cli custom --mode production",
+    "build:h5": "cross-env NODE_ENV=production UNI_PLATFORM=h5 vue-cli-service uni-build --mode production",
+    "build:mp-alipay": "cross-env NODE_ENV=production UNI_PLATFORM=mp-alipay vue-cli-service uni-build --mode production",
+    "build:mp-baidu": "cross-env NODE_ENV=production UNI_PLATFORM=mp-baidu vue-cli-service uni-build --mode production",
+    "build:mp-qq": "cross-env NODE_ENV=production UNI_PLATFORM=mp-qq vue-cli-service uni-build --mode production",
+    "build:mp-toutiao": "cross-env NODE_ENV=production UNI_PLATFORM=mp-toutiao vue-cli-service uni-build --mode production",
+    "build:mp-weixin": "cross-env NODE_ENV=production UNI_PLATFORM=mp-weixin vue-cli-service uni-build --mode production",
+    "build:quickapp": "cross-env NODE_ENV=production UNI_PLATFORM=quickapp vue-cli-service uni-build --mode production",
+    "dev:app-plus": "cross-env NODE_ENV=development UNI_PLATFORM=app-plus vue-cli-service uni-build --watch --mode development",
+    "dev:custom": "cross-env NODE_ENV=development uniapp-cli custom --mode development",
+    "dev:h5": "cross-env NODE_ENV=development UNI_PLATFORM=h5 vue-cli-service uni-serve --mode development",
+    "dev:mp-alipay": "cross-env NODE_ENV=development UNI_PLATFORM=mp-alipay vue-cli-service uni-build --watch --mode development",
+    "dev:mp-baidu": "cross-env NODE_ENV=development UNI_PLATFORM=mp-baidu vue-cli-service uni-build --watch --mode development",
+    "dev:mp-qq": "cross-env NODE_ENV=development UNI_PLATFORM=mp-qq vue-cli-service uni-build --watch --mode development",
+    "dev:mp-toutiao": "cross-env NODE_ENV=development UNI_PLATFORM=mp-toutiao vue-cli-service uni-build --watch --mode development",
+    "dev:mp-weixin": "cross-env NODE_ENV=development UNI_PLATFORM=mp-weixin vue-cli-service uni-build --watch --mode development",
+    "dev:quickapp": "cross-env NODE_ENV=development UNI_PLATFORM=quickapp vue-cli-service uni-build --watch --mode development",
+    "info": "node node_modules/@dcloudio/vue-cli-plugin-uni/commands/info.js",
+    "serve:quickapp": "node node_modules/@dcloudio/uni-quickapp/bin/serve.js",
+    "lintcss:fix": "stylelint src/**/*.{scss,vue}",
+    "lint:fix": "eslint -c .eslintrc.js src --ext .js,.vue --cache --fix",
+    "release:major": "standard-version -r major -n",
+    "release:minor": "standard-version -r minor -n",
+    "release:patch": "standard-version -r patch -n",
+    "prerelease:alpha": "standard-version -p alpha -n",
+    "prerelease:beta": "standard-version -p beta -n"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,vue}": [
+      "npm run lint:fix",
+      "git add"
+    ],
+    "src/**/*.{vue,scss}": [
+      "npm run lintcss:fix",
+      "git add"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Comsenz/discuz-uniapp.git"
+  },
+  "keywords": [
+    "vue"
+  ],
+  "author": "discuz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Comsenz/discuz-uniapp/issues"
+  },
+  "homepage": "http://discuz.chat/docs/",
+  "dependencies": {
+    "@dcloudio/uni-app-plus": "^2.0.0-27520200518001",
+    "@dcloudio/uni-h5": "^2.0.0-27520200518001",
+    "@dcloudio/uni-helper-json": "*",
+    "@dcloudio/uni-mp-alipay": "^2.0.0-27520200518001",
+    "@dcloudio/uni-mp-baidu": "^2.0.0-27520200518001",
+    "@dcloudio/uni-mp-qq": "^2.0.0-27520200518001",
+    "@dcloudio/uni-mp-toutiao": "^2.0.0-27520200518001",
+    "@dcloudio/uni-mp-weixin": "^2.0.0-27520200518001",
+    "@dcloudio/uni-ui": "^1.2.1",
+    "core-js": "^3.6.4",
+    "flyio": "^0.6.2",
+    "jsonpath-plus": "^3.0.0",
+    "jweixin-module": "^1.6.0",
+    "lodash": "^4.17.15",
+    "lodash.get": "^4.4.2",
+    "lodash.isequal": "^4.5.0",
+    "promise.allsettled": "^1.0.2",
+    "regenerator-runtime": "^0.12.1",
+    "vod-js-sdk-v6": "^1.4.8",
+    "vue": "^2.6.11",
+    "vue-i18n": "^8.18.1",
+    "vuex": "^3.4.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^8.3.5",
+    "@commitlint/config-conventional": "^8.3.4",
+    "@dcloudio/uni-cli-shared": "^2.0.0-27920200527001",
+    "@dcloudio/uni-migration": "^2.0.0-27920200527001",
+    "@dcloudio/uni-template-compiler": "^2.0.0-27920200527001",
+    "@dcloudio/vue-cli-plugin-hbuilderx": "^2.0.0-27920200527001",
+    "@dcloudio/vue-cli-plugin-uni": "^2.0.0-27920200527001",
+    "@dcloudio/vue-cli-plugin-uni-optimize": "^2.0.0-27920200527001",
+    "@dcloudio/webpack-uni-mp-loader": "^2.0.0-27920200527001",
+    "@dcloudio/webpack-uni-pages-loader": "^2.0.0-27920200527001",
+    "@types/html5plus": "^1.0.1",
+    "@types/uni-app": "^1.4.3",
+    "@vue/cli-plugin-babel": "~4.3.0",
+    "@vue/cli-plugin-eslint": "^4.4.1",
+    "@vue/cli-service": "~4.3.0",
+    "@vue/eslint-config-airbnb": "^5.0.2",
+    "@vue/eslint-config-prettier": "^6.0.0",
+    "babel-eslint": "^10.1.0",
+    "babel-plugin-import": "^1.11.0",
+    "babel-plugin-lodash": "^3.3.4",
+    "commitizen": "^4.1.2",
+    "cross-env": "^7.0.2",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-loader": "^4.0.2",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-prettier": "^3.1.3",
+    "eslint-plugin-vue": "^6.2.2",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.7",
+    "mini-types": "^0.1.2",
+    "miniprogram-api-typings": "^2.11.0",
+    "node-sass": "^4.14.1",
+    "postcss-comment": "^2.0.0",
+    "prettier-eslint": "^9.0.2",
+    "prettier-stylelint": "^0.4.2",
+    "sass-loader": "^8.0.2",
+    "standard-version": "^7.1.0",
+    "stylelint": "^13.5.0",
+    "stylelint-config-prettier": "^8.0.1",
+    "stylelint-config-standard": "^20.0.0",
+    "stylelint-declaration-block-no-ignored-properties": "^2.3.0",
+    "stylelint-order": "^4.1.0",
+    "stylelint-scss": "^3.17.2",
+    "stylelint-webpack-plugin": "^1.2.3",
+    "terser-webpack-plugin": "^2.3.6",
+    "vue-template-compiler": "^2.6.11",
+    "webpack": "^4.43.0"
+  },
+  "browserslist": [
+    "Android >= 4",
+    "ios >= 8"
+  ],
+  "uni-app": {
+    "scripts": {}
+  }
+}

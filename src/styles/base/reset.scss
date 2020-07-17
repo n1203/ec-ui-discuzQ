@@ -1,0 +1,484 @@
+// variable
+@import './variable/global.scss';
+@import './variable/color.scss'; // 里面包含主题样式
+@import '@/styles/base/theme/fn.scss';
+
+page,
+body {
+  width: 100%;
+  height: 100%;
+  /* #ifndef H5 */
+  overflow-x: hidden;
+  /* #endif */
+  font-family: $font-family;
+  font-size: $fg-f28;
+  color: --color(--qui-FC-333);
+  background-color: --color(--qui-BG-1);
+}
+
+//小程序原生组件--修改
+//多选框
+checkbox .wx-checkbox-input {
+  width: 44rpx;
+  height: 44rpx;
+  margin: 0;
+  border-radius: 50rpx;
+}
+checkbox .wx-checkbox-input.wx-checkbox-input-checked {
+  background: --color(--qui-BG-HIGH-LIGHT);
+}
+checkbox .wx-checkbox-input.wx-checkbox-input-checked:before {
+  color: --color(--qui-FC-FFF);
+}
+
+//日历控件修改
+page {
+  .uni-picker-container .uni-picker-header {
+    position: absolute;
+    bottom: 0;
+    z-index: 100;
+    height: 100rpx;
+    background: --color(--qui-BG-2);
+  }
+  .uni-picker-container .uni-picker-action {
+    width: 50%;
+    line-height: 100rpx;
+    text-align: center;
+  }
+  .uni-picker-action-cancel {
+    color: #aaa;
+    border-right: 2rpx solid --color(--qui-BG-ED);
+  }
+  .uni-picker-container .uni-picker-action.uni-picker-action-confirm {
+    color: --color(--qui-FC-333);
+  }
+  .uni-picker-container .uni-picker-item,
+  .uni-picker-container .uni-picker-view-indicator {
+    height: 100rpx;
+    font-size: 32rpx;
+    line-height: 100rpx;
+  }
+  .uni-picker-container .uni-picker-item {
+    background: --color(--qui-BG-BTN-GRAY-1);
+  }
+  .uni-picker-container .uni-picker-content {
+    height: 300rpx;
+  }
+  .uni-picker-container .uni-picker {
+    padding-bottom: 110rpx;
+    background-color: --color(--qui-BG-BTN-GRAY-1);
+  }
+  .uni-mask {
+    background: rgba(0, 0, 0, 0.4);
+  }
+}
+// 分享弹框
+.popup-share {
+  /* #ifndef APP-NVUE */
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  /* #endif */
+  background: --color(--qui-BG-2);
+}
+.popup-share-content {
+  /* #ifndef APP-NVUE */
+  display: flex;
+  /* #endif */
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  height: 250rpx;
+  padding-top: 40rpx;
+  padding-right: 97rpx;
+  padding-left: 98rpx;
+  background: --color(--qui-BG-BTN-GRAY-1);
+  box-sizing: border-box;
+}
+.popup-share-box {
+  width: 120rpx;
+  height: 120rpx;
+  line-height: 120rpx;
+  background: --color(--qui-BG-40);
+  border-radius: 10px;
+}
+.popup-share-content-box {
+  /* #ifndef APP-NVUE */
+  display: flex;
+  /* #endif */
+  flex-direction: column;
+  align-items: center;
+  width: 120rpx;
+  // height: 164rpx;
+  // background: --color(--qui-BG-2);
+}
+.popup-share-content-image {
+  /* #ifndef APP-NVUE */
+  display: flex;
+  /* #endif */
+  flex-direction: row;
+  justify-content: center;
+  // align-items: center;
+  width: 120rpx;
+  height: 120rpx;
+  overflow: hidden;
+  border-radius: 7rpx;
+}
+.content-image {
+  width: 60rpx;
+  height: 60rpx;
+  margin: 35rpx;
+  line-height: 129rpx;
+}
+.popup-share-content-text {
+  margin-top: 13rpx;
+  font-size: $fg-f28;
+  color: --color(--qui-FC-TAG);
+}
+.popup-share-btn {
+  height: 100rpx;
+  font-size: $fg-f28;
+  line-height: 100rpx;
+  color: --color(--qui-FC-333);
+  text-align: center;
+}
+.popup-share-content-space {
+  width: 100%;
+  height: 10rpx;
+  background: --color(--qui-BG-ED);
+}
+.popup-share-button {
+  position: absolute;
+  top: 43 rpx;
+  left: 455rpx;
+  z-index: 10;
+  width: 120rpx;
+  height: 120rpx;
+  background: --color(--qui-BG-2);
+  opacity: 0;
+}
+.popup-share-button__center {
+  position: absolute;
+  top: 43 rpx;
+  z-index: 10;
+  width: 120rpx;
+  height: 120rpx;
+  background: --color(--qui-BG-2);
+  opacity: 0;
+}
+.popup-share-button[plain] {
+  border: 0;
+}
+
+//公共搜索头样式
+.search {
+  /deep/ input .input-placeholder {
+    font-size: $fg-f28;
+    color: --color(--qui-FC-C6);
+  }
+  .icon-content-search {
+    position: absolute;
+    top: 24rpx;
+    left: 20rpx;
+    /* #ifndef MP-WEIXIN */
+    line-height: 1;
+    /* #endif */
+  }
+  .icon-close {
+    position: absolute;
+    top: -3rpx;
+    left: 2rpx;
+  }
+  .search-box {
+    display: flex;
+    padding: 30rpx 40rpx 20rpx;
+  }
+  .search-box__content {
+    position: relative;
+    flex: 1 1 0%;
+  }
+  .search-box__cancel {
+    padding-left: 24rpx;
+    font-size: $fg-f28;
+    line-height: 80rpx;
+    justify-content: flex-end;
+    color: --color(--qui-FC-CCC);
+  }
+  .search-box__content-input {
+    height: 80rpx;
+    padding: 0 60rpx;
+    line-height: 80rpx;
+    background: --color(--qui-BG-IT);
+    border: none;
+    border-radius: 7rpx;
+  }
+  .search-box__content-delete {
+    position: absolute;
+    top: 24rpx;
+    right: 20rpx;
+    /* #ifdef H5 */
+    line-height: 1;
+    /* #endif */
+  }
+}
+
+.loading {
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  margin-left: -30rpx;
+}
+
+.qq-emotion {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.content-member,
+.content-topic {
+  padding: 0 3px;
+  color: --color(--qui-LINK);
+  /* #ifdef H5 */
+  cursor: pointer;
+  /* #endif */
+}
+
+.uni-input-input {
+  color: #555;
+}
+image,
+img {
+  will-change: transform;
+}
+
+.wxParse {
+  width: 100%;
+  font-size: 1em;
+  // line-height: 1.5;
+  user-select: none;
+}
+.wxParse view {
+  word-break: break-all;
+}
+.wxParse .p {
+  padding-bottom: 0.5em;
+  clear: both;
+}
+.wxParse .inline {
+  display: inline;
+  padding: 0;
+  margin: 0;
+}
+
+.wxParse .div {
+  display: block;
+  padding: 0;
+  margin: 0;
+}
+
+.wxParse .h1 {
+  margin: 0.67em 0;
+  font-size: 2em;
+  line-height: 1.2em;
+}
+.wxParse .h2 {
+  margin: 0.83em 0;
+  font-size: 1.5em;
+}
+.wxParse .h3 {
+  margin: 1em 0;
+  font-size: 1.17em;
+}
+.wxParse .h4 {
+  margin: 1.33em 0;
+}
+.wxParse .h5 {
+  margin: 1.67em 0;
+  font-size: 0.83em;
+}
+.wxParse .h6 {
+  margin: 1.67em 0;
+  font-size: 0.83em;
+}
+
+.wxParse .h1,
+.wxParse .h2,
+.wxParse .h3,
+.wxParse .h4,
+.wxParse .h5,
+.wxParse .h6,
+.wxParse .b,
+.wxParse .strong {
+  font-weight: bolder;
+}
+
+.wxParse .i,
+.wxParse .cite,
+.wxParse .em,
+.wxParse .var,
+.wxParse .address {
+  font-style: italic;
+}
+.wxParse .spaceshow {
+  white-space: pre;
+}
+.wxParse .pre,
+.wxParse .tt,
+.wxParse .code,
+.wxParse .kbd,
+.wxParse .samp {
+  font-family: monospace;
+}
+.wxParse .pre {
+  padding: 16upx;
+  margin: 1em 0upx;
+  overflow: auto;
+  font-size: 24upx;
+  white-space: pre;
+  background: #f5f5f5;
+}
+.wxParse .code {
+  padding: 16upx;
+  margin: 1em 0upx;
+  overflow: auto;
+  font-size: 24upx;
+  white-space: pre;
+  background: #f5f5f5;
+}
+
+.wxParse .big {
+  font-size: 1.17em;
+}
+
+.wxParse .small,
+.wxParse .sub,
+.wxParse .sup {
+  font-size: 0.83em;
+}
+
+.wxParse .sub {
+  vertical-align: sub;
+}
+.wxParse .sup {
+  vertical-align: super;
+}
+
+.wxParse .s,
+.wxParse .strike,
+.wxParse .del {
+  text-decoration: line-through;
+}
+
+.wxParse .strong,
+.wxParse .text,
+.wxParse .span,
+.wxParse .s {
+  display: inline;
+}
+
+.wxParse .a {
+  color: --color(--qui-LINK);
+}
+
+.wxParse .video {
+  margin: 22upx 0;
+  text-align: center;
+}
+
+.wxParse .video-video {
+  width: 100%;
+}
+.wxParse .uni-image {
+  max-width: 100%;
+}
+.wxParse .img {
+  display: block;
+  max-width: 100%;
+  margin-bottom: 0;
+  overflow: hidden;
+}
+
+.wxParse .blockquote {
+  padding: 22upx 0 22upx 22upx;
+  margin: 10upx 0;
+  color: #6a737d;
+  border-left: 6upx solid #dbdbdb;
+}
+.wxParse .blockquote .p {
+  margin: 0;
+}
+.wxParse .ul,
+.wxParse .ol {
+  display: block;
+  padding-left: 2em;
+  margin: 1em 0;
+}
+.wxParse .ol {
+  list-style-type: disc;
+}
+
+.wxParse .ol .li,
+.wxParse .ul .li {
+  display: list-item;
+  align-items: baseline;
+  text-align: match-parent;
+}
+.wxParse .ul .ul,
+.wxParse .ol .ul {
+  list-style-type: circle;
+}
+.wxParse .u {
+  text-decoration: underline;
+}
+.wxParse .hide {
+  display: none;
+}
+.wxParse .del {
+  display: inline;
+}
+.wxParse .figure {
+  overflow: hidden;
+}
+.wxParse .tablebox {
+  padding: 8px;
+  overflow: auto;
+  font-size: 13px;
+  background: #f5f5f5;
+  background-color: #f5f5f5;
+}
+.wxParse .table .table,
+.wxParse .table {
+  overflow: auto;
+  white-space: pre;
+  border-collapse: collapse;
+  box-sizing: border-box;
+}
+.wxParse .tbody {
+  border: 1px solid #dadada;
+  border-collapse: collapse;
+  box-sizing: border-box;
+}
+.wxParse .table .thead,
+.wxParse .table .tfoot,
+.wxParse .table .th {
+  font-weight: 40;
+  background: #ececec;
+  border-collapse: collapse;
+  box-sizing: border-box;
+}
+.wxParse .table .tr {
+  overflow: auto;
+  border-collapse: collapse;
+  box-sizing: border-box;
+}
+.wxParse .table .th,
+.wxParse .table .td {
+  overflow: auto;
+  border: 2upx solid #dadada;
+  border-collapse: collapse;
+  box-sizing: border-box;
+}
+.wxParse .audio,
+.wxParse .uni-audio-default {
+  display: block;
+}

@@ -1,0 +1,364 @@
+// 具体配置：https://uniapp.dcloud.io/collocation/pages
+{
+  // pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+  "pages": [
+    {
+      "path": "pages/home/index",
+      "style": {
+        "navigationStyle": "custom"
+        // "onReachBottomDistance":126  //距离底部多远时触发 单位px
+      }
+    },
+    {
+      "path": "pages/topic/content",
+      "style": {
+        "navigationBarTitleText": "",
+        "navigationBarBackgroundColor": "#fff",
+        "navigationBarTextStyle": "black",
+        "navigationStyle": "default"
+      }
+    }, 
+    {
+      "path": "pages/topic/list",
+      "style": {
+        "navigationBarTitleText": "话题列表",
+        "navigationBarBackgroundColor": "#fff",
+        "navigationBarTextStyle": "black",
+        "navigationStyle": "default"
+      }
+    }, 
+    {
+      "path": "pages/topic/topic",
+      "style": {
+        "navigationBarBackgroundColor": "#fff",
+        "navigationBarTextStyle": "black",
+        "navigationBarTitleText": "#话题#"
+      }
+    },
+    // 登录注册
+    {
+      "path": "pages/user/phone-number-login",
+      "style": {
+        "navigationBarTitleText": "手机号码登录"
+      }
+    },
+    {
+      "path": "pages/user/verification-code-login",
+      "style": {
+        "navigationBarTitleText": "手机号码登录"
+      }
+    },
+    {
+      "path": "pages/user/login-bind",
+      "style": {
+        "navigationBarTitleText": "登录并绑定"
+      }
+    },
+    {
+      "path": "pages/user/register-bind",
+      "style": {
+        "navigationBarTitleText": "注册并绑定"
+      }
+    },
+    {
+      "path": "pages/user/login",
+      "style": {
+        "navigationBarTitleText": "登录"
+      }
+    },
+    {
+      "path": "pages/user/register",
+      "style": {
+        "navigationBarTitleText": "注册"
+      }
+    },
+    // {
+    //   "path": "pages/user/message",
+    //   "style": {
+    //     "navigationBarBackgroundColor": "#fff",
+    //     "navigationBarTitleText": "信息提示",
+    //     "disableScroll": true
+    //   }
+    // },
+
+    {
+      "path": "pages/topic/index",
+      "style": {
+        "navigationBarTitleText": "内容详情页"
+      }
+    },
+    {
+      "path": "pages/topic/comment",
+      "style": {
+        "navigationBarTitleText": "评论详情页"
+      }
+    },
+    //个人主页和我的部分页面
+    {
+      "path": "pages/my/profile",
+      "style": {
+        "navigationBarTitleText": "我的资料"
+      }
+    },
+    {
+      "path": "pages/my/wallet",
+      "style": {
+        "navigationBarTitleText": "我的钱包"
+      }
+    },
+    {
+      "path": "pages/my/freeze",
+      "style": {
+        "navigationBarTitleText": "冻结金额"
+      }
+    },
+    {
+      "path": "pages/my/withdrawalslist",
+      "style": {
+        "navigationBarTitleText": "提现记录"
+      }
+    },
+    {
+      "path": "pages/my/walletlist",
+      "style": {
+        "navigationBarTitleText": "钱包明细"
+      }
+    },
+    {
+      "path": "pages/my/orderlist",
+      "style": {
+        "navigationBarTitleText": "订单明细"
+      }
+    },
+    {
+      "path": "pages/my/favorite",
+      "style": {
+        "navigationBarTitleText": "我的收藏"
+      }
+    },
+    {
+      "path": "pages/profile/index",
+      "style": {
+        "navigationBarTitleText": "个人主页"
+      }
+    },
+    {
+      "path": "pages/site/index",
+      "style": {
+        "navigationBarTitleText": "站点信息"
+      }
+    },
+    {
+      "path": "pages/site/payh5",
+      "style": {
+        "navigationBarTitleText": "站点信息"
+      }
+    },
+    {
+      "path": "pages/site/info",
+      "style": {
+        "navigationBarTitleText": "站点信息"
+      }
+    },
+    {
+      "path": "pages/site/partner-invite",
+      "style": {
+        "navigationBarTitleText": "站点信息"
+      }
+    },
+    {
+      "path": "pages/site/search",
+      "style": {
+        "navigationBarTitleText": "搜索"
+      }
+    },
+    {
+      "path": "pages/site/search-theme",
+      "style": {
+        "navigationBarTitleText": "主题搜索"
+      }
+    },
+    {
+      "path": "pages/site/search-user",
+      "style": {
+        "navigationBarTitleText": "用户搜索"
+      }
+    },
+
+    {
+      "path": "pages/notice/notice", // @我的/回复我的/点赞我的/支付我的/系统通知
+      "style": {
+        "navigationBarTitleText": "通知"
+      }
+    },
+    {
+      "path": "pages/notice/msglist",
+      "style": {
+        "navigationBarTitleText": "来往记录",
+        "enablePullDownRefresh": true
+      }
+    },
+
+    // 站点管理
+    {
+      "path": "pages/manage/index",
+      "style": {
+        "navigationBarTitleText": "站点管理"
+      }
+    },
+    {
+      "path": "pages/manage/member",
+      "style": {
+        "navigationBarTitleText": "成员管理"
+      }
+    },
+    {
+      "path": "pages/manage/users",
+      "style": {
+        "navigationBarTitleText": "站点成员"
+      }
+    },
+    {
+      "path": "pages/manage/invite",
+      "style": {
+        "navigationBarTitleText": "邀请成员"
+      }
+    },
+
+    {
+      "path": "pages/topic/post",
+      "style": {
+        "navigationBarTitleText": "发布",
+        "navigationBarBackgroundColor": "#fff",
+        "navigationBarTextStyle": "black",
+        "navigationStyle": "default"
+      }
+    },
+    {
+      "path": "pages/user/at-member",
+      "style": {
+        "navigationBarBackgroundColor": "#fff",
+        "navigationBarTextStyle": "black",
+        "navigationBarTitleText": ""
+      }
+    },
+    {
+      "path": "pages/common/message",
+      "style": {
+        "navigationBarBackgroundColor": "#fff",
+        "navigationBarTitleText": "信息提示",
+        "disableScroll": true
+      }
+    },
+    // 帖子海报分享
+    {
+      "path": "pages/share/topic",
+      "style": {
+        "navigationBarTitleText": "分享海报"
+      }
+    },
+    // 首页海报分享
+    {
+      "path": "pages/share/site",
+      "style": {
+        "navigationBarTitleText": "分享海报"
+      }
+    },
+    // 修改用户信息
+    {
+      "path": "pages/modify/editusername",
+      "style": {
+        "navigationBarTitleText": "修改用户名"
+      }
+    },
+    {
+      "path": "pages/modify/mobile",
+      "style": {
+        "navigationBarTitleText": "修改手机号"
+      }
+    },
+    {
+      "path": "pages/modify/setphon",
+      "style": {
+        "navigationBarTitleText": "设置新手机"
+      }
+    },
+    {
+      "path": "pages/modify/paypwd",
+      "style": {
+        "navigationBarTitleText": "设置支付密码"
+      }
+    },
+    {
+      "path": "pages/modify/withdrawals",
+      "style": {
+        "navigationBarTitleText": "提现"
+      }
+    },
+    {
+      "path": "pages/modify/editpwd",
+      "style": {
+        "navigationBarTitleText": "修改密码"
+      }
+    },
+    {
+      "path": "pages/modify/realname",
+      "style": {
+        "navigationBarTitleText": "实名认证"
+      }
+    },
+    {
+      "path": "pages/modify/signature",
+      "style": {
+        "navigationBarTitleText": "签名"
+      }
+    },
+    {
+      "path": "pages/modify/newpwd",
+      "style": {
+        "navigationBarTitleText": "设置新密码"
+      }
+    },
+    {
+      "path": "pages/modify/findpwd",
+      "style": {
+        "navigationBarTitleText": "找回密码"
+      }
+    },
+    {
+      "path": "pages/modify/authen",
+      "style": {
+        "navigationBarTitleText": "验证身份"
+      }
+    },
+    {
+      "path": "pages/user/wechat",
+      "style": {
+        "navigationBarTitleText": "微信授权"
+      }
+    },
+    {
+      "path": "pages/common/view",
+      "style": {
+        "navigationBarTitleText": ""
+      }
+    }
+  ],
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "",
+    "navigationBarBackgroundColor": "#fff",
+    "backgroundColor": "#F8F8F8",
+    // "navigationStyle": "custom",
+    "usingComponents": {
+      "painter": "/wxcomponents/painter/painter"
+    },
+    "h5": {
+      // h5 不显示顶部导航栏
+      "titleNView": false
+    },
+    "app-plus": {
+      "softinputMode": "adjustResize"
+    }
+  }
+}

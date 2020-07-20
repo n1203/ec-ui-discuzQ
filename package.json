@@ -1,6 +1,6 @@
 {
-  "name": "discuz-uniapp",
-  "version": "1.0.1",
+  "name": "EC-UI",
+  "version": "0.0.2",
   "private": true,
   "scripts": {
     "serve": "npm run dev:h5",
@@ -89,8 +89,8 @@
     "vuex": "^3.4.0"
   },
   "devDependencies": {
-    "@commitlint/cli": "^8.3.5",
-    "@commitlint/config-conventional": "^8.3.4",
+    // "@commitlint/cli": "^8.3.5",
+    // "@commitlint/config-conventional": "^8.3.4",
     "@dcloudio/uni-cli-shared": "^2.0.0-27920200527001",
     "@dcloudio/uni-migration": "^2.0.0-27920200527001",
     "@dcloudio/uni-template-compiler": "^2.0.0-27920200527001",
@@ -109,7 +109,7 @@
     "babel-eslint": "^10.1.0",
     "babel-plugin-import": "^1.11.0",
     "babel-plugin-lodash": "^3.3.4",
-    "commitizen": "^4.1.2",
+    // "commitizen": "^4.1.2",
     "cross-env": "^7.0.2",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.1.0",

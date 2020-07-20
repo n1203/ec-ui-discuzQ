@@ -42,7 +42,12 @@
           </view>
         </view>
 
-        <view v-if="isAttentionVisible" class="themeItem__attention" @click="addFollow" @click.stop="">
+        <view
+          v-if="isAttentionVisible"
+          class="themeItem__attention"
+          @click="addFollow"
+          @click.stop=""
+        >
           关注
         </view>
       </view>
@@ -51,14 +56,34 @@
         <view class="themeItem__content__text">
           <view class="themeItem__content__text__longessay" v-if="threadType === 1">
             <view class="themeItem__content__text__longessay__publish">
-              {{ i18n.t('home.released') }} :
+              <svg
+                t="1595264739906"
+                class="icon"
+                fill="#fff"
+                viewBox="0 0 1024 1024"
+                version="1.1"
+                xmlns="http://www.w3.org/2000/svg"
+                p-id="2326"
+                width="30"
+                height="30"
+              >
+                <path
+                  d="M529.408 409.6a51.2 51.2 0 0 0 0 72.192 74.752 74.752 0 0 1 0 105.472L378.88 739.328a74.752 74.752 0 1 1-105.472-105.472l33.792-36.352a51.2 51.2 0 0 0-72.704-72.192l-33.792 37.888a177.152 177.152 0 0 0 250.368 250.368l151.04-151.04a177.152 177.152 0 0 0 0-250.368A51.2 51.2 0 0 0 529.408 409.6z"
+                  p-id="2327"
+                ></path>
+                <path
+                  d="M809.984 204.8a181.248 181.248 0 0 0-250.368 0L409.6 353.792a177.152 177.152 0 0 0 0 250.368 51.2 51.2 0 0 0 72.704-72.192 74.752 74.752 0 0 1 0-105.472l151.04-151.04a76.288 76.288 0 0 1 105.472 0 74.752 74.752 0 0 1 0 105.472l-36.352 36.352a51.2 51.2 0 0 0 72.192 72.704l36.352-36.352A177.152 177.152 0 0 0 809.984 204.8z"
+                  p-id="2328"
+                ></path>
+              </svg>
+              <!-- {{ i18n.t('home.released') }} -->
             </view>
-            <qui-icon
+            <!-- <qui-icon
               name="icon-link"
               :color="theme === $u.light() ? '#00479B' : '#1E78F3'"
               size="28"
               style="padding-left: 8rpx;"
-            ></qui-icon>
+            ></qui-icon> -->
             <!-- <navigator class="navPost">
               {{ themeContent }}
             </navigator> -->
@@ -382,7 +407,7 @@ export default {
     isAttentionVisible: {
       type: Boolean,
       default: true,
-    }
+    },
   },
 
   data: () => {
@@ -477,19 +502,19 @@ export default {
         }
       }
       // #endif
-      // const params = {
-      //   _jv: {
-      //     type: 'follow',
-      //   },
-      //   type: 'user_follow',
-      //   to_user_id: this._uid,
-      // };
-      // status
-      //   .run(() => this.$store.dispatch('jv/post', params))
-      //   .then(() => {
-      //     this.getUserInfo(this.userId);
-      //     if (this.$refs.followers) this.$refs.followers.getFollowerList('change');
-      //   });
+      const params = {
+        _jv: {
+          type: 'follow',
+        },
+        type: 'user_follow',
+        to_user_id: this._uid,
+      };
+      status
+        .run(() => this.$store.dispatch('jv/post', params))
+        .then(() => {
+          // this.getUserInfo(this.userId);
+          // if (this.$refs.followers) this.$refs.followers.getFollowerList('change');
+        });
     },
     // 点击删除按钮
     deleteClick(evt) {
@@ -674,7 +699,11 @@ export default {
       word-wrap: break-word;
       &__longessay {
         display: flex;
+        line-height: 50px;
+        text-indent: 10px;
+        background: #f5f5f5;
         word-break: break-all;
+        border-radius: 5px;
       }
     }
     &__reply {
@@ -784,8 +813,16 @@ export default {
 }
 
 .themeItem__content__text__longessay__publish {
-  display: inline;
+  display: flex;
+  padding: 10px;
+  color: #fff;
+  text-align: center;
+  background: #1878f3;
+  border-radius: 5px;
+  align-content: center;
+  align-items: center;
 }
+
 .navPost {
   display: inline-block;
   max-width: 75%;

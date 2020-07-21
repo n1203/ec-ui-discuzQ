@@ -28,7 +28,9 @@
       <view class="ft-box-spacal">
         <image class="ft-box-spacal-icon" src="@/static/publish.svg" @click="footerOpen"></image>
       </view>
+
     </view>
+    
     <uni-popup ref="popup" type="bottom">
       <view class="popup-share">
         <view class="popup-share-content">
@@ -80,16 +82,28 @@ export default {
           // routePath: 'pages/home/index', // 仅用作标识不用来跳转
         },
         {
+          tabsName: 'home.tabSearch',
+          tabsIcon: 'icon-search',
+          id: 2,
+          url: '/pages/site/search',
+          // routePath: 'pages/my/index', // 仅用作标识不用来跳转
+        },
+        {
+          tabsName: 'publish',
+          tabsIcon: 'null',
+          id: 0,
+        },
+        {
           tabsName: 'home.tabsNews',
           tabsIcon: 'icon-message',
-          id: 2,
+          id: 3,
           url: '/pages/notice/index',
           // routePath: 'pages/notice/index', // 仅用作标识不用来跳转
         },
         {
           tabsName: 'home.tabsMy',
           tabsIcon: 'icon-mine',
-          id: 3,
+          id: 4,
           url: '/pages/my/index',
           // routePath: 'pages/my/index', // 仅用作标识不用来跳转
         },
@@ -298,8 +312,8 @@ export default {
   text-align: center;
 }
 .ft-box-spacal {
-  position: relative;
-  top: -20rpx;
+  position: fixed;
+  bottom: 20rpx;
   width: 125rpx;
   height: 125rpx;
   border-radius: 50%;

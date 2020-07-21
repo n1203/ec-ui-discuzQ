@@ -5,8 +5,8 @@
       :style="'transform:' + navBarTransform"
       :title="forums.set_site ? forums.set_site.site_name : ''"
       fixed="true"
-      :color="navTheme === $u.light() ? '#000000' : '#ffffff'"
-      :background-color="navTheme === $u.light() ? '#ffffff' : '#2e2f30'"
+      :color="navTheme === $u.light() ? '#fff' : '#ffffff'"
+      :background-color="navTheme === $u.light() ? '#167bf4' : '#2e2f30'"
       status-bar
     ></uni-nav-bar>
     <scroll-view
@@ -42,7 +42,7 @@
             class="nav__box__icon"
             name="icon-screen"
             size="28"
-            :color="show ? '#1878F3' : '#777'"
+            :color="show ? '#FFF' : '#89c6ff'"
             @tap="showFilter"
           ></qui-icon>
         </view>
@@ -52,6 +52,7 @@
           :current="categoryIndex"
           @change="toggleTab"
           is-scroll="isScroll"
+          height="72"
           active-color="#1878F3"
         ></u-tabs>
       </view>
@@ -789,8 +790,9 @@ export default {
   z-index: 1;
   width: 100%;
   overflow: hidden;
-  background: --color(--qui-BG-2);
-  border-bottom: 2rpx solid --color(--qui-BOR-ED);
+  // background: --color(--qui-BG-2);
+  background: --color(--qui-BG-HIGH-LIGHT);
+  // border-bottom: 2rpx solid --color(--qui-BOR-ED);
   transition: box-shadow 0.2s, -webkit-transform 0.2s;
 
   &__box {
@@ -800,11 +802,12 @@ export default {
     display: block;
     float: right;
     width: 80rpx;
-    height: 97rpx;
-    background: --color(--qui-BG-2);
+    height: 70rpx;
+    // background: --color(--qui-BG-2);
+    background: --color(--qui-BG-HIGH-LIGHT);
     &__icon {
       margin-left: 24rpx;
-      line-height: 100rpx;
+      line-height: 70rpx;
     }
   }
 }
@@ -866,18 +869,20 @@ export default {
 }
 .scroll-tab {
   z-index: 100;
-  height: 100rpx;
+  height: 76rpx;
   text-align: center;
   white-space: nowrap;
-  border-bottom: 1rpx solid --color(--qui-BOR-EEE);
+  border-bottom: 1rpx solid #fff;
+  // border-bottom: 1rpx solid --color(--qui-BOR-EEE);
 }
 .scroll-tab-item {
   z-index: 1;
   display: inline-block;
-  margin: 20rpx 30rpx;
+  // margin: 5rpx 30rpx;
   font-size: $fg-f26;
-  line-height: 77rpx;
-  color: --color(--qui-FC-777);
+  line-height: 30rpx;
+  color: #fff;
+  // color: --color(--qui-FC-777);
 }
 .active .scroll-tab-line {
   color: --color(--qui-BG-HIGH-LIGHT);
@@ -886,7 +891,8 @@ export default {
 .uni-tab-bar .active {
   font-size: $fg-f28;
   font-weight: bold;
-  color: --color(--qui-BG-HIGH-LIGHT);
+  color: #fff;
+  // color: --color(--qui-BG-HIGH-LIGHT);
 }
 .main {
   margin-bottom: 130rpx;

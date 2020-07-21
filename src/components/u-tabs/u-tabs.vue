@@ -318,15 +318,19 @@ $screen: 80rpx;
   position: relative;
   display: inline-block;
   text-align: center;
-  color: --color(--qui-FC-777);
+  color: #89c6ff;
+  // color: --color(--qui-FC-777);
   transition-property: background-color, color;
   transition: $switch-theme-time;
 }
 .tabActive {
-  color: --color(--qui-TAB);
+  color: #fff;
+  // color: --color(--qui-TAB);
 }
 .tabBarBg {
-  background-color: --color(--qui-TAB-BAR);
+  background-color: #fff;
+  
+  // background-color: --color(--qui-TAB-BAR);
 }
 .u-tab-bar {
   position: absolute;

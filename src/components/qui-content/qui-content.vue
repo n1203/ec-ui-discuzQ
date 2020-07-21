@@ -610,7 +610,7 @@ export default {
     flex-direction: row;
     justify-content: flex-start;
     width: auto;
-    padding-bottom: 12rpx;
+    padding-bottom: 30rpx;
     box-sizing: border-box;
 
     &__img {
@@ -689,7 +689,8 @@ export default {
 
   &__content {
     &__text {
-      padding-bottom: 20rpx;
+      // padding-bottom: 20rpx;
+      // padding: 30rpx 0;
       overflow: hidden;
       font-family: $font-family;
       font-size: $fg-f28;
@@ -781,7 +782,7 @@ export default {
     &__themeType1 {
       display: flex;
       justify-content: space-between;
-      margin-top: 60rpx;
+      margin-top: 30rpx;
 
       &__item {
         font-family: $font-family;

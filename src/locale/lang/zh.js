@@ -319,6 +319,7 @@ export default {
     tabsCircle: '首页',
     tabsNews: '消息',
     tabsMy: '我',
+    tabSearch: '搜索',
     filterPlate: '版块',
     filterType: '类型',
     text: '文本',

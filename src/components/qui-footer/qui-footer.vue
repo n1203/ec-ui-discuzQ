@@ -91,19 +91,19 @@ export default {
         {
           tabsName: 'publish',
           tabsIcon: 'null',
-          id: 0,
+          id: 3,
         },
         {
           tabsName: 'home.tabsNews',
           tabsIcon: 'icon-message',
-          id: 3,
+          id: 4,
           url: '/pages/notice/index',
           // routePath: 'pages/notice/index', // 仅用作标识不用来跳转
         },
         {
           tabsName: 'home.tabsMy',
           tabsIcon: 'icon-mine',
-          id: 4,
+          id: 5,
           url: '/pages/my/index',
           // routePath: 'pages/my/index', // 仅用作标识不用来跳转
         },

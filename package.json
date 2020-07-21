@@ -1,6 +1,6 @@
 {
-  "name": "EC-UI",
-  "version": "0.0.2",
+  "name": "ec-ui",
+  "version": "0.0.4",
   "private": true,
   "scripts": {
     "serve": "npm run dev:h5",

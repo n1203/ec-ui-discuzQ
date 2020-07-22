@@ -12,11 +12,11 @@
         <qui-page-notice
           :nav-theme="theme"
           ref="quinotice"
-          :style="{ display: show_index === 1 ? 'block' : 'none' }"
+          :style="{ display: show_index === 3 ? 'block' : 'none' }"
         ></qui-page-notice>
         <qui-page-my
           ref="quimy"
-          :style="{ display: show_index === 2 ? 'block' : 'none' }"
+          :style="{ display: show_index === 4 ? 'block' : 'none' }"
         ></qui-page-my>
       </view>
 
@@ -150,11 +150,11 @@ export default {
     }),
     // 切换组件
     cut_index(e, type, isTabBar) {
-      const tabs = ['home', 'quinotice', 'quimy'];
+      const tabs = ['home', 'search', 'empty', 'quinotice', 'quimy'];
       this.currentTab = tabs[type];
       if (
         !this.$store.getters['session/get']('isLogin') &&
-        ['quinotice', 'quimy'].indexOf(this.currentTab) >= 0
+        ['quinotice', 'quimy', 'empty', 'search'].indexOf(this.currentTab) >= 0
       ) {
         this.$store.getters['session/get']('auth').open();
         this.currentTab = 'home';
@@ -162,9 +162,19 @@ export default {
         return;
       }
 
+      // 如果是搜索，则直接做跳转
+      if (type === 1) {
+        uni.navigateTo({
+          url: '/pages/site/search',
+        });
+        return;
+      }
       this.show_index = type;
       if (isTabBar.indexOf(type) === -1) {
-        this.$refs[this.currentTab].ontrueGetList();
+        // 如果点击的是中间的 + 则不做数据欲请求处理
+        if (type !== 2) {
+          this.$refs[this.currentTab].ontrueGetList();
+        }
         isTabBar.push(type);
       }
     },

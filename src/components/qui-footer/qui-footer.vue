@@ -92,6 +92,8 @@ export default {
           tabsName: 'publish',
           tabsIcon: 'null',
           id: 3,
+          url: '/pages/site/search',
+          // routePath: 'pages/my/index', // 仅用作标识不用来跳转
         },
         {
           tabsName: 'home.tabsNews',

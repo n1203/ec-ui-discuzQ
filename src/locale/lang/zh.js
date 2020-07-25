@@ -373,6 +373,7 @@ export default {
     myauthority: '我的权限',
     setting: '设置',
     noContent: '暂无内容',
+    ui: 'UI系统',
   },
   // 消息页面
   notice: {
@@ -636,6 +637,7 @@ export default {
     validationerror: '验证错误',
     filedownloadtips: '因iPhone系统限制，您的手机无法下载文件。请使用安卓手机或电脑访问下载',
     filedownloadtipswx: '因系统限制，无法下载文件。请使用安卓手机或电脑访问H5版进行下载',
+    enableEnLang: '切换英文版',
   },
   site: {
     circleintroduction: '站点介绍',

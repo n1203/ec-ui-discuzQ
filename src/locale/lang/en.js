@@ -147,6 +147,7 @@ export default {
       setting: 'setting',
       noContent: 'No Content',
       contentMaxLength: 'No more than 450 words',
+      ui: 'UI system',
     },
     // 消息页面
     notice: {
@@ -238,6 +239,7 @@ export default {
     paymenttobemade: 'Payment to bemade',
     paymentsucceed: 'Payment succeed',
     paymentfailed: 'Payment failed',
+    theme: 'Theme',
     freezingreason: 'Freezing reason',
     theuserwasdeleted: 'The user was deleted',
     thethemewasdeleted: 'The theme was deleted',
@@ -253,6 +255,7 @@ export default {
     successfullyuploadedtheavatar: 'Successfully uploaded the Avatar',
     validationerror: 'Validation error',
     uploadtimenotup: 'Upload time not up',
+    enableEnLang: 'Switch English',
   },
   site: {
     circleintroduction: 'Circle introduction',

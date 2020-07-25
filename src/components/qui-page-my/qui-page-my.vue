@@ -78,6 +78,12 @@
           </qui-cell-item>
         </view>
 
+        <view class="my-items__wrap">
+          <qui-cell-item :title="i18n.t('profile.enableEnLang')" slot-right :border="false">
+            <u-switch @change="changeLangs" v-model="lang" active-color="#1E78F3"></u-switch>
+          </qui-cell-item>
+        </view>
+
         <!-- #ifdef H5-->
         <!-- 微信内：无感模式不展示按钮，其他模式展示退出并解绑按钮，微信外：任何模式都展示退出登录按钮 -->
         <view class="logout">
@@ -121,6 +127,7 @@ import { THEME_DEFAULT, THEME_DARK } from '@/common/const';
 import forums from '@/mixin/forums';
 import appCommonH from '@/utils/commonHelper';
 import uniPopupDialog from '@/components/uni-popup/uni-popup-dialog';
+import { i18n, localeUse } from '@/locale';
 
 export default {
   components: { uniPopupDialog },
@@ -135,10 +142,12 @@ export default {
       ],
       current: 0,
       checked: false,
+      changeLang: false, //  当前多语言
       isWeixin: false, // 默认不是微信浏览器
       offiaccount_close: false, // 默认不开启微信公众号
       register_type: 0, // 注册模式
       site_mode: '', // 站点模式
+      lang: false,
     };
   },
   computed: {
@@ -165,9 +174,16 @@ export default {
     }
     const { isWeixin } = appCommonH.isWeixin();
     this.isWeixin = isWeixin;
+
+    // 多语言默认值
+    if (i18n.locale !== 'zh') this.lang = true;
   },
   // #endif
   methods: {
+    // 切换多语言
+    changeLangs(e) {
+      localeUse(e ? 'en' : 'zh');
+    },
     changeCheck(e) {
       getApp().globalData.themeChanged(e ? THEME_DARK : THEME_DEFAULT);
     },

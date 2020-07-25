@@ -54,6 +54,7 @@
         :title="i18n.t('manage.creationtime')"
         :addon="siteInfo.createdAt"
       ></qui-cell-item>
+      <qui-cell-item :title="i18n.t('manage.ui')" addon="EC-UI"></qui-cell-item>
       <qui-cell-item
         :title="i18n.t('manage.circlemode')"
         :addon="

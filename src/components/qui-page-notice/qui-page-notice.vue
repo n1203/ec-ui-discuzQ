@@ -54,10 +54,16 @@
                       <text v-if="item.name">（{{ item.name }}）</text>
                     </text>
                   </view>
-                  <view class="dialog-box__header__info__time">{{ dialog.time }}</view>
+                  <view class="dialog-box__con">
+                    <rich-text
+                      :nodes="dialog.dialogMessage ? dialog.dialogMessage.summary : ''"
+                      style="word-break: break-all;"
+                    ></rich-text>
+                  </view>
                 </view>
               </view>
               <view class="dialog-box__header__r">
+                <view class="dialog-box__header__info__time">{{ dialog.time }}</view>
                 <qui-icon
                   name="icon-circle"
                   class="red-circle"
@@ -67,12 +73,6 @@
                 ></qui-icon>
                 <qui-icon class="arrow" name="icon-folding-r" size="22" color="#ddd"></qui-icon>
               </view>
-            </view>
-            <view class="dialog-box__con">
-              <rich-text
-                :nodes="dialog.dialogMessage ? dialog.dialogMessage.summary : ''"
-                style="word-break: break-all;"
-              ></rich-text>
             </view>
           </view>
           <qui-load-more
@@ -268,6 +268,7 @@ export default {
   &__header {
     display: flex;
     justify-content: space-between;
+    border-bottom: 1px solid #f0f0f0;
 
     &__info {
       display: flex;
@@ -317,7 +318,7 @@ export default {
   }
 
   &__con {
-    padding: 0rpx 40rpx 30rpx;
+    // padding: 0rpx 40rpx 30rpx;
     font-weight: 400;
     color: --color(--qui-FC-333);
     opacity: 1;

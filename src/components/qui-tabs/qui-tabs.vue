@@ -85,10 +85,11 @@ export default {
   align-items: center;
   justify-content: center;
   padding: 30rpx;
+  border-bottom: 4rpx solid --color(--qui-FC-FFF);
   box-sizing: border-box;
 }
 .qui-tabs__item__brief {
-  font-size: 28rpx;
+  font-size: $fg-f28;
   color: --color(--qui-FC-333);
   transition: $switch-theme-time;
 }

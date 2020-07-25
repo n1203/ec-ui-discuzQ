@@ -1,8 +1,5 @@
 <template>
   <qui-page :data-qui-theme="theme" class="page-ediname">
-    <!-- #ifdef H5-->
-    <qui-header-back :title="i18n.t('modify.nametitle')"></qui-header-back>
-    <!-- #endif -->
     <view class="chagepas">
       <view class="chagepas-pas">
         <input
@@ -122,9 +119,6 @@ export default {
   .chagepas {
     width: 100vw;
     height: 100vh;
-    /* #ifdef H5 */
-    padding-top: 100rpx;
-    /* #endif */
     background-color: --color(--qui-BG-2);
     box-sizing: border-box;
   }

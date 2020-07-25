@@ -2,28 +2,33 @@
   <qui-page :data-qui-theme="theme"></qui-page>
 </template>
 <script>
+let payPhone = null;
+
 export default {
   data() {
     return {
-      state: true,
+      userId: uni.getStorageSync('user_id') || 0,
     };
   },
-  onShow() {
-    const params = {
-      include: 'groups,wechat',
-    };
-    const userId = this.$store.getters['session/get']('userId');
-    this.$store.dispatch('jv/get', [`users/${userId}`, { params }]).then(res => {
-      uni.showToast({
-        title: `${res.paid}支付状态`,
-        duration: 3000,
-      });
-      if (res.paid) {
-        window.location.href = '/pages/home/index';
-      } else {
-        window.location.href = '/pages/site/info';
-      }
-    });
+  onLoad() {
+    this.refresh();
+    // 输入密码错误的情况
+    payPhone = setInterval(() => {
+      this.refresh();
+    }, 3000);
+  },
+  onUnload() {
+    clearInterval(payPhone);
+  },
+  methods: {
+    refresh() {
+      setTimeout(() => {
+        uni.redirectTo({
+          url: '/pages/site/info',
+        });
+      }, 1000);
+      this.$u.event.$emit('refresh');
+    },
   },
 };
 </script>

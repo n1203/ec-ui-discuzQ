@@ -111,6 +111,14 @@ export default {
       deep: true,
       immediate: true,
     },
+    uploadList: {
+      handler(newVal) {
+        this.uploadList = newVal;
+        this.$emit('change', this.uploadList, true);
+      },
+      deep: true,
+      immediate: true,
+    },
   },
   async created() {
     setTimeout(() => {
@@ -186,11 +194,11 @@ export default {
                 _this.uploadBeforeList.push(res.tempFiles[index]);
                 _this.numberdata.push({ state: 0 });
                 _this.newindex.push(res.tempFiles[index]);
-                if (_this.uploadBeforeList.length > _this.count) {
-                  _this.uploadBeforeList = _this.uploadBeforeList.slice(0, _this.count);
-                  _this.numberdata = _this.numberdata.slice(0, _this.count);
-                  _this.newindex = _this.newindex.slice(0, _this.count);
-                }
+                // if (_this.uploadBeforeList.length > _this.count) {
+                //   _this.uploadBeforeList = _this.uploadBeforeList.slice(0, _this.count);
+                //   _this.numberdata = _this.numberdata.slice(0, _this.count);
+                //   _this.newindex = _this.newindex.slice(0, _this.count);
+                // }
                 _this.upload(
                   res.tempFilePaths[index],
                   _this.uploadBeforeList.length - 1,
@@ -202,12 +210,13 @@ export default {
               });
             });
 
-            Promise.allSettled(promise).then(() => {
+            Promise.race(promise).then(() => {
+              console.log(promise, '这是的', _this.uploadBeforeList.length, '----', _this.count);
               // 返回上传成功列表和成功状态值
-              if (_this.uploadList.length > _this.count) {
+              if (_this.uploadBeforeList.length > _this.count) {
                 _this.uploadList = _this.uploadList.slice(0, _this.count);
               }
-              // console.log(_this.uploadList, '这是组件内');
+              console.log(_this.uploadList, '这是组件内');
               _this.$emit('change', _this.uploadList, true);
             });
           },
@@ -257,6 +266,12 @@ export default {
               };
               // console.log(resObj, '这是新增的对象');
               _this.uploadList.push(resObj);
+              if (_this.uploadList.length > _this.count) {
+                _this.uploadBeforeList = _this.uploadBeforeList.slice(0, _this.count);
+                _this.uploadList = _this.uploadList.slice(0, _this.count);
+                _this.numberdata = _this.numberdata.slice(0, _this.count);
+                _this.newindex = _this.newindex.slice(0, _this.count);
+              }
               // console.log(_this.uploadList, '$$$$$$$$$$$$$');
               _this.newindex = [];
               _this.formDataAppend = {};

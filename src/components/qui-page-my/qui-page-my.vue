@@ -1,5 +1,6 @@
 <template>
   <view class="my">
+    <!-- #ifdef MP-WEIXIN -->
     <uni-nav-bar
       :title="i18n.t('profile.mine')"
       fixed="true"
@@ -7,6 +8,7 @@
       :background-color="checked ? '#2e2f30' : '#fff'"
       status-bar
     ></uni-nav-bar>
+    <!-- #endif -->
     <scroll-view
       scroll-y="true"
       scroll-with-animation="true"
@@ -37,7 +39,7 @@
           <navigator url="/pages/my/profile" hover-class="none">
             <qui-cell-item :title="i18n.t('profile.myprofile')" arrow></qui-cell-item>
           </navigator>
-          <navigator url="/pages/my/wallet" hover-class="none">
+          <navigator url="/pages/my/wallet" hover-class="none" v-if="forums.paycenter.wxpay_close">
             <qui-cell-item :title="i18n.t('profile.mywallet')" arrow></qui-cell-item>
           </navigator>
           <navigator url="/pages/my/favorite" hover-class="none">
@@ -56,11 +58,11 @@
             <qui-cell-item
               :title="i18n.t('profile.search')"
               arrow
-              :border="userInfo.groupsName == '管理员' ? true : false"
+              :border="forums.other && forums.other.can_create_invite ? true : false"
             ></qui-cell-item>
           </navigator>
           <navigator
-            v-if="userInfo.groupsName == '管理员'"
+            v-if="forums.other && forums.other.can_create_invite"
             url="/pages/manage/index"
             hover-class="none"
           >
@@ -77,13 +79,11 @@
             <u-switch @change="changeCheck" v-model="checked" active-color="#1E78F3"></u-switch>
           </qui-cell-item>
         </view>
-
         <view class="my-items__wrap">
           <qui-cell-item :title="i18n.t('profile.enableEnLang')" slot-right :border="false">
             <u-switch @change="changeLangs" v-model="lang" active-color="#1E78F3"></u-switch>
           </qui-cell-item>
         </view>
-
         <!-- #ifdef H5-->
         <!-- 微信内：无感模式不展示按钮，其他模式展示退出并解绑按钮，微信外：任何模式都展示退出登录按钮 -->
         <view class="logout">
@@ -189,7 +189,7 @@ export default {
     },
     onClickItem(e) {
       uni.navigateTo({
-        url: `/pages/profile/index?current=${e.currentIndex}`,
+        url: `/pages/profile/index?current=${e.currentIndex}&userId=${this.userId}`,
       });
     },
     // #ifdef H5
@@ -210,8 +210,6 @@ export default {
     // #endif
     // #ifdef H5
     handleClickOk() {
-      console.log('----userId-----', this.userId);
-      console.log('this.forums', this.forums);
       this.$store
         .dispatch('jv/delete', `users/${this.userId}/wechat`)
         .then(res => {
@@ -254,7 +252,7 @@ export default {
 @import '@/styles/base/variable/global.scss';
 @import '@/styles/base/theme/fn.scss';
 /* #ifdef H5 */
-$height: calc(100vh - 280rpx);
+$height: calc(100vh - 120rpx);
 /* #endif */
 
 /* #ifdef MP-WEIXIN */

@@ -1,8 +1,5 @@
 <template>
   <qui-page :data-qui-theme="theme">
-    <!-- #ifdef H5-->
-    <qui-header-back title="邀请成员"></qui-header-back>
-    <!-- #endif -->
     <scroll-view
       scroll-y
       show-scrollbar="false"
@@ -169,6 +166,13 @@ export default {
       path: `/pages/site/partner-invite?code=${this.code}`,
     };
   },
+  // 分享到朋友圈
+  onShareTimeline() {
+    return {
+      title: this.forums.set_site.site_name,
+      query: '',
+    };
+  },
   computed: {
     // 获取当前登录的id
     currentLoginId() {
@@ -277,7 +281,7 @@ export default {
       if (
         this.userInfos &&
         this.userInfos.groups.length > 0 &&
-        this.userInfos.groups[0].name === '管理员'
+        this.forums.other.can_create_invite
       ) {
         // 角色是管理员
         this.$store
@@ -329,14 +333,10 @@ export default {
       this.$refs.popupShare.open();
       // #endif
       // #ifdef H5
-      if (this.isWeixin === true) {
-        this.shareShow = true;
-      } else {
-        this.h5Share({
-          title: this.forums.set_site.site_name,
-          url: `pages/site/partner-invite?code=${this.code}`,
-        });
-      }
+      this.h5Share({
+        title: this.forums.set_site.site_name,
+        url: `pages/site/partner-invite?code=${this.code}`,
+      });
       // #endif
     },
     // 取消分享
@@ -363,10 +363,9 @@ export default {
   right: 0rpx;
   left: 0rpx;
   /* #ifdef H5 */
-  margin: 44px 0rpx 0rpx;
+  margin-top: 44px;
   /* #endif */
   font-size: $fg-f28;
-
   &-tabs {
     /deep/ .qui-tabs__item--active .qui-tabs__item__title {
       font-size: $fg-f28;

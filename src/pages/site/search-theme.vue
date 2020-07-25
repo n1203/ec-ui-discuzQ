@@ -1,8 +1,5 @@
 <template>
   <qui-page :data-qui-theme="theme" class="search">
-    <!-- #ifdef H5-->
-    <qui-header-back :title="i18n.t('search.searchthemes')"></qui-header-back>
-    <!-- #endif -->
     <view class="search-box">
       <view class="search-box__content">
         <view class="icon-content-search">
@@ -39,7 +36,7 @@
           :scroll-top="scrollTop"
           @toTopic="toTopic"
         ></qui-thread-item>
-        <qui-icon class="arrow" name="icon-folding-r" size="22" color="#ddd"></qui-icon>
+        <qui-icon class="arrow" name="icon-folding-r" size="26" color="#ddd"></qui-icon>
       </view>
       <qui-load-more :status="loadingType" :show-icon="false" v-if="loadingType"></qui-load-more>
     </scroll-view>
@@ -172,9 +169,6 @@ $height: calc(100vh - 110rpx);
   }
   .search-box {
     padding: 30rpx 40rpx 0;
-    /* #ifdef H5 */
-    margin-top: 80rpx;
-    /* #endif */
     background: --color(--qui-BG-2);
   }
 }
@@ -182,6 +176,7 @@ $height: calc(100vh - 110rpx);
   padding-right: 40rpx;
   padding-left: 0;
   margin: 0;
+  border-top: 0;
   box-shadow: none;
 }
 /deep/ .themeCount .themeItem__footer {

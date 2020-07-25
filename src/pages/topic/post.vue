@@ -1,11 +1,5 @@
 <template>
   <qui-page :data-qui-theme="theme">
-    <!-- #ifdef H5-->
-    <qui-header-back :title="navTitle"></qui-header-back>
-    <!-- #endif -->
-    <!-- #ifdef H5-->
-    <view class="head-gap"></view>
-    <!-- #endif -->
     <view class="post-box" v-if="loadStatus">
       <view class="post-box__title" v-if="type === 1">
         <input
@@ -190,7 +184,7 @@
         :attachment-list="attachmentList"
         :file-format="forums.set_attach && forums.set_attach.support_file_ext"
         :file-size="forums.set_attach && forums.set_attach.support_max_size"
-        v-if="type === 1"
+        v-if="type === 1 && forums.other && forums.other.can_upload_attachments"
         @deleteItem="deleteFile"
       ></qui-upload-file>
       <view class="post-box__video" v-if="type === 2">
@@ -240,7 +234,7 @@
         :title="i18n.t('discuzq.post.paymentAmount')"
         :addon="showPrice"
         arrow
-        v-if="type !== 0 && showHidden"
+        v-if="type !== 0 && showHidden && forums.paycenter.wxpay_close"
         @click="cellClick('pay')"
       ></qui-cell-item>
       <qui-cell-item
@@ -1378,27 +1372,25 @@ export default {
     }
 
     try {
-      // #ifndef H5
       const res = uni.getSystemInfoSync();
-      if (
-        res.platform === 'ios' &&
-        this.forums.set_site.site_mode === 'public' &&
-        this.forums.paycenter.wxpay_ios === false
-      ) {
-        this.showHidden = false;
-      } else if (
-        res.platform === 'ios' &&
-        this.forums.set_site.site_mode === 'public' &&
-        this.forums.paycenter.wxpay_ios === true
-      ) {
+      if (this.forums.paycenter.wxpay_close) {
+        // #ifndef H5
+        if (res.platform === 'ios') {
+          if (this.forums.paycenter.wxpay_ios === false) {
+            this.showHidden = false;
+          }else {
+            this.showHidden = true;
+          }
+        } else {
+          this.showHidden = true;
+        }
+        // #endif
+        // #ifdef H5
         this.showHidden = true;
+        // #endif
       } else {
-        this.showHidden = true;
+        this.showHidden = false;
       }
-      // #endif
-      // #ifdef H5
-      this.showHidden = true;
-      // #endif
     } catch (e) {
       // error
     }
@@ -1466,9 +1458,6 @@ export default {
 <style lang="scss" scoped>
 @import '@/styles/base/theme/fn.scss';
 @import '@/styles/base/variable/global.scss';
-.head-gap {
-  height: 44px;
-}
 .post-box {
   width: 100vw;
   height: 100%;
@@ -1634,7 +1623,7 @@ export default {
     position: relative;
     z-index: 2;
     font-size: $fg-f28;
-    line-height: 160rpx;
+    line-height: 36rpx;
     color: --color(--qui-FC-34);
   }
 

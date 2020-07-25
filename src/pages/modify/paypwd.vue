@@ -1,8 +1,5 @@
 <template>
   <qui-page :data-qui-theme="theme" class="page-paypwd">
-    <!-- #ifdef H5-->
-    <qui-header-back :title="i18n.t('modify.paypwdtitle')"></qui-header-back>
-    <!-- #endif -->
     <view class="setpw" @click.stop="toggleBox">
       <view class="setpw-input" v-if="pas" @click.stop="fourse">
         <view class="setpw-tit">
@@ -189,9 +186,6 @@ export default {
   .setpw {
     width: 100vw;
     height: 100vh;
-    /* #ifdef H5 */
-    padding-top: 100rpx;
-    /* #endif */
     background-color: --color(--qui-BG-2);
     box-sizing: border-box;
   }

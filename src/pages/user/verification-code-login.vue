@@ -1,8 +1,5 @@
 <template>
   <qui-page :data-qui-theme="theme">
-    <!-- #ifdef H5-->
-    <qui-header-back title="" :is-show-more="false"></qui-header-back>
-    <!-- #endif -->
     <view class="new" @click.stop="toggleBox">
       <view class="verification-code-login-box-h">{{ i18n.t('user.phoneNumberLogin') }}</view>
       <view class="new-phon">
@@ -251,9 +248,6 @@ export default {
 .new {
   width: 100vw;
   height: 100vh;
-  /* #ifdef H5 */
-  padding: 44px 0rpx 0rpx;
-  /* #endif */
   background-color: --color(--qui-BG-2);
   box-sizing: border-box;
 }

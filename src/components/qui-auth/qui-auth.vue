@@ -36,6 +36,14 @@ export default {
   },
   methods: {
     handleGetUserInfo(res) {
+      if (this.forums && !this.forums.set_reg.register_close) {
+        uni.showToast({
+          icon: 'none',
+          title: this.i18n.t('core.register_close'),
+        });
+        return;
+      }
+
       if (res.detail.errMsg === 'getUserInfo:ok') {
         // eslint-disable-next-line no-unused-vars
         this.$store

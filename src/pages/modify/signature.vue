@@ -1,8 +1,5 @@
 <template>
   <qui-page :data-qui-theme="theme" class="page-sinature">
-    <!-- #ifdef H5-->
-    <qui-header-back :title="i18n.t('modify.signaturetitle')"></qui-header-back>
-    <!-- #endif -->
     <view class="aogph">
       <view class="aogph-tab">
         <view class="aogph-tab-ao">
@@ -131,10 +128,8 @@ export default {
   .aogph {
     width: 100vw;
     height: 100vh;
-    /* #ifdef H5 */
-    padding-top: 100rpx;
-    /* #endif */
     background-color: --color(--qui-BG-2);
+    box-sizing: border-box;
   }
   .aogph-tab {
     padding: 36rpx 40rpx 0;

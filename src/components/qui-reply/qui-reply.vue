@@ -14,9 +14,19 @@
     >
       <view class="reply-user">{{ reply.user.username }}</view>
       <view class="reply-user">：</view>
-      <text class="reply-content">
+      <!--<text class="reply-content">
         {{ reply.content }}
-      </text>
+      </text>-->
+      <qui-uparse
+        v-if="commentTypeVal === 0"
+        :content="reply.summary"
+        class="reply-content"
+      ></qui-uparse>
+      <qui-uparse
+        v-else-if="commentTypeVal === 1"
+        :content="reply.contentHtml"
+        class="reply-content"
+      ></qui-uparse>
       <!--<qui-uparse
         :content="reply.contentHtml"
         class="reply-content"
@@ -29,6 +39,11 @@
 <script>
 export default {
   props: {
+    // 类型，0为取摘要，1为取全部内容
+    commentTypeVal: {
+      type: Number,
+      default: 0,
+    },
     // 盒子padding值
     padVal: {
       type: String,
@@ -73,6 +88,16 @@ export default {
   computed: {
     t() {
       return this.i18n.t('topic');
+    },
+  },
+  watch: {
+    // 监听得到的数据
+    commentTypeVal: {
+      handler(newVal) {
+        this.commentTypeVal = newVal;
+      },
+      deep: true,
+      immediate: true,
     },
   },
   methods: {
@@ -121,7 +146,7 @@ export default {
   line-height: 35rpx;
   word-break: break-all;
   .reply-user {
-    display: inline;
+    float: left;
     color: --color(--qui-LINK);
   }
   .reply-connector {
@@ -131,7 +156,7 @@ export default {
     flex-shrink: 0;
   }
   .reply-content {
-    display: inline;
+    // display: inline;
     color: --color(--qui-FC-777);
   }
 }

@@ -1,13 +1,10 @@
 <template>
   <qui-page :data-qui-theme="theme" class="orderlist">
-    <!-- #ifdef H5-->
-    <qui-header-back :title="i18n.t('profile.orderlist')"></qui-header-back>
-    <!-- #endif -->
     <view class="orderlist-wrap">
       <qui-cell-item slot-right :border="false">
         <view @tap="showFilter">
           <text>{{ `${i18n.t('profile.status')} :${filterSelected.label}` }}</text>
-          <qui-icon class="text" name="icon-screen" size="30" color="#777"></qui-icon>
+          <qui-icon class="text" name="icon-screen" size="32" color="#777"></qui-icon>
           <qui-filter-modal
             v-model="show"
             @confirm="confirm"
@@ -29,7 +26,7 @@
       show-scrollbar="false"
       class="scroll-y"
     >
-      <view class="orderlist-items" v-show="dataList.length > 0">
+      <view class="orderlist-items" v-if="dataList.length > 0">
         <qui-cell-item
           v-for="(item, index) in dataList"
           :key="index"
@@ -170,7 +167,7 @@ export default {
           // 打赏支出
           const regex = /(<([^>]+)>)/gi;
           const thread = item.thread
-            ? item.thread.firstPost.summary.replace(regex, '')
+            ? item.thread.title.replace(regex, '')
             : this.i18n.t('profile.thethemewasdeleted');
           return `${this.i18n.t('profile.givearewardforthetheme')} ${thread}`;
         }
@@ -178,7 +175,7 @@ export default {
           // 付费主题支出
           const regex = /(<([^>]+)>)/gi;
           const thread = item.thread
-            ? item.thread.firstPost.summary.replace(regex, '')
+            ? item.thread.title.replace(regex, '')
             : this.i18n.t('profile.thethemewasdeleted');
           return `${this.i18n.t('profile.paidtoview')} ${thread}`;
         }
@@ -232,16 +229,13 @@ $height: calc(100vh - 150rpx);
   }
   .cell-item__body__right-text {
     font-weight: bold;
-    color: #189a00;
+    color: --color(--qui-GREEN);
   }
   .icon-screen {
     margin-left: 20rpx;
   }
   .orderlist-wrap {
     padding: 40rpx 0 0 40rpx;
-    /* #ifdef H5 */
-    padding-top: 90rpx;
-    /* #endif */
     margin-bottom: 30rpx;
     color: --color(--qui-FC-333);
     background: --color(--qui-BG-2);
@@ -265,7 +259,7 @@ $height: calc(100vh - 150rpx);
   width: 50%;
   height: 78rpx;
   /* #ifdef H5 */
-  margin-top: 50rpx;
+  margin-top: 40px;
   /* #endif */
 }
 .date-picker .uni-input {

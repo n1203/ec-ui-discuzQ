@@ -1,8 +1,5 @@
 <template>
   <qui-page :data-qui-theme="theme" class="pages-list">
-    <!-- #ifdef H5-->
-    <qui-header-back :title="i18n.t('topic.topictitlelist')"></qui-header-back>
-    <!-- #endif -->
     <view class="qui-topic-page-box">
       <view class="qui-topic-page-box__hd">
         <view class="qui-topic-page-box__hd__sc">
@@ -160,12 +157,6 @@ export default {
 <style lang="scss" scoped>
 @import '@/styles/base/theme/fn.scss';
 @import '@/styles/base/variable/global.scss';
-.pages-list /deep/ {
-  /* #ifdef H5 */
-  padding-top: 88rpx;
-  box-sizing: border-box;
-  /* #endif */
-}
 .dropDownBox {
   position: absolute;
   top: 50rpx;

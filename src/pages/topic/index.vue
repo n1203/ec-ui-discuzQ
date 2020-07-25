@@ -1,8 +1,5 @@
 <template>
   <qui-page :data-qui-theme="theme" class="content">
-    <!-- #ifdef H5-->
-    <qui-header-back :title="navTitle"></qui-header-back>
-    <!-- #endif -->
     <view v-if="loaded">
       <scroll-view
         scroll-y="true"
@@ -23,11 +20,11 @@
             <view class="detail-tip" v-else-if="thread.isApproved == 0">
               {{ t.examineTip }}
             </view>
-
             <qui-topic-content
               :topic-status="thread.isApproved"
               :pay-status="thread.price > 0 && thread.paid"
               :video-status="(thread.price > 0 && thread.paid) || thread.price == 0"
+              :user-info="thread.user"
               :avatar-url="thread.user.avatarUrl"
               :user-name="thread.user.username"
               :user-role="thread.user.groups"
@@ -58,7 +55,37 @@
               @videocoverClick="payClickShow"
               @previewPicture="payClickShow"
               @tagClick="tagClick"
-            ></qui-topic-content>
+            >
+              <!--<view slot="follow" v-if="thread.user.follow != null">
+                <view
+                  class="themeItem__header__follow"
+                  @tap="
+                    thread.user.follow === 0 ? addFollow(thread.user) : deleteFollow(thread.user)
+                  "
+                >
+                  <qui-icon
+                    class="icon-follow"
+                    :name="thread.user.follow === 0 ? 'icon-follow' : 'icon-each-follow'"
+                    :color="
+                      thread.user.follow === 0
+                        ? '#777'
+                        : thread.user.follow === 1
+                        ? themeColor
+                        : '#ff8888'
+                    "
+                  ></qui-icon>
+                  <text>
+                    {{
+                      thread.user.follow === 0
+                        ? i18n.t('profile.following')
+                        : thread.user.follow === 1
+                        ? i18n.t('profile.followed')
+                        : i18n.t('profile.mutualfollow')
+                    }}
+                  </text>
+                </view>
+              </view>-->
+            </qui-topic-content>
             <!-- <qui-button size="max" type="primary" class="publishBtn" @tap="payClickShow()">
             {{ p.pay }}
           </qui-button> -->
@@ -84,7 +111,7 @@
                 :person-num="thread.rewardedCount"
                 :limit-count="limitShowNum"
                 :person-list="rewardedUsers"
-                :btn-show="true"
+                :btn-show="rewardBtnStatus"
                 :btn-icon-show="true"
                 btn-icon-name="reward"
                 :btn-text="t.reward"
@@ -125,17 +152,41 @@
           </view>
           <!-- 评论 -->
           <view class="comment">
-            <view
-              class="comment-num"
-              :style="{ paddingBottom: thread.postCount > 1 ? '0' : '40rpx' }"
-            >
-              {{ thread.postCount - 1 }}{{ t.item }}{{ t.comment }}
+            <view class="comment-top">
+              <view
+                class="comment-num"
+                :style="{ paddingBottom: thread.postCount > 1 ? '0' : '40rpx' }"
+              >
+                {{ thread.postCount - 1 }}{{ t.item }}{{ t.comment }}
+              </view>
+              <!--<view class="comment-sort" v-if="thread.postCount > 1">
+                <view class="comment-sort-operaCl" @click="sortOperaClick">
+                  <qui-icon
+                    name="icon-sort1"
+                    class="icon-management"
+                    color="#777"
+                    size="30"
+                  ></qui-icon>
+                </view>
+                <view>
+                  <qui-drop-down
+                    posival="absolute"
+                    :show="sortSeleShow"
+                    :list="sortSelectList"
+                    :top="60"
+                    :right="0"
+                    :width="220"
+                    @click="sortSelectChoice"
+                  ></qui-drop-down>
+                </view>
+              </view>-->
             </view>
 
             <view v-if="posts.length > 0">
               <view v-for="(post, index) in posts" :key="index">
                 <qui-topic-comment
-                  v-if="!post.isDeleted"
+                  v-if="!post.isDeleted && refreshVal"
+                  :comment-type="0"
                   :post-id="post._jv.id"
                   :comment-avatar-url="post.user.avatarUrl"
                   :user-name="post.user.username"
@@ -385,18 +436,18 @@
               <view class="comment-textarea" v-show="emojiShow">
                 {{ textAreaValue }}
               </view>
-              <qui-uploader
-                :url="`${url}api/attachments`"
-                :header="header"
-                :form-data="formData"
-                :count="3"
-                name="file"
-                async-clear
-                ref="upload"
-                @change="uploadChange"
-                @clear="uploadClear"
-              ></qui-uploader>
             </view>
+            <qui-uploader
+              :url="`${url}api/attachments`"
+              :header="header"
+              :form-data="formData"
+              :count="3"
+              name="file"
+              async-clear
+              ref="upload"
+              @change="uploadChange"
+              @clear="uploadClear"
+            ></qui-uploader>
           </view>
           <button class="publish-btn" @click="publishClickStatus && publishClick()">
             {{ t.publish }}
@@ -516,6 +567,7 @@ export default {
       limitShowNum: 12,
       paidStatus: false, // 是否有已支付数据
       paidBtnStatus: true, // 支付按钮是否显示（在ios里不显示，已支付主题后不显示）
+      rewardBtnStatus: true, // 打赏按钮是否显示（在ios里不显示，付费主题不显示）
       rewardStatus: false, // 是否已有打赏数据
       likedStatus: false, // 是否已有点赞数据
       commentStatus: {}, // 回复状态
@@ -616,6 +668,13 @@ export default {
       shareLogo: '', // 这是分享需要传的图片
       desc: '', // 这是分享需要传的描述
       rewardedUsers: [],
+      sortSeleShow: false, // 排序菜单状态
+      sortSelectList: [
+        { text: this.i18n.t('topic.sortTimeSequence'), type: '0', canOpera: true },
+        { text: this.i18n.t('topic.sortTimeReverse'), type: '1', canOpera: true },
+      ], // 评论排序菜单
+      sortVal: 'createdAt', // 排序值
+      refreshVal: true, // 是否刷新
     };
   },
   onReady() {},
@@ -646,6 +705,14 @@ export default {
     },
     status() {
       return status.status;
+    },
+    themeColor() {
+      return this.theme === this.$u.light() ? '#333' : '#fff'; // 用于图标色
+    },
+    currentLoginId() {
+      const userId = this.$store.getters['session/get']('userId');
+      console.log('获取当前登录的id', userId);
+      return parseInt(userId, 10);
     },
   },
   onLoad(option) {
@@ -708,6 +775,12 @@ export default {
       this.system = res.platform;
       this.detectionmodel = this.forums.set_site.site_mode;
       this.paymentmodel = this.forums.paycenter.wxpay_ios;
+      // #ifndef H5
+      if (this.detectionmodel === 'pay' && this.system === 'ios') {
+        this.$store.dispatch('forum/setError', { loading: false, code: 'dataerro' });
+        return;
+      }
+      // #endif
     } catch (e) {
       // error
     }
@@ -715,6 +788,12 @@ export default {
     // 编辑发帖回来后更新信息
     this.$u.event.$on('refreshFiles', () => {
       this.loadThread();
+    });
+  },
+  created() {
+    uni.$on('logind', () => {
+      this.loadThread();
+      this.loadThreadPosts();
     });
   },
   // 唤起小程序原声分享
@@ -736,6 +815,7 @@ export default {
     return {
       title: threadShare.type === 1 ? this.thread.title : this.thread.firstPost.summaryText,
       query: `id=${this.threadId}`,
+      imageUrl: this.shareLogo,
     };
   },
   onShow() {
@@ -792,6 +872,7 @@ export default {
 
       threadAction
         .then(data => {
+          console.log(data, '这是主题');
           if (data.isDeleted) {
             this.$store.dispatch('forum/setError', {
               code: 'thread_deleted',
@@ -882,93 +963,109 @@ export default {
             this.selectList[2].text = this.t.cancelSticky;
           }
           this.isLiked = data.firstPost.isLiked;
-          if (!data.paid || data.paidUsers.length > 0) {
-            // #ifndef H5
-            if (
-              this.system === 'ios' &&
-              this.detectionmodel === 'public' &&
-              this.paymentmodel === false
-            ) {
-              this.paidStatus = false;
-            } else if (
-              this.system === 'ios' &&
-              this.detectionmodel === 'public' &&
-              this.paymentmodel === true
-            ) {
-              this.paidStatus = true;
-            } else {
-              this.paidStatus = true;
-            }
-            // #endif
-            // #ifdef H5
-            this.paidStatus = true;
-            if (data.paid === true) {
-              this.paidBtnStatus = false;
-            } else {
-              this.paidBtnStatus = true;
-            }
-            // #endif
-          } else {
-            this.paidStatus = false;
-          }
-          if (data.type === 3) {
-            this.payThreadTypeText = this.t.pay + data.price + this.t.paymentViewPicture;
-          } else if (data.type === 2) {
-            this.payThreadTypeText = this.t.pay + data.price + this.t.paymentViewVideo;
-          } else if (data.type === 1) {
-            this.payThreadTypeText = this.t.pay + data.price + this.t.paymentViewRemainingContent;
-          }
-          if (data.price <= 0) {
-            // #ifndef H5
-            if (
-              this.system === 'ios' &&
-              this.detectionmodel === 'public' &&
-              this.paymentmodel === false
-            ) {
-              this.rewardStatus = false;
-            } else if (
-              this.system === 'ios' &&
-              this.detectionmodel === 'public' &&
-              this.paymentmodel === true
-            ) {
-              this.rewardStatus = true;
-            } else {
-              this.paidBtnStatus = false;
-              this.rewardStatus = true;
-            }
-            // #endif
-            // #ifdef H5
-            this.paidBtnStatus = false;
-            this.rewardStatus = true;
-            // #endif
-          } else {
-            // #ifndef H5
-            if (
-              this.system === 'ios' &&
-              this.detectionmodel === 'public' &&
-              this.paymentmodel === false
-            ) {
-              this.paidBtnStatus = false;
-            } else if (
-              this.system === 'ios' &&
-              this.detectionmodel === 'public' &&
-              this.paymentmodel === true &&
-              data.paid === false
-            ) {
-              this.paidBtnStatus = true;
-            } else if (data.paid === true) {
-              this.paidBtnStatus = false;
-            }
-            // #endif
+          if (!this.forums.paycenter.wxpay_close) {
+            // 如果关闭了微信支付
+            console.log('关闭微信支付');
             this.rewardStatus = false;
-            // #ifdef H5
-            if (data.paid === true) {
-              this.paidBtnStatus = false;
+            this.paidStatus = false;
+            // if (this.system === 'ios') {
+            //   // this.paidBtnStatus = false;
+            //   // this.rewardBtnStatus = false;
+            //   this.rewardStatus = false;
+            //   this.paidStatus = false;
+            // } else {
+            //   if (!data.paid || data.paidUsers.length > 0) {
+            //     this.rewardStatus = true;
+            //     this.paidStatus = false;
+            //     this.paidBtnStatus = true;
+            //   } else {
+            //     this.rewardStatus = false;
+            //     this.paidStatus = false;
+            //   }
+            // }
+          } else {
+            // 如果开启了微信支付
+            // console.log('开启微信支付');
+            // console.log(data.paid, '是否付费');
+            if (!data.paid || data.paidUsers.length > 0) {
+              // #ifndef H5
+              if (this.system === 'ios') {
+                if (this.paymentmodel === false) {
+                  this.paidStatus = false;
+                  this.paidBtnStatus = false;
+                } else {
+                  this.paidStatus = true;
+                  this.paidBtnStatus = true;
+                }
+              } else {
+                this.paidStatus = true;
+                this.paidBtnStatus = true;
+              }
+              // #endif
+              // #ifdef H5
+              this.paidStatus = true;
+              if (data.paid === true) {
+                this.paidBtnStatus = false;
+              } else {
+                this.paidBtnStatus = true;
+              }
+              // #endif
             } else {
-              this.paidBtnStatus = true;
+              this.paidStatus = false;
             }
-            // #endif
+            if (data.type === 3) {
+              this.payThreadTypeText = this.t.pay + data.price + this.t.paymentViewPicture;
+            } else if (data.type === 2) {
+              this.payThreadTypeText = this.t.pay + data.price + this.t.paymentViewVideo;
+            } else if (data.type === 1) {
+              this.payThreadTypeText = this.t.pay + data.price + this.t.paymentViewRemainingContent;
+            }
+            if (data.price <= 0) {
+              // #ifndef H5
+              if (this.system === 'ios') {
+                if (this.paymentmodel === false) {
+                  this.rewardStatus = false;
+                } else if (this.paymentmodel === true) {
+                  this.rewardStatus = true;
+                }
+              } else {
+                this.rewardStatus = true;
+              }
+              // #endif
+              this.paidBtnStatus = false;
+              // #ifdef H5
+              this.paidBtnStatus = false;
+              this.rewardStatus = true;
+              // #endif
+            } else {
+              // #ifndef H5
+              if (this.system === 'ios') {
+                if (this.paymentmodel === false) {
+                  this.paidBtnStatus = false;
+                } else if (this.paymentmodel === true && data.paid === false) {
+                  this.paidBtnStatus = true;
+                } else if (this.paymentmodel === true && data.paid === true) {
+                  this.paidBtnStatus = false;
+                }
+              } else {
+                if (data.paid === true) {
+                  this.paidBtnStatus = false;
+                } else {
+                  this.paidBtnStatus = true;
+                }
+              }
+              // #endif
+              this.rewardStatus = false;
+              // #ifdef H5
+              if (data.paid === true) {
+                this.paidBtnStatus = false;
+              } else {
+                this.paidBtnStatus = true;
+              }
+              // #endif
+            }
           }
+
           if (data.firstPost.likedUsers.length < 1) {
             this.likedStatus = false;
           } else {
@@ -1216,6 +1313,7 @@ export default {
         'page[number]': this.pageNum,
         'page[limit]': this.pageSize,
         'filter[thread]': this.threadId,
+        sort: this.sortVal,
         include: [
           'replyUser',
           'user.groups',
@@ -1236,6 +1334,7 @@ export default {
         delete data._jv;
         this.loadingType = data.length === this.pageSize ? 'more' : 'nomore';
         this.posts = [...this.posts, ...data];
+        console.log(this.posts, '~~~~~~~~~~');
         if (data.length === 0) {
           this.contentnomoreVal = this.t.noComment;
         } else {
@@ -1392,6 +1491,7 @@ export default {
             }
           } else if (payType === 1) {
             if (res.wallet_pay.result === 'success') {
+              this.$store.dispatch('jv/get', [`users/${this.currentLoginId}`, {}]);
               if (this.payTypeVal === 0) {
                 // 这是主题支付，支付完成刷新详情页，重新请求数据
                 this.loadThread();
@@ -1549,15 +1649,16 @@ export default {
       } else if (this.thread.type === 2) {
         this.payTypeText = this.t.pay + this.t.paymentViewVideo;
       }
-      this.price = this.thread.price;
+      this.price = parseFloat(this.thread.price);
       this.$nextTick(() => {
         this.$refs.payShow.payClickShow(this.payTypeVal);
       });
     },
     // 支付是否显示用户头像
     radioMyHead(val) {
+      console.log(val, '~~~~');
       // 是否显示用户头像
-      this.isAnonymous = val;
+      this.isAnonymous = !val;
     },
 
     // 选择支付方式，获取值
@@ -1879,9 +1980,17 @@ export default {
     // 内容部分分享海报,跳到分享海报页面
     shareContent(index) {
       if (index === 0) {
-        uni.navigateTo({
-          url: `/pages/share/topic?id=${this.threadId}`,
-        });
+        if (this.thread.isApproved == 0) {
+          uni.showToast({
+            icon: 'none',
+            title: this.i18n.t('topic.underReview'),
+            duration: 2000,
+          });
+        } else {
+          uni.navigateTo({
+            url: `/pages/share/topic?id=${this.threadId}`,
+          });
+        }
       }
       this.cancel();
     },
@@ -1937,6 +2046,85 @@ export default {
       clearInterval(payWechat);
       clearInterval(payPhone);
     },
+    // 点击排序
+    sortOperaClick() {
+      this.sortSeleShow = !this.sortSeleShow;
+    },
+    // 管理菜单内标签点击事件
+    sortSelectChoice(param) {
+      if (!this.$store.getters['session/get']('isLogin')) {
+        this.$store.getters['session/get']('auth').open();
+      }
+      this.sortSeleShow = false;
+
+      if (param.type === '0') {
+        if (this.sortVal === 'createdAt') {
+          console.log('1');
+          this.$refs.toast.show({ message: this.t.itsAlreadyWantedSort });
+        } else {
+          console.log('2');
+          this.refreshVal = false;
+          // this.refreshVal = true;
+
+          this.$nextTick(() => {
+            this.refreshVal = true;
+          });
+          this.sortVal = 'createdAt';
+          this.loadThreadPosts();
+        }
+      } else if (param.type === '1') {
+        if (this.sortVal === '-createdAt') {
+          console.log('3');
+          this.$refs.toast.show({ message: this.t.itsAlreadyWantedSort });
+        } else {
+          console.log('4');
+          this.refreshVal = false;
+          this.sortVal = '-createdAt';
+          this.loadThreadPosts();
+          this.$nextTick(() => {
+            this.refreshVal = true;
+          });
+        }
+      }
+    },
+    // 添加关注
+    addFollow(userInfo) {
+      // #ifdef H5
+      if (!this.$store.getters['session/get']('isLogin')) {
+        this.$store.getters['session/get']('auth').open();
+      }
+      // #endif
+      const params = {
+        _jv: {
+          type: 'follow',
+        },
+        type: 'user_follow',
+        to_user_id: userInfo.id,
+      };
+      status
+        .run(() => this.$store.dispatch('jv/post', params))
+        .then(res => {
+          console.log(res, '这是结果');
+          if (res.is_mutual == 0) {
+            console.log(res, '~!~~111');
+            this.thread.user.follow = 1;
+          } else {
+            console.log(res, '~~~222');
+            this.thread.user.follow = 2;
+          }
+        });
+    },
+    // 取消关注
+    deleteFollow(userInfo) {
+      console.log(userInfo, '这是取消');
+      this.$store.dispatch('jv/delete', `follow/${userInfo.id}/1`).then(() => {
+        console.log('成功了');
+        this.thread.user.follow = 0;
+      });
+    },
+  },
+  destroyed() {
+    uni.$off('logind');
   },
 };
 </script>
@@ -2106,11 +2294,20 @@ page {
   background: --color(--qui-BG-2);
   box-sizing: border-box;
 }
-.comment-num {
+.comment-top {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   padding: 0 40rpx;
+}
+.comment-num {
   font-size: $fg-f28;
   font-weight: bold;
   line-height: 37rpx;
+}
+.comment-sort {
+  position: relative;
+  z-index: 1;
 }
 .comment-child {
   display: flex;
@@ -2177,9 +2374,6 @@ page {
 }
 .ft-gap {
   width: 100%;
-  /* #ifdef H5 */
-  margin-top: 44px;
-  /* #endif */
   margin-bottom: 80rpx;
 }
 .det-ft {
@@ -2256,11 +2450,12 @@ page {
   }
 }
 .comment-content-box {
-  padding: 0 40rpx 30rpx;
+  padding: 0 40rpx 0 30rpx;
   .comment-content {
     width: 100%;
-    height: 420rpx;
-    padding: 20rpx;
+    height: 260rpx;
+    padding: 20rpx 20rpx 0;
+    overflow: hidden;
     background: --color(--qui-FC-GRAY);
     border: 1px solid --color(--qui-FC-DDD);
     border-radius: 7rpx;
@@ -2268,7 +2463,7 @@ page {
   }
   .comment-textarea {
     width: 100%;
-    height: 94rpx;
+    height: 220rpx;
     min-height: 70rpx;
     font-size: $fg-f28;
     line-height: 37rpx;
@@ -2485,6 +2680,19 @@ page {
     display: block;
     width: 35%;
     margin: 20vh auto 30rpx;
+  }
+}
+.themeItem__header__follow {
+  align-self: flex-start;
+  width: 160rpx;
+  margin-right: 29rpx;
+  line-height: 1;
+  text-align: right;
+  flex-shrink: 0;
+
+  .icon-follow {
+    margin-right: 7rpx;
+    font-size: $fg-f26;
   }
 }
 </style>

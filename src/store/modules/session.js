@@ -12,6 +12,7 @@ import {
   DELETE_USER_ID,
   DELETE_ACCESS_TOKEN,
 } from '@/store/types/session';
+import { i18n } from '@/locale';
 
 const accessToken = uni.getStorageSync('access_token');
 
@@ -152,6 +153,18 @@ const actions = {
             uni.showToast({
               icon: 'none',
               title: error.data.errors[0].detail[0],
+              duration: 2000,
+            });
+          }
+          if (
+            error &&
+            error.data &&
+            error.data.errors &&
+            error.data.errors[0].code === 'register_validate'
+          ) {
+            uni.showToast({
+              icon: 'none',
+              title: i18n.t('core.register_validate'),
               duration: 2000,
             });
           }

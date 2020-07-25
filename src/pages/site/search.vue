@@ -1,8 +1,5 @@
 <template>
   <qui-page :data-qui-theme="theme" class="search">
-    <!-- #ifdef H5-->
-    <qui-header-back :title="i18n.t('search.search')"></qui-header-back>
-    <!-- #endif -->
     <view class="search-box">
       <view class="search-box__content">
         <view class="icon-content-search">
@@ -42,7 +39,7 @@
           :title="item.username"
           arrow
           :border="index == userList.length - 1 ? false : true"
-          :addon="item.groups ? item.groups[0].name : ''"
+          :addon="item.groupName"
         ></qui-cell-item>
       </view>
       <qui-no-data :tips="i18n.t('search.norelatedusersfound')" v-if="userTotal == 0"></qui-no-data>
@@ -61,7 +58,7 @@
         class="search-item__content"
       >
         <qui-thread-item :currentindex="index" :thread="item" @toTopic="toTopic"></qui-thread-item>
-        <qui-icon class="arrow" name="icon-folding-r" size="22" color="#ddd"></qui-icon>
+        <qui-icon class="arrow" name="icon-folding-r" size="26" color="#ddd"></qui-icon>
       </view>
       <qui-no-data
         :tips="i18n.t('search.norelatedthemesfound')"
@@ -117,6 +114,9 @@ export default {
           if (res._jv) {
             delete res._jv;
           }
+          res.forEach((v, i) => {
+            res[i].groupName = v.groups[0] ? v.groups[0].name : '';
+          });
           this.userTotal = res.length;
           this.userList = res;
         });
@@ -195,11 +195,6 @@ export default {
   .search-box {
     background-color: --color(--qui-BG-2);
   }
-  .search-box {
-    /* #ifdef H5 */
-    margin-top: 80rpx;
-    /* #endif */
-  }
   .no-data {
     padding-top: 20rpx;
   }
@@ -247,6 +242,7 @@ export default {
 /deep/ .themeCount .themeItem {
   padding-left: 0;
   margin: 0;
+  border-top: 0;
   box-shadow: none;
 }
 /deep/ .themeCount .themeItem__footer {

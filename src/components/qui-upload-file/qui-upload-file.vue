@@ -16,7 +16,7 @@
       <view>
         <qui-icon name="icon-fujian" color="#aaa" size="40"></qui-icon>
       </view>
-      <view class="qui-uploader-box__add__fonts">上传附件</view>
+      <view class="qui-uploader-box__add__fonts">{{ i18n.t('profile.uploadFile') }}</view>
     </view>
     <view ref="input" class="input"></view>
     <qui-toast ref="toast"></qui-toast>
@@ -183,11 +183,17 @@ export default {
       const fileName = file.name;
       const fileFormat = fileName.substring(fileName.lastIndexOf('.') + 1);
       if (el.fileFormat && this.fileFormat.indexOf(fileFormat) === -1) {
-        el.$refs.toast.show({ message: `请选择${el.fileFormat}格式的文件` });
+        const message =
+          this.i18n.t('profile.pleaseselect') + el.fileFormat + this.i18n.t('profile.fileformat');
+        el.$refs.toast.show({
+          message,
+        });
         return false;
       }
       if (el.fileSize && (file.size / 1024).toFixed(0) > parseInt(el.fileSize, 10) * 1000) {
-        el.$refs.toast.show({ message: `文件大小不能超过${el.fileSize}M` });
+        el.$refs.toast.show({
+          message: `${this.i18n.t('profile.filesizecannotexceed')}${el.fileSize}M`,
+        });
         return false;
       }
       return true;

@@ -226,7 +226,7 @@ export default {
   padding: 0 20rpx;
   margin-right: 20rpx;
   margin-bottom: 20rpx;
-  font-size: 26rpx;
+  font-size: $fg-f26;
   line-height: 70rpx;
   color: --color(--qui-FC-TAG);
   background: --color(--qui-BG-F9F);

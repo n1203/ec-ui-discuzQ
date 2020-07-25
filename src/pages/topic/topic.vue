@@ -1,8 +1,5 @@
 <template>
   <qui-page :data-qui-theme="theme" class="pages-topic">
-    <!-- #ifdef H5-->
-    <qui-header-back :title="i18n.t('topic.topictitle')"></qui-header-back>
-    <!-- #endif -->
     <view class="qui-topic-page-box">
       <view class="qui-topic-page-box__hd">
         <view class="qui-topic-page-box__hd__sc">
@@ -104,13 +101,6 @@ export default {
 <style lang="scss" scoped>
 @import '@/styles/base/theme/fn.scss';
 @import '@/styles/base/variable/global.scss';
-
-.pages-topic /deep/ {
-  /* #ifdef H5 */
-  padding-top: 88rpx;
-  box-sizing: border-box;
-  /* #endif */
-}
 $otherHeight: 292rpx;
 .topic-content-item {
   position: relative;

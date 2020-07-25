@@ -41,7 +41,7 @@
                   ? 'icon-follow'
                   : 'icon-each-follow'
               "
-              size="22"
+              size="24"
               :color="
                 (followerItem.fromUser && followerItem.fromUser.follow) == 0
                   ? '#777'
@@ -154,7 +154,9 @@ export default {
             this.$emit('changeFollow', { userId: this.userId });
           }
           // is_mutual 是否互相关注 1 是 0 否
-          this.followerList[index].fromUser.follow = res.is_mutual === 1 ? 2 : 1;
+          const item = this.followerList[index];
+          item.fromUser.follow = res.is_mutual === 1 ? 2 : 1;
+          this.$set(this.followerList, index, item);
         });
     },
     // 取消关注
@@ -170,7 +172,9 @@ export default {
         if (this.userId === this.currentLoginId) {
           this.$emit('changeFollow', { userId: this.userId });
         }
-        this.followerList[index].fromUser.follow = 0;
+        const item = this.followerList[index];
+        item.fromUser.follow = 0;
+        this.$set(this.followerList, index, item);
       });
     },
   },
@@ -182,7 +186,6 @@ export default {
 @import '@/styles/base/theme/fn.scss';
 
 .following {
-  padding: 0 20rpx;
   font-size: $fg-f28;
   /deep/ .cell-item__body {
     padding-right: 20rpx;
@@ -200,7 +203,7 @@ export default {
   padding: 20rpx 0;
   margin-bottom: 30rpx;
   background: --color(--qui-BG-2);
-  box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.05);
+  border-bottom: solid 2rpx --color(--qui-BG-777);
 }
 .follow-content__items {
   position: relative;

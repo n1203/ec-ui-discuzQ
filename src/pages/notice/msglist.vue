@@ -1,8 +1,5 @@
 <template>
   <qui-page :data-qui-theme="theme">
-    <!-- #ifdef H5-->
-    <qui-header-back :title="title"></qui-header-back>
-    <!-- #endif -->
     <view class="chat-box">
       <!-- 消息内容 -->
       <scroll-view
@@ -47,7 +44,12 @@
             </view>
           </view>
         </view>
-        <view :style="{ height: bottomPadding + 'px', background: '#EDEDED' }"></view>
+        <view
+          :style="{
+            height: bottomPadding + 'px',
+            background: theme === $u.light() ? '#EDEDED' : '#3F4243',
+          }"
+        ></view>
       </scroll-view>
 
       <!-- 底部 -->
@@ -413,9 +415,6 @@ export default {
 
 .chat-box {
   height: 100%;
-  /* #ifdef H5 */
-  padding: 44px 0rpx 0rpx;
-  /* #endif */
   margin: 0rpx 0rpx 140rpx;
   background: --color(--qui-BG-ED);
 

@@ -1,8 +1,5 @@
 <template>
   <qui-page :data-qui-theme="theme" class="search">
-    <!-- #ifdef H5-->
-    <qui-header-back :title="i18n.t('search.searchusers')"></qui-header-back>
-    <!-- #endif -->
     <view class="search-box">
       <view class="search-box__content">
         <view class="icon-content-search">
@@ -38,11 +35,7 @@
         @tap="toProfile(item.id)"
       >
         <qui-avatar class="search-item__users__avatar" :user="item" size="70" />
-        <qui-cell-item
-          :title="item.username"
-          arrow
-          :addon="item.groups ? item.groups[0].name : ''"
-        ></qui-cell-item>
+        <qui-cell-item :title="item.username" arrow :addon="item.groupName"></qui-cell-item>
       </view>
       <qui-load-more :status="loadingType" :show-icon="false" v-if="loadingType"></qui-load-more>
     </scroll-view>
@@ -65,10 +58,6 @@ export default {
     this.getUserList(params.value);
   },
   methods: {
-    // 头像加载失败,显示默认头像
-    imageError(index) {
-      this.data[index].avatarUrl = '/static/noavatar.gif';
-    },
     searchInput(e) {
       this.searchValue = e.target.value;
       if (this.timeout) clearTimeout(this.timeout);
@@ -93,7 +82,7 @@ export default {
           delete res._jv;
         }
         res.forEach((v, i) => {
-          res[i].avatarUrl = v.avatarUrl || '/static/noavatar.gif';
+          res[i].groupName = v.groups[0] ? v.groups[0].name : '';
         });
         this.loadingType = res.length === this.pageSize ? 'more' : 'nomore';
         if (type && type === 'clear') {
@@ -151,9 +140,6 @@ $height: calc(100vh - 110rpx);
     border-bottom: 2rpx solid --color(--qui-BOR-ED);
   }
   .search-box {
-    /* #ifdef H5 */
-    margin-top: 80rpx;
-    /* #endif */
     background: --color(--qui-BG-2);
   }
 }

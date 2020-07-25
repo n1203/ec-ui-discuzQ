@@ -115,3 +115,8 @@ export default {
   },
 };
 </script>
+<style lang="scss">
+.like-page {
+  margin-top: -20rpx;
+}
+</style>

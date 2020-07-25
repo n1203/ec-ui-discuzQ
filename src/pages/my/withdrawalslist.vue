@@ -1,13 +1,10 @@
 <template>
   <qui-page :data-qui-theme="theme" class="withdrawalslist">
-    <!-- #ifdef H5-->
-    <qui-header-back :title="i18n.t('profile.withdrawalslist')"></qui-header-back>
-    <!-- #endif -->
     <view class="withdrawalslist-head">
       <qui-cell-item slot-right :border="false">
         <view @tap="showFilter">
           <text>{{ `${i18n.t('profile.status')} ：${filterSelected.label}` }}</text>
-          <qui-icon class="text" name="icon-screen" size="30" color="#777"></qui-icon>
+          <qui-icon class="text" name="icon-screen" size="32" color="#777"></qui-icon>
           <qui-filter-modal
             v-model="show"
             @confirm="confirm"
@@ -29,7 +26,7 @@
       show-scrollbar="false"
       class="scroll-y"
     >
-      <view class="withdrawalslist-items" v-show="dataList.length > 0">
+      <view class="withdrawalslist-items" v-if="dataList.length > 0">
         <qui-cell-item
           v-for="(item, index) in dataList"
           :key="index"
@@ -186,9 +183,6 @@ $height: calc(100vh - 150rpx);
   .withdrawalslist-head {
     position: relative;
     padding: 40rpx 0 0 40rpx;
-    /* #ifdef H5 */
-    padding-top: 90rpx;
-    /* #endif */
     margin-bottom: 30rpx;
     background: --color(--qui-BG-2);
     border-bottom: 2rpx solid --color(--qui-BOR-ED);
@@ -206,7 +200,7 @@ $height: calc(100vh - 150rpx);
     color: --color(--qui-RED);
   }
   .cell-item.success .cell-item__body__content-title {
-    color: #189a00;
+    color: --color(--qui-GREEN);
   }
 }
 
@@ -217,9 +211,6 @@ $height: calc(100vh - 150rpx);
   z-index: 10;
   width: 50%;
   height: 78rpx;
-  /* #ifdef H5 */
-  margin-top: 50rpx;
-  /* #endif */
 }
 .date-picker .uni-input {
   width: 100%;

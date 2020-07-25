@@ -1,9 +1,12 @@
 <template>
-  <view class="qui-page">
+  <view :class="['qui-page', header ? 'qui-page--padding' : '']">
     <!--
       放在这里是因为数据是异步请求的，然后判断论坛的显示状态。
       这样每个页面还是需要引入这个组件，一个是和主题相关，一个是和站点显示状态有关
     -->
+    <!-- #ifdef H5-->
+    <qui-header-back v-if="header"></qui-header-back>
+    <!-- #endif -->
     <view v-if="loading" class="loading">
       <u-loading :size="60"></u-loading>
     </view>
@@ -33,6 +36,17 @@ export default {
   // #ifdef H5
   mixins: [forums, appCommonH, user, loginAuth],
   // #endif
+  props: {
+    header: {
+      type: Boolean,
+      default: true,
+    },
+  },
+  data() {
+    return {
+      isRun: false,
+    };
+  },
   computed: {
     ...mapState({
       forumError: state => state.forum.error,
@@ -49,6 +63,7 @@ export default {
           'model_not_found',
           'dataerro',
           'permission_denied',
+          'register_validate',
         ].indexOf(this.forumError.code) !== -1
       );
     },
@@ -59,6 +74,18 @@ export default {
         this.$emit('pageLoaded');
       }
     },
+    // #ifdef H5
+    $route: {
+      handler(val, oldVal) {
+        if (val.path !== oldVal.path && !this.isRun) {
+          this.isRun = true;
+          uni.$emit('apploaded');
+          this.isRun = false;
+        }
+      }, // 深度观察监听
+      deep: true,
+    },
+    // #endif
   },
   mounted() {
     // #ifdef MP-WEIXIN
@@ -116,6 +143,12 @@ export default {
   min-height: 100%;
   color: --color(--qui-FC-333);
   background-color: --color(--qui-BG-1);
+  box-sizing: border-box;
   transition: $switch-theme-time;
+  &--padding {
+    /* #ifdef H5 */
+    padding-top: 44px;
+    /* #endif */
+  }
 }
 </style>

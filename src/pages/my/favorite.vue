@@ -1,8 +1,5 @@
 <template>
   <qui-page :data-qui-theme="theme" class="favorite">
-    <!-- #ifdef H5-->
-    <qui-header-back :title="i18n.t('profile.myfavorite')"></qui-header-back>
-    <!-- #endif -->
     <scroll-view
       scroll-y="true"
       scroll-with-animation="true"
@@ -28,7 +25,7 @@
           ></qui-thread-item>
           <qui-icon
             name="icon-delete"
-            size="28"
+            size="30"
             color="#aaa"
             @tap="itemDelete(item._jv.id, item.isFavorite, index)"
           ></qui-icon>
@@ -41,8 +38,10 @@
 
 <script>
 import { status } from '@/library/jsonapi-vuex/index';
+import forums from '@/mixin/forums';
 
 export default {
+  mixins: forums,
   props: {
     userId: {
       type: String,
@@ -68,6 +67,24 @@ export default {
   onShow() {
     this.uploadItem();
   },
+  // 唤起小程序原声分享（微信）
+  onShareAppMessage(res) {
+    // 来自页面内分享按钮
+    if (res.from === 'button') {
+      const threadShare = this.$store.getters['jv/get'](`/threads/${this.nowThreadId}`);
+      return {
+        title: threadShare.type === 1 ? threadShare.title : threadShare.firstPost.summary,
+        path: `/pages/topic/index?id=${this.nowThreadId}`,
+      };
+    }
+  },
+  // 分享到朋友圈
+  onShareTimeline() {
+    return {
+      title: this.forums.set_site.site_name,
+      query: '',
+    };
+  },
   methods: {
     toTopic(id) {
       this.editThreadId = id;
@@ -77,17 +94,6 @@ export default {
     },
     scroll(event) {
       this.scrollTop = event.detail.scrollTop;
-    },
-    // 唤起小程序原声分享（微信）
-    onShareAppMessage(res) {
-      // 来自页面内分享按钮
-      if (res.from === 'button') {
-        const threadShare = this.$store.getters['jv/get'](`/threads/${this.nowThreadId}`);
-        return {
-          title: threadShare.type === 1 ? threadShare.title : threadShare.firstPost.summary,
-          path: `/pages/topic/index?id=${this.nowThreadId}`,
-        };
-      }
     },
     loadlikes() {
       this.loadingType = 'loading';
@@ -169,9 +175,6 @@ export default {
   .favorite-head {
     padding-top: 20rpx;
     padding-left: 40rpx;
-    /* #ifdef H5 */
-    margin-top: 60rpx;
-    /* #endif */
     margin-bottom: 30rpx;
     background: --color(--qui-BG-2);
     border-bottom: 2rpx solid --color(--qui-BOR-ED);

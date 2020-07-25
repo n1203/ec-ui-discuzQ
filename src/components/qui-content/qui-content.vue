@@ -9,7 +9,7 @@
     ></image>
     <view class="themeItem" @click="backgroundClick">
       <view class="fbh">
-        <view class="themeItem__header fb1" @click="headClick" @click.stop="">
+        <view class="themeItem__header" @click="headClick" @click.stop="">
           <view class="themeItem__header__img">
             <qui-avatar :user="{ avatarUrl: themeImage, username: userName }" />
           </view>
@@ -41,7 +41,7 @@
             <view class="themeItem__header__title__time">{{ localTime }}</view>
           </view>
         </view>
-          <!-- follow 关注状态 0：未关注 1：已关注 2：互相关注 -->
+  <!-- follow 关注状态 0：未关注 1：已关注 2：互相关注 -->
                   
         <!-- <view
           v-if="isAttentionVisible"
@@ -53,11 +53,11 @@
         </view> -->
       </view>
 
-      <view class="themeItem__content" @click.stop="" @click="contentClick">
-        <view class="themeItem__content__text">
-          <view class="themeItem__content__text__longessay" v-if="threadType === 1">
-            <view class="themeItem__content__text__longessay__publish">
-              <svg
+        <view class="themeItem__content" @click.stop="" @click="contentClick">
+          <view class="themeItem__content__text">
+            <view class="themeItem__content__text__longessay" v-if="threadType === 1">
+              <view class="themeItem__content__text__longessay__publish">
+                <svg
                 t="1595264739906"
                 class="icon"
                 fill="#fff"
@@ -78,165 +78,166 @@
                 ></path>
               </svg>
               <!-- {{ i18n.t('home.released') }} -->
-            </view>
-            <!-- <qui-icon
+              </view>
+              <!-- <qui-icon
               name="icon-link"
               :color="theme === $u.light() ? '#00479B' : '#1E78F3'"
               size="28"
               style="padding-left: 8rpx;"
             ></qui-icon> -->
-            <!-- <navigator class="navPost">
-              {{ themeContent }}
-            </navigator> -->
-            <qui-uparse class="navPost" :content="themeContent"></qui-uparse>
+              <navigator class="navPost">
+                {{ themeContent }}
+              </navigator>
+              
+            </view>
+            <!-- <rich-text :nodes="themeContent" v-else></rich-text> -->
+            <qui-uparse :content="themeContent" v-else></qui-uparse>
           </view>
-          <!-- <rich-text :nodes="themeContent" v-else></rich-text> -->
-          <qui-uparse :content="themeContent" v-else></qui-uparse>
-        </view>
-        <view
-          class="theme__content__videocover"
-          v-if="threadType == 2 && !payStatus && coverImage != null"
-          :style="videoWidth >= videoHeight ? 'width:100%' : 'max-width: 50%'"
-        >
-          <view class="theme__mark"></view>
-          <image class="theme__mark__open" src="/static/video.svg"></image>
-          <image class="themeItem__content__coverimg" :src="coverImage" lazy-load></image>
-        </view>
-        <view class="content__video" v-if="threadType === 2 && payStatus">
-          <video
-            :poster="coverImage"
-            v-if="threadType === 2 && payStatus"
-            :id="'myVideo' + currentindex"
-            preload="auto"
-            bindpause="handlepause"
-            playsinline
-            webkit-playsinline
-            x5-playsinline
-            controls
-            :page-gesture="false"
-            show-fullscreen-btn="true"
-            :show-play-btn="true"
-            :autoplay="false"
-            auto-pause-if-open-native
-            auto-pause-if-navigate
-            :enable-play-gesture="false"
-            :vslide-gesture="false"
-            :vslide-gesture-in-fullscreen="false"
-            object-fit="cover"
-            :direction="videoWidth > videoHeight ? 90 : 0"
-            x5-video-player-type="h5-page"
-            :src="mediaUrl"
-            :style="videoWidth >= videoHeight ? 'width:100%' : 'max-width: 70%'"
-            bindfullscreenchange="fullScreen"
-            bindended="closeVideo"
-            @play="playVideo"
-            @click.stop=""
-          ></video>
-        </view>
-        <view v-if="imagesList.length == 1">
-          <view class="themeItem__content__imgone">
-            <image
-              class="themeItem__content__imgone__item"
-              v-for="(image, index) in imagesList"
-              :key="index"
-              :mode="modeVal"
-              :src="image.thumbUrl"
-              @click="previewPicture(index)"
-              @click.stop=""
-              lazy-load
-              alt
-            ></image>
-          </view>
-        </view>
-        <view v-if="imagesList.length == 2">
-          <view class="themeItem__content__imgtwo">
-            <image
-              class="themeItem__content__imgtwo__item"
-              v-for="(image, index) in imagesList"
-              :key="index"
-              :mode="modeVal"
-              :src="image.thumbUrl"
-              @click="previewPicture(index)"
-              @click.stop=""
-              lazy-load
-              alt
-            ></image>
-          </view>
-        </view>
-        <view v-if="imagesList.length >= 3">
-          <view class="themeItem__content__imgmore">
-            <image
-              class="themeItem__content__imgmore__item"
-              v-for="(image, index) in imagesList"
-              :key="index"
-              :mode="modeVal"
-              :src="image.thumbUrl"
-              @click="previewPicture(index)"
-              @click.stop=""
-              lazy-load
-              alt
-            ></image>
-            <image
-              class="themeItem__content__imgmore__item"
-              v-if="imagesList.length % 3 != 0"
-              @click.stop=""
-              lazy-load
-            ></image>
-          </view>
-        </view>
-
-        <view class="themeItem__content__tags" v-if="themeType === '0' && getCategoryId === 0">
-          <view class="themeItem__content__tags__item" v-for="(item, index) in tags" :key="index">
-            {{ item.name }}
-          </view>
-        </view>
-      </view>
-
-      <view class="themeItem__comment" @click.stop=""></view>
-
-      <view class="themeItem__footer" @click.stop="">
-        <view v-if="themeType === '1'" class="themeItem__footer__themeType1">
           <view
-            :class="[
-              'themeItem__footer__themeType1__item',
-              'themeItem__footer__themeType1__great',
-              isGreat && 'themeItem__footer__themeType1__greated',
-            ]"
-            @click="handleIsGreat"
+            class="theme__content__videocover"
+            v-if="threadType == 2 && !payStatus && coverImage != null"
+            :style="videoWidth >= videoHeight ? 'width:100%' : 'max-width: 50%'"
           >
-            <qui-icon class="qui-icon" name="icon-liked" size="28" v-if="isGreat"></qui-icon>
-            <qui-icon class="qui-icon" name="icon-like" size="28" v-else></qui-icon>
-            {{ isGreat ? t.giveLikeAlready : t.like }}
-            {{ themeLike === 0 ? '' : themeLike }}
+            <view class="theme__mark"></view>
+            <image class="theme__mark__open" src="/static/video.svg"></image>
+            <image class="themeItem__content__coverimg" :src="coverImage" lazy-load></image>
+          </view>
+          <view class="content__video" v-if="threadType === 2 && payStatus">
+            <video
+              :poster="coverImage"
+              v-if="threadType === 2 && payStatus"
+              :id="'myVideo' + currentindex"
+              :duration="duration"
+              preload="none"
+              bindpause="handlepause"
+              playsinline
+              webkit-playsinline
+              x5-playsinline
+              :page-gesture="false"
+              :show-fullscreen-btn="true"
+              :show-play-btn="true"
+              :autoplay="false"
+              auto-pause-if-open-native
+              auto-pause-if-navigate
+              :enable-play-gesture="false"
+              :vslide-gesture="false"
+              :vslide-gesture-in-fullscreen="false"
+              object-fit="cover"
+              :direction="videoWidth > videoHeight ? 90 : 0"
+              x5-video-player-type="h5-page"
+              :src="mediaUrl"
+              :style="videoWidth >= videoHeight ? 'width:100%' : 'max-width: 70%'"
+              bindfullscreenchange="fullScreen"
+              bindended="closeVideo"
+              @play="playVideo"
+              @click.stop=""
+            ></video>
+          </view>
+          <view v-if="imagesList.length == 1">
+            <view class="themeItem__content__imgone">
+              <image
+                class="themeItem__content__imgone__item"
+                v-for="(image, index) in imagesList"
+                :key="index"
+                :mode="modeVal"
+                :src="image.thumbUrl"
+                @click="previewPicture(index)"
+                @click.stop=""
+                lazy-load
+                alt
+              ></image>
+            </view>
+          </view>
+          <view v-if="imagesList.length == 2">
+            <view class="themeItem__content__imgtwo">
+              <image
+                class="themeItem__content__imgtwo__item"
+                v-for="(image, index) in imagesList"
+                :key="index"
+                :mode="modeVal"
+                :src="image.thumbUrl"
+                @click="previewPicture(index)"
+                @click.stop=""
+                lazy-load
+                alt
+              ></image>
+            </view>
+          </view>
+          <view v-if="imagesList.length >= 3">
+            <view class="themeItem__content__imgmore">
+              <image
+                class="themeItem__content__imgmore__item"
+                v-for="(image, index) in imagesList"
+                :key="index"
+                :mode="modeVal"
+                :src="image.thumbUrl"
+                @click="previewPicture(index)"
+                @click.stop=""
+                lazy-load
+                alt
+              ></image>
+              <image
+                class="themeItem__content__imgmore__item"
+                v-if="imagesList.length % 3 != 0"
+                @click.stop=""
+                lazy-load
+              ></image>
+            </view>
           </view>
 
-          <view
-            class="themeItem__footer__themeType1__item themeItem__footer__themeType1__comment"
-            @click="commentClick"
-          >
-            {{ t.comment }}
-            {{ themeComment === 0 ? '' : themeComment }}
-          </view>
-
-          <view
-            class="themeItem__footer__themeType1__item themeItem__footer__themeType1__share"
-            @click="handleClickShare"
-          >
-            <qui-icon class="qui-icon" name="icon-share" size="28" color="#AAA"></qui-icon>
-            {{ t.share }}
+          <view class="themeItem__content__tags" v-if="themeType === '0' && getCategoryId === 0">
+            <view class="themeItem__content__tags__item" v-for="(item, index) in tags" :key="index">
+              {{ item.name }}
+            </view>
           </view>
         </view>
 
-        <view v-if="themeType === '2'" class="themeItem__footer__themeType2">
-          <view class="themeItem__footer__themeType2__item">
-            <qui-icon
-              class="qui-icon"
-              :name="themeReplyBtn"
-              size="28"
-              color="#AAA"
-              @click="handleClick"
-            ></qui-icon>
-            {{ themeDeleteBtn }}
+        <view class="themeItem__comment" @click.stop=""></view>
+
+        <view class="themeItem__footer" @click.stop="">
+          <view v-if="themeType === '1'" class="themeItem__footer__themeType1">
+            <view
+              :class="[
+                'themeItem__footer__themeType1__item',
+                'themeItem__footer__themeType1__great',
+                isGreat && 'themeItem__footer__themeType1__greated',
+              ]"
+              @click="handleIsGreat"
+            >
+              <qui-icon class="qui-icon" name="icon-liked" size="28" v-if="isGreat"></qui-icon>
+              <qui-icon class="qui-icon" name="icon-like" size="28" v-else></qui-icon>
+              {{ isGreat ? t.giveLikeAlready : t.like }}
+              {{ themeLike === 0 ? '' : themeLike }}
+            </view>
+
+            <view
+              class="themeItem__footer__themeType1__item themeItem__footer__themeType1__comment"
+              @click="commentClick"
+            >
+              {{ t.comment }}
+              {{ themeComment === 0 ? '' : themeComment }}
+            </view>
+
+            <view
+              class="themeItem__footer__themeType1__item themeItem__footer__themeType1__share"
+              @click="handleClickShare"
+            >
+              <qui-icon class="qui-icon" name="icon-share" size="28" color="#AAA"></qui-icon>
+              {{ t.share }}
+            </view>
+          </view>
+
+          <view v-if="themeType === '2'" class="themeItem__footer__themeType2">
+            <view class="themeItem__footer__themeType2__item">
+              <qui-icon
+                class="qui-icon"
+                :name="themeReplyBtn"
+                size="28"
+                color="#AAA"
+                @click="handleClick"
+              ></qui-icon>
+              {{ themeDeleteBtn }}
+            </view>
           </view>
         </view>
       </view>
@@ -248,14 +249,8 @@
 import { status } from '@/library/jsonapi-vuex/index';
 import { time2MorningOrAfternoon } from '@/utils/time';
 import { mapState } from 'vuex';
-import following from '@/pages/profile/following';
-import followers from '@/pages/profile/followers';
 
 export default {
-  components: {
-    following,
-    followers,
-  },
   props: {
     themeType: {
       validator: value => {
@@ -416,6 +411,11 @@ export default {
       type: Boolean,
       default: true,
     },
+    // 视频时间
+    duration: {
+      type: String,
+      default: '',
+    },
   },
 
   data: () => {
@@ -444,14 +444,6 @@ export default {
     localTime() {
       return time2MorningOrAfternoon(this.themeTime);
     },
-    // 用户信息，获得用户的关注逻辑
-    // userInfo() {
-    //   const userInfo = this.$store.getters['jv/get'](`users/${this.userId}`);
-    //   console.log(userInfo)
-    //   userInfo.groupsName = userInfo.groups ? userInfo.groups[0].name : '';
-    //   // this.setNum(userInfo);
-    //   return userInfo;
-    // },
     ...mapState({
       getCategoryId: state => state.session.categoryId,
       getCategoryIndex: state => state.session.categoryIndex,
@@ -500,7 +492,6 @@ export default {
     // #endif
   },
   methods: {
-    // 添加关注
     // 添加关注
     async addFollow(evt) {
       const follows = await this.$emit('addFollow', evt);
@@ -616,7 +607,6 @@ export default {
         border-radius: 100%;
       }
     }
-
     &__title {
       flex: 1;
 
@@ -650,7 +640,7 @@ export default {
 
       &__time {
         padding-top: 10rpx;
-        font-size: 24rpx;
+        font-size: $fg-f24;
         font-weight: 400;
         line-height: 31rpx;
         color: --color(--qui-FC-AAA);
@@ -679,8 +669,7 @@ export default {
 
   &__content {
     &__text {
-      // padding-bottom: 20rpx;
-      // padding: 30rpx 0;
+      padding-bottom: 20rpx;
       overflow: hidden;
       font-family: $font-family;
       font-size: $fg-f28;
@@ -772,7 +761,7 @@ export default {
     &__themeType1 {
       display: flex;
       justify-content: space-between;
-      margin-top: 30rpx;
+      margin-top: 60rpx;
 
       &__item {
         font-family: $font-family;

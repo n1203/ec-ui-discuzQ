@@ -45,6 +45,7 @@
         ></qui-cell-item>
       </navigator>
     </view>
+    <ec-copyright />
   </qui-page>
 </template>
 

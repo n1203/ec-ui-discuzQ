@@ -107,6 +107,7 @@
         </view>
       </qui-cell-item>
     </view>
+    <ec-copyright />
   </qui-page>
 </template>
 

@@ -41,15 +41,16 @@
             <view class="themeItem__header__title__time">{{ localTime }}</view>
           </view>
         </view>
-
-        <view
+          <!-- follow 关注状态 0：未关注 1：已关注 2：互相关注 -->
+                  
+        <!-- <view
           v-if="isAttentionVisible"
           class="themeItem__attention"
           @click="addFollow"
           @click.stop=""
         >
           关注
-        </view>
+        </view> -->
       </view>
 
       <view class="themeItem__content" @click.stop="" @click="contentClick">
@@ -244,10 +245,17 @@
 </template>
 
 <script>
+import { status } from '@/library/jsonapi-vuex/index';
 import { time2MorningOrAfternoon } from '@/utils/time';
 import { mapState } from 'vuex';
+import following from '@/pages/profile/following';
+import followers from '@/pages/profile/followers';
 
 export default {
+  components: {
+    following,
+    followers,
+  },
   props: {
     themeType: {
       validator: value => {
@@ -493,28 +501,10 @@ export default {
   },
   methods: {
     // 添加关注
-    addFollow() {
-      // console.log(userInfo, 'userInfo')
-      // #ifdef H5
-      if (!this.$store.getters['session/get']('isLogin')) {
-        if (!this.handleLogin()) {
-          return;
-        }
-      }
-      // #endif
-      const params = {
-        _jv: {
-          type: 'follow',
-        },
-        type: 'user_follow',
-        to_user_id: this._uid,
-      };
-      status
-        .run(() => this.$store.dispatch('jv/post', params))
-        .then(() => {
-          // this.getUserInfo(this.userId);
-          // if (this.$refs.followers) this.$refs.followers.getFollowerList('change');
-        });
+    // 添加关注
+    async addFollow(evt) {
+      const follows = await this.$emit('addFollow', evt);
+      console.log('addFollow -> follows', follows);
     },
     // 点击删除按钮
     deleteClick(evt) {

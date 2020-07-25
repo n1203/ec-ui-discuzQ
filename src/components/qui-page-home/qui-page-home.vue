@@ -1,14 +1,16 @@
 <template>
   <view class="home">
-    <uni-nav-bar
-      class="status-bar"
-      :style="'transform:' + navBarTransform"
-      :title="forums.set_site ? forums.set_site.site_name : ''"
-      fixed="true"
-      :color="navTheme === $u.light() ? '#fff' : '#ffffff'"
-      :background-color="navTheme === $u.light() ? '#167bf4' : '#2e2f30'"
-      status-bar
-    ></uni-nav-bar>
+    <view @tap="handleSearch">
+      <uni-nav-bar2
+        class="status-bar"
+        :style="'transform:' + navBarTransform"
+        :title="forums.set_site ? forums.set_site.site_name : ''"
+        fixed="true"
+        :color="navTheme === $u.light() ? '#fff' : '#ffffff'"
+        :background-color="navTheme === $u.light() ? '#167bf4' : '#2e2f30'"
+        status-bar
+      ></uni-nav-bar2>
+    </view>
     <scroll-view
       scroll-y="true"
       scroll-with-animation="true"
@@ -115,6 +117,7 @@
           @contentClick="contentClick(item)"
           @backgroundClick="contentClick(item)"
           @headClick="headClick(item.user._jv.id)"
+          @addFollow="addFollow(item.user._jv.id)"
           @videoPlay="handleVideoPlay"
         ></qui-content>
         <qui-load-more :status="loadingType"></qui-load-more>
@@ -487,6 +490,11 @@ export default {
         url: `/pages/profile/index?userId=${id}`,
       });
     },
+    handleSearch() {
+      uni.navigateTo({
+        url: '/pages/site/search',
+      });
+    },
     // 首页头部分享按钮弹窗
     open() {
       // #ifdef MP-WEIXIN
@@ -758,6 +766,30 @@ export default {
         this.$refs[`myVideo${this.playIndex}`][0].pauseVideo();
       }
       this.playIndex = index;
+    },
+    // 添加关注
+    addFollow(id) {
+      // #ifdef H5
+      if (!this.$store.getters['session/get']('isLogin')) {
+        if (!this.handleLogin()) {
+          return;
+        }
+      }
+      // #endif
+      const params = {
+        _jv: {
+          type: 'follow',
+        },
+        type: 'user_follow',
+        to_user_id: id,
+      };
+      status
+        .run(() => this.$store.dispatch('jv/post', params))
+        .then(() => {
+          this.getUserInfo(this.userId);
+          if (this.$refs.followers) this.$refs.followers.getFollowerList('change');
+          return { success: true };
+        });
     },
     // 组件初始化请求接口
     ontrueGetList() {

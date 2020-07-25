@@ -10,16 +10,42 @@
       ></uni-nav-bar>
       <!-- 通知类型列表 -->
       <scroll-view
-        scroll-y
+        scroll-x
         @scrolltolower="pullDown"
         show-scrollbar="false"
         show-icon
         class="scroll-Y"
         :style="'top:' + navbarHeight + 'px'"
       >
-        <view class="notice-box__list">
-          <view v-for="item in list" :key="item.id" @click="jumpNoticePage(item)">
-            <qui-cell-item :title="i18n.t(item.title)" :border="item.border" arrow slot-right>
+        <view class="notice-box__list fbh">
+          <view
+            class="ec-notice-box"
+            v-for="item in list"
+            :key="item.id"
+            @click="jumpNoticePage(item)"
+          >
+            <view
+              class="ec-notice-box__item"
+              :title="i18n.t(item.title)"
+              :border="item.border"
+              arrow
+              slot-right
+            >
+              <view class="ec-notice-box__item__icon">
+                <qui-icon
+                  v-if="item.unReadNum && item.unReadNum > 0"
+                  name="icon-circle"
+                  class="red-circle ec-notice-box__item__icon__circle"
+                  color="red"
+                  size="14"
+                ></qui-icon>
+                <qui-icon name="icon-message" color="#fff" size="30"></qui-icon>
+              </view>
+              <view class="ec-notice-box__item__text">
+                {{ i18n.t(item.title) }}
+              </view>
+            </view>
+            <!-- <qui-cell-item :title="i18n.t(item.title)" :border="item.border" arrow slot-right>
               <qui-icon
                 v-if="item.unReadNum && item.unReadNum > 0"
                 name="icon-circle"
@@ -27,7 +53,7 @@
                 color="red"
                 size="14"
               ></qui-icon>
-            </qui-cell-item>
+            </qui-cell-item> -->
           </view>
         </view>
         <!-- 会话列表 -->
@@ -322,6 +348,33 @@ export default {
     font-weight: 400;
     color: --color(--qui-FC-333);
     opacity: 1;
+  }
+}
+
+.ec-notice-box {
+  width: 17%;
+  padding: 1%;
+  margin-bottom: 10px;
+  &__item {
+    text-align: center;
+    &__icon {
+      background: linear-gradient(45deg, #4f64dd, #2533b4);
+      text-align: center;
+      width: 40px;
+      height: 40px;
+      margin: 0 auto;
+      border-radius: 10px;
+      line-height: 40px;
+      position: relative;
+      &__circle {
+        position: absolute;
+        top: -15px;
+        right: -5px;
+      }
+    }
+    &__text {
+      line-height: 36px;
+    }
   }
 }
 </style>

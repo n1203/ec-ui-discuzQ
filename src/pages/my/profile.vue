@@ -104,13 +104,13 @@
       ></qui-uploader>
       <qui-toast ref="toast"></qui-toast>
     </view>
+    <ec-copyright />
   </qui-page>
 </template>
 
 <script>
 import { DISCUZ_REQUEST_HOST } from '@/common/const';
 import forums from '@/mixin/forums';
-
 export default {
   mixins: [forums],
   data() {

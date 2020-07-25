@@ -3,6 +3,7 @@
     <!-- #ifdef H5-->
     <qui-header-back
       :title="title"
+      v-if="isShowHome || isShowBack || isShowMore"
       :is-show-home="isShowHome"
       :is-show-back="isShowBack"
       :is-show-more="isShowMore"

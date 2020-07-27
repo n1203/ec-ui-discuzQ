@@ -1,6 +1,6 @@
 <template>
   <view class="home">
-    <view @tap="handleSearch">
+    <!-- <view @tap="handleSearch">
       <uni-nav-bar2
         class="status-bar"
         :style="'transform:' + navBarTransform"
@@ -10,7 +10,7 @@
         :background-color="navTheme === $u.light() ? '#167bf4' : '#2e2f30'"
         status-bar
       ></uni-nav-bar2>
-    </view>
+    </view> -->
     <scroll-view
       scroll-y="true"
       scroll-with-animation="true"
@@ -59,11 +59,12 @@
         ></u-tabs>
       </view>
       <view class="sticky" :style="headerShow ? 'margin-top:30rpx' : 'margin-top:130rpx'">
-        <view
+        <!-- <view
           class="sticky"
           :style="headerShow ? 'margin-top:20rpx' : 'margin-top:130rpx'"
           v-if="sticky.length > 0"
-        >
+        > -->
+        <view class="sticky" style="margin-top:0rpx" v-if="sticky.length > 0">
           <view class="sticky__box">
             <view
               class="sticky__isSticky"
@@ -950,7 +951,7 @@ export default {
   height: 72rpx;
   text-align: center;
   white-space: nowrap;
-  border-bottom: 1rpx solid #fff;
+  // border-bottom: 1rpx solid #fff;
   // border-bottom: 2rpx solid --color(--qui-BOR-EEE);
 }
 .scroll-tab-item {

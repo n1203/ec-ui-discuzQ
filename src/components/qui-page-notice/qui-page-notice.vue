@@ -1,6 +1,7 @@
 <template>
   <view>
     <view class="notice-box">
+      <!-- #ifdef MP-WEIXIN -->
       <uni-nav-bar
         :title="title"
         fixed
@@ -8,6 +9,7 @@
         :background-color="navTheme === $u.light() ? '#ffffff' : '#2e2f30'"
         status-bar
       ></uni-nav-bar>
+      <!-- #endif -->
       <!-- 通知类型列表 -->
       <scroll-view
         scroll-x
@@ -85,8 +87,8 @@
                       :nodes="dialog.dialogMessage ? dialog.dialogMessage.summary : ''"
                       style="word-break: break-all;"
                     ></rich-text>
-                  </view>
                 </view>
+              </view>
               </view>
               <view class="dialog-box__header__r">
                 <view class="dialog-box__header__info__time">{{ dialog.time }}</view>
@@ -100,7 +102,7 @@
                 <qui-icon class="arrow" name="icon-folding-r" size="22" color="#ddd"></qui-icon>
               </view>
             </view>
-          </view>
+            </view>
           <qui-load-more
             :status="loadingType"
             v-if="dialogList && dialogList.length > 0"
@@ -150,7 +152,12 @@ export default {
     },
   },
   mounted() {
+    // #ifndef MP-WEIXIN
+    this.navbarHeight = uni.getSystemInfoSync().statusBarHeight;
+    // #endif
+    // #ifdef MP-WEIXIN
     this.navbarHeight = uni.getSystemInfoSync().statusBarHeight + 44;
+    // #endif
     uni.$on('updateNotiNum', () => {
       console.log('updateNode', this.user);
       this.getUnreadNoticeNum();
@@ -280,6 +287,20 @@ export default {
     border-bottom: 2rpx solid --color(--qui-BOR-ED);
     transition: $switch-theme-time;
 
+    &-red-circle {
+      position: relative;
+    }
+    &-red-circle:after {
+      position: absolute;
+      top: 4px;
+      right: -5px;
+      width: 7px;
+      height: 7px;
+      background: --color(--qui-RED);
+      border-radius: 50%;
+      content: '';
+    }
+
     /deep/ text {
       vertical-align: middle;
     }
@@ -295,6 +316,7 @@ export default {
     display: flex;
     justify-content: space-between;
     border-bottom: 1px solid #f0f0f0;
+
 
     &__info {
       display: flex;
@@ -336,9 +358,18 @@ export default {
       align-items: center;
       margin: 0rpx 40rpx 0rpx 0rpx;
 
-      .red-circle {
-        margin: 0rpx 20rpx 0rpx 0rpx;
-        vertical-align: middle;
+      &-red-circle {
+        position: relative;
+      }
+      &-red-circle:after {
+        position: absolute;
+        top: -4px;
+        right: 5px;
+        width: 7px;
+        height: 7px;
+        background: --color(--qui-RED);
+        border-radius: 50%;
+        content: '';
       }
     }
   }
@@ -354,7 +385,7 @@ export default {
 .ec-notice-box {
   width: 17%;
   padding: 1%;
-  margin-bottom: 10px;
+  margin: 10px 0;
   &__item {
     text-align: center;
     &__icon {

@@ -576,7 +576,7 @@ export default {
   padding: 30rpx;
   margin: 0 0 30rpx;
   background: --color(--qui-BG-2);
-  border-radius: 6rpx;
+  // border-radius: 6rpx;
   box-shadow: 0rpx 4rpx 8rpx rgba(0, 0, 0, 0.05);
   box-sizing: border-box;
   &__attention {

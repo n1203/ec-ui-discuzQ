@@ -31,6 +31,7 @@
         :is-show-more="false"
         :is-show-back="false"
         :is-show-home="false"
+        :on-handle-click-setting="showFilter"
         @click="open"
         @closeShare="closeShare"
       ></qui-header>
@@ -39,7 +40,7 @@
         id="navId"
         :style="headerShow ? '' : 'width:100%;position:fixed;z-index:9;top:' + navbarHeight + 'px;'"
       >
-        <view class="nav__box">
+        <!-- <view class="nav__box">
           <qui-icon
             class="nav__box__icon"
             name="icon-screen"
@@ -47,7 +48,7 @@
             :color="show ? '#FFF' : '#89c6ff'"
             @tap="showFilter"
           ></qui-icon>
-        </view>
+        </view> -->
         <u-tabs
           class="scroll-tab"
           :list="categories"
@@ -58,14 +59,15 @@
           active-color="#1878F3"
         ></u-tabs>
       </view>
-      <view class="sticky" :style="headerShow ? 'margin-top:30rpx' : 'margin-top:130rpx'">
-        <!-- <view
+      <!-- <view class="sticky"> -->
+      <!-- <view
           class="sticky"
           :style="headerShow ? 'margin-top:20rpx' : 'margin-top:130rpx'"
           v-if="sticky.length > 0"
         > -->
-        <view class="sticky" style="margin-top:0rpx" v-if="sticky.length > 0">
-          <view class="sticky__box">
+      <view class="sticky" v-if="sticky.length > 0">
+        <scroll-view scroll-x="true">
+          <view class="sticky__box fbh">
             <view
               class="sticky__isSticky"
               v-for="(item, index) in sticky"
@@ -82,64 +84,65 @@
               </view>
             </view>
           </view>
-        </view>
-        <!-- </view> -->
-        <view class="main" id="main">
-          <qui-content
-            v-for="(item, index) in threads"
-            :ref="'myVideo' + index"
-            :key="index"
-            :currentindex="index"
-            :pay-status="(item.price > 0 && item.paid) || item.price == 0"
-            :user-name="item.user.username"
-            :theme-image="item.user.avatarUrl"
-            :theme-btn="item.canHide || ''"
-            :theme-reply-btn="item.canReply || ''"
-            :user-groups="item.user && item.user.groups"
-            :theme-time="item.createdAt"
-            :theme-content="item.type == 1 ? item.title : item.firstPost.summary"
-            :thread-type="item.type"
-            :media-url="item.threadVideo && item.threadVideo.media_url"
-            :is-great="item.firstPost.isLiked"
-            :theme-like="item.firstPost.likeCount"
-            :theme-comment="item.postCount - 1"
-            :tags="[item.category]"
-            :images-list="item.firstPost.images"
-            :theme-essence="item.isEssence"
-            :video-width="item.threadVideo && item.threadVideo.width"
-            :video-height="item.threadVideo && item.threadVideo.height"
-            :video-id="item.threadVideo && item.threadVideo._jv.id"
-            :cover-image="item.threadVideo && item.threadVideo.cover_url"
-            :duration="item.threadVideo && item.threadVideo.duration"
-            :is-deleted="item.isDeleted"
-            :scroll-top="scrollTop"
-            @click="handleClickShare(item._jv.id)"
-            @handleIsGreat="
-              handleIsGreat(
-                item.firstPost._jv.id,
-                item.firstPost.canLike,
-                item.firstPost.isLiked,
-                item.firstPost.likeCount,
-              )
-            "
-            @commentClick="commentClick(item._jv.id)"
-            @contentClick="contentClick(item)"
-            @backgroundClick="contentClick(item)"
-            @headClick="headClick(item.user._jv.id)"
-            @addFollow="addFollow(item.user._jv.id)"
-            @videoPlay="handleVideoPlay"
-          ></qui-content>
-          <qui-load-more :status="loadingType"></qui-load-more>
-        </view>
-        <!-- #ifdef H5-->
-        <view class="record" v-if="forums.set_site ? forums.set_site.site_record : '' !== ''">
-          <!-- <text>{{ i18n.t('home.record') }}</text> -->
-          <a class="record__url" href="http://www.beian.miit.gov.cn" target="_blank">
-            {{ forums.set_site ? forums.set_site.site_record : '' }}
-          </a>
-        </view>
-        <!-- #endif -->
+        </scroll-view>
       </view>
+      <!-- </view> -->
+      <view class="main" id="main">
+        <qui-content
+          v-for="(item, index) in threads"
+          :ref="'myVideo' + index"
+          :key="index"
+          :currentindex="index"
+          :pay-status="(item.price > 0 && item.paid) || item.price == 0"
+          :user-name="item.user.username"
+          :theme-image="item.user.avatarUrl"
+          :theme-btn="item.canHide || ''"
+          :theme-reply-btn="item.canReply || ''"
+          :user-groups="item.user && item.user.groups"
+          :theme-time="item.createdAt"
+          :theme-content="item.type == 1 ? item.title : item.firstPost.summary"
+          :thread-type="item.type"
+          :media-url="item.threadVideo && item.threadVideo.media_url"
+          :is-great="item.firstPost.isLiked"
+          :theme-like="item.firstPost.likeCount"
+          :theme-comment="item.postCount - 1"
+          :tags="[item.category]"
+          :images-list="item.firstPost.images"
+          :theme-essence="item.isEssence"
+          :video-width="item.threadVideo && item.threadVideo.width"
+          :video-height="item.threadVideo && item.threadVideo.height"
+          :video-id="item.threadVideo && item.threadVideo._jv.id"
+          :cover-image="item.threadVideo && item.threadVideo.cover_url"
+          :duration="item.threadVideo && item.threadVideo.duration"
+          :is-deleted="item.isDeleted"
+          :scroll-top="scrollTop"
+          @click="handleClickShare(item._jv.id)"
+          @handleIsGreat="
+            handleIsGreat(
+              item.firstPost._jv.id,
+              item.firstPost.canLike,
+              item.firstPost.isLiked,
+              item.firstPost.likeCount,
+            )
+          "
+          @commentClick="commentClick(item._jv.id)"
+          @contentClick="contentClick(item)"
+          @backgroundClick="contentClick(item)"
+          @headClick="headClick(item.user._jv.id)"
+          @addFollow="addFollow(item.user._jv.id)"
+          @videoPlay="handleVideoPlay"
+        ></qui-content>
+        <qui-load-more :status="loadingType"></qui-load-more>
+      </view>
+      <!-- #ifdef H5-->
+      <view class="record" v-if="forums.set_site ? forums.set_site.site_record : '' !== ''">
+        <!-- <text>{{ i18n.t('home.record') }}</text> -->
+        <a class="record__url" href="http://www.beian.miit.gov.cn" target="_blank">
+          {{ forums.set_site ? forums.set_site.site_record : '' }}
+        </a>
+      </view>
+      <!-- #endif -->
+      <!-- </view> -->
     </scroll-view>
     <qui-filter-modal
       v-model="show"
@@ -888,25 +891,29 @@ export default {
 }
 
 .sticky {
-  margin: 30rpx auto;
+  // margin: 30rpx auto;
   // margin: 20rpx auto;
-  border-top: 2rpx solid --color(--qui-BOR-ED);
-  border-bottom: 2rpx solid --color(--qui-BOR-ED);
+  // border-top: 2rpx solid --color(--qui-BOR-ED);
+  // border-bottom: 2rpx solid --color(--qui-BOR-ED);
+  padding: 10px 0;
 }
 .sticky__box {
-  background: --color(--qui-BG-2);
+  // background: --color(--qui-BG-2);
 }
 
 .sticky__isSticky {
   display: flex;
-  width: 710rpx;
+  width: 600rpx;
   height: 80rpx;
   margin: 10rpx auto;
+  border-radius: 5rpx;
   // margin-left: 30rpx;
   font-size: $fg-f26;
   line-height: 80rpx;
-  background: --color(--qui-BG-2);
-  border-bottom: 2rpx solid --color(--qui-BOR-ED);
+  background: #f5f5f5;
+  padding: 0 10px;
+  margin: 10px;
+  // border-bottom: 2rpx solid --color(--qui-BOR-ED);
   // border-radius: 6rpx;
   // box-shadow: 0rpx 2rpx 4rpx rgba(0, 0, 0, 0.05);
   &__box {
@@ -917,9 +924,11 @@ export default {
     // margin-left: 20rpx;
     font-size: $fg-f20;
     line-height: 35rpx;
-    color: --color(--qui-FC-777);
+    color: #fff;
+    // color: --color(--qui-FC-777);
     text-align: center;
-    background: --color(--qui-BG-777);
+    // background: --color(--qui-BG-777);
+    background: #1878f3;
     border-radius: 6rpx;
     transition: $switch-theme-time;
   }
@@ -951,6 +960,7 @@ export default {
   height: 72rpx;
   text-align: center;
   white-space: nowrap;
+  
   // border-bottom: 1rpx solid #fff;
   // border-bottom: 2rpx solid --color(--qui-BOR-EEE);
 }

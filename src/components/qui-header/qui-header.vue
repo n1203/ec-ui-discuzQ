@@ -12,14 +12,30 @@
     ></qui-header-back> -->
     <!-- #endif -->
     <view class="logoBox">
-      <image
+      <view class="fbh fbjc logoBox__header">
+        <view class="fb1 logoBox__header__icon">
+          <image
+            class="logoBox__header__icon__logo"
+            :src="headImg != '' && headImg != null ? headImg : '/static/favicon.ico'"
+          ></image>
+        </view>
+        <view @click="handleClickSearch" class="fb10 logoBox__header__search">
+          <qui-icon name="icon-search" size="14" color="#80c5ff"></qui-icon>
+          <span>搜索你想要看到的...</span>
+        </view>
+        <view @click="onHandleClickSetting" class="fb3 logoBox__header__icon">
+          <qui-icon name="icon-screen" size="14" color="#fff"></qui-icon>
+          <span>标签</span>
+        </view>
+      </view>
+      <!-- <image
         class="logo"
-        :src="headImg != '' && headImg != null ? headImg : '/static/admin-logo-x2.png'"
+        :src="headImg != '' && headImg != null ? headImg : '/favicon.ico'"
         mode="aspectFit"
         lazy-load
-      ></image>
+      ></image> -->
     </view>
-    <view class="circleDet">
+    <!-- <view class="circleDet">
       <text>
         <text class="circleDet-txt">{{ t.theme }}</text>
         <text class="circleDet-num">{{ themeNum }}</text>
@@ -39,7 +55,7 @@
           <img src="/static/shareKnow.png" alt class="shareKnow" />
         </view>
       </view>
-    </view>
+    </view> -->
   </view>
 </template>
 <script>
@@ -101,6 +117,10 @@ export default {
     isShowMore: {
       type: Boolean,
       default: true,
+    },
+    onHandleClickSetting: {
+      type: Function,
+      default: () => {},
     },
   },
   data: () => {
@@ -211,7 +231,7 @@ export default {
   }
 }
 .header-h5 {
-  height: 256rpx;
+  height: 80rpx;
   background-size: 100%;
   .logo {
     max-height: 74rpx;
@@ -219,6 +239,31 @@ export default {
   }
   .circleDet {
     padding: 49rpx 20rpx 47rpx;
+  }
+}
+.logoBox {
+  &__header {
+    padding: 10px 15px;
+    line-height: 26px;
+    &__search {
+      background: #349aff;
+      color: #80c5ff;
+      text-indent: 10px;
+      border-radius: 3px;
+      font-size: 12px;
+    }
+    &__icon {
+      width: 100%;
+      color: #fff;
+      font-size: 14px;
+      text-align: center;
+      &__logo {
+        height: 26px;
+        width: 26px;
+        margin-right: 10px;
+        display: block;
+      }
+    }
   }
 }
 </style>

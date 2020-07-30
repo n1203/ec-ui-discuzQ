@@ -4,6 +4,7 @@ import { DISCUZ_REQUEST_HOST } from '@/common/const';
 
 let customConf = {};
 customConf.config = {
+  // appkey: '179E80BB32C54EA58539924926EFB3A6',
   appkey: '179E80BB32C54EA58539924926EFB3A6',
   appName: 'dzq',
   versionName: '1.0',

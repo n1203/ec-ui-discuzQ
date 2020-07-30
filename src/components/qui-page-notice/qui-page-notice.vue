@@ -58,6 +58,11 @@
             </qui-cell-item> -->
           </view>
         </view>
+        <!-- 如果没有会话 -->
+        <view :v-if="!dialogList.length" style="text-align: center; padding: 30px; color: #ccc">
+          <qui-icon size="100" name="icon-fail" />
+          <view style="line-height: 40px; font-size: 12px;">暂时没有私信，赶快去联系好友！</view>
+        </view>
         <!-- 会话列表 -->
         <view class="dialog-box__main" v-if="dialogList && dialogList.length > 0">
           <view
@@ -87,8 +92,8 @@
                       :nodes="dialog.dialogMessage ? dialog.dialogMessage.summary : ''"
                       style="word-break: break-all;"
                     ></rich-text>
+                  </view>
                 </view>
-              </view>
               </view>
               <view class="dialog-box__header__r">
                 <view class="dialog-box__header__info__time">{{ dialog.time }}</view>
@@ -102,7 +107,7 @@
                 <qui-icon class="arrow" name="icon-folding-r" size="22" color="#ddd"></qui-icon>
               </view>
             </view>
-            </view>
+          </view>
           <qui-load-more
             :status="loadingType"
             v-if="dialogList && dialogList.length > 0"
@@ -317,7 +322,6 @@ export default {
     justify-content: space-between;
     border-bottom: 1px solid #f0f0f0;
 
-
     &__info {
       display: flex;
       justify-content: space-between;
@@ -389,7 +393,7 @@ export default {
   &__item {
     text-align: center;
     &__icon {
-      background: linear-gradient(45deg, #4f64dd, #2533b4);
+      background: #1878f3;
       text-align: center;
       width: 40px;
       height: 40px;
@@ -404,7 +408,8 @@ export default {
       }
     }
     &__text {
-      line-height: 36px;
+      font-size: 26rpx;
+      margin-top: 15rpx;
     }
   }
 }

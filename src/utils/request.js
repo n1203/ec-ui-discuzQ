@@ -6,7 +6,7 @@
  * @Author lu-ch
  * @Date 2020-03-17
  * @Email webwork.s@qq.com
- * http://ext.dcloud.net.cn/plugin?id=392
+ * http://ext.dcloud.net.cn/plugin?id=392 
  */
 export default class Request {
   config = {

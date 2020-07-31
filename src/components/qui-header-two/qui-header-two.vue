@@ -13,7 +13,7 @@
     <!-- #endif -->
     <view class="logoBox">
       <view class="fbh fbjc logoBox__header">
-        <view class="fb1 logoBox__header__icon">
+        <view class="fb2 logoBox__header__icon">
           <image
             class="logoBox__header__icon__logo"
             :src="headImg != '' && headImg != null ? headImg : '/static/favicon.ico'"
@@ -23,7 +23,7 @@
           <qui-icon name="icon-search" size="14" color="#80c5ff"></qui-icon>
           <span>{{ this.$i18n.t('ec.searchPlaceholder') }}</span>
         </view>
-        <view @click="onHandleClickSetting" class="fb3 logoBox__header__icon">
+        <view @click="onHandleClickSetting" class="fb2 logoBox__header__icon">
           <qui-icon name="icon-screen" size="14" color="#fff"></qui-icon>
           <span>{{ this.$i18n.t('ec.tags') }}</span>
         </view>

@@ -156,7 +156,7 @@ export default {
 .serach {
   display: flex;
   width: 100%;
-  //border-bottom: 1px #f5f5f5 solid; //去掉边框
+  //border-bottom: 1px #0001 solid; //去掉边框
   font-size: $uni-font-size-base;
   box-sizing: border-box;
   .content {

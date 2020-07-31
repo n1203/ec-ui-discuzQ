@@ -87,6 +87,7 @@
                 <!-- {{ item.type == 1 ? item.title : item.firstPost.summary }} -->
               </view>
             </view>
+            <view class="sticky__isSticky__empty"></view>
           </view>
         </scroll-view>
       </view>
@@ -906,9 +907,21 @@ export default {
   // padding: 10px 0;
 }
 .sticky__box {
+  padding-right: 20px;
   // background: --color(--qui-BG-2);
 }
-
+.sticky__isSticky__empty {
+  display: flex;
+  width: 0;
+  height: 80rpx;
+  margin: 10rpx auto;
+  border-radius: 5rpx;
+  // margin-left: 30rpx;
+  font-size: $fg-f26;
+  line-height: 80rpx;
+  padding: 1px;
+  margin: -1px;
+}
 .sticky__isSticky {
   display: flex;
   width: 600rpx;
@@ -918,7 +931,7 @@ export default {
   // margin-left: 30rpx;
   font-size: $fg-f26;
   line-height: 80rpx;
-  background: #f5f5f510;
+  background: #0001;
   padding: 0 10px;
   margin: 10px;
   // border-bottom: 2rpx solid --color(--qui-BOR-ED);
@@ -1029,5 +1042,10 @@ export default {
     color: --color(--qui-FC-B2);
     text-decoration: none;
   }
+}
+.area {
+  width: 10px;
+  height: 10px;
+  display: block;
 }
 </style>

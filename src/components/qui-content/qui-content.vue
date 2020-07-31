@@ -206,7 +206,7 @@
             >
               <qui-icon class="qui-icon" name="icon-liked" size="28" v-if="isGreat"></qui-icon>
               <qui-icon class="qui-icon" name="icon-like" size="28" v-else></qui-icon>
-              {{ isGreat ? t.giveLikeAlready : t.like }}
+              <!-- {{ isGreat ? t.giveLikeAlready : t.like }} -->
               {{ themeLike === 0 ? '' : themeLike }}
             </view>
 
@@ -214,7 +214,8 @@
               class="themeItem__footer__themeType1__item themeItem__footer__themeType1__comment"
               @click="commentClick"
             >
-              {{ t.comment }}
+              <qui-icon class="qui-icon" name="icon-message" size="28" color="#AAA"></qui-icon>
+              <!-- {{ t.comment }} -->
               {{ themeComment === 0 ? '' : themeComment }}
             </view>
 
@@ -223,7 +224,7 @@
               @click="handleClickShare"
             >
               <qui-icon class="qui-icon" name="icon-share" size="28" color="#AAA"></qui-icon>
-              {{ t.share }}
+              <!-- {{ t.share }} -->
             </view>
           </view>
 
@@ -681,7 +682,7 @@ export default {
         display: flex;
         line-height: 50px;
         text-indent: 10px;
-        background: #f5f5f510;
+        background: #0001;
         word-break: break-all;
         border-radius: 5px;
       }
@@ -765,7 +766,8 @@ export default {
 
       &__item {
         font-family: $font-family;
-        font-size: $fg-f28;
+        font-size: 14px;
+        // font-size: $fg-f28;
         font-weight: 400;
         line-height: 37rpx;
         color: rgba(170, 170, 170, 1);

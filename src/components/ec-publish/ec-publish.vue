@@ -1,25 +1,44 @@
 <template>
   <view class="fbh publish">
-    <view class="fb1 fbv publish_item">
+    <view id="0" class="fb1 fbv publish_item" @click="open">
       <view>最新版本</view>
       <view class="omit">V0.0.0-alpha20200721</view>
     </view>
-    <view class="fb1 fbv publish_item">
+    <view id="1" class="fb1 fbv publish_item" @click="open">
       <view>安装教程</view>
       <view class="omit">文字版 · 视频版</view>
     </view>
-    <view class="fb1 fbv publish_item">
+    <view id="2" class="fb1 fbv publish_item" @click="open">
       <view>下载主题</view>
       <view class="omit">@souwinds</view>
     </view>
   </view>
 </template>
 
-<script></script>
+<script>
+export default {
+  computed: {
+    t() {
+      return this.i18n.t('auth');
+    },
+  },
+  methods: {
+    open(e) {
+      window.open(
+        [
+          'https://github.com/SouWinds/ec-ui-discuzQ/tags',
+          'https://www.bilibili.com/video/BV1V54y1D7UV',
+          'https://github.com/SouWinds/ec-ui-discuzQ',
+        ][Number(e.currentTarget.id)],
+      );
+    },
+  },
+};
+</script>
 
 <style>
 .publish {
-  padding: 0 10px;
+  padding: 0 5px;
   width: 100%;
   box-sizing: border-box;
 }
@@ -39,6 +58,6 @@
   width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;    
+  white-space: nowrap;
 }
 </style>

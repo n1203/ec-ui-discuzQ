@@ -2497,7 +2497,7 @@ page {
   line-height: 100rpx;
   color: #666;
   text-align: center;
-  border-top-color: #f5f5f5;
+  border-top-color: #0001;
   border-top-style: solid;
   border-top-width: 1px;
 }

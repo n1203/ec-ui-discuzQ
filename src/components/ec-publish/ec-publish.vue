@@ -2,7 +2,7 @@
   <view class="fbh publish">
     <view id="0" class="fb1 fbv publish_item" @click="open">
       <view>最新版本</view>
-      <view class="omit">V0.0.0-alpha20200721</view>
+      <view class="omit">alpha v0.0.200721</view>
     </view>
     <view id="1" class="fb1 fbv publish_item" @click="open">
       <view>安装教程</view>

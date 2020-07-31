@@ -335,7 +335,7 @@ export default {
     }),
   },
   created() {
-    if (window.location.origin === ('http://localhost:8080' || 'https://q.e-spy.cn')) {
+    if (['http://localhost:8080/', 'https://q.e-spy.cn/'].indexOf(window.location.href) !== -1) {
       this.isPublish = true;
     }
     // #ifdef  H5

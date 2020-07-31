@@ -13,19 +13,19 @@
     <!-- #endif -->
     <view class="logoBox">
       <view class="fbh fbjc logoBox__header">
-        <view class="fb2 logoBox__header__icon">
+        <view class="logoBox__header__icon">
           <image
-            class="logoBox__header__icon__logo"
-            :src="headImg != '' && headImg != null ? headImg : '/static/favicon.ico'"
+            mode="heightFix"
+            :src="headImg != '' && headImg != null ? headImg : 'https://i0.hdslb.com/bfs/sycp/creative_img/202007/d62064d5f8c9961c1a99a170434169d8.jpg'"
           ></image>
         </view>
         <view @click="onHandleClickSearch" class="fb10 logoBox__header__search">
           <qui-icon name="icon-search" size="14" color="#80c5ff"></qui-icon>
           <span>{{ this.$i18n.t('ec.searchPlaceholder') }}</span>
         </view>
-        <view @click="onHandleClickSetting" class="fb2 logoBox__header__icon">
+        <view @click="onHandleClickSetting" class="logoBox__header__icon">
           <qui-icon name="icon-screen" size="14" color="#fff"></qui-icon>
-          <span>{{ this.$i18n.t('ec.tags') }}</span>
+          <!-- <span>{{ this.$i18n.t('ec.tags') }}</span> -->
         </view>
       </view>
       <!-- <image
@@ -257,13 +257,14 @@ export default {
       font-size: 12px;
     }
     &__icon {
-      width: 100%;
       color: #fff;
       font-size: 14px;
       text-align: center;
+      height: 26px;
+      width: auto;
+      display: block;
       &__logo {
         height: 26px;
-        width: 26px;
         margin-right: 10px;
         display: block;
       }

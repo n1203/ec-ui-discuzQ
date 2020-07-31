@@ -19,9 +19,9 @@
           size="48"
           :class="{ select: true, active: index === footerIndex }"
         ></qui-icon>
-        <text class="ft-box-content" :class="{ select: true, active: index === footerIndex }">
+        <!-- <text class="ft-box-content" :class="{ select: true, active: index === footerIndex }">
           {{ item.tabsName }}
-        </text>
+        </text> -->
         <view v-if="redCircle && item.id === 2" name="icon-circle" class="red-circle"></view>
       </view>
 
@@ -286,7 +286,7 @@ export default {
   z-index: 1;
   display: flex;
   width: 100%;
-  height: 119rpx;
+  height: 90rpx;
   background-color: --color(--qui-BG-2);
   box-shadow: 0 -3px 6px rgba(0, 0, 0, 0.05);
   justify-content: space-around;
@@ -295,8 +295,8 @@ export default {
   position: relative;
   display: flex;
   width: 20%;
-  height: 72rpx;
-  margin-top: 20rpx;
+  height: 70rpx;
+  margin-top: 10rpx;
   flex-direction: column;
   justify-content: center;
   align-content: center;
@@ -316,16 +316,16 @@ export default {
 }
 .ft-box-spacal {
   position: fixed;
-  bottom: 20rpx;
-  width: 125rpx;
-  height: 125rpx;
+  bottom: 0rpx;
+  width: 120rpx;
+  height: 120rpx;
   border-radius: 50%;
   box-shadow: 0 -3px 6px rgba(0, 0, 0, 0.05);
 }
 .ft-box-spacal-icon {
   position: relative;
-  width: 125rpx;
-  height: 125rpx;
+  width: 110rpx;
+  height: 110rpx;
 }
 .active {
   color: --color(--qui-TAB);

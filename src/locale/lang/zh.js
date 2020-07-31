@@ -9,6 +9,7 @@ export default {
     // 常用
     ok: '确认',
     close: '关闭',
+    cancle: '取消',
     // 日期相关
     date: {
       now: '此刻',
@@ -329,11 +330,11 @@ export default {
     tabsCircle: '首页',
     tabsNews: '消息',
     tabsMy: '我',
-    tabSearch: '搜索',
+    tabTopic: '话题',
     filterPlate: '版块',
     filterType: '类型',
     text: '文本',
-    invitation: '帖子',
+    post: '帖子',
     video: '视频',
     picture: '图片',
     essence: '精华',
@@ -728,5 +729,9 @@ export default {
     registerBindSuccess: '注册绑定成功',
     loginSuccess: '登录成功',
     loginBindSuccess: '登录绑定成功',
+  },
+  ec: {
+    tags: '标签',
+    searchPlaceholder: '搜索你想要看到的...',
   },
 };

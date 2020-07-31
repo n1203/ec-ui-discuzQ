@@ -182,10 +182,13 @@ export default {
   methods: {
     // 切换多语言
     changeLangs(e) {
-      localeUse(e ? 'en' : 'zh');
+      this.$localeUse(e ? 'en' : 'zh');
+      window.location.reload();
+      // localeUse(e ? 'en' : 'zh');
     },
     changeCheck(e) {
       getApp().globalData.themeChanged(e ? THEME_DARK : THEME_DEFAULT);
+      window.location.reload();
     },
     onClickItem(e) {
       uni.navigateTo({

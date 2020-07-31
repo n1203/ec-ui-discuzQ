@@ -9,6 +9,11 @@
           :style="{ display: show_index === 0 ? 'block' : 'none' }"
           @handleClickShare="handleClickShare"
         ></qui-page-home>
+        <qui-page-topic
+          ref="topic"
+          :nav-theme="theme"
+          :style="{ display: show_index === 1 ? 'block' : 'none' }"
+        ></qui-page-topic>
         <qui-page-notice
           :nav-theme="theme"
           ref="quinotice"
@@ -161,11 +166,11 @@ export default {
     }),
     // 切换组件
     cut_index(e, type, isTabBar) {
-      const tabs = ['home', 'search', 'empty', 'quinotice', 'quimy'];
+      const tabs = ['home', 'topic', 'empty', 'quinotice', 'quimy'];
       this.currentTab = tabs[type];
       if (
         !this.$store.getters['session/get']('isLogin') &&
-        ['quinotice', 'quimy', 'empty', 'search'].indexOf(this.currentTab) >= 0
+        ['quinotice', 'quimy', 'empty', 'topic'].indexOf(this.currentTab) >= 0
       ) {
         this.$store.getters['session/get']('auth').open();
         this.currentTab = 'home';
@@ -174,12 +179,12 @@ export default {
       }
 
 // 如果是搜索，则直接做跳转
-      if (type === 1) {
-        uni.navigateTo({
-          url: '/pages/site/search',
-        });
-        return;
-      }
+      // if (type === 1) {
+      //   uni.navigateTo({
+      //     url: '/pages/site/search',
+      //   });
+      //   return;
+      // }
       this.show_index = type;
       if (isTabBar.indexOf(type) === -1) {
         // 如果点击的是中间的 + 则不做数据欲请求处理

@@ -681,7 +681,7 @@ export default {
         display: flex;
         line-height: 50px;
         text-indent: 10px;
-        background: #f5f5f5;
+        background: #f5f5f510;
         word-break: break-all;
         border-radius: 5px;
       }
@@ -807,6 +807,9 @@ export default {
   display: inline-block;
   max-width: 75%;
   padding-left: 8rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   color: --color(--qui-LINK);
 }
 .themeItem__content__coverimg {

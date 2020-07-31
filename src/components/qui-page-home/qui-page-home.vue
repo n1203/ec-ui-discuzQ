@@ -20,7 +20,7 @@
       @scrolltolower="pullDown"
       @scrolltoupper="toUpper"
     >
-      <qui-header
+      <qui-header-two
         :head-img="forums.set_site ? forums.set_site.site_header_logo : ''"
         :background-head-full-img="forums.set_site ? forums.set_site.site_background_image : ''"
         :theme="theme"
@@ -32,9 +32,10 @@
         :is-show-back="false"
         :is-show-home="false"
         :on-handle-click-setting="showFilter"
+        :on-handle-click-search="searchClick"
         @click="open"
         @closeShare="closeShare"
-      ></qui-header>
+      ></qui-header-two>
       <view
         class="nav"
         id="navId"
@@ -59,6 +60,9 @@
           active-color="#1878F3"
         ></u-tabs>
       </view>
+
+      <ec-publish v-if="isPublish" />
+
       <!-- <view class="sticky"> -->
       <!-- <view
           class="sticky"
@@ -283,7 +287,7 @@ export default {
           data: [
             { label: this.i18n.t('home.all'), value: '', selected: true },
             { label: this.i18n.t('home.text'), value: '0', selected: false },
-            { label: this.i18n.t('home.invitation'), value: '1', selected: false },
+            { label: this.i18n.t('home.post'), value: '1', selected: false },
             { label: this.i18n.t('home.video'), value: '2', selected: false },
             { label: this.i18n.t('home.picture'), value: '3', selected: false },
           ],
@@ -320,6 +324,7 @@ export default {
       categories: [],
       playIndex: null,
       scrollTop: 0,
+      isPublish: false,
     };
   },
   computed: {
@@ -329,6 +334,9 @@ export default {
     }),
   },
   created() {
+    if (window.location.origin === ('http://localhost:8080' || 'https://q.e-spy.cn')) {
+      this.isPublish = true;
+    }
     // #ifdef  H5
     this.isWeixin = appCommonH.isWeixin().isWeixin;
     this.isPhone = appCommonH.isWeixin().isPhone;
@@ -895,7 +903,7 @@ export default {
   // margin: 20rpx auto;
   // border-top: 2rpx solid --color(--qui-BOR-ED);
   // border-bottom: 2rpx solid --color(--qui-BOR-ED);
-  padding: 10px 0;
+  // padding: 10px 0;
 }
 .sticky__box {
   // background: --color(--qui-BG-2);
@@ -910,7 +918,7 @@ export default {
   // margin-left: 30rpx;
   font-size: $fg-f26;
   line-height: 80rpx;
-  background: #f5f5f5;
+  background: #f5f5f510;
   padding: 0 10px;
   margin: 10px;
   // border-bottom: 2rpx solid --color(--qui-BOR-ED);
@@ -960,7 +968,7 @@ export default {
   height: 72rpx;
   text-align: center;
   white-space: nowrap;
-  
+
   // border-bottom: 1rpx solid #fff;
   // border-bottom: 2rpx solid --color(--qui-BOR-EEE);
 }

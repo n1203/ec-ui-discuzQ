@@ -75,7 +75,7 @@
           </view>
         </view>
         <view class="popup-share-content-space"></view>
-        <text class="popup-share-btn" @click="cancel('share')">{{ i18n.t('home.cancel') }}</text>
+        <text class="popup-share-btn" @click="cancel('share')">{{ i18n.t('cancel') }}</text>
       </view>
     </uni-popup>
     <qui-toast ref="toast"></qui-toast>
@@ -212,7 +212,7 @@ export default {
       }
       if (this.forums.other.can_create_thread_long) {
         this.bottomData.push({
-          text: this.i18n.t('home.invitation'),
+          text: this.i18n.t('home.post'),
           icon: 'icon-post',
           name: 'post',
           type: 1,

@@ -50,7 +50,7 @@
           </view>
         </view>
         <view class="popup-share-content-space"></view>
-        <text class="popup-share-btn" @click="cancel('share')">{{ i18n.t('home.cancel') }}</text>
+        <text class="popup-share-btn" @click="cancel('share')">{{ i18n.t('cancel') }}</text>
       </view>
     </uni-popup>
     <qui-toast ref="toast"></qui-toast>
@@ -60,6 +60,7 @@
 import forums from '@/mixin/forums';
 import user from '@/mixin/user';
 import { mapState, mapMutations } from 'vuex';
+
 
 export default {
   mixins: [forums, user],
@@ -82,10 +83,10 @@ export default {
           // routePath: 'pages/home/index', // 仅用作标识不用来跳转
         },
         {
-          tabsName: 'home.tabSearch',
-          tabsIcon: 'icon-search',
+          tabsName: 'home.tabTopic',
+          tabsIcon: 'icon-wei',
           id: 2,
-          url: '/pages/site/search',
+          url: '/pages/site/topic/list',
           // routePath: 'pages/my/index', // 仅用作标识不用来跳转
         },
         {
@@ -228,7 +229,7 @@ export default {
       }
       if (this.forums.other.can_create_thread_long) {
         this.bottomData.push({
-          text: this.i18n.t('home.invitation'),
+          text: this.i18n.t('home.post'),
           icon: 'icon-post',
           name: 'post',
           type: 1,

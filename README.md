@@ -51,6 +51,8 @@ index.html
 - [MaxCourse](https://q.e-spy.cn)
 - [无障有爱](https://web.xy1189.com/)
 - [收单学堂](https://shoudanxuetang.com/)
+- [Qilanim 启浪](https://www.qilanim.com/)
+- [实在人](https//www.10z.ren)
 - 暂无更多，使用的站长快来联系添加～～～
 
 ## 联系我们

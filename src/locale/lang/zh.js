@@ -3,13 +3,13 @@
  * 注意和英文或者其它语言对齐
  */
 export default {
+  cancel: '取消',
   discuzq: {
     // 测试，不用的时候可以删掉
     hello: '你好',
     // 常用
     ok: '确认',
     close: '关闭',
-    cancle: '取消',
     // 日期相关
     date: {
       now: '此刻',

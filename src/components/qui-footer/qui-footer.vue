@@ -22,15 +22,13 @@
         <!-- <text class="ft-box-content" :class="{ select: true, active: index === footerIndex }">
           {{ item.tabsName }}
         </text> -->
-        <view v-if="redCircle && item.id === 2" name="icon-circle" class="red-circle"></view>
+        <view v-if="redCircle && item.id === 4" name="icon-circle" class="red-circle"></view>
       </view>
 
       <view class="ft-box-spacal">
         <image class="ft-box-spacal-icon" src="@/static/publish.svg" @click="footerOpen"></image>
       </view>
-
     </view>
-    
     <uni-popup ref="popup" type="bottom">
       <view class="popup-share">
         <view class="popup-share-content">

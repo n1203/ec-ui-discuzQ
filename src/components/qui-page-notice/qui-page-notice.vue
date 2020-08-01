@@ -1,7 +1,7 @@
 <template>
   <view>
     <view class="notice-box">
-      <!-- #ifdef MP-WEIXIN -->
+      <!-- #ifdef _MP-WEIXIN -->
       <uni-nav-bar
         :title="title"
         fixed
@@ -9,7 +9,7 @@
         :background-color="navTheme === $u.light() ? '#ffffff' : '#2e2f30'"
         status-bar
       ></uni-nav-bar>
-      <!-- #endif -->
+      <!-- _#endif -->
       <!-- 通知类型列表 -->
       <scroll-view
         scroll-x
@@ -19,6 +19,7 @@
         class="scroll-Y"
         :style="'top:' + navbarHeight + 'px'"
       >
+        <ec-header-placehoder />
         <view class="notice-box__list fbh">
           <view
             class="ec-notice-box"
@@ -59,10 +60,7 @@
           </view>
         </view>
         <!-- 如果没有会话 -->
-        <view
-          v-if="!dialogList.length === 0"
-          style="text-align: center; padding: 30px; color: #ccc"
-        >
+        <view v-if="dialogList.length === 0" style="text-align: center; padding: 30px; color: #ccc">
           <qui-icon size="100" name="icon-message" />
           <view style="line-height: 40px; font-size: 12px;">暂时没有私信，赶快去联系好友！</view>
         </view>
@@ -292,7 +290,7 @@ export default {
   &__list {
     padding-left: 40rpx;
     background: --color(--qui-BG-2);
-    border-bottom: 2rpx solid --color(--qui-BOR-ED);
+    // border-bottom: 2rpx solid --color(--qui-BOR-ED);
     transition: $switch-theme-time;
 
     &-red-circle {
@@ -316,14 +314,14 @@ export default {
 }
 
 .dialog-box {
-  margin: 20rpx 0;
+  // margin: 20rpx 0;
   background: --color(--qui-BG-2);
   border-bottom: 2rpx solid --color(--qui-BOR-ED);
 
   &__header {
     display: flex;
     justify-content: space-between;
-    border-bottom: 1px solid #f0f0f0;
+    // border-bottom: 1px solid #f0f0f0;
 
     &__info {
       display: flex;
@@ -392,7 +390,6 @@ export default {
 .ec-notice-box {
   width: 17%;
   padding: 1%;
-  margin: 10px 0;
   &__item {
     text-align: center;
     &__icon {
@@ -415,5 +412,9 @@ export default {
       margin-top: 15rpx;
     }
   }
+}
+.notice-box__list {
+  margin: 20rpx 0;
+  padding: 20rpx 0;
 }
 </style>

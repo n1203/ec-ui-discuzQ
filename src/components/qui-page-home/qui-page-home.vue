@@ -35,13 +35,33 @@
         :on-handle-click-search="searchClick"
         @click="open"
         @closeShare="closeShare"
-      ></qui-header-two>
-      <view
-        class="nav"
-        id="navId"
-        :style="headerShow ? '' : 'width:100%;position:fixed;z-index:9;top:' + navbarHeight + 'px;'"
       >
-        <!-- <view class="nav__box">
+        <view
+          class="nav"
+          id="navId"
+          :style="
+            headerShow ? '' : 'width:100%;position:fixed;z-index:9;top:' + navbarHeight + 'px;'
+          "
+        >
+          <u-tabs
+            class="scroll-tab"
+            :list="categories"
+            :current="categoryIndex"
+            @change="toggleTab"
+            is-scroll="isScroll"
+            height="72"
+            active-color="#1878F3"
+          ></u-tabs>
+        </view>
+      </qui-header-two>
+      <!-- <view
+          class="nav"
+          id="navId"
+          :style="
+            headerShow ? '' : 'width:100%;position:fixed;z-index:9;top:' + navbarHeight + 'px;'
+          "
+        > -->
+      <!-- <view class="nav__box">
           <qui-icon
             class="nav__box__icon"
             name="icon-screen"
@@ -50,17 +70,16 @@
             @tap="showFilter"
           ></qui-icon>
         </view> -->
-        <u-tabs
-          class="scroll-tab"
-          :list="categories"
-          :current="categoryIndex"
-          @change="toggleTab"
-          is-scroll="isScroll"
-          height="72"
-          active-color="#1878F3"
-        ></u-tabs>
-      </view>
-
+      <!-- <u-tabs
+            class="scroll-tab"
+            :list="categories"
+            :current="categoryIndex"
+            @change="toggleTab"
+            is-scroll="isScroll"
+            height="72"
+            active-color="#1878F3"
+          ></u-tabs>
+        </view> -->
       <ec-publish v-if="isPublish" />
 
       <!-- <view class="sticky"> -->
@@ -69,7 +88,32 @@
           :style="headerShow ? 'margin-top:20rpx' : 'margin-top:130rpx'"
           v-if="sticky.length > 0"
         > -->
-      <view class="sticky" v-if="sticky.length > 0">
+      <ec-sticky :items="sticky" :handle-click="stickyClick" />
+      <!-- <view class="sticky" v-if="sticky.length > 0">
+        <scroll-view scroll-x="true">
+          <view class="sticky__box fbh">
+            <view
+              class="sticky__isSticky"
+              v-for="(item, index) in sticky"
+              :key="index"
+              @click="stickyClick(item._jv.id)"
+            >
+              <view class="sticky__isSticky__box">{{ i18n.t('home.sticky') }}</view>
+              {{ item.firstPost.summary }}
+              <view class="sticky__isSticky__count">
+                <qui-uparse
+                  class="sticky__isSticky__text"
+                  :content="item.type == 1 ? item.title : item.firstPost.summary"
+                ></qui-uparse>
+                {{ item.type == 1 ? item.title : item.firstPost.summary }}
+              </view>
+            </view>
+            <view class="sticky__isSticky__empty"></view>
+          </view>
+        </scroll-view>
+      </view> -->
+
+      <!-- <view class="sticky" v-if="sticky.length > 0">
         <scroll-view scroll-x="true">
           <view class="sticky__box fbh">
             <view
@@ -84,13 +128,13 @@
                   class="sticky__isSticky__text"
                   :content="item.type == 1 ? item.title : item.firstPost.summary"
                 ></qui-uparse>
-                <!-- {{ item.type == 1 ? item.title : item.firstPost.summary }} -->
+                {{ item.type == 1 ? item.title : item.firstPost.summary }}
               </view>
             </view>
             <view class="sticky__isSticky__empty"></view>
           </view>
         </scroll-view>
-      </view>
+      </view> -->
       <!-- </view> -->
       <view class="main" id="main">
         <qui-content
@@ -417,15 +461,15 @@ export default {
       this.loadThreads();
     });
 
-    this.$uGetRect('#navId').then(rect => {
-      this.navTop = rect.top;
-      this.navHeight = rect.height;
-    });
-    if (this.forums.set_site) {
-      uni.setNavigationBarTitle({
-        title: this.forums.set_site.site_name,
-      });
-    }
+    // this.$uGetRect('#soltNav').then(rect => {
+    //   this.navTop = rect.top;
+    //   this.navHeight = rect.height;
+    // });
+    // if (this.forums.set_site) {
+    //   uni.setNavigationBarTitle({
+    //     title: this.forums.set_site.site_name,
+    //   });
+    // }
   },
   methods: {
     ...mapMutations({
@@ -858,7 +902,8 @@ export default {
 .home {
   min-height: 100vh;
   color: --color(--qui-FC-333);
-  background-color: --color(--qui-BG-1);
+  background-color: #f6f6f6;
+  // background-color: --color(--qui-BG-1);
 }
 .status-bar {
   position: fixed;
@@ -871,7 +916,7 @@ export default {
   width: 100%;
   overflow: hidden;
   // background: --color(--qui-BG-2);
-  background: --color(--qui-BG-HIGH-LIGHT);
+  // background: --color(--qui-BG-HIGH-LIGHT);
   // border-bottom: 2rpx solid --color(--qui-BOR-ED);
   transition: box-shadow 0.2s, -webkit-transform 0.2s;
 

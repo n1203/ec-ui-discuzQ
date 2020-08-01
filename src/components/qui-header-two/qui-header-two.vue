@@ -3,20 +3,20 @@
     :class="['header', headerH5]"
     :style="{ 'background-image': 'url(' + backgroundHeadFullImg + ')' }"
   >
-    <!-- #ifdef H5-->
-    <!-- <qui-header-back
-      :title="title"
-      :is-show-home="isShowHome"
-      :is-show-back="isShowBack"
-      :is-show-more="isShowMore"
-    ></qui-header-back> -->
-    <!-- #endif -->
     <view class="logoBox">
       <view class="fbh fbjc logoBox__header">
         <view class="logoBox__header__icon">
-          <image
+          <!-- <image
             mode="heightFix"
+            style="height: 24px; width: 30px"
+            lazy-load
             :src="headImg != '' && headImg != null ? headImg : 'https://i0.hdslb.com/bfs/sycp/creative_img/202007/d62064d5f8c9961c1a99a170434169d8.jpg'"
+          ></image> -->
+          <image
+            class="logo"
+            :src="headImg != '' && headImg != null ? headImg : '/static/favicon.ico'"
+            mode="aspectFit"
+            lazy-load
           ></image>
         </view>
         <view @click="onHandleClickSearch" class="fb10 logoBox__header__search">
@@ -28,6 +28,10 @@
           <!-- <span>{{ this.$i18n.t('ec.tags') }}</span> -->
         </view>
       </view>
+      <view class="solt" id="soltNav">
+        <slot></slot>
+      </view>
+
       <!-- <image
         class="logo"
         :src="headImg != '' && headImg != null ? headImg : '/favicon.ico'"
@@ -56,6 +60,7 @@
         </view>
       </view>
     </view> -->
+    <ec-header-placehoder />
   </view>
 </template>
 <script>
@@ -156,13 +161,12 @@ export default {
   position: relative;
   width: 100%;
   height: 400rpx;
-  background: #1878f3;
+  // background: #1878f3;
   background-size: 100%;
   .logo {
     display: block;
-    // width: 100%;
-    max-height: 88rpx;
-    padding-top: 159rpx;
+    width: 100px;
+    max-height: 30rpx;
     margin: 0 auto;
   }
   /deep/ .qui-back {
@@ -238,8 +242,8 @@ export default {
   height: 80rpx;
   background-size: 100%;
   .logo {
-    max-height: 74rpx;
-    padding-top: 58rpx;
+    // max-height: 74rpx;
+    // padding-top: 58rpx;
   }
   .circleDet {
     padding: 49rpx 20rpx 47rpx;
@@ -250,7 +254,7 @@ export default {
     padding: 10px 15px;
     line-height: 26px;
     &__search {
-      background: #349aff;
+      // background: #349aff;
       color: #80c5ff;
       text-indent: 10px;
       border-radius: 3px;
@@ -261,7 +265,7 @@ export default {
       font-size: 14px;
       text-align: center;
       height: 26px;
-      width: auto;
+      max-width: 100px;
       display: block;
       &__logo {
         height: 26px;
@@ -270,5 +274,9 @@ export default {
       }
     }
   }
+}
+.solt {
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: saturate(180%) blur(20px) opacity(70%);
 }
 </style>

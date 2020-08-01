@@ -2,6 +2,36 @@
   <qui-page ref="quiPage" :data-qui-theme="theme" @pageLoaded="handlePageLoaded" :header="false">
     <view class="content">
       <view class="view-content">
+        <!-- <swiper>
+          <swiper-item>
+            <qui-page-home
+              ref="home"
+              :nav-theme="theme"
+              @handleClickShare="handleClickShare"
+            ></qui-page-home>
+          </swiper-item>
+          <swiper-item>
+            <qui-page-topic
+              ref="topic"
+              :nav-theme="theme"
+              @handleClickShare="handleClickShare"
+            ></qui-page-topic>
+          </swiper-item>
+          <swiper-item>
+            <qui-page-notice
+              ref="quinotice"
+              :nav-theme="theme"
+              @handleClickShare="handleClickShare"
+            ></qui-page-notice>
+          </swiper-item>
+          <swiper-item>
+            <qui-page-my
+              ref="quimy"
+              :nav-theme="theme"
+              @handleClickShare="handleClickShare"
+            ></qui-page-my>
+          </swiper-item>
+        </swiper> -->
         <qui-page-home
           v-if="showHome"
           ref="home"
@@ -23,6 +53,27 @@
           ref="quimy"
           :style="{ display: show_index === 4 ? 'block' : 'none' }"
         ></qui-page-my>
+        <!-- <qui-page-home
+          v-if="showHome"
+          ref="home"
+          :nav-theme="theme"
+          :style="{ display: show_index === 0 ? 'block' : 'none' }"
+          @handleClickShare="handleClickShare"
+        ></qui-page-home>
+        <qui-page-topic
+          ref="topic"
+          :nav-theme="theme"
+          :style="{ display: show_index === 1 ? 'block' : 'none' }"
+        ></qui-page-topic>
+        <qui-page-notice
+          :nav-theme="theme"
+          ref="quinotice"
+          :style="{ display: show_index === 3 ? 'block' : 'none' }"
+        ></qui-page-notice>
+        <qui-page-my
+          ref="quimy"
+          :style="{ display: show_index === 4 ? 'block' : 'none' }"
+        ></qui-page-my> -->
       </view>
 
       <view class="tabBar">

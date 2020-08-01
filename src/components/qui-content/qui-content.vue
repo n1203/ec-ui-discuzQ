@@ -11,7 +11,7 @@
       <view class="fbh">
         <view class="themeItem__header" @click="headClick" @click.stop="">
           <view class="themeItem__header__img">
-            <qui-avatar :user="{ avatarUrl: themeImage, username: userName }" />
+            <qui-avatar size="70" :user="{ avatarUrl: themeImage, username: userName }" />
           </view>
           <view class="themeItem__header__title">
             <view class="themeItem__header__title__top">
@@ -598,7 +598,7 @@ export default {
     &__img {
       width: 80rpx;
       height: 80rpx;
-      margin-right: 18rpx;
+      margin-right: 12rpx;
       // background: #ccc;
       border-radius: 100%;
 
@@ -626,6 +626,7 @@ export default {
         overflow: hidden;
         font-weight: bold;
         line-height: 37rpx;
+        font-size: 28rpx;
         color: --color(--qui-FC-333);
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -635,13 +636,14 @@ export default {
       &__isAdmin {
         margin-left: 13rpx;
         font-weight: 400;
+        font-size: 24rpx;
         color: --color(--qui-FC-AAA);
         transition: $switch-theme-time;
       }
 
       &__time {
-        padding-top: 10rpx;
-        font-size: $fg-f24;
+        padding-top: 4rpx;
+        font-size: 24rpx;
         font-weight: 400;
         line-height: 31rpx;
         color: --color(--qui-FC-AAA);
@@ -673,7 +675,7 @@ export default {
       padding-bottom: 20rpx;
       overflow: hidden;
       font-family: $font-family;
-      font-size: $fg-f28;
+      font-size: 28rpx;
       font-weight: 400;
       line-height: 45rpx;
       color: --color(--qui-FC-333);

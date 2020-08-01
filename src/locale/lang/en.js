@@ -9,7 +9,7 @@ export default {
     // 常用
     ok: 'Ok',
     close: 'Close',
-    cancle: 'Cancle',
+    cancel: 'Cancel',
     // 日期相关
     date: {
       now: 'Now',

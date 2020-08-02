@@ -1,45 +1,69 @@
 <template>
-  <view
-    :class="['header', headerH5]"
-    :style="{ 'background-image': 'url(' + backgroundHeadFullImg + ')' }"
-  >
-    <view class="logoBox">
-      <view class="fbh fbjc logoBox__header">
-        <view class="logoBox__header__icon">
-          <!-- <image
+  <view>
+    <view
+      :class="['header', headerH5]"
+      :style="
+        ({ 'background-image': 'url(' + backgroundHeadFullImg + ')' },
+        headerShow ? '' : 'width:100%;position:fixed;z-index:9;top:' + 0 + 'px;')
+      "
+    >
+      <view class="logoBox">
+        <view v-if="headerShow" class="fbh fbjc logoBox__header">
+          <view class="logoBox__header__icon">
+            <image
+              class="logo"
+              :src="headImg != '' && headImg != null ? headImg : '/static/logo.png'"
+              lazy-load
+              mode="aspectFit"
+            ></image>
+          </view>
+          <view class="fbh fb1 fbje">
+            <view @click="onHandleClickSearch" class="logoBox__header__icon iconMenu">
+              <qui-icon name="icon-search" size="18" color="#fff"></qui-icon>
+              <!-- <span>{{ this.$i18n.t('ec.tags') }}</span> -->
+            </view>
+            <view @click="onHandleClickSetting" class="logoBox__header__icon iconMenn">
+              <qui-icon name="icon-screen" size="18" color="#fff"></qui-icon>
+              <!-- <span>{{ this.$i18n.t('ec.tags') }}</span> -->
+            </view>
+          </view>
+        </view>
+        <view class="solt" id="soltNav">
+          <slot></slot>
+        </view>
+      </view>
+    </view>
+    <view
+      :class="['header', headerH5]"
+      v-if="!headerShow"
+    >
+      <view class="logoBox">
+        <view class="fbh fbjc logoBox__header">
+          <view class="logoBox__header__icon"></view>
+          <view class="fbh fb1 fbje">
+            <view class="logoBox__header__icon iconMenu"></view>
+            <view class="logoBox__header__icon iconMenn"></view>
+          </view>
+        </view>
+        <view class="solt" id="soltNav"></view>
+      </view>
+    </view>
+  </view>
+  <!-- :style="headerShow ? '' : 'width:100%;position:fixed;z-index:9;top:' + navbarHeight + 'px;'" -->
+
+  <!-- <image
             mode="heightFix"
             style="height: 24px; width: 30px"
             lazy-load
             :src="headImg != '' && headImg != null ? headImg : 'https://i0.hdslb.com/bfs/sycp/creative_img/202007/d62064d5f8c9961c1a99a170434169d8.jpg'"
           ></image> -->
-          <image
-            class="logo"
-            :src="headImg != '' && headImg != null ? headImg : '/static/favicon.ico'"
-            mode="aspectFit"
-            lazy-load
-          ></image>
-        </view>
-        <view @click="onHandleClickSearch" class="fb10 logoBox__header__search">
-          <qui-icon name="icon-search" size="14" color="#80c5ff"></qui-icon>
-          <span>{{ this.$i18n.t('ec.searchPlaceholder') }}</span>
-        </view>
-        <view @click="onHandleClickSetting" class="logoBox__header__icon">
-          <qui-icon name="icon-screen" size="14" color="#fff"></qui-icon>
-          <!-- <span>{{ this.$i18n.t('ec.tags') }}</span> -->
-        </view>
-      </view>
-      <view class="solt" id="soltNav">
-        <slot></slot>
-      </view>
-
-      <!-- <image
+  <!-- <image
         class="logo"
         :src="headImg != '' && headImg != null ? headImg : '/favicon.ico'"
         mode="aspectFit"
         lazy-load
       ></image> -->
-    </view>
-    <!-- <view class="circleDet">
+  <!-- <view class="circleDet">
       <text>
         <text class="circleDet-txt">{{ t.theme }}</text>
         <text class="circleDet-num">{{ themeNum }}</text>
@@ -60,8 +84,6 @@
         </view>
       </view>
     </view> -->
-    <ec-header-placehoder />
-  </view>
 </template>
 <script>
 let headerH5 = 'header-h5';
@@ -130,6 +152,15 @@ export default {
     onHandleClickSearch: {
       type: Function,
       default: () => {},
+    },
+    // 是否吸顶状态
+    suspended: {
+      type: Boolean,
+      default: false,
+    },
+    headerShow: {
+      type: Boolean,
+      default: true,
     },
   },
   data: () => {
@@ -239,20 +270,26 @@ export default {
   }
 }
 .header-h5 {
-  height: 80rpx;
+  height: 180rpx;
   background-size: 100%;
   .logo {
-    // max-height: 74rpx;
-    // padding-top: 58rpx;
+    max-height: 50rpx;
+    padding-top: 10rpx;
   }
   .circleDet {
     padding: 49rpx 20rpx 47rpx;
   }
 }
 .logoBox {
+  background: linear-gradient(127.43deg, #00f0ff 0%, #a80028 100%),
+    radial-gradient(107% 142.8% at 15.71% 104.5%, #f3d0fc 0%, #1700a4 100%),
+    radial-gradient(111% 111% at 74.29% -11%, #a90000 0%, #00ffe0 100%),
+    linear-gradient(127.43deg, #b7d500 0%, #2200aa 100%);
+  background-blend-mode: overlay, difference, difference, normal;
   &__header {
-    padding: 10px 15px;
-    line-height: 26px;
+    padding: 25rpx 20rpx;
+    box-sizing: border-box;
+    line-height: 60rpx;
     &__search {
       // background: #349aff;
       color: #80c5ff;
@@ -278,5 +315,9 @@ export default {
 .solt {
   background: rgba(255, 255, 255, 0.12);
   backdrop-filter: saturate(180%) blur(20px) opacity(70%);
+}
+.iconMenu {
+  width: 40rpx;
+  display: block;
 }
 </style>

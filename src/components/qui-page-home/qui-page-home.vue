@@ -1,6 +1,15 @@
 <template>
   <view class="home">
-    <!-- <view @tap="handleSearch">
+    <scroll-view
+      scroll-y="true"
+      scroll-with-animation="true"
+      show-scrollbar="false"
+      class="scroll-y"
+      @scroll="scroll"
+      @scrolltolower="pullDown"
+      @scrolltoupper="toUpper"
+    >
+      <!-- <view @tap="handleSearch">
       <uni-nav-bar2
         class="status-bar"
         :style="'transform:' + navBarTransform"
@@ -11,15 +20,6 @@
         status-bar
       ></uni-nav-bar2>
     </view> -->
-    <scroll-view
-      scroll-y="true"
-      scroll-with-animation="true"
-      show-scrollbar="false"
-      class="scroll-y"
-      @scroll="scroll"
-      @scrolltolower="pullDown"
-      @scrolltoupper="toUpper"
-    >
       <qui-header-two
         :head-img="forums.set_site ? forums.set_site.site_header_logo : ''"
         :background-head-full-img="forums.set_site ? forums.set_site.site_background_image : ''"
@@ -33,16 +33,13 @@
         :is-show-home="false"
         :on-handle-click-setting="showFilter"
         :on-handle-click-search="searchClick"
+        :suspended="suspended"
+        :header-show="headerShow"
         @click="open"
         @closeShare="closeShare"
       >
-        <view
-          class="nav"
-          id="navId"
-          :style="
-            headerShow ? '' : 'width:100%;position:fixed;z-index:9;top:' + navbarHeight + 'px;'
-          "
-        >
+        <!-- :style="headerShow ? '' : 'width:100%;position:fixed;z-index:9;top:' + navbarHeight + 'px;'" -->
+        <view class="nav" id="navId">
           <u-tabs
             class="scroll-tab"
             :list="categories"
@@ -315,7 +312,7 @@ export default {
       showSearch: true, // 筛选显示搜索
       navbarHeight, // 顶部导航栏的高度
       headerShow: true, // 是否显示标题图(背景+logo)，不显示标题图时，分类切换栏需要固定顶部
-      navTop: 0, // 切换分类导航的top
+      navTop: 38, // 切换分类导航的top
       navHeight: 0, // 切换分类导航的高度
       nowThreadId: '', // 当前点击主题ID
       filterTop: '', // 筛选弹窗的位置

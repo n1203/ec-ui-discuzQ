@@ -113,8 +113,8 @@ export default {
     register() {
       if (this.username === '') {
         this.showDialog('用户名不能为空');
-      } else if (!RegExp(/^.{2,15}.$/).test(this.username)) {
-        this.showDialog('用户名长度必须在2-15之间');
+      } else if (!RegExp(/^.{3,15}.$/).test(this.username)) {
+        this.showDialog('用户名长度必须在3-15之间');
       } else if (this.password === '') {
         this.showDialog('密码不能为空');
       } else if (this.forums && this.forums.set_reg && this.forums.set_reg.register_captcha) {

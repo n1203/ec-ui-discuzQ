@@ -125,7 +125,7 @@ export default {
     // 获取用户信息
     getusertitle() {
       this.reconame = this.userInfo.username;
-      this.recoimg = this.userInfo.avatarUrl || `${this.$u.host()}static/images/noavatar.gif`;
+      this.recoimg = this.userInfo.avatarUrl || `${this.$u.host()}static/noavatar.gif`;
       this.getthemdata();
     },
     // 获取帖子内容信息

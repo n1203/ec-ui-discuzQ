@@ -1,8 +1,5 @@
 <template>
   <qui-page :data-qui-theme="theme" class="member-box">
-    <!-- #ifdef H5-->
-    <qui-header-back title="成员管理"></qui-header-back>
-    <!-- #endif -->
     <!-- 搜索成员 -->
     <view class="member-box-search">
       <view class="search">
@@ -317,12 +314,12 @@ export default {
     top: 0rpx;
     z-index: 99;
     width: 100%;
+    /* #ifdef H5 */
+    margin-top: 44px;
+    /* #endif */
   }
 
   .search-box {
-    /* #ifdef H5 */
-    margin: 44px 0rpx 0rpx;
-    /* #endif */
     background-color: --color(--qui-BG-2);
   }
 }

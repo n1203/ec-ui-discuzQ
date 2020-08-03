@@ -1,8 +1,5 @@
 <template>
   <qui-page :data-qui-theme="theme" class="profile">
-    <!-- #ifdef H5-->
-    <qui-header-back :title="i18n.t('profile.myprofile')"></qui-header-back>
-    <!-- #endif -->
     <view class="my-profile">
       <!-- canEditUsername 是否允许修改用户名-->
       <navigator
@@ -126,7 +123,6 @@ export default {
   computed: {
     profile() {
       const data = this.$store.getters['jv/get'](`users/${this.userId}`);
-      data.avatarUrl = data.avatarUrl || '/static/noavatar.gif';
       return data;
     },
   },
@@ -181,11 +177,8 @@ export default {
   overflow: hidden;
   .my-profile {
     position: relative;
-    padding-top: 40rpx;
+    padding-top: 20rpx;
     padding-left: 40rpx;
-    /* #ifdef H5 */
-    margin-top: 50rpx;
-    /* #endif */
     background: --color(--qui-BG-2);
     border-bottom: 2rpx solid --color(--qui-BOR-ED);
     box-sizing: border-box;

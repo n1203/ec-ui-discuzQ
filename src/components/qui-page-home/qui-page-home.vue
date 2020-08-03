@@ -1,5 +1,6 @@
 <template>
   <view class="home">
+    <!-- #ifdef MP-WEIXIN -->
     <uni-nav-bar
       class="status-bar"
       :style="'transform:' + navBarTransform"
@@ -9,6 +10,7 @@
       :background-color="navTheme === $u.light() ? '#ffffff' : '#2e2f30'"
       status-bar
     ></uni-nav-bar>
+    <!-- #endif -->
     <scroll-view
       scroll-y="true"
       scroll-with-animation="true"
@@ -41,7 +43,7 @@
           <qui-icon
             class="nav__box__icon"
             name="icon-screen"
-            size="28"
+            size="32"
             :color="show ? '#1878F3' : '#777'"
             @tap="showFilter"
           ></qui-icon>
@@ -55,20 +57,26 @@
           active-color="#1878F3"
         ></u-tabs>
       </view>
-      <view class="sticky" :style="headerShow ? 'margin-top:30rpx' : 'margin-top:130rpx'">
-        <view
-          class="sticky__isSticky"
-          v-for="(item, index) in sticky"
-          :key="index"
-          @click="stickyClick(item._jv.id)"
-        >
-          <view class="sticky__isSticky__box">{{ i18n.t('home.sticky') }}</view>
-          <view class="sticky__isSticky__count">
-            <qui-uparse
-              class="sticky__isSticky__text"
-              :content="item.type == 1 ? item.title : item.firstPost.summary"
-            ></qui-uparse>
-            <!-- {{ item.type == 1 ? item.title : item.firstPost.summary }} -->
+      <view
+        class="sticky"
+        :style="headerShow ? 'margin-top:20rpx' : 'margin-top:130rpx'"
+        v-if="sticky.length > 0"
+      >
+        <view class="sticky__box">
+          <view
+            class="sticky__isSticky"
+            v-for="(item, index) in sticky"
+            :key="index"
+            @click="stickyClick(item._jv.id)"
+          >
+            <view class="sticky__isSticky__box">{{ i18n.t('home.sticky') }}</view>
+            <view class="sticky__isSticky__count">
+              <qui-uparse
+                class="sticky__isSticky__text"
+                :content="item.type == 1 ? item.title : item.firstPost.summary"
+              ></qui-uparse>
+              <!-- {{ item.type == 1 ? item.title : item.firstPost.summary }} -->
+            </view>
           </view>
         </view>
       </view>
@@ -99,6 +107,7 @@
           :video-height="item.threadVideo && item.threadVideo.height"
           :video-id="item.threadVideo && item.threadVideo._jv.id"
           :cover-image="item.threadVideo && item.threadVideo.cover_url"
+          :duration="item.threadVideo && item.threadVideo.duration"
           :is-deleted="item.isDeleted"
           :scroll-top="scrollTop"
           @click="handleClickShare(item._jv.id)"
@@ -121,7 +130,9 @@
       <!-- #ifdef H5-->
       <view class="record" v-if="forums.set_site ? forums.set_site.site_record : '' !== ''">
         <!-- <text>{{ i18n.t('home.record') }}</text> -->
-        <text>{{ forums.set_site ? forums.set_site.site_record : '' }}</text>
+        <a class="record__url" href="http://www.beian.miit.gov.cn" target="_blank">
+          {{ forums.set_site ? forums.set_site.site_record : '' }}
+        </a>
       </view>
       <!-- #endif -->
     </scroll-view>
@@ -201,7 +212,13 @@ import { mapMutations, mapState } from 'vuex';
 
 const sysInfo = uni.getSystemInfoSync();
 
-const navbarHeight = sysInfo.statusBarHeight + 44; /* uni-nav-bar的高度 */
+let navbarHeight;
+// #ifdef H5
+navbarHeight = sysInfo.statusBarHeight; /* uni-nav-bar的高度 */
+// #endif
+// #ifdef MP-WEIXIN
+navbarHeight = sysInfo.statusBarHeight + 44; /* uni-nav-bar的高度 */
+// #endif
 const navBarTransform = `translateY(-${navbarHeight}px)`;
 
 export default {
@@ -403,9 +420,11 @@ export default {
     },
     scroll(event) {
       this.scrollTop = event.detail.scrollTop;
+      // #ifdef MP-WEIXIN
       if (!this.navbarHeight) {
         return;
       }
+
       if (event.detail.scrollTop + this.navbarHeight + 20 >= this.navTop) {
         this.headerShow = false;
         this.navBarTransform = 'none';
@@ -413,10 +432,26 @@ export default {
         this.headerShow = true;
         this.navBarTransform = `translate3d(0, -${this.navbarHeight}px, 0)`;
       }
+      // #endif
+
+      // #ifdef H5
+      if (event.detail.scrollTop >= this.navTop) {
+        this.headerShow = false;
+        this.navBarTransform = 'none';
+      } else {
+        this.headerShow = true;
+        this.navBarTransform = `translate3d(0, -${this.navbarHeight}px, 0)`;
+      }
+      // #endif
     },
     // 滑动到顶部
     toUpper() {
       this.headerShow = true;
+      // console.log('refresh');
+      // this.ontrueGetList();
+      // setTimeout(function() {
+      // uni.startPullDownRefresh();
+      // }, 1000);
     },
     // 初始化选中的选项卡
     getCategorieIndex(tagId) {
@@ -476,7 +511,7 @@ export default {
           url: `/pages/topic/index?id=${thread._jv.id}`,
         });
       } else {
-        this.$store.getters['session/get']('auth').open();
+        // this.$store.getters['session/get']('auth').open();
         this.$refs.toast.show({ message: this.i18n.t('home.noPostingTopic') });
       }
     },
@@ -790,7 +825,7 @@ export default {
   width: 100%;
   overflow: hidden;
   background: --color(--qui-BG-2);
-  border-bottom: 2rpx solid --color(--qui-BOR-ED);
+  // border-bottom: 2rpx solid --color(--qui-BOR-ED);
   transition: box-shadow 0.2s, -webkit-transform 0.2s;
 
   &__box {
@@ -817,25 +852,31 @@ export default {
 }
 
 .sticky {
-  margin: 30rpx auto;
+  // margin: 20rpx auto;
+  border-top: 2rpx solid --color(--qui-BOR-ED);
+  border-bottom: 2rpx solid --color(--qui-BOR-ED);
+}
+.sticky__box {
+  background: --color(--qui-BG-2);
 }
 
 .sticky__isSticky {
   display: flex;
   width: 710rpx;
   height: 80rpx;
-  margin: 10rpx auto;
+  margin-left: 30rpx;
   font-size: $fg-f26;
   line-height: 80rpx;
   background: --color(--qui-BG-2);
-  border-radius: 6rpx;
-  box-shadow: 0rpx 2rpx 4rpx rgba(0, 0, 0, 0.05);
+  border-bottom: 2rpx solid --color(--qui-BOR-ED);
+  // border-radius: 6rpx;
+  // box-shadow: 0rpx 2rpx 4rpx rgba(0, 0, 0, 0.05);
   &__box {
     // display: block;
     width: 62rpx;
     height: 35rpx;
     margin-top: 27rpx;
-    margin-left: 20rpx;
+    // margin-left: 20rpx;
     font-size: $fg-f20;
     line-height: 35rpx;
     color: --color(--qui-FC-777);
@@ -851,7 +892,7 @@ export default {
     margin-left: 21rpx;
     overflow: hidden;
     line-height: 35rpx;
-    color: #777;
+    color: --color(--qui-FC-333);
     text-overflow: ellipsis;
     white-space: nowrap;
     &__text {
@@ -861,6 +902,9 @@ export default {
     }
   }
 }
+.sticky__isSticky:last-child {
+  border-bottom: none;
+}
 .horizonal-tab .active {
   color: --color(--qui-BG-HIGH-LIGHT);
 }
@@ -869,7 +913,7 @@ export default {
   height: 100rpx;
   text-align: center;
   white-space: nowrap;
-  border-bottom: 1rpx solid --color(--qui-BOR-EEE);
+  border-bottom: 2rpx solid --color(--qui-BOR-EEE);
 }
 .scroll-tab-item {
   z-index: 1;
@@ -895,7 +939,7 @@ export default {
 .scroll-y {
   // max-height: calc(100vh - 497rpx);
   // max-height: calc(100vh - 100rpx);
-  height: calc(100vh - 119rpx);
+  height: calc(100vh - 90rpx);
 }
 
 .nav .filter-modal {
@@ -916,7 +960,14 @@ export default {
   height: 40rpx;
   margin-top: -100rpx;
   font-size: $fg-f26;
-  color: #b2b2b2;
+  color: --color(--qui-FC-B2);
   text-align: center;
+  &record__url {
+    color: --color(--qui-BG-HIGH-LIGHT);
+  }
+  a {
+    color: --color(--qui-FC-B2);
+    text-decoration: none;
+  }
 }
 </style>

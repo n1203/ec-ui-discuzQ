@@ -6,6 +6,7 @@
       "path": "pages/home/index",
       "style": {
         "navigationStyle": "custom"
+        // "enablePullDownRefresh": true
         // "onReachBottomDistance":126  //距离底部多远时触发 单位px
       }
     },
@@ -149,13 +150,13 @@
       }
     },
     {
-      "path": "pages/site/payh5",
+      "path": "pages/site/info",
       "style": {
         "navigationBarTitleText": "站点信息"
       }
     },
     {
-      "path": "pages/site/info",
+      "path": "pages/site/payH5",
       "style": {
         "navigationBarTitleText": "站点信息"
       }

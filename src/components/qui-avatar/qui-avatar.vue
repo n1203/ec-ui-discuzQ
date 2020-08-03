@@ -60,7 +60,7 @@ export default {
       return `background-color: #${color};${sizes[this.size]}`;
     },
     error() {
-      this.avatarUrl = false;
+      this.user.avatarUrl = false;
     },
     click() {
       this.$emit('click');

@@ -1,8 +1,5 @@
 <template>
   <qui-page :data-qui-theme="theme">
-    <!-- #ifdef H5-->
-    <qui-header-back title="" :is-show-more="false"></qui-header-back>
-    <!-- #endif -->
     <view class="register-bind-box">
       <view class="register-bind-box-h">{{ i18n.t('user.registerBind') }}</view>
       <view class="register-bind-box-con">
@@ -225,9 +222,6 @@ export default {
 @import '@/styles/base/theme/fn.scss';
 .register-bind-box {
   height: 100vh;
-  /* #ifdef H5 */
-  margin: 44px 0rpx 0rpx;
-  /* #endif */
   font-size: $fg-f28;
   background-color: --color(--qui-BG-2);
 

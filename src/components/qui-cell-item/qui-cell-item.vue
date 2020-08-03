@@ -13,7 +13,7 @@
         <qui-icon
           class="arrow"
           name="icon-folding-r"
-          size="22"
+          size="26"
           color="#ddd"
           v-if="arrow"
         ></qui-icon>
@@ -25,7 +25,7 @@
         <qui-icon
           class="arrow"
           name="icon-folding-r"
-          size="22"
+          size="26"
           color="#ddd"
           v-if="arrow"
         ></qui-icon>

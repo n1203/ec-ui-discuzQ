@@ -1,8 +1,5 @@
 <template>
   <qui-page :data-qui-theme="theme">
-    <!-- #ifdef H5-->
-    <qui-header-back title="" :is-show-more="false"></qui-header-back>
-    <!-- #endif -->
     <view class="register-box">
       <view class="register-box-h">{{ i18n.t('user.register') }}</view>
       <view class="register-box-con">
@@ -193,6 +190,24 @@ export default {
               duration: 2000,
             });
           }
+          if (
+            result &&
+            result.data &&
+            result.data.errors &&
+            result.data.errors[0].code === 'register_validate'
+          ) {
+            this.$store
+              .dispatch('forum/setError', {
+                code: 'register_validate',
+                status: 500,
+              })
+              .then(res => {
+                console.log(res);
+                uni.navigateTo({
+                  url: '/pages/home/index',
+                });
+              });
+          }
         })
         .catch(err => {
           console.log(err);
@@ -223,9 +238,6 @@ export default {
 @import '@/styles/base/theme/fn.scss';
 .register-box {
   height: 100vh;
-  /* #ifdef H5 */
-  margin: 44px 0rpx 0rpx;
-  /* #endif */
   font-size: $fg-f28;
   background-color: --color(--qui-BG-2);
 

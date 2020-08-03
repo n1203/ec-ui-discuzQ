@@ -37,7 +37,7 @@
             <qui-icon
               class="text"
               :name="followingItem.toUser.follow == 0 ? 'icon-follow' : 'icon-each-follow'"
-              size="22"
+              size="24"
               :color="
                 followingItem.toUser.follow == 0
                   ? '#777'
@@ -151,7 +151,9 @@ export default {
             this.$emit('changeFollow', { userId: this.userId });
           }
           // is_mutual 是否互相关注 1 是 0 否
-          this.followingList[index].toUser.follow = res.is_mutual === 1 ? 2 : 1;
+          const item = this.followingList[index];
+          item.toUser.follow = res.is_mutual === 1 ? 2 : 1;
+          this.$set(this.followingList, index, item);
         });
     },
     // 取消关注
@@ -165,10 +167,11 @@ export default {
       // #endif
       this.$store.dispatch('jv/delete', `follow/${userInfo.id}/1`).then(() => {
         if (this.userId === this.currentLoginId) {
-          // this.followingList.splice(index, 1);
           this.$emit('changeFollow', { userId: this.userId });
         }
-        this.followingList[index].toUser.follow = 0;
+        const item = this.followingList[index];
+        item.toUser.follow = 0;
+        this.$set(this.followingList, index, item);
       });
     },
   },
@@ -180,7 +183,6 @@ export default {
 @import '@/styles/base/theme/fn.scss';
 
 .following {
-  padding: 0 20rpx;
   font-size: $fg-f28;
   .cell-item__body__right {
     font-size: $fg-f28;
@@ -198,7 +200,7 @@ export default {
   padding: 20rpx 0;
   margin-bottom: 30rpx;
   background: --color(--qui-BG-2);
-  box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.05);
+  border-bottom: solid 2rpx --color(--qui-BG-777);
 }
 .follow-content__items {
   position: relative;

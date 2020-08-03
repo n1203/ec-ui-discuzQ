@@ -1,5 +1,5 @@
 <template>
-  <qui-page :data-qui-theme="theme" class="site">
+  <qui-page :data-qui-theme="theme" class="site" :header="false">
     <qui-header
       :head-img="
         forums.set_site && forums.set_site.site_logo
@@ -213,6 +213,12 @@ export default {
       return this.$store.getters['session/get']('userId');
     },
   },
+  created() {
+    // 华为手机支付后不刷新也不进入任何生命周期的情况
+    this.$u.event.$on('refresh', () => {
+      window.location.reload();
+    });
+  },
   onLoad() {
     // #ifdef MP-WEIXIN
     uni.hideHomeButton();
@@ -249,6 +255,13 @@ export default {
     }
     return {
       title: this.forums.set_site.site_name,
+    };
+  },
+  // 分享到朋友圈
+  onShareTimeline() {
+    return {
+      title: this.forums.set_site.site_name,
+      query: '',
     };
   },
   methods: {
@@ -352,8 +365,8 @@ export default {
             this.onBridgeReady(res);
           }
         } else if (browserType === '2') {
-          const url = encodeURI(`${DISCUZ_REQUEST_HOST}pages/site/info`);
-          window.location.replace(`${res.wechat_h5_link}&redirect_url=${url}`);
+          const url = encodeURI(`${DISCUZ_REQUEST_HOST}pages/site/payH5`);
+          window.location.href = `${res.wechat_h5_link}&redirect_url=${url}`;
         } else if (browserType === '3') {
           if (res) {
             this.codeUrl = res.wechat_qrcode;
@@ -411,9 +424,7 @@ export default {
         res => {
           // alert('支付唤醒');
           if (res.err_msg === 'get_brand_wcpay_request:ok') {
-            uni.redirectTo({
-              url: '/pages/home/index',
-            });
+            window.location.href = '/pages/home/index';
             // 微信支付成功，进行支付成功处理
           } else if (res.err_msg === 'get_brand_wcpay_request:cancel') {
             // 取消支付
@@ -504,7 +515,7 @@ export default {
     padding-top: 71rpx;
   }
   .cell-item__body__content-title {
-    width: 120rpx;
+    width: 150rpx;
     margin-right: 40rpx;
     color: --color(--qui-FC-777);
   }
@@ -627,7 +638,7 @@ export default {
   width: 90%;
   padding: 0 20rpx;
   margin: 50rpx auto 30rpx;
-  font-size: 28rpx;
+  font-size: $fg-f28;
 }
 .site-item__pay .cell-item__body__right-text {
   color: --color(--qui-RED);

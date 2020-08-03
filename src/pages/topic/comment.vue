@@ -1,8 +1,5 @@
 <template>
   <qui-page :data-qui-theme="theme" class="content bg">
-    <!-- #ifdef H5-->
-    <qui-header-back :title="navTitle"></qui-header-back>
-    <!-- #endif -->
     <view v-if="loaded && status">
       <scroll-view
         scroll-y="true"
@@ -123,6 +120,7 @@
                 <view v-for="(commentPost, index) in postComments" :key="index">
                   <qui-topic-comment
                     v-if="!commentPost.isDeleted"
+                    :comment-type="1"
                     :post-id="commentPost._jv.id"
                     :comment-avatar-url="commentPost.user.avatarUrl"
                     :user-name="commentPost.user.username"
@@ -232,18 +230,18 @@
               <view class="comment-textarea" v-show="emojiShow">
                 {{ textAreaValue }}
               </view>
-              <qui-uploader
-                :url="`${url}api/attachments`"
-                :header="header"
-                :form-data="formData"
-                :count="3"
-                name="file"
-                async-clear
-                ref="upload"
-                @change="uploadChange"
-                @clear="uploadClear"
-              ></qui-uploader>
             </view>
+            <qui-uploader
+              :url="`${url}api/attachments`"
+              :header="header"
+              :form-data="formData"
+              :count="3"
+              name="file"
+              async-clear
+              ref="upload"
+              @change="uploadChange"
+              @clear="uploadClear"
+            ></qui-uploader>
           </view>
           <button class="publish-btn" @click="publishClick()">
             {{ t.publish }}
@@ -1047,9 +1045,6 @@ page {
 }
 .ft-gap {
   width: 100%;
-  /* #ifdef H5 */
-  margin-top: 88rpx;
-  /* #endif */
   margin-bottom: 80rpx;
 }
 .det-ft {
@@ -1121,11 +1116,12 @@ page {
   }
 }
 .comment-content-box {
-  padding: 0 40rpx 30rpx;
+  padding: 0 40rpx 0 30rpx;
   .comment-content {
     width: 100%;
-    height: 420rpx;
-    padding: 20rpx;
+    height: 260rpx;
+    padding: 20rpx 20rpx 0;
+    overflow: hidden;
     background: --color(--qui-FC-GRAY);
     border: 1px solid --color(--qui-FC-DDD);
     border-radius: 7rpx;
@@ -1133,7 +1129,7 @@ page {
   }
   .comment-textarea {
     width: 100%;
-    height: 94rpx;
+    height: 220rpx;
     min-height: 70rpx;
     font-size: $fg-f28;
     line-height: 37rpx;

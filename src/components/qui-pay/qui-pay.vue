@@ -198,13 +198,13 @@ export default {
         this.show = false;
       }
     },
-    money: {
-      handler(newVal) {
-        console.log(newVal, '这是监听到的点赞数');
-      },
-      deep: true,
-      immediate: true,
-    },
+    // money: {
+    //   handler(newVal) {
+    //     // console.log(newVal, '这是监听到的点赞数');
+    //   },
+    //   deep: true,
+    //   immediate: true,
+    // },
   },
   onLoad() {},
 
@@ -225,7 +225,7 @@ export default {
     },
     // 父组件触发是否显示弹框
     payClickShow(val) {
-      console.log(val, '这是父组件触发的事件');
+      // console.log(val, '这是父组件触发的事件');
       if (val === 0) {
         this.$refs.payPopup.open();
       } else {
@@ -235,9 +235,9 @@ export default {
     // 是否显示钱包密码支付框
     paysureShow() {
       if (this.current === 0) {
-        console.log('这是微信支付');
+        // console.log('这是微信支付');
       } else if (this.current === 1) {
-        console.log('这是钱包支付');
+        // console.log('这是钱包支付');
         this.show = true;
         this.$refs.payTypePopup.close();
         this.$refs.keyboardPopup.open();
@@ -246,15 +246,15 @@ export default {
     },
     // 支付方式单选框change事件
     radioChange(evt) {
-      console.log('这是change事件');
-      console.log(typeof evt.target.value, '这是value的类型');
+      // console.log('这是change事件');
+      // console.log(typeof evt.target.value, '这是value的类型');
 
       for (let i = 0; i < this.payTypeData.length; i += 1) {
         console.log(this.payTypeData[i].value);
         console.log(this.payTypeData[i].value, '如果');
         if (this.payTypeData[i].value === evt.target.value) {
           this.current = i;
-          console.log(i, '这是得到的');
+          // console.log(i, '这是得到的');
           break;
         }
       }
@@ -262,13 +262,13 @@ export default {
     },
     // 确认支付，选择支付方式
     payChoice() {
-      console.log('确认支付，选择支付方式');
+      // console.log('确认支付，选择支付方式');
       this.$refs.payPopup.close();
       this.$refs.payTypePopup.open();
     },
     // 取消支付
     cancel(type) {
-      console.log(type);
+      // console.log(type);
       if (type === '1') {
         this.$refs.payPopup.close();
       } else {
@@ -284,21 +284,21 @@ export default {
       this.setRouter(`${curRoute}/${this.threadId}`);
       // this.$store.commit('setRouter', curRoute);
       if (this.payUrl) {
-        console.log(1);
+        // console.log(1);
         uni.redirectTo({ url: this.payUrl });
       }
-      console.log(2);
+      // console.log(2);
       uni.redirectTo({ url: '/pages/modify/paypwd' });
     },
     // 输入密码完成
     onInput(val) {
       // 当输入密码为6位数时
-      console.log(val, '输入完成');
+      // console.log(val, '输入完成');
       this.$emit('onInput', val);
     },
     // 关闭密码输入框
     close() {
-      console.log('关闭支付');
+      // console.log('关闭支付');
       this.show = false;
       this.$refs.keyboardPopup.close();
       this.$emit('close');
@@ -306,7 +306,7 @@ export default {
     // 清空密码输入框
     clearPassword() {
       this.$refs.keyboard.clear();
-      console.log('清空');
+      // console.log('清空');
     },
   },
 };

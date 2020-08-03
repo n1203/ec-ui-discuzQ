@@ -1,5 +1,5 @@
 <template>
-  <qui-page ref="quiPage" :data-qui-theme="theme" @pageLoaded="handlePageLoaded">
+  <qui-page ref="quiPage" :data-qui-theme="theme" @pageLoaded="handlePageLoaded" :header="false">
     <view class="content">
       <view class="view-content">
         <qui-page-home
@@ -84,6 +84,17 @@ export default {
       this.getUserInfo(true);
     });
   },
+  // 下拉刷新
+  // onPullDownRefresh() {
+  //   if (this.show_index === 0) {
+  //     this.$refs["home"].ontrueGetList();
+  //   }
+  //   if (this.show_index === 1) {
+  //     this.$refs["quinotice"].pageNum = 1;
+  //     this.$refs["quinotice"].ontrueGetList();
+  //   }
+  //   uni.stopPullDownRefresh();  //停止下拉刷新动画
+  // },
   // 唤起小程序原声分享
   onShareAppMessage(res) {
     // 来自页面内分享按钮

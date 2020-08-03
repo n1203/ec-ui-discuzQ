@@ -16,17 +16,24 @@
         <qui-icon
           class="ft-box-icon"
           :name="item.tabsIcon"
-          size="48"
+          size="34"
           :class="{ select: true, active: index === footerIndex }"
         ></qui-icon>
         <text class="ft-box-content" :class="{ select: true, active: index === footerIndex }">
           {{ item.tabsName }}
         </text>
-        <view v-if="redCircle && item.id === 2" name="icon-circle" class="red-circle"></view>
+        <view
+          v-if="redCircle && item.id === 2"
+          name="icon-circle"
+          class="red-circle red-circle-wx"
+        ></view>
+        <!-- <view v-if="redCircle && item.id === 2" class="red-num">
+          {{ user.unreadNotifications }}
+        </view> -->
       </view>
 
       <view class="ft-box-spacal">
-        <image class="ft-box-spacal-icon" src="@/static/publish.svg" @click="footerOpen"></image>
+        <image class="ft-box-spacal-icon" src="@/static/published.svg" @click="footerOpen"></image>
       </view>
     </view>
     <uni-popup ref="popup" type="bottom">
@@ -269,17 +276,19 @@ export default {
   z-index: 1;
   display: flex;
   width: 100%;
-  height: 119rpx;
+  height: 90rpx;
   background-color: --color(--qui-BG-2);
   box-shadow: 0 -3px 6px rgba(0, 0, 0, 0.05);
   justify-content: space-around;
 }
 .ft-box {
   position: relative;
-  display: flex;
-  width: 20%;
-  height: 72rpx;
-  margin-top: 20rpx;
+  // display: flex;
+  width: 21%;
+  height: 90rpx;
+  padding-left: 40rpx;
+  // margin-top: 23rpx;
+  line-height: 90rpx;
   flex-direction: column;
   justify-content: center;
   align-content: center;
@@ -287,39 +296,55 @@ export default {
 .ft-box-icon {
   align-self: center;
   height: 50rpx;
+  margin-top: 23rpx;
   // background: #c33;
 }
 .ft-box-content {
+  position: absolute;
   align-self: center;
-  margin-top: 10rpx;
-  font-size: 20rpx;
+  margin-top: 32rpx;
+  margin-left: 21rpx;
+  font-size: $fg-f26;
   line-height: 26rpx;
   color: --color(--qui-FC-777);
   text-align: center;
 }
 .ft-box-spacal {
   position: relative;
-  top: -20rpx;
-  width: 125rpx;
-  height: 125rpx;
+  // top: -15rpx;
+  // width: 105rpx;
+  // height: 89rpx;
   border-radius: 50%;
-  box-shadow: 0 -3px 6px rgba(0, 0, 0, 0.05);
+  // box-shadow: 0 -3px 6px rgba(0, 0, 0, 0.05);
 }
 .ft-box-spacal-icon {
   position: relative;
-  width: 125rpx;
-  height: 125rpx;
+  width: 64rpx;
+  height: 64rpx;
+  margin: 13rpx 20rpx 0 0;
 }
 .active {
+  font-weight: bold;
   color: --color(--qui-TAB);
 }
 .red-circle {
   position: absolute;
-  top: -10rpx;
-  left: calc(50% + 18rpx);
+  top: 20rpx;
+  left: calc(29% + 12rpx);
   width: 14rpx;
   height: 14rpx;
-  background: red;
+  background: --color(--qui-BG-FF);
   border-radius: 50%;
 }
+.red-circle-wx {
+  /* #ifdef MP-WEIXIN */
+  left: calc(29% + 24rpx);
+  /* #endif */
+}
+// .red-num {
+//   position: absolute;
+//   top: -22rpx;
+//   left: calc(23% + 12rpx);
+//   color: --color(--qui-BOR-FFF);
+// }
 </style>

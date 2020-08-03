@@ -1,12 +1,15 @@
 <template>
-  <view class="header" :style="{ 'background-image': 'url(' + backgroundHeadFullImg + ')' }">
+  <view
+    :class="['header', headerH5]"
+    :style="{ 'background-image': 'url(' + backgroundHeadFullImg + ')' }"
+  >
     <!-- #ifdef H5-->
-    <qui-header-back
+    <!-- <qui-header-back
       :title="title"
       :is-show-home="isShowHome"
       :is-show-back="isShowBack"
       :is-show-more="isShowMore"
-    ></qui-header-back>
+    ></qui-header-back> -->
     <!-- #endif -->
     <view class="logoBox">
       <image
@@ -40,6 +43,10 @@
   </view>
 </template>
 <script>
+let headerH5 = 'header-h5';
+/* #ifdef MP-WEIXIN */
+headerH5 = '';
+/* #endif */
 export default {
   name: 'QuiHeader',
   props: {
@@ -97,7 +104,9 @@ export default {
     },
   },
   data: () => {
-    return {};
+    return {
+      headerH5,
+    };
   },
   computed: {
     // 语言包
@@ -124,7 +133,7 @@ export default {
   width: 100%;
   height: 400rpx;
   background: #1878f3;
-  background-size: 100% 100%;
+  background-size: 100%;
   .logo {
     display: block;
     // width: 100%;
@@ -199,6 +208,17 @@ export default {
       width: 35%;
       margin: 20vh auto 30rpx;
     }
+  }
+}
+.header-h5 {
+  height: 256rpx;
+  background-size: 100%;
+  .logo {
+    max-height: 74rpx;
+    padding-top: 58rpx;
+  }
+  .circleDet {
+    padding: 49rpx 20rpx 47rpx;
   }
 }
 </style>

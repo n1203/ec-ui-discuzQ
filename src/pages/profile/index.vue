@@ -1,8 +1,5 @@
 <template>
   <qui-page :data-qui-theme="theme" class="profile">
-    <!-- #ifdef H5-->
-    <qui-header-back :title="i18n.t('profile.personalhomepage')"></qui-header-back>
-    <!-- #endif -->
     <view v-if="loaded">
       <scroll-view
         scroll-y="true"
@@ -32,7 +29,7 @@
                     <qui-icon
                       class="text"
                       name="icon-message1"
-                      size="22"
+                      size="24"
                       :color="themeColor"
                     ></qui-icon>
                     <text>{{ i18n.t('profile.privateMessage') }}</text>
@@ -45,7 +42,7 @@
                     <qui-icon
                       class="text"
                       :name="userInfo.follow == 0 ? 'icon-follow' : 'icon-each-follow'"
-                      size="26"
+                      size="28"
                       :color="
                         userInfo.follow == 0
                           ? '#777'
@@ -117,6 +114,7 @@ import { status } from '@/library/jsonapi-vuex/index';
 // #ifdef H5
 import loginAuth from '@/mixin/loginAuth-h5';
 // #endif
+import forums from '@/mixin/forums';
 import topic from './topic';
 import following from './following';
 import followers from './followers';
@@ -130,6 +128,7 @@ export default {
     like,
   },
   mixins: [
+    forums,
     // #ifdef H5
     loginAuth,
     // #endif
@@ -152,7 +151,7 @@ export default {
       currentLoginId: this.$store.getters['session/get']('userId'),
       current: 0,
       nowThreadId: '',
-      imageStatus: true,
+      userInfo: '',
       can_create_dialog: false,
       dialogId: 0, // 会话id
       scrollTop: 0,
@@ -160,12 +159,6 @@ export default {
     };
   },
   computed: {
-    userInfo() {
-      const userInfo = this.$store.getters['jv/get'](`users/${this.userId}`);
-      userInfo.groupsName = userInfo.groups ? userInfo.groups[0].name : '';
-      this.setNum(userInfo);
-      return userInfo;
-    },
     themeColor() {
       return this.theme === this.$u.light() ? '#333' : '#fff'; // 用于图标色
     },
@@ -193,6 +186,13 @@ export default {
         path: `/pages/topic/index?id=${this.nowThreadId}`,
       };
     }
+  },
+  // 分享到朋友圈
+  onShareTimeline() {
+    return {
+      title: this.forums.set_site.site_name,
+      query: '',
+    };
   },
   methods: {
     scroll(event) {
@@ -233,6 +233,9 @@ export default {
           } else {
             this.loaded = true;
             this.dialogId = res.dialog ? res.dialog._jv.id : 0;
+            res.groupsName = res.groups ? res.groups[0].name : '';
+            this.setNum(res);
+            this.userInfo = res;
             uni.setNavigationBarTitle({
               title: `${res.username}的${this.i18n.t('profile.personalhomepage')}`,
             });
@@ -305,10 +308,6 @@ export default {
     handleClickShare(e) {
       this.nowThreadId = e;
     },
-    // 头像加载失败,显示默认头像
-    imageError() {
-      this.imageStatus = false;
-    },
     // 私信跳转到聊天页面（传入用户名和会话id）
     chat() {
       uni.navigateTo({
@@ -336,9 +335,6 @@ export default {
 .profile-info {
   padding: 40rpx;
   padding-top: 30rpx;
-  /* #ifdef H5 */
-  margin-top: 44px;
-  /* #endif */
   font-size: $fg-f28;
   background: --color(--qui-BG-2);
 }

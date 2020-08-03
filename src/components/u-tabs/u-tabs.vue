@@ -79,7 +79,7 @@ export default {
     // 字体大小
     fontSize: {
       type: [String, Number],
-      default: 26,
+      default: 28,
     },
     // 过渡动画时长, 单位ms
     duration: {
@@ -159,6 +159,7 @@ export default {
         height: `${this.barHeight}rpx`,
         // 设置一个很大的值，它会自动取能用的最大值，不用高度的一半，是因为高度可能是单数，会有小数出现
         'border-radius': `${this.barHeight / 2}px`,
+        // position: absolute,
       };
       Object.assign(style, this.barStyle);
       return style;
@@ -177,7 +178,7 @@ export default {
         };
         // 字体加粗
         if (index === this.currentIndex && this.bold) style.fontWeight = 'bold';
-        if (index === this.currentIndex) style['font-size'] = '28rpx';
+        // if (index === this.currentIndex) style['font-size'] = '30rpx';
         if (index === this.currentIndex) {
           // style.color = this.activeColor;
           // style.font-size = 28;

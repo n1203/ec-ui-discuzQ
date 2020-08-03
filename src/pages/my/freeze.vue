@@ -1,8 +1,5 @@
 <template>
   <qui-page :data-qui-theme="theme" class="freeze">
-    <!-- #ifdef H5-->
-    <qui-header-back :title="i18n.t('profile.freezeamount')"></qui-header-back>
-    <!-- #endif -->
     <scroll-view
       scroll-y="true"
       scroll-with-animation="true"
@@ -21,7 +18,7 @@
           <text class="freeze-head__money__detail">¥{{ userInfo.walletFreeze }}</text>
         </view>
       </view>
-      <view class="freeze-items" v-show="freezelist.length > 0">
+      <view class="freeze-items" v-if="freezelist.length > 0">
         <qui-cell-item
           v-for="(freezeItem, index) in freezelist"
           :key="index"
@@ -74,8 +71,10 @@ export default {
         'page[limit]': this.pageSize,
       };
       this.$store.dispatch('jv/get', ['wallet/log', { params }]).then(res => {
-        this.totalData = res._jv.json.meta.total;
-        delete res._jv;
+        if (res._jv) {
+          this.totalData = res._jv.json.meta.total;
+          delete res._jv;
+        }
         this.loadingType = res.length === this.pageSize ? 'more' : 'nomore';
         this.freezelist = [...this.freezelist, ...res];
       });
@@ -118,9 +117,6 @@ export default {
     align-items: center;
     justify-content: space-between;
     padding: 40rpx 40rpx 0;
-    /* #ifdef H5 */
-    padding-top: 90rpx;
-    /* #endif */
     margin-bottom: 30rpx;
     font-size: $fg-f24;
     background: --color(--qui-BG-2);

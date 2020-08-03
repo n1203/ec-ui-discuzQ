@@ -1,8 +1,5 @@
 <template>
   <qui-page :data-qui-theme="theme" class="page-newpwd">
-    <!-- #ifdef H5-->
-    <qui-header-back :title="i18n.t('modify.newpwdtitle')"></qui-header-back>
-    <!-- #endif -->
     <view class="setuppas">
       <view class="setuppas-pas">
         <input
@@ -161,9 +158,6 @@ export default {
   .setuppas {
     width: 100vw;
     height: 100vh;
-    /* #ifdef H5 */
-    padding-top: 100rpx;
-    /* #endif */
     background-color: --color(--qui-BG-2);
     box-sizing: border-box;
   }

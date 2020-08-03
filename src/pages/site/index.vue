@@ -164,6 +164,13 @@ export default {
       title: this.forums.set_site.site_name,
     };
   },
+  // 分享到朋友圈
+  onShareTimeline() {
+    return {
+      title: this.forums.set_site.site_name,
+      query: '',
+    };
+  },
   computed: {
     currentLoginId() {
       const userId = this.$store.getters['session/get']('userId');
@@ -296,18 +303,6 @@ export default {
         });
       }
     },
-    // 唤起小程序原声分享
-    onShareAppMessage(res) {
-      // 来自页面内分享按钮
-      if (res.from === 'button') {
-        return {
-          title: this.forums.set_site.site_name,
-        };
-      }
-      return {
-        title: this.forums.set_site.site_name,
-      };
-    },
     // 取消按钮
     cancel() {
       this.$refs.popupHead.close();
@@ -331,9 +326,6 @@ export default {
 .site /deep/ {
   .header {
     height: auto;
-    /* #ifdef H5 */
-    margin: 44px 0rpx 0rpx;
-    /* #endif */
     margin-bottom: 30rpx;
     background: --color(--qui-BG-2);
     border-bottom: 2rpx solid --color(--qui-BOR-ED);
@@ -354,7 +346,7 @@ export default {
     background: --color(--qui-BG-2);
   }
   .cell-item__body__content-title {
-    width: 120rpx;
+    width: 150rpx;
     margin-right: 40rpx;
     color: --color(--qui-FC-777);
   }

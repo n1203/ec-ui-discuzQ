@@ -1,6 +1,7 @@
 <template>
   <view>
     <view class="notice-box">
+      <!-- #ifdef MP-WEIXIN -->
       <uni-nav-bar
         :title="title"
         fixed
@@ -8,6 +9,7 @@
         :background-color="navTheme === $u.light() ? '#ffffff' : '#2e2f30'"
         status-bar
       ></uni-nav-bar>
+      <!-- #endif -->
       <!-- 通知类型列表 -->
       <scroll-view
         scroll-y
@@ -20,13 +22,10 @@
         <view class="notice-box__list">
           <view v-for="item in list" :key="item.id" @click="jumpNoticePage(item)">
             <qui-cell-item :title="i18n.t(item.title)" :border="item.border" arrow slot-right>
-              <qui-icon
+              <text
+                class="notice-box__list-red-circle"
                 v-if="item.unReadNum && item.unReadNum > 0"
-                name="icon-circle"
-                class="red-circle"
-                color="red"
-                size="14"
-              ></qui-icon>
+              ></text>
             </qui-cell-item>
           </view>
         </view>
@@ -58,13 +57,7 @@
                 </view>
               </view>
               <view class="dialog-box__header__r">
-                <qui-icon
-                  name="icon-circle"
-                  class="red-circle"
-                  v-if="dialog.readAt === null"
-                  color="red"
-                  size="14"
-                ></qui-icon>
+                <text class="dialog-box__header__r-red-circle" v-if="dialog.readAt === null"></text>
                 <qui-icon class="arrow" name="icon-folding-r" size="22" color="#ddd"></qui-icon>
               </view>
             </view>
@@ -124,7 +117,12 @@ export default {
     },
   },
   mounted() {
+    // #ifndef MP-WEIXIN
+    this.navbarHeight = uni.getSystemInfoSync().statusBarHeight;
+    // #endif
+    // #ifdef MP-WEIXIN
     this.navbarHeight = uni.getSystemInfoSync().statusBarHeight + 44;
+    // #endif
     uni.$on('updateNotiNum', () => {
       console.log('updateNode', this.user);
       this.getUnreadNoticeNum();
@@ -254,6 +252,20 @@ export default {
     border-bottom: 2rpx solid --color(--qui-BOR-ED);
     transition: $switch-theme-time;
 
+    &-red-circle {
+      position: relative;
+    }
+    &-red-circle:after {
+      position: absolute;
+      top: 4px;
+      right: -5px;
+      width: 7px;
+      height: 7px;
+      background: --color(--qui-RED);
+      border-radius: 50%;
+      content: '';
+    }
+
     /deep/ text {
       vertical-align: middle;
     }
@@ -309,9 +321,18 @@ export default {
       align-items: center;
       margin: 0rpx 40rpx 0rpx 0rpx;
 
-      .red-circle {
-        margin: 0rpx 20rpx 0rpx 0rpx;
-        vertical-align: middle;
+      &-red-circle {
+        position: relative;
+      }
+      &-red-circle:after {
+        position: absolute;
+        top: -4px;
+        right: 5px;
+        width: 7px;
+        height: 7px;
+        background: --color(--qui-RED);
+        border-radius: 50%;
+        content: '';
       }
     }
   }

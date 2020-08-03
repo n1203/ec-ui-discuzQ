@@ -1,8 +1,5 @@
 <template>
   <qui-page :data-qui-theme="theme" class="page-setphon">
-    <!-- #ifdef H5-->
-    <qui-header-back :title="i18n.t('modify.setphontitle')"></qui-header-back>
-    <!-- #endif -->
     <view class="new" @click.stop="toggleBox">
       <view class="new-phon" v-if="phon">
         <view class="new-phon-test">
@@ -303,9 +300,6 @@ export default {
   .new {
     width: 100vw;
     height: 100vh;
-    /* #ifdef H5 */
-    padding-top: 100rpx;
-    /* #endif */
     background-color: --color(--qui-BG-2);
     box-sizing: border-box;
   }
@@ -345,7 +339,7 @@ export default {
     display: block;
     height: 70rpx;
     min-width: 180rpx;
-    margin: 15rpx 0 0 91rpx;
+    margin: 15rpx 20rpx 0 50rpx;
     font-size: $fg-f28;
     font-weight: 400;
     line-height: 70rpx;

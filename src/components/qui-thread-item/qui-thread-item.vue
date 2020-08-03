@@ -23,6 +23,7 @@
       :video-height="thread.threadVideo && thread.threadVideo.height"
       :video-id="thread.threadVideo && thread.threadVideo._jv.id"
       :cover-image="thread.threadVideo && thread.threadVideo.cover_url"
+      :duration="thread.threadVideo && thread.threadVideo.duration"
       :is-deleted="thread.isDeleted"
       :scroll-top="scrollTop"
       @click="handleClickShare(thread._jv.id)"

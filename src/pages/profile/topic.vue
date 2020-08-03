@@ -123,3 +123,8 @@ export default {
   },
 };
 </script>
+<style lang="scss">
+.topic-page {
+  margin-top: -20rpx;
+}
+</style>

@@ -172,6 +172,10 @@ export default {
   },
   // 我的和个人主页
   profile: {
+    uploadFile: 'Upload file',
+    filesizecannotexceed: 'File size cannot exceed',
+    pleaseselect: 'Please select',
+    fileformat: 'File format',
     downloadSuccess: 'Download success',
     downloadError: 'download error',
     thetemporarypathis: 'The temporary path is',
@@ -179,6 +183,7 @@ export default {
     post: 'Post',
     notice: 'Notice',
     mine: 'Mine',
+    backhomePage: 'Backhome page',
     myprofile: 'My profile',
     mywallet: 'My wallet',
     myfavorite: 'My favorite',

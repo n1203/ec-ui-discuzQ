@@ -1,5 +1,5 @@
 <template>
-  <qui-page :data-qui-theme="theme" class="site">
+  <qui-page :data-qui-theme="theme" class="site" :header="false">
     <qui-header
       :head-img="
         forums.set_site && forums.set_site.site_logo
@@ -158,6 +158,13 @@ export default {
       title: this.forums.set_site.site_name,
     };
   },
+  // 分享到朋友圈
+  onShareTimeline() {
+    return {
+      title: this.forums.set_site.site_name,
+      query: '',
+    };
+  },
   methods: {
     // 首页头部分享按钮弹窗
     open() {
@@ -306,7 +313,7 @@ export default {
     padding-top: 71rpx;
   }
   .cell-item__body__content-title {
-    width: 120rpx;
+    width: 150rpx;
     margin-right: 40rpx;
     color: --color(--qui-FC-777);
   }
@@ -344,7 +351,7 @@ export default {
   width: 85%;
   padding: 0 20rpx;
   margin: 50rpx auto 30rpx;
-  font-size: 28rpx;
+  font-size: $fg-f28;
 }
 .site-item__person__content-avatar,
 .site-item__owner-avatar {

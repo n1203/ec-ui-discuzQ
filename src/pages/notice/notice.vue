@@ -1,8 +1,5 @@
 <template>
   <qui-page :data-qui-theme="theme">
-    <!-- #ifdef H5-->
-    <qui-header-back :title="navTitle"></qui-header-back>
-    <!-- #endif -->
     <view class="notification-box">
       <!-- 通知信息 -->
       <scroll-view
@@ -122,9 +119,6 @@ export default {
 @import '@/styles/base/theme/fn.scss';
 
 .notification-box {
-  /* #ifdef H5 */
-  margin: 44px 0rpx 0rpx;
-  /* #endif */
   color: --color(--qui-FC-333);
   background-color: --color(--qui-BG-1);
   transition: $switch-theme-time;

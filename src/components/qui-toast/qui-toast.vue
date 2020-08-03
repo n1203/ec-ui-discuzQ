@@ -122,6 +122,7 @@ export default {
   &--content {
     font-size: 28rpx;
     color: #fff;
+    word-break: break-all;
   }
 }
 .qui-toast.top {

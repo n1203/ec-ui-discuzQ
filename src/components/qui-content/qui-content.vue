@@ -47,18 +47,16 @@
             <view class="themeItem__content__text__longessay__publish">
               {{ i18n.t('home.released') }} :
             </view>
-            <qui-icon
+            <!-- <qui-icon
               name="icon-link"
               :color="theme === $u.light() ? '#00479B' : '#1E78F3'"
               size="28"
               style="padding-left: 8rpx;"
-            ></qui-icon>
-            <!-- <navigator class="navPost">
+            ></qui-icon> -->
+            <navigator class="navPost">
               {{ themeContent }}
-            </navigator> -->
-            <qui-uparse class="navPost" :content="themeContent"></qui-uparse>
+            </navigator>
           </view>
-          <!-- <rich-text :nodes="themeContent" v-else></rich-text> -->
           <qui-uparse :content="themeContent" v-else></qui-uparse>
         </view>
         <view
@@ -75,14 +73,14 @@
             :poster="coverImage"
             v-if="threadType === 2 && payStatus"
             :id="'myVideo' + currentindex"
-            preload="auto"
+            :duration="duration"
+            preload="none"
             bindpause="handlepause"
             playsinline
             webkit-playsinline
             x5-playsinline
-            controls
             :page-gesture="false"
-            show-fullscreen-btn="true"
+            :show-fullscreen-btn="true"
             :show-play-btn="true"
             :autoplay="false"
             auto-pause-if-open-native
@@ -372,6 +370,11 @@ export default {
       type: Number,
       default: 0,
     },
+    // 视频时间
+    duration: {
+      type: String,
+      default: '',
+    },
   },
 
   data: () => {
@@ -525,10 +528,12 @@ export default {
 }
 .themeItem {
   padding: 30rpx;
-  margin: 0 20rpx 30rpx;
+  margin: 20rpx 0;
   background: --color(--qui-BG-2);
-  border-radius: 6rpx;
-  box-shadow: 0rpx 4rpx 8rpx rgba(0, 0, 0, 0.05);
+  // border-radius: 6rpx;
+  // box-shadow: 0rpx 4rpx 8rpx rgba(0, 0, 0, 0.05);
+  border-top: solid 2rpx --color(--qui-BOR-ED);
+  border-bottom: solid 2rpx --color(--qui-BOR-ED);
   box-sizing: border-box;
 
   &__header {
@@ -586,7 +591,7 @@ export default {
 
       &__time {
         padding-top: 10rpx;
-        font-size: 24rpx;
+        font-size: $fg-f24;
         font-weight: 400;
         line-height: 31rpx;
         color: --color(--qui-FC-AAA);
@@ -624,8 +629,9 @@ export default {
       color: --color(--qui-FC-333);
       word-wrap: break-word;
       &__longessay {
-        display: flex;
-        word-break: break-all;
+        // display: flex;
+        // flex-direction: column;
+        // word-break: break-all;
       }
     }
     &__reply {
@@ -735,13 +741,13 @@ export default {
 }
 
 .themeItem__content__text__longessay__publish {
-  display: inline;
+  display: inline-block;
 }
 .navPost {
-  display: inline-block;
-  max-width: 75%;
+  display: inline;
   padding-left: 8rpx;
-  color: --color(--qui-LINK);
+  // font-weight: 900;
+  color: var(--qui-LINK);
 }
 .themeItem__content__coverimg {
   width: 100%;

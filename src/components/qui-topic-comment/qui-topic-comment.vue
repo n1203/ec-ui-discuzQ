@@ -41,6 +41,7 @@
         <qui-image :images-list="imagesList"></qui-image>
         <qui-reply
           v-if="replyList.length > 0"
+          :comment-type-val="commentType"
           :reply-list="replyList"
           @commentJump="commentJump"
         ></qui-reply>
@@ -81,6 +82,16 @@ import { time2MorningOrAfternoon } from '@/utils/time';
 
 export default {
   props: {
+    // 类型，0为取摘要，1为取全部内容
+    commentType: {
+      type: Number,
+      default: 0,
+    },
+    // 刷新状态
+    refreshStatus: {
+      type: Boolean,
+      default: false,
+    },
     // 回复的用户头像
     commentAvatarUrl: {
       type: String,
@@ -183,6 +194,18 @@ export default {
     commentLikeCount: {
       handler(newVal) {
         this.commentLikeCount = newVal;
+      },
+      deep: true,
+      immediate: true,
+    },
+    // 监听得到的数据
+    refreshStatus: {
+      handler(newVal) {
+        this.refreshStatus = newVal;
+        if (this.refreshStatus === true) {
+          console.log('刷新');
+          this.$forceUpdate();
+        }
       },
       deep: true,
       immediate: true,

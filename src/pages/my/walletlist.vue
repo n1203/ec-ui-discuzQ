@@ -1,13 +1,10 @@
 <template>
   <qui-page :data-qui-theme="theme" class="walletlist">
-    <!-- #ifdef H5-->
-    <qui-header-back :title="i18n.t('profile.walletlist')"></qui-header-back>
-    <!-- #endif -->
     <view class="walletlist-head">
       <qui-cell-item slot-right :border="false">
         <view @tap="showFilter">
           <text>{{ `${i18n.t('profile.status')} ：${filterSelected.label}` }}</text>
-          <qui-icon class="text" name="icon-screen" size="30" color="#777"></qui-icon>
+          <qui-icon class="text" name="icon-screen" size="32" color="#777"></qui-icon>
           <qui-filter-modal
             v-model="show"
             @confirm="confirm"
@@ -29,7 +26,7 @@
       show-scrollbar="false"
       class="scroll-y"
     >
-      <view class="walletlist-items" v-show="dataList.length > 0">
+      <view class="walletlist-items" v-if="dataList.length > 0">
         <qui-cell-item
           v-for="(item, index) in dataList"
           :key="index"
@@ -159,7 +156,7 @@ export default {
             : this.i18n.t('profile.theuserwasdeleted');
           const regex = /(<([^>]+)>)/gi;
           const thread = item.order.thread
-            ? item.order.thread.firstPost.summary.replace(regex, '')
+            ? item.order.thread.title.replace(regex, '')
             : this.i18n.t('profile.thethemewasdeleted');
           return `${user} ${this.i18n.t('profile.givearewardforyourtheme')} ${thread}`;
         }
@@ -167,7 +164,7 @@ export default {
           // 打赏支出
           const regex = /(<([^>]+)>)/gi;
           const thread = item.order.thread
-            ? item.order.thread.firstPost.summary.replace(regex, '')
+            ? item.order.thread.title.replace(regex, '')
             : this.i18n.t('profile.thethemewasdeleted');
           return `${this.i18n.t('profile.givearewardforthetheme')} ${thread}`;
         }
@@ -178,7 +175,7 @@ export default {
             : this.i18n.t('profile.theuserwasdeleted');
           const regex = /(<([^>]+)>)/gi;
           const thread = item.order.thread
-            ? item.order.thread.firstPost.summary.replace(regex, '')
+            ? item.order.thread.title.replace(regex, '')
             : this.i18n.t('profile.givearewardforthetheme');
           return `${user} ${this.i18n.t('profile.paidtoseeyourtheme')} ${thread}`;
         }
@@ -186,7 +183,7 @@ export default {
           // 付费主题支出
           const regex = /(<([^>]+)>)/gi;
           const thread = item.order.thread
-            ? item.order.thread.firstPost.summary.replace(regex, '')
+            ? item.order.thread.title.replace(regex, '')
             : this.i18n.t('profile.thethemewasdeleted');
           return `${this.i18n.t('profile.paidtoview')} ${thread}`;
         }
@@ -246,9 +243,6 @@ $height: calc(100vh - 150rpx);
   .walletlist-head {
     position: relative;
     padding: 40rpx 0 0 40rpx;
-    /* #ifdef H5 */
-    padding-top: 90rpx;
-    /* #endif */
     margin-bottom: 30rpx;
     background: --color(--qui-BG-2);
     border-bottom: 2rpx solid --color(--qui-BOR-ED);
@@ -260,7 +254,7 @@ $height: calc(100vh - 150rpx);
     color: --color(--qui-RED);
   }
   .cell-item.success .cell-item__body__right-text {
-    color: #189a00;
+    color: --color(--qui-GREEN);
   }
   .walletlist-items {
     padding-left: 40rpx;
@@ -277,9 +271,6 @@ $height: calc(100vh - 150rpx);
   z-index: 10;
   width: 50%;
   height: 78rpx;
-  /* #ifdef H5 */
-  margin-top: 50rpx;
-  /* #endif */
 }
 .date-picker .uni-input {
   width: 100%;

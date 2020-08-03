@@ -1,5 +1,5 @@
 <template>
-  <qui-page :data-qui-theme="theme" class="pages-list">
+  <qui-page header="false" :data-qui-theme="theme" class="pages-list">
     <view class="qui-topic-page-box">
       <view class="qui-topic-page-box__hd">
         <view class="qui-topic-page-box__hd__sc">

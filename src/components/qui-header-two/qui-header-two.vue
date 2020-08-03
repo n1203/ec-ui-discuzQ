@@ -1,13 +1,10 @@
 <template>
   <view>
-    <view
-      :class="['header', headerH5]"
-      :style="
-        ({ 'background-image': 'url(' + backgroundHeadFullImg + ')' },
-        headerShow ? '' : 'width:100%;position:fixed;z-index:9;top:' + 0 + 'px;')
-      "
-    >
-      <view class="logoBox">
+    <view :class="['header', headerH5]" :style="`background: url(${backgroundHeadFullImg})`">
+      <view
+        class="logoBox"
+        :style="headerShow ? '' : 'width:100%;position:fixed;z-index:9;top:' + 0 + 'px;'"
+      >
         <view v-if="headerShow" class="fbh fbjc logoBox__header">
           <view class="logoBox__header__icon">
             <image
@@ -19,25 +16,30 @@
           </view>
           <view class="fbh fb1 fbje">
             <view @click="onHandleClickSearch" class="logoBox__header__icon iconMenu">
-              <qui-icon name="icon-search" size="18" color="#fff"></qui-icon>
+              <qui-icon name="icon-search" size="36" color="#fff"></qui-icon>
               <!-- <span>{{ this.$i18n.t('ec.tags') }}</span> -->
             </view>
             <view @click="onHandleClickSetting" class="logoBox__header__icon iconMenn">
-              <qui-icon name="icon-screen" size="18" color="#fff"></qui-icon>
+              <qui-icon name="icon-screen" size="36" color="#fff"></qui-icon>
               <!-- <span>{{ this.$i18n.t('ec.tags') }}</span> -->
             </view>
           </view>
         </view>
-        <view class="solt" id="soltNav">
-          <slot></slot>
+        <view
+          :style="
+            `background-image: url(${backgroundHeadFullImg}); background-position-y: -120rpx;`
+          "
+        >
+          <view class="solt" id="soltNav">
+            <slot></slot>
+          </view>
         </view>
       </view>
     </view>
-    <view
-      :class="['header', headerH5]"
-      v-if="!headerShow"
-    >
-      <view class="logoBox">
+    <slot v-if="!headerShow"></slot>
+
+    <!-- <view :class="['header', headerH5]" v-if="!headerShow">
+      <view class="logoBox" style="background: none;">
         <view class="fbh fbjc logoBox__header">
           <view class="logoBox__header__icon"></view>
           <view class="fbh fb1 fbje">
@@ -47,7 +49,7 @@
         </view>
         <view class="solt" id="soltNav"></view>
       </view>
-    </view>
+    </view> -->
   </view>
   <!-- :style="headerShow ? '' : 'width:100%;position:fixed;z-index:9;top:' + navbarHeight + 'px;'" -->
 
@@ -191,7 +193,12 @@ export default {
 .header {
   position: relative;
   width: 100%;
-  height: 400rpx;
+  background: linear-gradient(127.43deg, #00f0ff 0%, #a80028 100%),
+    radial-gradient(107% 142.8% at 15.71% 104.5%, #f3d0fc 0%, #1700a4 100%),
+    radial-gradient(111% 111% at 74.29% -11%, #a90000 0%, #00ffe0 100%),
+    linear-gradient(127.43deg, #b7d500 0%, #2200aa 100%);
+  background-blend-mode: overlay, difference, difference, normal;
+  // height: 400rpx;
   // background: #1878f3;
   background-size: 100%;
   .logo {
@@ -270,8 +277,8 @@ export default {
   }
 }
 .header-h5 {
-  height: 180rpx;
-  background-size: 100%;
+  // height: 180rpx;
+  // background-size: 100% auto;
   .logo {
     max-height: 50rpx;
     padding-top: 10rpx;
@@ -281,11 +288,6 @@ export default {
   }
 }
 .logoBox {
-  background: linear-gradient(127.43deg, #00f0ff 0%, #a80028 100%),
-    radial-gradient(107% 142.8% at 15.71% 104.5%, #f3d0fc 0%, #1700a4 100%),
-    radial-gradient(111% 111% at 74.29% -11%, #a90000 0%, #00ffe0 100%),
-    linear-gradient(127.43deg, #b7d500 0%, #2200aa 100%);
-  background-blend-mode: overlay, difference, difference, normal;
   &__header {
     padding: 25rpx 20rpx;
     box-sizing: border-box;
@@ -301,7 +303,7 @@ export default {
       color: #fff;
       font-size: 14px;
       text-align: center;
-      height: 26px;
+      height: 70rpx;
       max-width: 100px;
       display: block;
       &__logo {
@@ -313,11 +315,11 @@ export default {
   }
 }
 .solt {
-  background: rgba(255, 255, 255, 0.12);
-  backdrop-filter: saturate(180%) blur(20px) opacity(70%);
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: saturate(180%) blur(20px);
 }
 .iconMenu {
-  width: 40rpx;
+  width: 80rpx;
   display: block;
 }
 </style>

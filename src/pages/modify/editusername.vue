@@ -48,9 +48,18 @@ export default {
     },
   },
   methods: {
+    showDialog(title) {
+      uni.showToast({
+        icon: 'none',
+        title,
+        duration: 2000,
+      });
+    },
     submission() {
       if (this.sername) {
         this.changname();
+      } else if (!RegExp(/^.{2,15}.$/).test(this.username)) {
+        this.showDialog('用户名长度必须在2-15之间');
       } else {
         uni.showToast({
           icon: this.nametitle.icon,

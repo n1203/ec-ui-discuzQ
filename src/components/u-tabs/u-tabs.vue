@@ -319,7 +319,7 @@ $screen: 80rpx;
   position: relative;
   display: inline-block;
   text-align: center;
-  color: #89c6ff;
+  color: #fff9;
   // color: --color(--qui-FC-777);
   transition-property: background-color, color;
   transition: $switch-theme-time;

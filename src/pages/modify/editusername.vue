@@ -56,16 +56,12 @@ export default {
       });
     },
     submission() {
-      if (this.sername) {
-        this.changname();
+      if (this.sername === '') {
+        this.showDialog('用户名不能为空');
       } else if (!RegExp(/^.{3,15}.$/).test(this.sername)) {
         this.showDialog('用户名长度必须在3-15之间');
       } else {
-        uni.showToast({
-          icon: this.nametitle.icon,
-          title: this.i18n.t('modify.emptyname'),
-          duration: this.nametitle.duration,
-        });
+        this.changname();
       }
     },
     changname() {

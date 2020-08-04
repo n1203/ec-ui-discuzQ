@@ -59,7 +59,6 @@ import forums from '@/mixin/forums';
 import user from '@/mixin/user';
 import { mapState, mapMutations } from 'vuex';
 
-
 export default {
   mixins: [forums, user],
   props: {
@@ -298,6 +297,9 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-content: center;
+  &:active {
+    transform: scale(0.9);
+  }
 }
 .ft-box-icon {
   align-self: center;

@@ -5,7 +5,7 @@
       这样每个页面还是需要引入这个组件，一个是和主题相关，一个是和站点显示状态有关
     -->
     <!-- #ifdef H5-->
-    <qui-header-back v-if="header"></qui-header-back>
+    <!-- <qui-header-back v-if="header"></qui-header-back> -->
     <!-- #endif -->
     <view v-if="loading" class="loading">
       <u-loading :size="60"></u-loading>

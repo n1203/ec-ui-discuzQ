@@ -1,6 +1,6 @@
 <template>
   <view>
-    <view class="sticky" v-if="items.length > 0">
+    <view :class="sticky" v-if="items.length > 0">
       <swiper class="sticky__box fbh" next-margin="50px" autoplay>
         <swiper-item
           class="sticky__isSticky"

@@ -289,7 +289,7 @@ export default {
   text-align: center;
 }
 .ioschoice-content {
-  font-size: $fg-f26;
+  font-size: 28rpx;
   font-weight: 400;
   line-height: 37rpx;
   color: rgba(170, 170, 170, 1);
@@ -299,7 +299,7 @@ export default {
   width: 510rpx;
   height: 90rpx;
   margin: 50rpx auto 0;
-  font-size: $fg-f26;
+  font-size: 28rpx;
   font-weight: 400;
   line-height: 90rpx;
   color: rgba(255, 255, 255, 1);

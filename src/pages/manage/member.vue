@@ -338,7 +338,7 @@ export default {
       background-color: --color(--qui-BG-2);
       .loading-text {
         height: 100rpx;
-        font-size: $fg-f26;
+        font-size: 28rpx;
         line-height: 100rpx;
         text-align: center;
       }
@@ -353,7 +353,7 @@ export default {
       background-color: --color(--qui-BG-2);
       .loading-text {
         height: 100rpx;
-        font-size: $fg-f26;
+        font-size: 28rpx;
         line-height: 100rpx;
         text-align: center;
       }

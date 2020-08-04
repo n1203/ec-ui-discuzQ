@@ -47,7 +47,7 @@ export default {
   background: #0001;
   color: #555;
   padding: 10px;
-  font-size: $fg-f26;
+  font-size: 28rpx;
   text-align: center;
   box-sizing: border-box;
   border-radius: 5px;

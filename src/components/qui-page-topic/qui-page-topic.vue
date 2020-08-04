@@ -224,14 +224,14 @@ $otherHeight: 292rpx;
     float: left;
     margin: 20rpx;
     margin-bottom: 8rpx;
-    font-size: $fg-f26;
+    font-size: 28rpx;
   }
   &_sortBox {
     position: relative;
     float: right;
     margin: 20rpx;
     margin-bottom: 8rpx;
-    font-size: $fg-f26;
+    font-size: 28rpx;
     color: #1878f3;
   }
   .icon-sort {
@@ -254,7 +254,7 @@ $otherHeight: 292rpx;
     margin: 20rpx 0;
     &_text {
       overflow: hidden;
-      font-size: $fg-f28;
+      font-size: 30rpx;
       color: --color(--qui-FC-333);
       text-overflow: ellipsis;
       -webkit-line-clamp: 2;
@@ -263,7 +263,7 @@ $otherHeight: 292rpx;
   &_heat,
   &_content {
     margin-right: 37rpx;
-    font-size: $fg-f26;
+    font-size: 28rpx;
     color: --color(--qui-FC-AAA);
   }
   &_other {
@@ -280,7 +280,7 @@ $otherHeight: 292rpx;
     position: absolute;
     left: 0;
     padding-bottom: 34rpx;
-    font-size: $fg-f28;
+    font-size: 30rpx;
     font-weight: 600;
     color: #333;
   }
@@ -329,7 +329,7 @@ $otherHeight: 292rpx;
       height: calc(100vh - #{$otherHeight});
       .loading-text {
         height: 100rpx;
-        font-size: $fg-f26;
+        font-size: 28rpx;
         line-height: 100rpx;
         color: --color(--qui-FC-AAA);
         text-align: center;

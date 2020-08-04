@@ -59,7 +59,7 @@ export default {
   &__text {
     display: inline-block;
     margin-left: 16rpx;
-    font-size: $fg-f26;
+    font-size: 28rpx;
     color: #888;
     vertical-align: middle;
   }

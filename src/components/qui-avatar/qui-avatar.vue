@@ -20,7 +20,7 @@ const sizes = {
   80: 'font-size: 48rpx;line-height: 80rpx;',
   70: 'font-size: 44rpx;line-height: 70rpx;',
   60: 'font-size: 40rpx;line-height: 60rpx;',
-  50: 'font-size: $fg-f34;line-height: 50rpx;',
+  50: 'font-size: 36rpx;line-height: 50rpx;',
 };
 
 export default {

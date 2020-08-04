@@ -246,7 +246,7 @@ $otherHeight: 292rpx;
   &_toAll {
     margin-bottom: 15rpx;
     margin-left: 36rpx;
-    font-size: $fg-f26;
+    font-size: 28rpx;
     color: --color(--qui-LINK);
   }
 }
@@ -254,10 +254,10 @@ $otherHeight: 292rpx;
   display: flex;
   flex-direction: row;
   align-items: center;
-  font-size: $fg-f24;
+  font-size: 26rpx;
   color: --color(--qui-FC-777);
   text {
-    font-size: $fg-f26;
+    font-size: 28rpx;
     color: --color(--qui-FC-333);
   }
 }

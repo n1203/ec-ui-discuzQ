@@ -79,7 +79,7 @@ export default {
   margin-right: 20rpx;
 }
 .stick-title {
-  font-size: $fg-f26;
+  font-size: 28rpx;
 }
 .ec-sticky-box {
   box-sizing: border-box;

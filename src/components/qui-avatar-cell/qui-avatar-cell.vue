@@ -109,7 +109,7 @@ export default {
     .avatar-box__r__tit {
       display: flex;
       flex-direction: column;
-      font-size: $fg-f26;
+      font-size: 28rpx;
       &-label {
         color: --color(--qui-FC-DDD);
       }

@@ -306,7 +306,7 @@ export default {
         height: 37rpx;
         margin-bottom: 10rpx;
         margin-left: 2rpx;
-        font-size: $fg-f26;
+        font-size: 28rpx;
         line-height: 37rpx;
       }
 
@@ -349,7 +349,7 @@ export default {
     &__r {
       width: 100rpx;
       .comment-status {
-        font-size: $fg-f24;
+        font-size: 26rpx;
         color: --color(--qui-RED);
         text-align: right;
       }
@@ -359,7 +359,7 @@ export default {
   &__content {
     &__text {
       overflow: hidden;
-      font-size: $fg-f26;
+      font-size: 28rpx;
       font-weight: 400;
       line-height: 45rpx;
       color: --color(--qui-FC-333);
@@ -438,7 +438,7 @@ export default {
   justify-content: flex-end;
   .like {
     margin-right: 15rpx;
-    font-size: $fg-f28;
+    font-size: 30rpx;
     line-height: 37rpx;
     color: --color(--qui-FC-777);
   }

@@ -408,7 +408,7 @@ export default {
       }
     }
     &__text {
-      font-size: $fg-f24;
+      font-size: 26rpx;
       margin-top: 15rpx;
     }
   }

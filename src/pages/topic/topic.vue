@@ -109,7 +109,7 @@ $otherHeight: 292rpx;
   border-bottom: 0.5rpx solid --color(--qui-BOR-ED);
   &_title {
     padding-right: 150rpx;
-    font-size: $fg-f28;
+    font-size: 30rpx;
     font-weight: 600;
     color: --color(--qui-FC-333);
     word-break: break-all;
@@ -160,7 +160,7 @@ $otherHeight: 292rpx;
       height: calc(100vh - #{$otherHeight});
       .loading-text {
         height: 100rpx;
-        font-size: $fg-f26;
+        font-size: 28rpx;
         line-height: 100rpx;
         color: --color(--qui-FC-AAA);
         text-align: center;

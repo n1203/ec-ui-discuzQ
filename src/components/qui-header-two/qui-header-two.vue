@@ -301,7 +301,7 @@ export default {
     }
     &__icon {
       color: #fff;
-      font-size: $fg-f26;
+      font-size: 28rpx;
       text-align: center;
       height: 70rpx;
       max-width: 100px;

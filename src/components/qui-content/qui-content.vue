@@ -626,7 +626,7 @@ export default {
         overflow: hidden;
         font-weight: bold;
         line-height: 37rpx;
-        font-size: $fg-f26;
+        font-size: 28rpx;
         color: --color(--qui-FC-333);
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -675,7 +675,7 @@ export default {
       padding-bottom: 20rpx;
       overflow: hidden;
       font-family: $font-family;
-      font-size: $fg-f26;
+      font-size: 28rpx;
       font-weight: 400;
       line-height: 45rpx;
       color: --color(--qui-FC-333);
@@ -768,7 +768,7 @@ export default {
 
       &__item {
         font-family: $font-family;
-        font-size: $fg-f26;
+        font-size: 28rpx;
         // font-size: $fg-f28;
         font-weight: 400;
         line-height: 37rpx;

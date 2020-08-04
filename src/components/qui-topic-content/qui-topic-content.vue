@@ -524,7 +524,7 @@ export default {
       padding-bottom: 20rpx;
       &__title {
         padding-bottom: 40rpx;
-        font-size: $fg-f28;
+        font-size: 30rpx;
         font-weight: 600;
         line-height: 160%;
         text-align: left;
@@ -622,7 +622,7 @@ export default {
 
       &__item {
         font-family: $font-family;
-        font-size: $fg-f26;
+        font-size: 28rpx;
         font-weight: 400;
         line-height: 37rpx;
         color: rgba(170, 170, 170, 1);

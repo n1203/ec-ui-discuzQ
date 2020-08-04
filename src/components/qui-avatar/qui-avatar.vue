@@ -17,10 +17,10 @@
 import stringToColor from '@/utils/stringToColor';
 
 const sizes = {
-  80: 'font-size: 24px;line-height: 80rpx;',
-  70: 'font-size: 22px;line-height: 70rpx;',
-  60: 'font-size: 20px;line-height: 60rpx;',
-  50: 'font-size: 18px;line-height: 50rpx;',
+  80: 'font-size: 48rpx;line-height: 80rpx;',
+  70: 'font-size: 44rpx;line-height: 70rpx;',
+  60: 'font-size: 40rpx;line-height: 60rpx;',
+  50: 'font-size: 36rpx;line-height: 50rpx;',
 };
 
 export default {

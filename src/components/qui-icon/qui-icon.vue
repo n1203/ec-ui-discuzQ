@@ -57,7 +57,7 @@ export default {
   right: 0;
   min-width: 16px;
   padding: 0 3px;
-  font-size: 12px;
+  font-size: 24rpx;
   font-weight: bold;
   line-height: 14px;
   color: #fff;

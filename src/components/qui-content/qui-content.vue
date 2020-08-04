@@ -768,7 +768,7 @@ export default {
 
       &__item {
         font-family: $font-family;
-        font-size: 14px;
+        font-size: 28rpx;
         // font-size: $fg-f28;
         font-weight: 400;
         line-height: 37rpx;

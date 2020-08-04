@@ -297,11 +297,11 @@ export default {
       color: #80c5ff;
       text-indent: 10px;
       border-radius: 3px;
-      font-size: 12px;
+      font-size: 24rpx;
     }
     &__icon {
       color: #fff;
-      font-size: 14px;
+      font-size: 28rpx;
       text-align: center;
       height: 70rpx;
       max-width: 100px;

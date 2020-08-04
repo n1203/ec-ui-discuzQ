@@ -62,7 +62,7 @@
         <!-- 如果没有会话 -->
         <view v-if="dialogList.length === 0" style="text-align: center; padding: 30px; color: #ccc">
           <qui-icon size="100" name="icon-message" />
-          <view style="line-height: 40px; font-size: 12px;">暂时没有私信，赶快去联系好友！</view>
+          <view style="line-height: 40px; font-size: 24rpx;">暂时没有私信，赶快去联系好友！</view>
         </view>
         <!-- 会话列表 -->
         <view class="dialog-box__main" v-if="dialogList && dialogList.length > 0">

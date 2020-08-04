@@ -193,7 +193,7 @@ $nav-height: 44px;
   flex-direction: row;
   width: 100%;
   height: $nav-height;
-  font-size: 16px;
+  font-size: 32rpx;
   line-height: $nav-height;
   // background-color: #ffffff;
 }

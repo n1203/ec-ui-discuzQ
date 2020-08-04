@@ -257,7 +257,7 @@ $otherHeight: 292rpx;
       height: calc(100vh - #{$otherHeight});
       .loading-text {
         height: 100rpx;
-        font-size: 28rpx;
+        font-size: $fg-f26;
         line-height: 100rpx;
         color: --color(--qui-FC-AAA);
         text-align: center;

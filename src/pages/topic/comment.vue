@@ -219,7 +219,7 @@
                 :maxlength="450"
                 class="comment-textarea"
                 :placeholder="t.writeComments"
-                placeholder-style="color:#b5b5b5;font-size: 28rpx;"
+                placeholder-style="color:#b5b5b5;font-size: $fg-f26;"
                 placeholder-class="text-placeholder"
                 :show-confirm-bar="barStatus"
                 cursor-spacing="80"
@@ -902,7 +902,7 @@ page {
     line-height: 1;
     .icon-management {
       margin-right: 7rpx;
-      font-size: 26rpx;
+      font-size: $fg-f24;
     }
   }
   font-size: $fg-f28;
@@ -955,7 +955,7 @@ page {
     align-items: center;
     .qui-icon {
       margin-right: 17rpx;
-      font-size: 30rpx;
+      font-size: $fg-f28;
     }
     * {
       font-size: $fg-f28;
@@ -1069,7 +1069,7 @@ page {
   color: --color(--qui-FC-777);
   .qui-icon {
     margin-right: 18rpx;
-    font-size: 30rpx;
+    font-size: $fg-f28;
     line-height: 80rpx;
   }
   .ft-child-word {
@@ -1135,7 +1135,7 @@ page {
     line-height: 37rpx;
   }
   .text-placeholder {
-    font-size: 28rpx;
+    font-size: $fg-f26;
   }
 }
 

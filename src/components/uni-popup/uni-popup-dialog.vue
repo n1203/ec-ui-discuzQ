@@ -190,7 +190,7 @@ export default {
 }
 
 .uni-dialog-content-text {
-  font-size: 28rpx;
+  font-size: $fg-f26;
   color: #6e6e6e;
 }
 
@@ -223,7 +223,7 @@ export default {
 }
 
 .uni-dialog-button-text {
-  font-size: 28rpx;
+  font-size: $fg-f26;
 }
 
 .uni-button-color {
@@ -232,7 +232,7 @@ export default {
 
 .uni-dialog-input {
   flex: 1;
-  font-size: 28rpx;
+  font-size: $fg-f26;
 }
 
 .uni-popup__success {

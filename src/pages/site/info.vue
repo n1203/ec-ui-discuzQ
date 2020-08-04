@@ -606,7 +606,7 @@ export default {
     display: flex;
     flex-direction: row;
     .code-type-icon {
-      font-size: 36rpx;
+      font-size: $fg-f34;
     }
     .code-type-text {
       padding-left: 12rpx;

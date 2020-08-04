@@ -87,7 +87,7 @@ export default {
           // routePath: 'pages/my/index', // 仅用作标识不用来跳转
         },
         {
-          tabsName: 'publish',
+          tabsName: 'topic.publish',
           tabsIcon: 'null',
           id: 3,
           url: '/pages/site/search',

@@ -703,7 +703,7 @@ export default {
       &__item {
         max-width: 80%;
         max-height: 80%;
-        border-radius: 5rpx;
+        border-radius: 10rpx;
       }
     }
     &__imgtwo {
@@ -717,7 +717,7 @@ export default {
         height: 211rpx;
         margin-bottom: 10rpx;
         background: #fff;
-        border-radius: 5rpx;
+        border-radius: 10rpx;
       }
     }
     &__imgmore {
@@ -735,7 +735,7 @@ export default {
         margin-right: 1.33%;
         margin-bottom: 10rpx;
         background: #fff;
-        border-radius: 5rpx;
+        border-radius: 10rpx;
       }
     }
 

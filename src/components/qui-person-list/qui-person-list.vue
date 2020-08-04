@@ -204,7 +204,7 @@ export default {
     line-height: 90rpx;
     .qui-icon {
       margin-right: 13rpx;
-      font-size: 36rpx;
+      font-size: $fg-f34;
       line-height: 90rpx;
     }
   }

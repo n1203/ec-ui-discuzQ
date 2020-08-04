@@ -104,7 +104,7 @@ export default {
   justify-content: center;
   width: 100%;
   height: 100%;
-  font-size: 16rpx;
+  font-size: $fg-f14;
   &--position {
     display: line-flex;
     flex-direction: column;
@@ -120,7 +120,7 @@ export default {
     margin-bottom: 16rpx;
   }
   &--content {
-    font-size: 28rpx;
+    font-size: $fg-f26;
     color: #fff;
     word-break: break-all;
   }

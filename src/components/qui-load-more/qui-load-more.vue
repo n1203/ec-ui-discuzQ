@@ -162,7 +162,7 @@ export default {
 }
 
 .uni-load-more__text {
-  font-size: 26rpx;
+  font-size: $fg-f24;
 }
 
 .uni-load-more__img {

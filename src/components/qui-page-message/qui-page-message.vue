@@ -268,7 +268,7 @@ export default {
   width: 510rpx;
   height: 90rpx;
   margin: 50rpx auto 0;
-  font-size: 28rpx;
+  font-size: $fg-f26;
   font-weight: 400;
   line-height: 90rpx;
   color: rgba(255, 255, 255, 1);

@@ -166,7 +166,7 @@ export default {
   justify-content: space-between;
   align-items: center;
   padding: 0 0 24rpx;
-  font-size: 28rpx;
+  font-size: $fg-f26;
   line-height: 37rpx;
 }
 .center {

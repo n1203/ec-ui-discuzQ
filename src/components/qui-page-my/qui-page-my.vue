@@ -37,27 +37,43 @@
       <view class="my-items">
         <view class="my-items__wrap">
           <navigator url="/pages/my/profile" hover-class="none">
-            <qui-cell-item :title="i18n.t('profile.myprofile')" arrow></qui-cell-item>
+            <qui-cell-item
+              left-icon="icon-message"
+              icon-background="#fff0"
+              :title="i18n.t('profile.myprofile')"
+              arrow
+              icon-background-color="#f60"
+            ></qui-cell-item>
           </navigator>
           <navigator url="/pages/my/wallet" hover-class="none" v-if="forums.paycenter.wxpay_close">
-            <qui-cell-item :title="i18n.t('profile.mywallet')" arrow></qui-cell-item>
+            <qui-cell-item
+              left-icon="icon-message"
+              :title="i18n.t('profile.mywallet')"
+              arrow
+            ></qui-cell-item>
           </navigator>
           <navigator url="/pages/my/favorite" hover-class="none">
             <qui-cell-item
               :title="i18n.t('profile.myfavorite')"
               arrow
+              left-icon="icon-message"
               :border="false"
             ></qui-cell-item>
           </navigator>
         </view>
         <view class="my-items__wrap">
           <navigator url="/pages/site/index" hover-class="none">
-            <qui-cell-item :title="i18n.t('profile.circleinfo')" arrow></qui-cell-item>
+            <qui-cell-item
+              left-icon="icon-message"
+              :title="i18n.t('profile.circleinfo')"
+              arrow
+            ></qui-cell-item>
           </navigator>
           <navigator url="/pages/site/search" hover-class="none">
             <qui-cell-item
               :title="i18n.t('profile.search')"
               arrow
+              left-icon="icon-message"
               :border="forums.other && forums.other.can_create_invite ? true : false"
             ></qui-cell-item>
           </navigator>
@@ -69,18 +85,29 @@
             <qui-cell-item
               :title="i18n.t('profile.circlemanagement')"
               arrow
+              left-icon="icon-message"
               :border="false"
             ></qui-cell-item>
           </navigator>
         </view>
 
         <view class="my-items__wrap">
-          <qui-cell-item :title="i18n.t('profile.theme')" slot-right :border="false">
+          <qui-cell-item
+            left-icon="icon-message"
+            :title="i18n.t('profile.theme')"
+            slot-right
+            :border="false"
+          >
             <u-switch @change="changeCheck" v-model="checked" active-color="#1E78F3"></u-switch>
           </qui-cell-item>
         </view>
         <view class="my-items__wrap">
-          <qui-cell-item :title="i18n.t('profile.enableEnLang')" slot-right :border="false">
+          <qui-cell-item
+            left-icon="icon-message"
+            :title="i18n.t('profile.enableEnLang')"
+            slot-right
+            :border="false"
+          >
             <u-switch @change="changeLangs" v-model="lang" active-color="#1E78F3"></u-switch>
           </qui-cell-item>
         </view>

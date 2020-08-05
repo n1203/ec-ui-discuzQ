@@ -1,6 +1,14 @@
 <template>
   <view :class="['cell-item', { border: border }, classItem]" @tap="$_click">
     <view class="cell-item__body">
+      <qui-icon
+        class="leftIcon"
+        :name="leftIcon"
+        size="26"
+        :color="iconColor"
+        v-if="leftIcon"
+        :style="{ background: iconBackgroundColor }"
+      ></qui-icon>
       <view class="cell-item__body__left" v-if="slotLeft">
         <slot></slot>
       </view>
@@ -84,6 +92,20 @@ export default {
     classItem: {
       type: String,
       default: '',
+    },
+    // 左侧图标
+    leftIcon: {
+      type: String,
+      default: '',
+    },
+    iconColor: {
+      type: String,
+      default: '#fff',
+    },
+    iconBackgroundColor: {
+      type: String,
+      default:
+        'linear-gradient(235deg, #FFFFFF 0%, #000F25 100%), linear-gradient(180deg, #6100FF 0%, #000000 100%), linear-gradient(235deg, #FFA3AC 0%, #FFA3AC 40%, #00043C calc(40% + 1px), #00043C 60%, #005D6C calc(60% + 1px), #005D6C 70%, #00C9B1 calc(70% + 1px), #00C9B1 100%), linear-gradient(125deg, #FFA3AC 0%, #FFA3AC 40%, #00043C calc(40% + 1px), #00043C 60%, #005D6C calc(60% + 1px), #005D6C 70%, #00C9B1 calc(70% + 1px), #00C9B1 100%)',
     },
   },
 
@@ -170,5 +192,11 @@ export default {
 }
 .arrow {
   margin-left: 20rpx;
+}
+.leftIcon {
+  margin-right: 20rpx;
+  padding: 20rpx;
+  border-radius: 100rpx;
+  background-blend-mode: overlay, hard-light, normal;
 }
 </style>

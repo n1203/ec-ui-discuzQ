@@ -808,6 +808,9 @@ export default {
   max-width: 75%;
   padding-left: 8rpx;
   color: --color(--qui-LINK);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 .themeItem__content__coverimg {
   width: 100%;

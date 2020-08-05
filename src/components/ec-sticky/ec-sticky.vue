@@ -61,8 +61,6 @@ export default {
     },
   },
   data: () => {
-    
-    debugger 
     return {
       headerH5,
     };

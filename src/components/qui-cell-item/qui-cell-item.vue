@@ -4,7 +4,7 @@
       <qui-icon
         class="leftIcon"
         :name="leftIcon"
-        size="26"
+        size="36"
         :color="iconColor"
         v-if="leftIcon"
         :style="{ background: iconBackgroundColor }"
@@ -100,12 +100,11 @@ export default {
     },
     iconColor: {
       type: String,
-      default: '#fff',
+      default: '#000',
     },
     iconBackgroundColor: {
       type: String,
-      default:
-        'linear-gradient(235deg, #FFFFFF 0%, #000F25 100%), linear-gradient(180deg, #6100FF 0%, #000000 100%), linear-gradient(235deg, #FFA3AC 0%, #FFA3AC 40%, #00043C calc(40% + 1px), #00043C 60%, #005D6C calc(60% + 1px), #005D6C 70%, #00C9B1 calc(70% + 1px), #00C9B1 100%), linear-gradient(125deg, #FFA3AC 0%, #FFA3AC 40%, #00043C calc(40% + 1px), #00043C 60%, #005D6C calc(60% + 1px), #005D6C 70%, #00C9B1 calc(70% + 1px), #00C9B1 100%)',
+      default: '',
     },
   },
 

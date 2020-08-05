@@ -38,7 +38,7 @@
         <view class="my-items__wrap">
           <navigator url="/pages/my/profile" hover-class="none">
             <qui-cell-item
-              left-icon="icon-message"
+              left-icon="icon-mine"
               icon-color="#000"
               :title="i18n.t('profile.myprofile')"
               arrow
@@ -47,7 +47,7 @@
           </navigator>
           <navigator url="/pages/my/wallet" hover-class="none" v-if="forums.paycenter.wxpay_close">
             <qui-cell-item
-              left-icon="icon-message"
+              left-icon="icon-rmb"
               :title="i18n.t('profile.mywallet')"
               arrow
             ></qui-cell-item>
@@ -56,7 +56,7 @@
             <qui-cell-item
               :title="i18n.t('profile.myfavorite')"
               arrow
-              left-icon="icon-message"
+              left-icon="icon-collection"
               :border="false"
             ></qui-cell-item>
           </navigator>
@@ -64,7 +64,7 @@
         <view class="my-items__wrap">
           <navigator url="/pages/site/index" hover-class="none">
             <qui-cell-item
-              left-icon="icon-message"
+              left-icon="icon-quote"
               :title="i18n.t('profile.circleinfo')"
               arrow
             ></qui-cell-item>
@@ -73,7 +73,7 @@
             <qui-cell-item
               :title="i18n.t('profile.search')"
               arrow
-              left-icon="icon-message"
+              left-icon="icon-search"
               :border="forums.other && forums.other.can_create_invite ? true : false"
             ></qui-cell-item>
           </navigator>
@@ -93,7 +93,7 @@
 
         <view class="my-items__wrap">
           <qui-cell-item
-            left-icon="icon-message"
+            left-icon="icon-each-follow"
             :title="i18n.t('profile.theme')"
             slot-right
             :border="false"
@@ -103,7 +103,7 @@
         </view>
         <view class="my-items__wrap">
           <qui-cell-item
-            left-icon="icon-message"
+            left-icon="icon-title"
             :title="i18n.t('profile.enableEnLang')"
             slot-right
             :border="false"

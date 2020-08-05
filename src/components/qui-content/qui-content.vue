@@ -18,6 +18,7 @@
               <text class="themeItem__header__title__username">
                 {{ userName }}
               </text>
+              <text :class="['badge', [user.groups[0].name]]">{{user.groups[0].name}}</text>
               <text v-if="isAdmin && themeType == '1'" class="themeItem__header__title__isAdmin">
                 <text v-for="(item, index) in userGroups" :key="index">
                   {{ item.isDisplay ? `(${item.name})` : '' }}
@@ -417,6 +418,11 @@ export default {
       type: String,
       default: '',
     },
+    // 作者个人信息
+    user: {
+      type: Object,
+      default: {},
+    }
   },
 
   data: () => {
@@ -844,5 +850,39 @@ export default {
   height: 80rpx;
   margin-top: -40rpx;
   margin-left: -40rpx;
+}
+
+.themeItem__header__title__top{
+  height: 24px;
+  align-items: center;
+}
+
+.themeItem__header__title__username {
+  height: 18px;
+  align-items: center;
+}
+
+.themeItem__header__img {
+  margin-top: 7px;
+}
+
+.badge {
+  height: 18px;
+  line-height: 18px;
+  align-items: center;
+  background: #fff !important;
+  color: yellow;
+  border-radius: 10px;
+  margin-left: -5px;
+  padding: 3px 6px;
+  transform: scale(.5);
+}
+.管理员 {
+  border: #1878f3 1px solid;
+  color: #1878f3;
+}
+.普通会员 {
+  border: #ccc 1px solid;
+  color: #ccc;
 }
 </style>

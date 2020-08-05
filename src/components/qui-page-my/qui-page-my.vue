@@ -39,10 +39,10 @@
           <navigator url="/pages/my/profile" hover-class="none">
             <qui-cell-item
               left-icon="icon-message"
-              icon-background="#fff0"
+              icon-color="#000"
               :title="i18n.t('profile.myprofile')"
               arrow
-              icon-background-color="#f60"
+              icon-background-color=""
             ></qui-cell-item>
           </navigator>
           <navigator url="/pages/my/wallet" hover-class="none" v-if="forums.paycenter.wxpay_close">

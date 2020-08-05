@@ -177,6 +177,8 @@
           @headClick="headClick(item.user._jv.id)"
           @addFollow="addFollow(item.user._jv.id)"
           @videoPlay="handleVideoPlay"
+          :is-attention-visible="true"
+          :item="item"
         ></qui-content>
         <qui-load-more :status="loadingType"></qui-load-more>
       </view>

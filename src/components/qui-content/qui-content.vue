@@ -9,7 +9,7 @@
     ></image>
     <view class="themeItem" @click="backgroundClick">
       <view class="fbh">
-        <view class="themeItem__header" @click="headClick" @click.stop="">
+        <view class="themeItem__header fb1 fbjc" @click="headClick" @click.stop="">
           <view class="themeItem__header__img">
             <qui-avatar size="70" :user="{ avatarUrl: themeImage, username: userName }" />
           </view>
@@ -49,7 +49,7 @@
           @click="addFollow"
           @click.stop=""
         >
-          关注
+          关注 {{item.user.canFollow}}
         </view> -->
       </view>
 
@@ -586,6 +586,7 @@ export default {
     color: $uni-color-primary;
     border: 1px solid $uni-color-primary;
     border-radius: 4px;
+    font-size: 24rpx;
   }
   &__header {
     display: inline-flex;

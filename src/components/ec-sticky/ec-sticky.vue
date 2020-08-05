@@ -3,7 +3,7 @@
     <view class="sticky" v-if="items.length > 0">
       <swiper class="sticky__box fbh" next-margin="50px" autoplay>
         <swiper-item
-          class="sticky__isSticky"
+          :class="['sticky__isSticky', { 'acticv-sticky': index === items.length - 1 }]"
           v-for="(item, index) in items"
           :key="index"
           @click="handleClick(item._jv.id)"
@@ -17,6 +17,24 @@
             </view>
             <view class="stick-content">
               {{ item.title ? item.firstPost.summaryText : null }}
+            </view>
+            <view class="meta fbh">
+              <view class="meta-item fbh">
+                <qui-icon
+                  class="qui-icon"
+                  name="icon-liked"
+                  size="24"
+                  v-if="item.firstPost.isLiked"
+                ></qui-icon>
+                <qui-icon class="qui-icon" name="icon-like" size="24" v-else></qui-icon>
+                <view class="meta-item-count">{{ item.firstPost.likeCount || '' }}</view>
+              </view>
+              <view class="meta-item fbh">
+                <qui-icon class="qui-icon" name="icon-message" size="24"></qui-icon>
+                <view class="meta-item-count">
+                  {{ item.postCount || '' }}
+                </view>
+              </view>
             </view>
           </view>
         </swiper-item>
@@ -43,6 +61,8 @@ export default {
     },
   },
   data: () => {
+    
+    debugger 
     return {
       headerH5,
     };
@@ -80,6 +100,9 @@ export default {
 }
 .stick-title {
   font-size: 28rpx;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 .ec-sticky-box {
   box-sizing: border-box;
@@ -92,6 +115,28 @@ export default {
   .stick-content {
     font-size: 24rpx;
     color: #999;
+    height: 80rpx;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+}
+.acticv-sticky {
+  background: brown;
+  overflow: visible;
+  .ec-sticky-box {
+    margin-right: -50px;
+  }
+}
+
+.meta {
+  &-item {
+    margin-right: 20rpx;
+    &-count {
+      font-size: 24rpx;
+      padding: 0 20rpx;
+    }
   }
 }
 </style>

@@ -141,6 +141,7 @@
           :currentindex="index"
           :pay-status="(item.price > 0 && item.paid) || item.price == 0"
           :user-name="item.user.username"
+          :user="item.user"
           :theme-image="item.user.avatarUrl"
           :theme-btn="item.canHide || ''"
           :theme-reply-btn="item.canReply || ''"

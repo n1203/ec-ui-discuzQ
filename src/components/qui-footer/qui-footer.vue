@@ -7,7 +7,7 @@
       }"
     >
       <view
-        class="ft-box "
+        class="ft-box fbac fbjc"
         :class="{ select: true, active: index === footerIndex }"
         v-for="(item, index) in tabs"
         :key="index"
@@ -17,18 +17,27 @@
           class="ft-box-icon"
           :name="item.tabsIcon"
           size="48"
+          v-if="item.tabsName"
           :class="{ select: true, active: index === footerIndex }"
         ></qui-icon>
+        <qui-icon
+          name="icon-add"
+          size="36"
+          color="#fff"
+          v-if="!item.tabsName"
+          class="ft-box-spacal"
+          @click="footerOpen"
+        />
         <!-- <text class="ft-box-content" :class="{ select: true, active: index === footerIndex }">
           {{ item.tabsName }}
         </text> -->
         <view v-if="redCircle && item.id === 4" name="icon-circle" class="red-circle"></view>
       </view>
 
-      <view class="ft-box-spacal" @click="footerOpen">
-        <text>+</text>
-        <!-- <image class="ft-box-spacal-icon" src="@/static/publish.svg" @click="footerOpen"></image> -->
-      </view>
+      <!-- <view class="ft-box-spacal" @click="footerOpen">
+        <text class="">+</text>
+        <image class="ft-box-spacal-icon" src="@/static/publish.svg" @click="footerOpen"></image>
+      </view> -->
     </view>
     <uni-popup ref="popup" type="bottom">
       <view class="popup-share">
@@ -316,17 +325,15 @@ export default {
   text-align: center;
 }
 .ft-box-spacal {
-  position: fixed;
-  bottom: 10rpx;
   text-align: center;
   font-size: 58rpx;
   background-color: --color(--qui-BG-HIGH-LIGHT);
   box-shadow: 0 0 40rpx --color(--qui-BG-A3CAFF);
   border-radius: 30rpx;
-  line-height: 50rpx;
-  padding: 0 40rpx 12rpx;
+  width: 100rpx;
+  line-height: 60rpx;
   color: #fff;
-  display: inline-block;
+  display: block;
 }
 .ft-box-spacal-icon {
   position: relative;

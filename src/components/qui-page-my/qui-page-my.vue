@@ -21,7 +21,10 @@
             <qui-avatar :user="userInfo" />
             <view class="fbv fbjc ">
               <view class="my-info__box__detail-username">
-                {{ userInfo.username }} [{{ userInfo.groupsName }}]
+                {{ userInfo.username }}
+                <view :class="['badge', [userInfo.groups[0].name]]">
+                  {{ userInfo.groupsName }}
+                </view>
               </view>
               <view class="my-info__introduction" v-if="userInfo.signature">
                 {{ userInfo.signature }}
@@ -143,7 +146,8 @@
           >
             <u-switch @change="changeLangs" v-model="lang" active-color="#1E78F3"></u-switch>
           </qui-cell-item>
-        </view>        <!-- #ifdef H5-->
+        </view>
+        <!-- #ifdef H5-->
         <!-- 微信内：无感模式不展示按钮，其他模式展示退出并解绑按钮，微信外：任何模式都展示退出登录按钮 -->
         <view class="logout">
           <qui-button
@@ -235,10 +239,11 @@ export default {
     this.isWeixin = isWeixin;
 
     // 多语言默认值
-    if (i18n.locale !== 'zh') this.lang = true;  },
+    if (i18n.locale !== 'zh') this.lang = true;
+  },
   // #endif
   methods: {
-// 切换多语言
+    // 切换多语言
     changeLangs(e) {
       this.$localeUse(e ? 'en' : 'zh');
       // window.location.reload();
@@ -366,15 +371,37 @@ $height: calc(100vh - 260rpx);
   box-sizing: border-box;
 }
 .my-info__box__detail-username {
+  display: flex;
+  align-items: center;
   padding-left: 20rpx;
   color: #fff;
+}
+.badge {
+  font-size: 14px;
+  line-height: 14px;
+  align-items: center;
+  background: #fff !important;
+  color: yellow;
+  border-radius: 20rpx;
+  margin-left: 10rpx;
+  padding: 3px 6px;
+  transform: scale(.8);
+}
+.管理员 {
+  border: #1878f3 1px solid;
+  color: #1878f3;
+}
+.普通会员 {
+  border: #ccc 1px solid;
+  color: #ccc;
 }
 .my-tabs {
   // background: --color(--qui-BG-2);
   background: --color(--qui-BG-FFF);
   border-radius: 20rpx;
   overflow: hidden;
-  transform: translateY(50rpx);  transition: $switch-theme-time;
+  transform: translateY(50rpx);
+  transition: $switch-theme-time;
 }
 .scroll-y {
   max-height: $height;

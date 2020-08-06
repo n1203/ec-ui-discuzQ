@@ -48,18 +48,9 @@ export default {
     },
   },
   methods: {
-    showDialog(title) {
-      uni.showToast({
-        icon: 'none',
-        title,
-        duration: 2000,
-      });
-    },
     submission() {
       if (this.sername) {
         this.changname();
-      } else if (!RegExp(/^.{2,15}.$/).test(this.username)) {
-        this.showDialog('用户名长度必须在2-15之间');
       } else {
         uni.showToast({
           icon: this.nametitle.icon,
@@ -125,9 +116,14 @@ export default {
 @import '@/styles/base/variable/global.scss';
 @import '@/styles/base/theme/fn.scss';
 .page-ediname /deep/ {
+  height: 100%;
+  background-color: --color(--qui-BG-2);
+  box-sizing: border-box;
   .chagepas {
     width: 100vw;
+    /* #ifndef H5 */
     height: 100vh;
+    /* #endif */
     background-color: --color(--qui-BG-2);
     box-sizing: border-box;
   }
@@ -142,12 +138,18 @@ export default {
     font-weight: 400;
     color: --color(--qui-RED);
   }
+  /* #ifdef H5 */
+  .uni-input-input {
+    color: --color(--qui-FC-333);
+  }
+  /* #endif */
   .chagepas-pas-inpa {
     width: 100%;
     height: 100rpx;
     font-size: $fg-f34;
     font-weight: 400;
     line-height: 100rpx;
+    color: --color(--qui-FC-333);
     text-align: left;
     border-bottom: 2rpx solid --color(--qui-BOR-ED);
   }

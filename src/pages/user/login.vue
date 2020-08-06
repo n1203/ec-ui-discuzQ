@@ -32,6 +32,7 @@
         </view>
       </view>
     </view>
+    <qui-registration-agreement></qui-registration-agreement>
   </qui-page>
 </template>
 
@@ -50,20 +51,29 @@ export default {
       validate: false, // 开启注册审核
       site_mode: '', // 站点模式
       isPaid: false, // 是否付费
+      code: '', // 注册邀请码
       qcloud_sms: false, // 默认不开启短信功能
       register: true, // 默认展示注册链接
     };
   },
   onLoad(params) {
-    console.log('登录');
     this.$store.dispatch('forum/setError', {
       code: 'user_login',
       status: 200,
     });
-    console.log('params', params);
-    const { url, validate, register } = params;
+    const { url, validate, register, commentId, code } = params;
     if (url) {
-      this.url = url;
+      let pageUrl;
+      if (url.substr(0, 1) !== '/') {
+        pageUrl = `/${url}`;
+      } else {
+        pageUrl = url;
+      }
+      if (commentId) {
+        this.url = `${pageUrl}&commentId=${commentId}`;
+      } else {
+        this.url = pageUrl;
+      }
     }
     if (validate) {
       this.validate = JSON.parse(validate);
@@ -71,9 +81,10 @@ export default {
     if (register) {
       this.register = JSON.parse(register);
     }
-    console.log('register', typeof this.register);
-    console.log('validate', typeof this.validate);
-    console.log('----this.forums-----', this.forums);
+    if (code !== 'undefined') {
+      this.code = code;
+    }
+
     if (this.forums && this.forums.set_site && this.forums.set_site.site_mode) {
       this.site_mode = this.forums.set_site.site_mode;
     }
@@ -84,10 +95,9 @@ export default {
       if (this.user && this.user.paid) {
         this.isPaid = this.user.paid;
       }
-      console.log('----this.user-----', this.user);
-      if (this.site_mode !== SITE_PAY || this.isPaid) {
+      if (this.site_mode !== SITE_PAY) {
         uni.navigateTo({
-          url: '/pages/home/index',
+          url: this.url,
         });
       }
       if (this.site_mode === SITE_PAY && !this.isPaid) {
@@ -100,9 +110,9 @@ export default {
   methods: {
     login() {
       if (this.username === '') {
-        this.showDialog('用户名不能为空');
+        this.showDialog(this.i18n.t('user.usernameEmpty'));
       } else if (this.password === '') {
-        this.showDialog('密码不能为空');
+        this.showDialog(this.i18n.t('user.passwordEmpty'));
       } else {
         const params = {
           data: {
@@ -115,7 +125,7 @@ export default {
         this.$store
           .dispatch('session/h5Login', params)
           .then(res => {
-            console.log('登录成功', res);
+            console.log(res);
             this.logind();
             uni.showToast({
               title: this.i18n.t('user.loginSuccess'),
@@ -128,13 +138,11 @@ export default {
       }
     },
     jump2Register() {
-      console.log('跳转到注册页面');
       uni.navigateTo({
-        url: `/pages/user/register?url=${this.url}&validate=${this.validate}`,
+        url: `/pages/user/register?url=${this.url}&validate=${this.validate}&code=${this.code}`,
       });
     },
     jump2findPassword() {
-      console.log('跳转到找回密码页面');
       uni.navigateTo({
         url: `/pages/modify/findpwd?pas=reset_pwd`,
       });
@@ -166,7 +174,7 @@ export default {
   }
 
   &-con {
-    margin: 0rpx 0rpx 0rpx 40rpx;
+    margin: 0rpx 40rpx;
 
     .input {
       width: 100%;
@@ -201,5 +209,4 @@ export default {
 
 .login-box-btn:active {
   opacity: 0.8;
-}
-</style>
+}</style>

@@ -181,15 +181,6 @@ export default {
   margin: 0 20upx;
 }
 
-.cell-item.is-disabled .cell-item__body__content,
-.cell-item.is-disabled .cell-item__body__content-title,
-.cell-item.is-disabled .cell-item__body__content-brief,
-.cell-item.is-disabled .cell-item__body__left,
-.cell-item.is-disabled .cell-item__body__right,
-.cell-item.is-disabled .cell-item__body__right-brief,
-.cell-item.is-disabled .cell-item__children {
-  color: #c5cad5;
-}
 .arrow {
   margin-left: 20rpx;
 }

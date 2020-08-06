@@ -123,10 +123,14 @@ export default {
 @import '@/styles/base/variable/global.scss';
 @import '@/styles/base/theme/fn.scss';
 .page-authen /deep/ {
+  background: --color(--qui-BG-2);
+  box-sizing: border-box;
   .authen {
     width: 100vw;
+    /* #ifndef H5 */
     height: 100vh;
-    background: --color(--qui-BG-2);
+    /* #endif */
+    background-color: --color(--qui-BG-2);
     box-sizing: border-box;
   }
   .authen-input {

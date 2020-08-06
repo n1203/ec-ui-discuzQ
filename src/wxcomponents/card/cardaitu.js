@@ -228,7 +228,7 @@ export default class LastMayday {
             "css": {
               "color": "#303133",
               "background": "rgba(0,0,0,0)",
-              "width": "453px",
+              "width": "650px",
               "height": "33.9px",
               "top": "160px",
               "left": "40px",

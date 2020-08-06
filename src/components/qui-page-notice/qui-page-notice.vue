@@ -1,7 +1,7 @@
 <template>
   <view>
     <view class="notice-box">
-      <!-- #ifdef _MP-WEIXIN -->
+      <!-- #ifdef MP-WEIXIN -->
       <uni-nav-bar
         :title="title"
         fixed
@@ -9,7 +9,7 @@
         :background-color="navTheme === $u.light() ? '#ffffff' : '#2e2f30'"
         status-bar
       ></uni-nav-bar>
-      <!-- _#endif -->
+      <!-- #endif -->
       <!-- 通知类型列表 -->
       <scroll-view
         scroll-x
@@ -19,7 +19,7 @@
         class="scroll-Y"
         :style="'top:' + navbarHeight + 'px'"
       >
-        <ec-header-placehoder />
+        <!-- <ec-header-placehoder /> -->
         <view class="notice-box__list fbh">
           <view
             class="ec-notice-box"
@@ -63,7 +63,7 @@
         <view v-if="dialogList.length === 0" style="text-align: center; padding: 30px; color: #ccc">
           <qui-icon size="100" name="icon-message" />
           <view style="line-height: 40px; font-size: 24rpx;">暂时没有私信，赶快去联系好友！</view>
-        </view>
+        </view>  
         <!-- 会话列表 -->
         <view class="dialog-box__main" v-if="dialogList && dialogList.length > 0">
           <view
@@ -74,7 +74,11 @@
           >
             <view class="dialog-box__header">
               <view class="dialog-box__header__info">
-                <qui-avatar class="dialog-box__header__info__user-avatar" :user="dialog" />
+                <qui-avatar
+                  class="dialog-box__header__info__user-avatar"
+                  :user="dialog"
+                  :is-real="dialog.isReal"
+                />
                 <view>
                   <view class="dialog-box__header__info__box">
                     <text class="dialog-box__header__info__username">
@@ -120,7 +124,7 @@
 </template>
 
 <script>
-import { time2MorningOrAfternoon } from '@/utils/time';
+import { time2DateAndHM } from '@/utils/time';
 import user from '@/mixin/user';
 
 export default {
@@ -153,7 +157,6 @@ export default {
     // 获取当前登录的id
     currentLoginId() {
       const userId = this.$store.getters['session/get']('userId');
-      console.log('获取当前登录的id', userId);
       return parseInt(userId, 10);
     },
   },
@@ -165,12 +168,20 @@ export default {
     this.navbarHeight = uni.getSystemInfoSync().statusBarHeight + 44;
     // #endif
     uni.$on('updateNotiNum', () => {
-      console.log('updateNode', this.user);
       this.getUnreadNoticeNum();
     });
+    // #ifdef H5
+    uni.$on('updateNoticePage', () => {
+      this.getUnreadNoticeNum();
+      this.getDialogList();
+    });
+    // #endif
   },
   destroyed() {
     uni.$off('updateNotiNum');
+    // #ifdef H5
+    uni.$off('updateNoticePage');
+    // #endif
   },
   methods: {
     // 调用 会话列表 的接口
@@ -182,12 +193,11 @@ export default {
         include: ['sender', 'recipient', 'sender.groups', 'recipient.groups', 'dialogMessage'],
       };
       this.$store.dispatch('jv/get', ['dialog', { params }]).then(res => {
-        console.log('会话列表res', res);
         if (res && res.length > 0) {
           const list = JSON.parse(JSON.stringify(res));
           for (let i = 0; i < list.length; i += 1) {
             if (list[i] && list[i].dialogMessage) {
-              list[i].time = time2MorningOrAfternoon(list[i].dialogMessage.created_at);
+              list[i].time = time2DateAndHM(list[i].dialogMessage.created_at);
             }
             if (list[i] && list[i].recipient && list[i].sender) {
               if (list[i].recipient.id === this.currentLoginId) {
@@ -195,14 +205,16 @@ export default {
                 list[i].avatarUrl = list[i].sender.avatarUrl;
                 list[i].groupname = list[i].sender.groups;
                 list[i].readAt = list[i].recipient_read_at;
+                list[i].isReal = list[i].sender.isReal;
               } else if (list[i].sender.id === this.currentLoginId) {
                 list[i].username = list[i].recipient.username;
                 list[i].avatarUrl = list[i].recipient.avatarUrl;
                 list[i].groupname = list[i].recipient.groups;
                 list[i].readAt = list[i].sender_read_at;
+                list[i].isReal = list[i].recipient.isReal;
               }
             } else {
-              list[i].username = '该用户已被删除';
+              list[i].username = this.i18n.t('core.userDeleted');
               list[i].avatarUrl = '';
             }
           }
@@ -214,7 +226,6 @@ export default {
     // 调用 未读通知数 的接口
     getUnreadNoticeNum() {
       if (this.user && this.user.typeUnreadNotifications) {
-        console.log('this.user', this.user);
         this.list[0].unReadNum = this.user.typeUnreadNotifications.related || '';
         this.list[1].unReadNum = this.user.typeUnreadNotifications.replied || '';
         this.list[2].unReadNum = this.user.typeUnreadNotifications.liked || '';
@@ -227,7 +238,6 @@ export default {
     },
     // 跳转至 @我的/回复我的/点赞我的/财务通知/系统通知 页面（传入标题，类型和未读通知条数）
     jumpNoticePage(item) {
-      console.log('item', item);
       // 如果有未读消息，点击时请求并更新消息信息
       if (item.unReadNum) this.getUserInfo(true);
       uni.navigateTo({
@@ -235,12 +245,10 @@ export default {
           item.unReadNum
         }`,
       });
-      console.log(`跳转${this.i18n.t(item.title)}页面`);
     },
     // 跳转至 聊天页面
     jumpMsglistPage(dialogInfo, index) {
       if (dialogInfo) {
-        console.log('会话信息', dialogInfo);
         this.dialogList[index].readAt = '1';
         uni.navigateTo({
           url: `/pages/notice/msglist?dialogId=${dialogInfo._jv.id}&username=${dialogInfo.username}`,
@@ -254,7 +262,6 @@ export default {
       }
       this.pageNum += 1;
       this.getDialogList();
-      console.log('页码', this.pageNum);
     },
     // 组件初始化数据
     ontrueGetList() {
@@ -290,7 +297,7 @@ export default {
   &__list {
     padding-left: 40rpx;
     background: --color(--qui-BG-2);
-    // border-bottom: 2rpx solid --color(--qui-BOR-ED);
+    border-bottom: 2rpx solid --color(--qui-BOR-ED);
     transition: $switch-theme-time;
 
     &-red-circle {
@@ -314,14 +321,13 @@ export default {
 }
 
 .dialog-box {
-  // margin: 20rpx 0;
+  margin: 20rpx 0;
   background: --color(--qui-BG-2);
   border-bottom: 2rpx solid --color(--qui-BOR-ED);
 
   &__header {
     display: flex;
     justify-content: space-between;
-    // border-bottom: 1px solid #f0f0f0;
 
     &__info {
       display: flex;
@@ -338,8 +344,8 @@ export default {
       }
 
       &__username {
+        font-size: 28rpx;
         margin-right: 6rpx;
-        font-weight: bold;
         line-height: 37rpx;
         color: --color(--qui-FC-000);
       }
@@ -380,9 +386,9 @@ export default {
   }
 
   &__con {
-    // padding: 0rpx 40rpx 30rpx;
-    font-weight: 400;
-    color: --color(--qui-FC-333);
+    padding: 0rpx 40rpx 30rpx 0;
+    font-size: 24rpx;
+    color: --color(--qui-FC-AAA);
     opacity: 1;
   }
 }

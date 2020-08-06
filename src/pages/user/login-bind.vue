@@ -26,6 +26,7 @@
         {{ i18n.t('user.registerBindId') }}
       </view>
     </view>
+    <qui-registration-agreement></qui-registration-agreement>
   </qui-page>
 </template>
 
@@ -49,10 +50,19 @@ export default {
     };
   },
   onLoad(params) {
-    console.log('params', params);
-    const { url, validate, token, code } = params;
+    const { url, validate, token, commentId, code } = params;
     if (url) {
-      this.url = url;
+      let pageUrl;
+      if (url.substr(0, 1) !== '/') {
+        pageUrl = `/${url}`;
+      } else {
+        pageUrl = url;
+      }
+      if (commentId) {
+        this.url = `${pageUrl}&commentId=${commentId}`;
+      } else {
+        this.url = pageUrl;
+      }
     }
     if (validate) {
       this.validate = JSON.parse(validate);
@@ -63,19 +73,22 @@ export default {
     if (token) {
       this.token = token;
     }
-    console.log('validate', typeof this.validate);
-    console.log('----this.forums-----', this.forums);
     if (this.forums && this.forums.set_site && this.forums.set_site.site_mode) {
       this.site_mode = this.forums.set_site.site_mode;
     }
-    this.$u.event.$on('logind', () => {
-      if (this.user && this.user.paid) {
-        this.isPaid = this.user.paid;
+    if (this.user && this.user.paid) {
+      this.isPaid = this.user.paid;
+    }
+  },
+  created() {
+    uni.$on('logind', () => {
+      let url = '';
+      if (this.url) {
+        url = this.url;
       }
-      console.log('----this.user-----', this.user);
-      if (this.site_mode !== SITE_PAY || this.isPaid) {
+      if (this.site_mode !== SITE_PAY) {
         uni.navigateTo({
-          url: '/pages/home/index',
+          url,
         });
       }
       if (this.site_mode === SITE_PAY && !this.isPaid) {
@@ -85,12 +98,15 @@ export default {
       }
     });
   },
+  destroyed() {
+    uni.$off('logind');
+  },
   methods: {
     login() {
       if (this.username === '') {
-        this.showDialog('用户名不能为空');
+        this.showDialog(this.i18n.t('user.usernameEmpty'));
       } else if (this.password === '') {
-        this.showDialog('密码不能为空');
+        this.showDialog(this.i18n.t('user.passwordEmpty'));
       } else {
         const params = {
           data: {
@@ -104,7 +120,7 @@ export default {
         this.$store
           .dispatch('session/h5Login', params)
           .then(res => {
-            console.log('登录绑定成功', res);
+            console.log(res);
             this.logind();
             uni.showToast({
               title: this.i18n.t('user.loginBindSuccess'),
@@ -124,7 +140,6 @@ export default {
       });
     },
     jump2RegisterBind() {
-      console.log('注册并绑定页');
       uni.navigateTo({
         url: `/pages/user/register-bind?url=${this.url}&validate=${this.validate}&token=${this.token}&code=${this.code}`,
       });
@@ -149,7 +164,7 @@ export default {
   }
 
   &-con {
-    margin: 0rpx 0rpx 0rpx 40rpx;
+    margin: 0rpx 40rpx;
 
     .input {
       width: 100%;

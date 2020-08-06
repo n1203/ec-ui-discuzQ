@@ -170,7 +170,7 @@
         :form-data="formData"
         :file-preview="filePreview"
         name="file"
-        async-clear
+        :async-clear="true"
         ref="upload"
         v-if="type === 1 || type === 3"
         @change="uploadChange"
@@ -263,7 +263,7 @@
           type="primary"
           size="large"
           id="TencentCaptcha"
-          :data-appid="forums.qcloud.qcloud_captcha_app_id || ''"
+          :data-appid="(forums.qcloud && forums.qcloud.qcloud_captcha_app_id) || ''"
           @click="postClick"
           :disabled="textAreaValue.length > textAreaLength"
         >
@@ -364,6 +364,15 @@
           </view>
         </view>
       </uni-popup>
+      <uni-popup ref="deletePopup" type="center">
+        <uni-popup-dialog
+          type="warn"
+          :content="deleteTip"
+          :before-close="true"
+          @close="handleClickCancel"
+          @confirm="handleClickOk"
+        ></uni-popup-dialog>
+      </uni-popup>
       <qui-toast ref="toast"></qui-toast>
     </view>
   </qui-page>
@@ -375,12 +384,14 @@ import { DISCUZ_REQUEST_HOST } from '@/common/const';
 import VodUploader from '@/common/cos-wx-sdk-v5.1';
 import forums from '@/mixin/forums';
 // #ifdef  H5
-import tcaptchs from '@/utils/tcaptcha';
 import TcVod from 'vod-js-sdk-v6';
+import tcaptchs from '@/utils/tcaptcha';
 // #endif
+import uniPopupDialog from '@/components/uni-popup/uni-popup-dialog';
 
 export default {
   name: 'Post',
+  components: { uniPopupDialog },
   mixins: [
     forums,
     // #ifdef  H5
@@ -488,6 +499,10 @@ export default {
       attachmentList: [], // 附件列表
       preAttachmentList: [], // 编辑的时候只传新增的用于比较是否是新增的
       signatureVal: '',
+      deleteType: '', // 删除类型 0为图片，1为附件，2为视频
+      deleteId: '', // 当前点击要删除的图片Id
+      deleteIndex: '', // 当前点击要删除的图片index
+      deleteTip: '确定删除吗？', // 删除提示
     };
   },
   computed: {
@@ -508,6 +523,17 @@ export default {
       return pay;
     },
   },
+  // created() {
+  //   if (
+  //     this.forums &&
+  //     this.forums.qcloud.qcloud_captcha &&
+  //     this.forums.other.create_thread_with_captcha
+  //   ) {
+  //     // eslint-disable-next-line
+  //     const tcaptchas = require('@/utils/tcaptcha');
+  //     // eslint-disable-next-line
+  //   }
+  // },
   updated() {
     // #ifndef MP-WEIXIN
     this.$nextTick(() => {
@@ -636,9 +662,11 @@ export default {
 
     // video相关方法
     videoDel() {
-      this.videoBeforeList = [];
-      this.percent = 0;
-      this.videoPercent = 0;
+      this.deleteType = 2;
+      // this.deleteId = id;
+      // this.deleteIndex = del;
+      this.$refs.deletePopup.open();
+      this.deleteTip = this.i18n.t('core.deleteVideoSure');
     },
     playVideo() {
       this.controlsStatus = true;
@@ -797,11 +825,12 @@ export default {
       this.uploadStatus = status;
     },
     uploadClear(list, del) {
-      // const id = this.operating === 'edit' ? list.id : list.data.id;
       const id = list.id;
-      this.delAttachments(id, del).then(() => {
-        this.$refs.upload.clear(del);
-      });
+      this.deleteType = 0;
+      this.deleteId = id;
+      this.deleteIndex = del;
+      this.$refs.deletePopup.open();
+      this.deleteTip = this.i18n.t('core.deleteImgSure');
     },
 
     // 表情点击事件
@@ -986,6 +1015,7 @@ export default {
           this.videoBeforeList.push({
             path: data.threadVideo.media_url,
           });
+          this.videoPercent = 1;
           break;
         default:
           console.log('没有匹配模式');
@@ -1024,7 +1054,15 @@ export default {
       }
       return attachments;
     },
+    // 删除附件显示弹框
     deleteFile(id) {
+      this.deleteTip = this.i18n.t('core.deleteEnclosureSure');
+      this.$refs.deletePopup.open();
+      this.deleteType = 1;
+      this.deleteId = id;
+    },
+    // 删除附件调用删除接口
+    deleteFileSure(id) {
       const params = {
         _jv: {
           type: 'attachments',
@@ -1032,7 +1070,7 @@ export default {
         },
       };
       this.$store.dispatch('jv/delete', params).then(res => {
-        console.log(res);
+        this.$refs.uploadFiles.deleteSure();
       });
     },
 
@@ -1108,6 +1146,29 @@ export default {
           });
       });
     },
+
+    handleClickOk() {
+      this.$refs.deletePopup.close();
+      if (this.deleteType === 0) {
+        // 删除类型为图片
+        this.delAttachments(this.deleteId, this.deleteIndex).then(() => {
+          this.$refs.upload.clear(this.deleteIndex);
+        });
+      } else if (this.deleteType === 1) {
+        // 删除类型为附件
+        this.deleteFileSure(this.deleteId);
+      } else if (this.deleteType === 2) {
+        // 删除类型为视频
+        this.videoBeforeList = [];
+        this.percent = 0;
+        this.videoPercent = 0;
+      }
+    },
+
+    handleClickCancel() {
+      this.$refs.deletePopup.close();
+    },
+
     delAttachments(id, index) {
       const params = {
         _jv: {
@@ -1125,11 +1186,13 @@ export default {
               threadId: this.postDetails._jv.id,
               index,
             });
+            const post = this.$store.getters['jv/get'](
+              `posts/${this.postDetails.firstPost._jv.id}`,
+            );
+            post.images.splice(index, 1);
+            post._jv.relationships.images.data.splice(index, 1);
           }
 
-          const post = this.$store.getters['jv/get'](`posts/${this.postDetails.firstPost._jv.id}`);
-          post.images.splice(index, 1);
-          post._jv.relationships.images.data.splice(index, 1);
           this.uploadFile.forEach((value, key, item) => {
             value.id == id && item.splice(key, 1);
           });
@@ -1310,7 +1373,7 @@ export default {
           appId: this.forums.qcloud.qcloud_captcha_app_id, //您申请的验证码的 appId
         },
         success(res) {
-          console.log('验证码成功打开');
+          // 验证码成功打开
         },
         fail(err) {
           uni.hideLoading();
@@ -1320,12 +1383,11 @@ export default {
       // #endif
       // h5内发布按钮验证码验证
       // #ifdef H5
-
       this.captcha = new TencentCaptcha(this.forums.qcloud.qcloud_captcha_app_id, res => {
         if (res.ret === 0) {
           this.ticket = res.ticket;
           this.randstr = res.randstr;
-          //验证通过后发布
+          // 验证通过后发布
           this.postClick();
         }
         if (res.ret === 2) {
@@ -1373,12 +1435,12 @@ export default {
 
     try {
       const res = uni.getSystemInfoSync();
-      if (this.forums.paycenter.wxpay_close) {
+      if (this.forums && this.forums.paycenter.wxpay_close && this.forums.other.can_create_thread_paid) {
         // #ifndef H5
         if (res.platform === 'ios') {
           if (this.forums.paycenter.wxpay_ios === false) {
             this.showHidden = false;
-          }else {
+          } else {
             this.showHidden = true;
           }
         } else {
@@ -1644,6 +1706,7 @@ export default {
 }
 .post-box__ft-categories /deep/ .qui-button--button:after {
   border: none;
+  border-radius: 0;
 }
 .post-box__ft-categories /deep/ .cateActive {
   &[size='default'] {

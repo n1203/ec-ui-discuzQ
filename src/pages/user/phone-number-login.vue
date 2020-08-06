@@ -7,14 +7,7 @@
           {{ i18n.t('user.phoneNumber') }}
         </view>
         <view class="new-phon-number">
-          <input
-            class="new-phon-num"
-            type="number"
-            v-model="username"
-            :focus="true"
-            :cursor="1"
-            maxlength="11"
-          />
+          <input class="new-phon-num" type="number" v-model="username" maxlength="11" />
         </view>
       </view>
       <view class="new-phon">
@@ -37,6 +30,7 @@
         </view>
       </view>
     </view>
+    <qui-registration-agreement></qui-registration-agreement>
   </qui-page>
 </template>
 
@@ -53,32 +47,46 @@ export default {
       password: '', // 密码
       url: '', // 上一个页面的路径
       token: '', // token
+      code: '', // 注册邀请码
       validate: false, // 开启注册审核
       site_mode: '', // 站点模式
       isPaid: false, // 是否付费
     };
   },
   onLoad(params) {
-    console.log('params', params);
-    const { url, validate, token } = params;
-    this.url = url;
+    const { url, validate, token, commentId, code } = params;
+    if (url) {
+      let pageUrl;
+      if (url.substr(0, 1) !== '/') {
+        pageUrl = `/${url}`;
+      } else {
+        pageUrl = url;
+      }
+      if (commentId) {
+        this.url = `${pageUrl}&commentId=${commentId}`;
+      } else {
+        this.url = pageUrl;
+      }
+    }
     if (validate) {
       this.validate = JSON.parse(validate);
     }
+    if (code !== 'undefined') {
+      this.code = code;
+    }
     this.token = token;
-    console.log('validate', typeof this.validate);
-    console.log('----this.forums-----', this.forums);
     if (this.forums && this.forums.set_site && this.forums.set_site.site_mode) {
       this.site_mode = this.forums.set_site.site_mode;
     }
+    if (this.user && this.user.paid) {
+      this.isPaid = this.user.paid;
+    }
+  },
+  created() {
     this.$u.event.$on('logind', () => {
-      if (this.user && this.user.paid) {
-        this.isPaid = this.user.paid;
-      }
-      console.log('----this.user-----', this.user);
-      if (this.site_mode !== SITE_PAY || this.isPaid) {
+      if (this.site_mode !== SITE_PAY) {
         uni.navigateTo({
-          url: '/pages/home/index',
+          url: this.url,
         });
       }
       if (this.site_mode === SITE_PAY && !this.isPaid) {
@@ -88,12 +96,15 @@ export default {
       }
     });
   },
+  destroyed() {
+    uni.$off('logind');
+  },
   methods: {
     login() {
       if (this.username === '') {
-        this.showDialog('手机号码不能为空');
+        this.showDialog(this.i18n.t('user.phonenumberEmpty'));
       } else if (this.password === '') {
-        this.showDialog('密码不能为空');
+        this.showDialog(this.i18n.t('user.passwordEmpty'));
       } else {
         const params = {
           data: {
@@ -106,10 +117,13 @@ export default {
         if (this.token && this.token !== '') {
           params.data.attributes.token = this.token;
         }
+        if (this.code !== '') {
+          params.data.attributes.code = this.code;
+        }
         this.$store
           .dispatch('session/h5Login', params)
           .then(res => {
-            console.log('手机号密码登录绑定成功', res);
+            console.log(res);
             this.logind();
             uni.showToast({
               title: this.i18n.t('user.loginSuccess'),
@@ -122,13 +136,11 @@ export default {
       }
     },
     jump2VerificationCodeLogin() {
-      console.log('跳转到验证码登录页面');
       uni.navigateTo({
-        url: `/pages/user/verification-code-login?url=${this.url}&validate=${this.forums.set_reg.register_validate}&token=${this.token}`,
+        url: `/pages/user/verification-code-login?url=${this.url}&validate=${this.forums.set_reg.register_validate}&token=${this.token}&code=${this.code}`,
       });
     },
     jump2findPassword() {
-      console.log('跳转到找回密码页面');
       uni.navigateTo({
         url: `/pages/modify/findpwd?pas=reset_pwd`,
       });
@@ -149,7 +161,8 @@ export default {
 @import '@/styles/base/theme/fn.scss';
 
 .phone-number-login-box-h {
-  margin: 60rpx 0rpx 80rpx 40rpx;
+  padding-top: 20px;
+  margin: 0 0rpx 80rpx 40rpx;
   font-size: 50rpx;
   font-weight: bold;
   color: --color(--qui-FC-333);
@@ -162,7 +175,7 @@ export default {
 }
 .new-phon {
   width: 710rpx;
-  margin-left: 40rpx;
+  margin: 0rpx 40rpx;
   font-size: $fg-f50;
   font-weight: bold;
   line-height: 100rpx;

@@ -2,7 +2,7 @@
   <view>
     <label class="avatar-box" @click="getNameId(mark)">
       <view class="avatar-box__img">
-        <qui-avatar :user="{ username: title, avatarUrl: icon }" size="70" />
+        <qui-avatar :user="{ username: title, avatarUrl: icon }" :is-real="isReal" size="70" />
       </view>
       <view class="avatar-box__r">
         <view class="avatar-box__r__tit">
@@ -39,6 +39,10 @@ export default {
     title: {
       type: String,
       default: '',
+    },
+    isReal: {
+      type: Boolean,
+      default: false,
     },
     label: {
       type: String,

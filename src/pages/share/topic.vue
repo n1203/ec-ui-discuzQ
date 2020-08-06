@@ -17,10 +17,11 @@
             :palette="template"
             @imgErr="imgErr"
             @imgOK="onImgOK"
-            width-pixels="2080"
+            width-pixels="1040"
           />
         </view>
       </view>
+      <qui-toast ref="toast"></qui-toast>
       <view class="btn-box">
         <qui-button type="primary" size="large" @click="fun">
           {{ i18n.t('share.savealbum') }}
@@ -81,10 +82,7 @@ export default {
     };
   },
   onLoad(arr) {
-    uni.showLoading({
-      title: this.i18n.t('share.generating'),
-      mask: true,
-    });
+    this.showToast();
     this.themeid = arr.id;
     this.userid = this.usersid;
     this.slitename = this.forums.set_site.site_name;
@@ -128,6 +126,16 @@ export default {
       this.recoimg = this.userInfo.avatarUrl || `${this.$u.host()}static/noavatar.gif`;
       this.getthemdata();
     },
+    showToast() {
+      this.$refs.toast.showLoading({
+        icon: 'icon-load',
+        message: this.i18n.t('share.generating'),
+        position: 'middle',
+      });
+    },
+    openLoading() {
+      this.$refs.toast.close(); // 或者 this.$refs.toast.close();
+    },
     // 获取帖子内容信息
     getthemdata() {
       const that = this;
@@ -137,10 +145,11 @@ export default {
           `threads/${this.themeid}?include=user,firstPost,firstPost.images,threadVideo,category`,
         )
         .then(data => {
+          console.log(data);
           this.headerName = data.user.username;
           this.postyTepy = data.type;
           this.headerImg = data.user.avatarUrl || `${this.$u.host()}static/images/noavatar.gif`;
-          if (data.firstPost.images.length >= 1) {
+          if (data.firstPost.images.length >= 1 || this.postyTepy === 2) {
             if (this.postyTepy === 2 && data.threadVideo.cover_url) {
               this.implement = false;
             } else {
@@ -158,11 +167,7 @@ export default {
               src: that.contentImg[0],
               success(image) {
                 const num = image.height * (620 / image.width);
-                if (num > 402) {
-                  that.heightdefill = num - 402;
-                } else {
-                  that.heightdefill = 0;
-                }
+                that.heightdefill = num - 402;
               },
             });
           }
@@ -182,17 +187,17 @@ export default {
           if (this.postyTepy === 2) {
             this.video = data.threadVideo.cover_url;
             this.videoduc = data.threadVideo.file_name;
-            uni.getImageInfo({
-              src: that.video,
-              success(image) {
-                const num = image.height * (620 / image.width);
-                if (num > 402) {
+            if (this.video) {
+              uni.getImageInfo({
+                src: that.video,
+                success(image) {
+                  const num = image.height * (620 / image.width);
                   that.heightdefill = num - 402;
-                } else {
-                  that.heightdefill = 0;
-                }
-              },
-            });
+                },
+              });
+            } else {
+              that.heightdefill = 0;
+            }
           }
         });
       // this.headerName = this.themedata.user.username;
@@ -345,10 +350,10 @@ export default {
     },
     onImgOK(e) {
       this.imagePath = e.detail.path;
-      uni.hideLoading();
+      this.openLoading();
     },
     imgErr() {
-      uni.hideLoading();
+      this.openLoading();
       uni.showModal({
         title: this.i18n.t('discuzq.msgbox.title'),
         content: this.i18n.t('share.buildfailed'),

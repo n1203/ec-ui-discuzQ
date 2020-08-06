@@ -34,6 +34,7 @@
         {{ i18n.t('user.loginBindId') }}
       </view>
     </view>
+    <qui-registration-agreement></qui-registration-agreement>
   </qui-page>
 </template>
 
@@ -74,10 +75,19 @@ export default {
     };
   },
   onLoad(params) {
-    console.log('params', params);
-    const { url, validate, token, code } = params;
+    const { url, validate, token, commentId, code } = params;
     if (url) {
-      this.url = url;
+      let pageUrl;
+      if (url.substr(0, 1) !== '/') {
+        pageUrl = `/${url}`;
+      } else {
+        pageUrl = url;
+      }
+      if (commentId) {
+        this.url = `${pageUrl}&commentId=${commentId}`;
+      } else {
+        this.url = pageUrl;
+      }
     }
     if (validate) {
       this.validate = JSON.parse(validate);
@@ -88,22 +98,25 @@ export default {
     if (token) {
       this.token = token;
     }
-    console.log('validate', typeof this.validate);
-    console.log('----this.forums-----', this.forums);
     if (this.forums && this.forums.set_reg && this.forums.set_reg.register_captcha) {
       this.register_captcha = this.forums.set_reg.register_captcha;
     }
     if (this.forums && this.forums.set_site && this.forums.set_site.site_mode) {
       this.site_mode = this.forums.set_site.site_mode;
     }
-    this.$u.event.$on('logind', () => {
-      if (this.user && this.user.paid) {
-        this.isPaid = this.user.paid;
+    if (this.user && this.user.paid) {
+      this.isPaid = this.user.paid;
+    }
+  },
+  created() {
+    uni.$on('logind', () => {
+      let url = '';
+      if (this.url) {
+        url = this.url;
       }
-      console.log('----this.user-----', this.user);
-      if (this.site_mode !== SITE_PAY || this.isPaid) {
+      if (this.site_mode !== SITE_PAY) {
         uni.navigateTo({
-          url: '/pages/home/index',
+          url,
         });
       }
       if (this.site_mode === SITE_PAY && !this.isPaid) {
@@ -113,12 +126,15 @@ export default {
       }
     });
   },
+  destroyed() {
+    uni.$off('logind');
+  },
   methods: {
     register() {
       if (this.username === '') {
-        this.showDialog('用户名不能为空');
+        this.showDialog(this.i18n.t('user.usernameEmpty'));
       } else if (this.password === '') {
-        this.showDialog('密码不能为空');
+        this.showDialog(this.i18n.t('user.passwordEmpty'));
       } else if (this.register_captcha) {
         this.toTCaptcha();
       } else {
@@ -130,7 +146,6 @@ export default {
       // #ifdef H5
       // eslint-disable-next-line no-undef
       this.captcha = new TencentCaptcha(this.forums.qcloud.qcloud_captcha_app_id, res => {
-        console.log('h5验证码', res);
         if (res.ret === 0) {
           this.ticket = res.ticket;
           this.randstr = res.randstr;
@@ -173,7 +188,6 @@ export default {
         .dispatch('session/h5Register', params)
         .then(result => {
           if (result && result.data && result.data.data && result.data.data.id) {
-            console.log('注册绑定成功', result);
             this.logind();
             uni.showToast({
               title: this.i18n.t('user.registerBindSuccess'),
@@ -205,9 +219,8 @@ export default {
       });
     },
     jump2LoginBind() {
-      console.log('登录并绑定页');
       uni.navigateTo({
-        url: `/pages/user/login-bind?url=${this.url}&validate=${this.validate}&token=${this.token}`,
+        url: `/pages/user/login-bind?url=${this.url}&validate=${this.validate}&token=${this.token}&code=${this.code}`,
       });
     },
   },
@@ -233,7 +246,7 @@ export default {
   }
 
   &-con {
-    margin: 0rpx 0rpx 0rpx 40rpx;
+    margin: 0rpx 40rpx;
 
     .input {
       width: 100%;

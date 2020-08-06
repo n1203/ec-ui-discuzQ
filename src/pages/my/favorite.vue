@@ -33,14 +33,25 @@
         <qui-load-more :status="loadingType" :show-icon="false" v-if="loadingType"></qui-load-more>
       </view>
     </scroll-view>
+    <uni-popup ref="popTips" type="center">
+      <uni-popup-dialog
+        type="warn"
+        :before-close="true"
+        :content="i18n.t('core.deleteFavoriteSure')"
+        @close="handleCancel"
+        @confirm="handleOk"
+      ></uni-popup-dialog>
+    </uni-popup>
   </qui-page>
 </template>
 
 <script>
 import { status } from '@/library/jsonapi-vuex/index';
 import forums from '@/mixin/forums';
+import uniPopupDialog from '@/components/uni-popup/uni-popup-dialog';
 
 export default {
+  components: { uniPopupDialog },
   mixins: forums,
   props: {
     userId: {
@@ -57,12 +68,21 @@ export default {
       pageSize: 20,
       pageNum: 1, // 当前页数
       scrollTop: 0,
+      currentItem: '',
       editThreadId: '',
       nowThreadId: '',
     };
   },
   mounted() {
     this.loadlikes();
+  },
+  onLoad() {
+    // #ifdef MP-WEIXIN
+    wx.showShareMenu({
+      withShareTicket: true,
+      menus: ['shareAppMessage', 'shareTimeline'],
+    });
+    // #endif
   },
   onShow() {
     this.uploadItem();
@@ -126,19 +146,29 @@ export default {
           this.data = [...this.data, ...res];
         });
     },
-    // 删除收藏
-    itemDelete(id, isFavorite, index) {
+    handleCancel() {
+      this.$refs.popTips.close();
+    },
+    handleOk() {
+      this.$refs.popTips.close();
+      const { currentItem } = this;
       const params = {
         _jv: {
           type: 'threads',
-          id,
+          id: currentItem.id,
         },
-        isFavorite: isFavorite !== true,
+        isFavorite: currentItem.isFavorite !== true,
       };
       this.$store.dispatch('jv/patch', params).then(() => {
         this.totalData -= 1;
-        this.data.splice(index, 1);
+        this.data.splice(currentItem.index, 1);
       });
+    },
+    // 删除收藏
+    itemDelete(id, isFavorite, index) {
+      const currentItem = { id, isFavorite, index };
+      this.currentItem = currentItem;
+      this.$refs.popTips.open();
     },
     // 下拉加载
     pullDown() {

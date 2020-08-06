@@ -63,10 +63,10 @@
     <text class="uni-load-more__text" :style="{ color: color }">
       {{
         status === 'more'
-          ? contentText.contentdown
+          ? contentText.contentdown || i18n.t('core.contentdown')
           : status === 'loading'
-          ? contentText.contentrefresh
-          : contentText.contentnomore
+          ? contentText.contentrefresh || i18n.t('core.contentrefresh')
+          : contentText.contentnomore || i18n.t('core.noMoreData')
       }}
     </text>
   </view>
@@ -102,9 +102,9 @@ export default {
       type: Object,
       default() {
         return {
-          contentdown: '显示更多...',
-          contentrefresh: '正在加载...',
-          contentnomore: '没有更多数据了',
+          contentdown: '',
+          contentrefresh: '',
+          contentnomore: '',
         };
       },
     },
@@ -118,7 +118,6 @@ export default {
   // #ifndef APP-NVUE
   computed: {
     iconSnowWidth() {
-      // console.log((Math.floor(this.iconSize / 24) || 1) * 2);
       return (Math.floor(this.iconSize / 24) || 1) * 2;
     },
   },

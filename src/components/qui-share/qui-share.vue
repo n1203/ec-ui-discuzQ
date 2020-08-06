@@ -66,8 +66,14 @@ export default {
     shareContent(index) {
       const { shareType } = this;
       if (!this.$store.getters['session/get']('isLogin')) {
+        // #ifdef MP-WEIXIN
         this.$store.getters['session/get']('auth').open();
-        return;
+        // #endif
+        // #ifdef H5
+        if (!this.handleLogin()) {
+          return;
+        }
+        // #endif
       }
       if (shareType === 'top') {
         if (index === 0) {

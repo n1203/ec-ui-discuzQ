@@ -40,6 +40,7 @@
           @click="previewPicture(previewStatus, index)"
           lazy-load
         ></image>
+        <view class="themeItem__content__imgmore__item" v-if="imagesList.length % 3 != 0"></view>
         <image
           class="themeItem__content__imgmore__item"
           v-if="imagesList.length % 3 != 0"

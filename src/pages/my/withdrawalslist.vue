@@ -167,7 +167,7 @@ $height: calc(100vh - 150rpx);
 /* #endif */
 
 .withdrawalslist /deep/ {
-  min-height: auto;
+  min-height: 100vh;
   .cell-item {
     padding-right: 40rpx;
   }

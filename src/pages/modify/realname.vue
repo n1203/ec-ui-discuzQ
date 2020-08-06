@@ -180,9 +180,13 @@ export default {
 @import '@/styles/base/variable/global.scss';
 @import '@/styles/base/theme/fn.scss';
 .page-realname /deep/ {
+  background-color: --color(--qui-BG-2);
+  box-sizing: border-box;
   .tica {
     width: 100vw;
+    /* #ifndef H5 */
     height: 100vh;
+    /* #endif */
     background-color: --color(--qui-BG-2);
     box-sizing: border-box;
   }

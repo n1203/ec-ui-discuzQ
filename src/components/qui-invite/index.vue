@@ -2,7 +2,7 @@
   <view class="invite-con">
     <!-- 记录数 -->
     <view class="invite-con-total">
-      <text>共有 {{ total }} 条记录</text>
+      <text>{{ i18n.t('manage.total', { total }) }}</text>
     </view>
     <!-- 邀请列表 -->
     <view class="invite-con-list">

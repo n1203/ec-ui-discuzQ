@@ -10,6 +10,7 @@
               <qui-avatar
                 class="list-box__notice__hl-avatar"
                 :user="item"
+                :is-real="item.isReal"
                 @click="jumpUserPage(item.user_id)"
               />
             </view>
@@ -31,9 +32,6 @@
                     >
                       {{ item.user_name }}
                     </text>
-                    <!-- <text class="list-box__notice__hl-info-groupname" v-if="item.thread_user_groups">
-                  （{{ item.thread_user_groups }}）
-                </text> -->
                     <text class="list-box__notice__hl-info-title" v-if="item.type === 'related'">
                       {{ i18n.t('notice.relatedMe') }}
                     </text>
@@ -195,7 +193,6 @@ export default {
   methods: {
     jumpUserPage(id) {
       if (id) {
-        console.log('跳转到个人主页', id);
         uni.navigateTo({
           url: `/pages/profile/index?userId=${id}`,
         });
@@ -205,7 +202,6 @@ export default {
       this.$emit('deleteNotice', id);
     },
     jumpMyComment(item) {
-      console.log('跳转到评论页面：', item);
       if (item && item.reply_post_id !== 0) {
         uni.navigateTo({
           url: `/pages/topic/comment?threadId=${item.thread_id}&commentId=${item.reply_post_id}`,
@@ -218,7 +214,6 @@ export default {
     },
     jumpOtherTopic(topicId) {
       if (topicId) {
-        console.log('跳转到帖子详情页面：', topicId);
         uni.navigateTo({
           url: `/pages/topic/index?id=${topicId}`,
         });
@@ -232,7 +227,6 @@ export default {
         item.raw.thread_id &&
         item.thread_is_approved === 1
       ) {
-        console.log('系统通知跳转到帖子详情页面：', item);
         uni.navigateTo({
           url: `/pages/topic/index?id=${item.raw.thread_id}`,
         });

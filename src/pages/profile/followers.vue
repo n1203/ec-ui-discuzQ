@@ -7,7 +7,12 @@
         @tap="toProfile(followerItem.fromUser.id)"
         :key="index"
       >
-        <qui-avatar class="follow-content__items__avatar" :user="followerItem.fromUser" size="70" />
+        <qui-avatar
+          class="follow-content__items__avatar"
+          :user="followerItem.fromUser"
+          size="70"
+          :is-real="followerItem.fromUser.isReal"
+        />
         <qui-cell-item
           :title="(followerItem.fromUser && followerItem.fromUser.username) || ''"
           slot-right
@@ -63,6 +68,7 @@ import { status } from '@/library/jsonapi-vuex/index';
 // #ifdef H5
 import loginAuth from '@/mixin/loginAuth-h5';
 // #endif
+import { getCurUrl } from '@/utils/getCurUrl';
 
 export default {
   mixins: [
@@ -89,6 +95,11 @@ export default {
     this.getFollowerList();
   },
   methods: {
+    pullDownRefresh() {
+      this.pageNum = 1;
+      this.followerList = [];
+      this.getFollowerList('pullDownRefresh');
+    },
     // 获取用户粉丝列表
     getFollowerList(type) {
       this.loadingType = 'loading';
@@ -111,6 +122,9 @@ export default {
           } else {
             this.followerList = [...this.followerList, ...res];
           }
+          if (type && type === 'pullDownRefresh') {
+            uni.stopPullDownRefresh();
+          }
         });
     },
     // 点击头像到个人主页
@@ -129,13 +143,17 @@ export default {
     },
     // 添加关注
     addFollow(userInfo, index) {
-      // #ifdef H5
       if (!this.$store.getters['session/get']('isLogin')) {
-        if (!this.handleLogin()) {
+        // #ifdef MP-WEIXIN
+        this.$store.getters['session/get']('auth').open();
+        // #endif
+        // #ifdef H5
+        if (!this.handleLogin(getCurUrl())) {
           return;
         }
+        // #endif
+        return;
       }
-      // #endif
       if (userInfo.follow !== 0) {
         this.deleteFollow(userInfo, index);
         return;
@@ -161,13 +179,17 @@ export default {
     },
     // 取消关注
     deleteFollow(userInfo, index) {
-      // #ifdef H5
       if (!this.$store.getters['session/get']('isLogin')) {
-        if (!this.handleLogin()) {
+        // #ifdef MP-WEIXIN
+        this.$store.getters['session/get']('auth').open();
+        // #endif
+        // #ifdef H5
+        if (!this.handleLogin(getCurUrl())) {
           return;
         }
+        // #endif
+        return;
       }
-      // #endif
       this.$store.dispatch('jv/delete', `follow/${userInfo.id}/1`).then(() => {
         if (this.userId === this.currentLoginId) {
           this.$emit('changeFollow', { userId: this.userId });

@@ -1,34 +1,32 @@
 <template>
-  <qui-page :data-qui-theme="theme">
+  <qui-page :data-qui-theme="theme" class="verification-code-login-box">
     <view class="new" @click.stop="toggleBox">
       <view class="verification-code-login-box-h">{{ i18n.t('user.phoneNumberLogin') }}</view>
       <view class="new-phon">
-        <view class="new-phon-test">
-          {{ i18n.t('user.phoneNumber') }}
-        </view>
+        <view class="new-phon-test">{{ i18n.t('user.phoneNumber') }}</view>
         <view class="new-phon-number">
           <input
             class="new-phon-num"
             type="number"
             v-model="phoneNumber"
-            :focus="true"
-            :cursor="1"
             @input="changeinput"
             maxlength="11"
           />
-          <button class="new-phon-send" @click="sendVerificationCode" :disabled="disabled">
+          <button
+            class="new-phon-send"
+            @click="sendVerificationCode"
+            id="TencentCaptcha"
+            :data-appid="(forums.qcloud && forums.qcloud.qcloud_captcha_app_id) || ''"
+            :disabled="disabled"
+          >
             {{ btnContent }}
           </button>
         </view>
       </view>
-      <view class="newphon-erro" v-if="formeerro">
-        {{ formeerro }}
-      </view>
+      <view class="newphon-erro" v-if="formeerro">{{ formeerro }}</view>
       <!-- 验证码 -->
       <view class="new-input" @click.stop="fourse">
-        <view class="new-input-test">
-          {{ i18n.t('modify.placeentercode') }}
-        </view>
+        <view class="new-input-test">{{ i18n.t('modify.placeentercode') }}</view>
         <qui-input-code
           @getdata="btndata"
           :title="tit"
@@ -38,9 +36,7 @@
           ref="quiinput"
         ></qui-input-code>
       </view>
-      <view class="verification-code-login-box-btn" @click="login">
-        {{ i18n.t('user.login') }}
-      </view>
+      <view class="verification-code-login-box-btn" @click="login">{{ i18n.t('user.login') }}</view>
       <view
         class="verification-code-login-box-pwdlogin"
         @click="jump2PhoneNumberLogin"
@@ -49,6 +45,7 @@
         {{ i18n.t('user.passwordLogin') }}
       </view>
     </view>
+    <qui-registration-agreement></qui-registration-agreement>
   </qui-page>
 </template>
 
@@ -56,9 +53,18 @@
 import forums from '@/mixin/forums';
 import user from '@/mixin/user';
 import { SITE_PAY } from '@/common/const';
+// #ifdef  H5
+import tcaptchs from '@/utils/tcaptcha';
+// #endif
 
 export default {
-  mixins: [forums, user],
+  mixins: [
+    forums,
+    user,
+    // #ifdef  H5
+    tcaptchs,
+    // #endif
+  ],
   data() {
     return {
       tit: false,
@@ -66,7 +72,7 @@ export default {
       inshow: false,
       inisIphone: false,
       formeerro: '',
-      btnContent: '发送验证码',
+      btnContent: this.i18n.t('modify.sendverificode'),
       time: 0, // 倒计时
       timer: '', // 定时器
       disabled: true, // 发送验证码按钮的状态
@@ -78,13 +84,26 @@ export default {
       validate: false, // 开启注册审核
       site_mode: '', // 站点模式
       isPaid: false, // 是否付费
+      captcha: null, // 腾讯云验证码实例
+      captcha_ticket: '', // 腾讯云验证码返回票据
+      captcha_rand_str: '', // 腾讯云验证码返回随机字符串
+      captchaResult: {},
     };
   },
   onLoad(params) {
-    console.log('params', params);
-    const { url, validate, token, code } = params;
+    const { url, validate, token, commentId, code } = params;
     if (url) {
-      this.url = url;
+      let pageUrl;
+      if (url.substr(0, 1) !== '/') {
+        pageUrl = `/${url}`;
+      } else {
+        pageUrl = url;
+      }
+      if (commentId) {
+        this.url = `${pageUrl}&commentId=${commentId}`;
+      } else {
+        this.url = pageUrl;
+      }
     }
     if (validate) {
       this.validate = JSON.parse(validate);
@@ -95,19 +114,18 @@ export default {
     if (token) {
       this.token = token;
     }
-    console.log('validate', typeof this.validate);
-    console.log('----this.forums-----', this.forums);
     if (this.forums && this.forums.set_site && this.forums.set_site.site_mode) {
       this.site_mode = this.forums.set_site.site_mode;
     }
+    if (this.user && this.user.paid) {
+      this.isPaid = this.user.paid;
+    }
+  },
+  created() {
     this.$u.event.$on('logind', () => {
-      if (this.user && this.user.paid) {
-        this.isPaid = this.user.paid;
-      }
-      console.log('----this.user-----', this.user);
-      if (this.site_mode !== SITE_PAY || this.isPaid) {
+      if (this.site_mode !== SITE_PAY) {
         uni.navigateTo({
-          url: '/pages/home/index',
+          url: this.url,
         });
       }
       if (this.site_mode === SITE_PAY && !this.isPaid) {
@@ -116,6 +134,9 @@ export default {
         });
       }
     });
+  },
+  destroyed() {
+    uni.$off('logind');
   },
   methods: {
     changeinput() {
@@ -136,20 +157,49 @@ export default {
     },
     // 发送验证码
     sendVerificationCode() {
-      this.time = 60;
-      this.countdown();
-      this.sendSMS();
+      if (this.forums.qcloud.qcloud_captcha) {
+        if (!this.ticket || !this.randstr) {
+          this.toTCaptcha();
+          return false;
+        }
+      } else {
+        this.time = 60;
+        this.countdown();
+        this.sendSMS();
+      }
     },
+    // h5内发布按钮验证码验证
+    // #ifdef H5
+    toTCaptcha() {
+      // eslint-disable-next-line no-undef
+      this.captcha = new TencentCaptcha(this.forums.qcloud.qcloud_captcha_app_id, res => {
+        if (res.ret === 0) {
+          this.ticket = res.ticket;
+          this.randstr = res.randstr;
+          // 验证通过后发布
+          this.time = 60;
+          this.countdown();
+          this.sendSMS();
+        }
+        if (res.ret === 2) {
+          this.postLoading = false;
+          uni.hideLoading();
+        }
+      });
+      // 显示验证码
+      this.captcha.show();
+    },
+    // #endif
     // 60s倒计时
     countdown() {
       if (this.time > 1) {
         this.time -= 1;
-        this.btnContent = `${this.time}秒后重发`;
+        this.btnContent = `${this.time}${this.i18n.t('modify.retransmission')}`;
         this.disabled = true;
         this.timer = setTimeout(this.countdown, 1000);
         this.isGray = true;
       } else if (this.time === 1) {
-        this.btnContent = '获取验证码';
+        this.btnContent = this.i18n.t('modify.sendverificode');
         clearTimeout(this.timer);
         this.disabled = false;
         this.isGray = false;
@@ -163,12 +213,15 @@ export default {
         },
         mobile: this.phoneNumber,
         type: 'login',
+        captcha_ticket: this.ticket,
+        captcha_rand_str: this.randstr,
       };
       this.$store
         .dispatch('jv/post', params)
         .then(res => {
           if (res) {
-            console.log('短信发送成功', res);
+            this.ticket = '';
+            this.randstr = '';
           }
         })
         .catch(err => {
@@ -177,9 +230,9 @@ export default {
     },
     login() {
       if (this.phoneNumber === '') {
-        this.showDialog('手机号不能为空');
+        this.showDialog(this.i18n.t('user.phonenumberEmpty'));
       } else if (this.verificationCode === '') {
-        this.showDialog('验证码不能为空');
+        this.showDialog(this.i18n.t('user.verificationCodeEmpty'));
       } else {
         this.verifyPhoneNumber();
       }
@@ -204,7 +257,7 @@ export default {
       this.$store
         .dispatch('session/verificationCodeh5Login', params)
         .then(res => {
-          console.log('手机号验证成功', res);
+          console.log(res);
           this.logind();
           uni.showToast({
             title: this.i18n.t('user.loginSuccess'),
@@ -226,11 +279,16 @@ export default {
       this.inshow = false;
     },
     jump2PhoneNumberLogin() {
-      console.log('跳转到密码登录页面');
       uni.navigateTo({
-        url: `/pages/user/phone-number-login?url=${this.url}&validate=${this.forums.set_reg.register_validate}&token=${this.token}`,
+        url: `/pages/user/phone-number-login?url=${this.url}&validate=${this.forums.set_reg.register_validate}&token=${this.token}&code=${this.code}`,
       });
     },
+  },
+  onUnload() {
+    // 隐藏验证码
+    if (this.captcha) {
+      this.captcha.destroy();
+    }
   },
 };
 </script>
@@ -239,15 +297,19 @@ export default {
 @import '@/styles/base/variable/global.scss';
 @import '@/styles/base/theme/fn.scss';
 
+.verification-code-login-box {
+  background-color: --color(--qui-BG-2);
+}
+
 .verification-code-login-box-h {
-  margin: 60rpx 0rpx 80rpx 40rpx;
+  padding-top: 20px;
+  margin: 0 0rpx 80rpx 40rpx;
   font-size: 50rpx;
   font-weight: bold;
   color: --color(--qui-FC-333);
 }
 .new {
   width: 100vw;
-  height: 100vh;
   background-color: --color(--qui-BG-2);
   box-sizing: border-box;
 }

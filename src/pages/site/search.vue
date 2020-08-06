@@ -34,7 +34,12 @@
         :key="index"
         @tap="toProfile(item.id)"
       >
-        <qui-avatar class="search-item__users__avatar" :user="item" size="70" />
+        <qui-avatar
+          class="search-item__users__avatar"
+          :user="item"
+          size="70"
+          :is-real="item.isReal"
+        />
         <qui-cell-item
           :title="item.username"
           arrow
@@ -242,7 +247,7 @@ export default {
 /deep/ .themeCount .themeItem {
   padding-left: 0;
   margin: 0;
-  border-top: 0;
+  border: 0;
   box-shadow: none;
 }
 /deep/ .themeCount .themeItem__footer {

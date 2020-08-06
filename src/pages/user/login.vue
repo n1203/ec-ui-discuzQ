@@ -198,4 +198,8 @@ export default {
     color: --color(--qui-LINK);
   }
 }
+
+.login-box-btn:active {
+  opacity: 0.8;
+}
 </style>

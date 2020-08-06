@@ -280,4 +280,8 @@ export default {
     color: --color(--qui-LINK);
   }
 }
+
+.register-box-btn:active {
+  opacity: 0.8;
+}
 </style>

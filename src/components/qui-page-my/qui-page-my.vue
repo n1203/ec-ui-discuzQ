@@ -21,7 +21,10 @@
             <qui-avatar :user="userInfo" />
             <view class="fbv fbjc ">
               <view class="my-info__box__detail-username">
-                {{userInfo.username}} [{{userInfo.groupsName}}]
+                {{userInfo.username}}
+              <view :class="['badge', [userInfo.groups[0].name]]">
+                {{userInfo.groupsName}}
+              </view>
               </view>
               <view class="my-info__introduction" v-if="userInfo.signature">
                 {{ userInfo.signature }}
@@ -352,8 +355,28 @@ $height: calc(100vh - 260rpx);
   box-sizing: border-box;
 }
 .my-info__box__detail-username {
+  display: flex;
+  align-items: center;
   padding-left: 20rpx;
   color: #fff;
+}
+.badge {
+  font-size: 14px;
+  line-height: 14px;
+  align-items: center;
+  background: #fff !important;
+  color: yellow;
+  border-radius: 10px;
+  margin-left: 10px;
+  padding: 3px 6px;
+}
+.管理员 {
+  border: #1878f3 1px solid;
+  color: #1878f3;
+}
+.普通会员 {
+  border: #ccc 1px solid;
+  color: #ccc;
 }
 .my-tabs {
   background: --color(--qui-BG-FFF);

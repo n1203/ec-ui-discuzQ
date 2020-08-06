@@ -11,10 +11,10 @@
         :class="{ select: true, active: index === footerIndex }"
         v-for="(item, index) in tabs"
         :key="index"
-        @click="select(item, index)"
       >
         <qui-icon
           class="ft-box-icon"
+          @click="select(item, index)"
           :name="item.tabsIcon"
           size="48"
           v-if="item.tabsName"

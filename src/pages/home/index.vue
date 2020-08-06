@@ -258,8 +258,10 @@ export default {
       this.show_index = type;
       if (isTabBar.indexOf(type) === -1) {
         // 如果是话题
-        if (type === 1) {
+        try {
           this.$refs[this.currentTab].ontrueGetList();
+        } catch (err) {
+          console.log('ontrueGetList', err)
         }
         isTabBar.push(type);
       }

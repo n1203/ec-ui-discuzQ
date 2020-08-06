@@ -37,12 +37,12 @@
               <view class="ec-notice-box__item__icon">
                 <qui-icon
                   v-if="item.unReadNum && item.unReadNum > 0"
-                  :name="item.icon"
+                  name="icon-circle"
                   class="red-circle ec-notice-box__item__icon__circle"
                   color="red"
                   size="14"
                 ></qui-icon>
-                <qui-icon name="icon-message" color="#fff" size="30"></qui-icon>
+                <qui-icon :name="item.icon" color="#fff" size="42"></qui-icon>
               </view>
               <view class="ec-notice-box__item__text">
                 {{ i18n.t(item.title) }}
@@ -153,7 +153,7 @@ export default {
           type: 'replied',
           unReadNum: 0,
           border: true,
-          icon: 'icon-call',
+          icon: 'icon-message',
         },
         {
           id: 3,

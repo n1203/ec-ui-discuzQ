@@ -1,0 +1,16 @@
+@import './var/light.scss';
+@import './var/dark.scss';
+@import './fn.scss';
+
+page,
+[data-qui-theme='light'] {
+  @each $name, $color in $light {
+    #{$name}: #{$color};
+  }
+}
+
+[data-qui-theme='dark'] {
+  @each $name, $color in $dark {
+    #{$name}: #{$color};
+  }
+}

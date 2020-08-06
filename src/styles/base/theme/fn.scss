@@ -1,0 +1,9 @@
+// 借助 Sass Function 使用 CSS Variables
+/* eg:
+  .container {
+    color: --color(BG-1);
+  }
+*/
+@function --color($color-name) {
+  @return var(#{$color-name});
+}

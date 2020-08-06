@@ -1,0 +1,23 @@
+# top-most efitorconfig file
+root = true
+
+### defaults
+[*]
+charset = utf-8
+
+# unix-style newlines with
+end_of_line = lf
+
+# max line length
+max_line_length = 80
+
+[*.{js,jsx,ts,tsx,vue}]
+# 2 space indentation
+indent_style = space
+indent_size = 2
+
+# remove any whitespace characters preceding newline characters
+trim_trailing_whitespace = true
+
+# newline ending
+insert_final_newline = true

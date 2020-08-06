@@ -853,12 +853,10 @@ export default {
 }
 
 .themeItem__header__title__top{
-  height: 24px;
   align-items: center;
 }
 
 .themeItem__header__title__username {
-  height: 18px;
   align-items: center;
 }
 

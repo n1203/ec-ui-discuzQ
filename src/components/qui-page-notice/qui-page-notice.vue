@@ -37,7 +37,7 @@
               <view class="ec-notice-box__item__icon">
                 <qui-icon
                   v-if="item.unReadNum && item.unReadNum > 0"
-                  name="icon-circle"
+                  :name="item.icon"
                   class="red-circle ec-notice-box__item__icon__circle"
                   color="red"
                   size="14"
@@ -63,7 +63,7 @@
         <view v-if="dialogList.length === 0" style="text-align: center; padding: 30px; color: #ccc">
           <qui-icon size="100" name="icon-message" />
           <view style="line-height: 40px; font-size: 24rpx;">暂时没有私信，赶快去联系好友！</view>
-        </view>  
+        </view>
         <!-- 会话列表 -->
         <view class="dialog-box__main" v-if="dialogList && dialogList.length > 0">
           <view
@@ -139,11 +139,46 @@ export default {
     return {
       title: this.i18n.t('notice.notice'), // 标题
       list: [
-        { id: 1, title: 'notice.relate', type: 'related', unReadNum: 0, border: true },
-        { id: 2, title: 'notice.reply', type: 'replied', unReadNum: 0, border: true },
-        { id: 3, title: 'notice.like', type: 'liked', unReadNum: 0, border: true },
-        { id: 4, title: 'notice.reward', type: 'rewarded,withdrawal', unReadNum: 0, border: true },
-        { id: 5, title: 'notice.system', type: 'system', unReadNum: 0, border: false },
+        {
+          id: 1,
+          title: 'notice.relate',
+          type: 'related',
+          unReadNum: 0,
+          border: true,
+          icon: 'icon-call',
+        },
+        {
+          id: 2,
+          title: 'notice.reply',
+          type: 'replied',
+          unReadNum: 0,
+          border: true,
+          icon: 'icon-call',
+        },
+        {
+          id: 3,
+          title: 'notice.like',
+          type: 'liked',
+          unReadNum: 0,
+          border: true,
+          icon: 'icon-like',
+        },
+        {
+          id: 4,
+          title: 'notice.reward',
+          type: 'rewarded,withdrawal',
+          unReadNum: 0,
+          border: true,
+          icon: 'icon-walletPay',
+        },
+        {
+          id: 5,
+          title: 'notice.system',
+          type: 'system',
+          unReadNum: 0,
+          border: false,
+          icon: 'icon-management',
+        },
       ],
       loadingType: 'more', // 上拉加载状态
       isFirst: true, // 是否是第一次进入页面

@@ -257,8 +257,8 @@ export default {
 
       this.show_index = type;
       if (isTabBar.indexOf(type) === -1) {
-        // 如果点击的是中间的 + 则不做数据欲请求处理
-        if (type !== 2) {
+        // 如果是话题
+        if (type === 1) {
           this.$refs[this.currentTab].ontrueGetList();
         }
         isTabBar.push(type);

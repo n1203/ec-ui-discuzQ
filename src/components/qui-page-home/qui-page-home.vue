@@ -33,7 +33,6 @@
       :is-show-home="false"
       :on-handle-click-setting="showFilter"
       :on-handle-click-search="searchClick"
-      :suspended="suspended"
       :header-show="headerShow"
       @click="open"
       @closeShare="closeShare"
@@ -309,6 +308,7 @@ export default {
   data() {
     return {
       navBarTransform,
+      isPublish: false,
       // suspended: false, // 是否吸顶状态
       checkoutTheme: false, // 切换主题  搭配是否吸顶使用
       threadType: '', // 主题类型 0普通 1长文 2视频 3图片（'' 不筛选）
@@ -402,6 +402,10 @@ export default {
     },
   },
   created() {
+    if (['http://localhost:8080/', 'https://q.e-spy.cn/'].indexOf(window.location.href) !== -1) {
+      this.isPublish = true;
+    }
+
     // #ifdef  H5
     this.isWeixin = appCommonH.isWeixin().isWeixin;
     this.isPhone = appCommonH.isWeixin().isPhone;

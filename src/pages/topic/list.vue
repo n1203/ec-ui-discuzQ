@@ -38,9 +38,21 @@
       <view style="clear: both;"></view>
       <view class="topic-page-list-item" v-for="(item, i) in topicData" :key="i">
         <navigator :url="'/pages/topic/content?id=' + item._jv.id">
-          <view class="topic-page-list-item_title">#{{ item.content }}#</view>
+          <view class="topic-page-list-item_title fbh">
+            <view class="topic-page-list-item_title_icon">
+              <qui-icon name="icon-wei" size="28" color="#fff" />
+            </view>
+            <text>{{ item.content }}</text>
+          </view>
         </navigator>
         <view class="topic-page-list-item_details" v-if="item.lastThread.length">
+          <view class="fbh fbac">
+            <qui-avatar
+              size="50"
+              :user="{ avatarUrl: item.user.avatarUrl, username: item.user.username }"
+            />
+            <view class="topic-page-list-item_details_username">{{ item.user.username }}</view>
+          </view>
           <navigator :url="'/pages/topic/index?id=' + item.lastThread[0]._jv.id">
             <qui-uparse
               class="topic-page-list-item_details_text"
@@ -78,6 +90,7 @@
       </view>
     </view>
     <qui-load-more :content-text="contentText"></qui-load-more>
+    <ec-footer-placeholder />
   </qui-page>
 </template>
 
@@ -98,6 +111,12 @@ export default {
       sort: '-viewCount',
     };
   },
+  created() {
+    this.ontrueGetList();
+    uni.$on('logind', () => {
+      this.ontrueGetList();
+    });
+  },
   methods: {
     toggleDropDown() {
       this.dropDownShow = !this.dropDownShow;
@@ -106,14 +125,14 @@ export default {
       clearTimeout(timer);
       timer = setTimeout(() => {
         // 为发送请求添加防抖处理
-        this.topics();
+        this.ontrueGetList();
       }, 300);
     },
     switchSort(sort) {
       this.sort = sort;
-      this.topics();
+      this.ontrueGetList();
     },
-    topics(page = 1, limit = 20) {
+    ontrueGetList(page = 1, limit = 20) {
       const params = {
         include: 'user,lastThread,lastThread.firstPost,lastThread.firstPost.images',
         'page[number]': page,
@@ -143,12 +162,15 @@ export default {
       });
     },
   },
+  // ontrueGetList() {
+  //   this.ontrueGetList();
+  // },
   onLoad() {
-    this.topics();
+    this.ontrueGetList();
   },
   onReachBottom() {
     if (this.meta.next) {
-      this.topics((currentPage += 1));
+      this.ontrueGetList((currentPage += 1));
     }
   },
 };
@@ -230,7 +252,7 @@ $otherHeight: 292rpx;
 }
 .topic-page-list-item {
   padding: 30rpx;
-  margin: 20rpx;
+  margin: 20rpx 0;
   background: --color(--qui-BG-2);
   border-radius: 6rpx;
   box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.05);
@@ -239,12 +261,30 @@ $otherHeight: 292rpx;
     font-size: 35rpx;
     font-weight: 700;
     word-break: break-all;
+    &_icon {
+      background: --color(--qui-BG-HIGH-LIGHT);
+      width: 50rpx;
+      height: 50rpx;
+      text-align: center;
+      line-height: 50rpx;
+      margin-right: 20rpx;
+      border-radius: 50rpx;
+    }
   }
   &_details {
     margin: 20rpx 0;
+    background: --color(--qui-BG-ED);
+    padding: 20rpx;
+    border-radius: 10rpx;
+    &_username {
+      font-size: 24rpx;
+      line-height: 50rpx;
+      margin-left: 20rpx;
+    }
     &_text {
+      margin-top: 6rpx;
       overflow: hidden;
-      font-size: 30rpx;
+      font-size: 24rpx;
       color: --color(--qui-FC-333);
       text-overflow: ellipsis;
       -webkit-line-clamp: 2;
@@ -253,7 +293,7 @@ $otherHeight: 292rpx;
   &_heat,
   &_content {
     margin-right: 37rpx;
-    font-size: 28rpx;
+    font-size: 24rpx;
     color: --color(--qui-FC-AAA);
   }
   &_other {

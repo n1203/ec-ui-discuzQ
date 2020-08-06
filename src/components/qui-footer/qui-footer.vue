@@ -7,7 +7,7 @@
       }"
     >
       <view
-        class="ft-box "
+        class="ft-box fbac fbjc"
         :class="{ select: true, active: index === footerIndex }"
         v-for="(item, index) in tabs"
         :key="index"
@@ -17,17 +17,27 @@
           class="ft-box-icon"
           :name="item.tabsIcon"
           size="48"
+          v-if="item.tabsName"
           :class="{ select: true, active: index === footerIndex }"
         ></qui-icon>
+        <qui-icon
+          name="icon-add"
+          size="36"
+          color="#fff"
+          v-if="!item.tabsName"
+          class="ft-box-spacal"
+          @click="footerOpen"
+        />
         <!-- <text class="ft-box-content" :class="{ select: true, active: index === footerIndex }">
           {{ item.tabsName }}
         </text> -->
         <view v-if="redCircle && item.id === 4" name="icon-circle" class="red-circle"></view>
       </view>
 
-      <view class="ft-box-spacal">
+      <!-- <view class="ft-box-spacal" @click="footerOpen">
+        <text class="">+</text>
         <image class="ft-box-spacal-icon" src="@/static/publish.svg" @click="footerOpen"></image>
-      </view>
+      </view> -->
     </view>
     <uni-popup ref="popup" type="bottom">
       <view class="popup-share">
@@ -87,7 +97,7 @@ export default {
           // routePath: 'pages/my/index', // 仅用作标识不用来跳转
         },
         {
-          tabsName: 'topic.publish',
+          tabsName: '',
           tabsIcon: 'null',
           id: 3,
           url: '/pages/site/search',
@@ -309,23 +319,26 @@ export default {
 .ft-box-content {
   align-self: center;
   margin-top: 10rpx;
-  font-size: 20rpx;
+  font-size: 26rpx;
   line-height: 26rpx;
   color: --color(--qui-FC-777);
   text-align: center;
 }
 .ft-box-spacal {
-  position: fixed;
-  bottom: 0rpx;
-  width: 120rpx;
-  height: 120rpx;
-  border-radius: 50%;
-  box-shadow: 0 -3px 6px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  font-size: 58rpx;
+  background-color: --color(--qui-BG-HIGH-LIGHT);
+  box-shadow: 0 0 40rpx --color(--qui-BG-A3CAFF);
+  border-radius: 30rpx;
+  width: 100rpx;
+  line-height: 60rpx;
+  color: #fff;
+  display: block;
 }
 .ft-box-spacal-icon {
   position: relative;
   width: 110rpx;
-  height: 110rpx;
+  height: 72rpx;
 }
 .active {
   color: --color(--qui-TAB);

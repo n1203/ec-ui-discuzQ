@@ -131,9 +131,10 @@ export default {
 @import '@/styles/base/theme/fn.scss';
 .cell-item {
   position: relative;
+  padding-left: 20rpx;
 }
 .cell-item.border {
-  border-bottom: 2rpx solid --color(--qui-BOR-ED);
+  // border-bottom: 2rpx solid --color(--qui-BOR-ED);
   // transition: $switch-theme-time;
 }
 

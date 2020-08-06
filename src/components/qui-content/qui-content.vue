@@ -860,10 +860,6 @@ export default {
   align-items: center;
 }
 
-.themeItem__header__img {
-  margin-top: 7px;
-}
-
 .badge {
   height: 18px;
   line-height: 18px;

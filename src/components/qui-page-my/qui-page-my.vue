@@ -17,22 +17,35 @@
     >
       <view class="my-info">
         <view class="my-info__box">
-          <view class="my-info__box__detail">
+          <view class="my-info__box__detail fbh">
             <qui-avatar :user="userInfo" />
-            <qui-cell-item
+            <view class="fbv fbjc ">
+              <view class="my-info__box__detail-username">
+                {{userInfo.username}} [{{userInfo.groupsName}}]
+              </view>
+              <view class="my-info__introduction" v-if="userInfo.signature">
+                {{ userInfo.signature }}
+              </view>
+            </view>
+            <!-- <qui-cell-item
               :title="userInfo.username || ''"
               :brief="userInfo.groupsName"
               :border="false"
               class="my-info__box__detail-username"
-            ></qui-cell-item>
+            >
+              
+            </qui-cell-item> -->
           </view>
         </view>
-        <view class="my-info__introduction" v-if="userInfo.signature">
-          {{ userInfo.signature }}
+        <view class="my-tabs">
+          <qui-tabs
+            :hide-border="false"
+            :values="items"
+            @clickItem="onClickItem"
+            :brief="true"
+            :current="-1"
+          ></qui-tabs>
         </view>
-      </view>
-      <view class="my-tabs">
-        <qui-tabs :values="items" @clickItem="onClickItem" :brief="true" :current="-1"></qui-tabs>
       </view>
       <view class="my-items">
         <view class="my-items__wrap">
@@ -301,11 +314,24 @@ $height: calc(100vh - 260rpx);
   padding-bottom: 60rpx;
 }
 .my-info {
-  padding: 40rpx;
-  padding-top: 30rpx;
+  padding: 20rpx;
+  padding-top: 60rpx;
+  height: 180rpx;
+  margin-bottom: 100rpx;
   font-size: $fg-f28;
-  background: --color(--qui-BG-2);
-  transition: $switch-theme-time;
+  // background: --color(--qui-BG-HIGH-LIGHT);
+  animation: identifier 100s infinite linear;
+  // animation-direction: 5s;
+  // animation-delay: 0s;
+  // animation-iteration-count: 100;
+  // animation-direction: alternate;
+  background: linear-gradient(
+    101.35deg,
+    --color(--qui-BG-HIGH-LIGHT) 14.66%,
+    #0a9393 29.72972972972973%,
+    #11e397 34%,
+    #000066 100%
+  );
 }
 .my-info__box {
   display: flex;
@@ -327,9 +353,13 @@ $height: calc(100vh - 260rpx);
 }
 .my-info__box__detail-username {
   padding-left: 20rpx;
+  color: #fff;
 }
 .my-tabs {
-  background: --color(--qui-BG-2);
+  background: --color(--qui-BG-FFF);
+  border-radius: 20rpx;
+  overflow: hidden;
+  transform: translateY(50rpx);
   transition: $switch-theme-time;
 }
 .scroll-y {
@@ -339,5 +369,17 @@ $height: calc(100vh - 260rpx);
   margin: 30rpx 30rpx 0;
   text-align: center;
   border-radius: 7rpx;
+}
+
+@keyframes identifier {
+  0% {
+    background-size: 100%;
+  }
+  50% {
+    background-size: 200%;
+  }
+  100% {
+    background-size: 100%;
+  }
 }
 </style>

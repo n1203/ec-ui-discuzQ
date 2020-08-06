@@ -1,5 +1,5 @@
 <template>
-  <view class="qui-tabs">
+  <view class="qui-tabs" :style="{ border: hideBorder ? 'none' : '' }">
     <view
       v-for="(item, index) in values"
       :class="index === currentIndex ? 'qui-tabs__item--active qui-tabs__item' : 'qui-tabs__item'"
@@ -40,6 +40,11 @@ export default {
     activeColor: {
       type: String,
       default: '#1878F3',
+    },
+    // 隐藏border
+    hideBorder: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {

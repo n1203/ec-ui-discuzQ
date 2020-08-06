@@ -289,11 +289,13 @@ $height: calc(100vh - 120rpx);
 $height: calc(100vh - 260rpx);
 /* #endif */
 .my-items__wrap {
-  padding-left: 40rpx;
-  margin-top: 30rpx;
+  // padding-left: 20rpx;
+  margin: 30rpx 20rpx 0;
   background: --color(--qui-BG-2);
-  border-bottom: 2rpx solid --color(--qui-BOR-ED);
+  // border-bottom: 2rpx solid --color(--qui-BOR-ED);
   transition: $switch-theme-time;
+  box-shadow: 0 0 10rpx #ccc3;
+  border-radius: 10rpx;
 }
 .my-items {
   padding-bottom: 60rpx;

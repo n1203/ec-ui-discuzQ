@@ -243,11 +243,11 @@ export default {
     }),
     // 切换组件
     cut_index(e, type, isTabBar) {
-      const tabs = ['home', 'quinotice', 'quimy'];
+      const tabs = ['home', 'topic', 'publish', 'quinotice', 'quimy'];
       this.currentTab = tabs[type];
       if (
         !this.$store.getters['session/get']('isLogin') &&
-        ['quinotice', 'quimy'].indexOf(this.currentTab) >= 0
+        ['quinotice', 'publish', 'quimy'].indexOf(this.currentTab) >= 0
       ) {
         this.$store.getters['session/get']('auth').open();
         this.currentTab = 'home';

@@ -359,7 +359,6 @@ export default {
 }
 
 .dialog-box {
-  margin: 20rpx 0;
   background: --color(--qui-BG-2);
   border-bottom: 2rpx solid --color(--qui-BOR-ED);
 

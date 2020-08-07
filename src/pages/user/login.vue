@@ -19,10 +19,10 @@
           v-model="password"
         />
       </view>
-      <view class="login-box-btnOne" @click="login">
+      <view class="login-box-btn login-box-btnOne" @click="login">
         {{ i18n.t('user.login') }}
       </view>
-      <view class="login-box-btnTwo" v-if="register">
+      <view class="login-box-btn login-box-btnTwo" v-if="register">
         <view @click="jump2Register">
           {{ i18n.t('user.noexist') }}
         </view>
@@ -187,26 +187,23 @@ export default {
     }
   }
 
-  &-btnOne {
+  &-btn {
     width: 670rpx;
     height: 90rpx;
     margin: 50rpx auto 0rpx;
     line-height: 90rpx;
-    color: --color(--qui-FC-FFF);
     text-align: center;
-    background-color: --color(--qui-BG-BTN);
     border-radius: 5rpx;
   }
 
-  &-btnTwo {
-    width: 670rpx;
-    height: 90rpx;
-    margin: 50rpx auto 0rpx;
-    line-height: 90rpx;
+  &-btnOne {
     color: --color(--qui-FC-FFF);
-    text-align: center;
+    background-color: --color(--qui-BG-BTN);
+  }
+
+  &-btnTwo {
+    color: --color(--qui-FC-FFF);
     background-color: --color(--qui-FC-TAG);
-    border-radius: 5rpx;
   }
 }
 </style>

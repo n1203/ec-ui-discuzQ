@@ -18,8 +18,8 @@
       <view class="my-info">
         <view class="my-info__box">
           <view class="my-info__box__detail fbh">
-            <qui-avatar :user="userInfo" />
-            <view class="fbv fbjc ">
+            <qui-avatar :user="userInfo"/>
+            <view class="fbv fbjc">
               <view class="my-info__box__detail-username">
                 {{userInfo.username}}
               <view :class="['badge', [userInfo.groups[0].name]]">
@@ -317,6 +317,7 @@ $height: calc(100vh - 260rpx);
   padding-bottom: 60rpx;
 }
 .my-info {
+  justify-content: space-between;
   padding: 20rpx;
   padding-top: 60rpx;
   height: 180rpx;
@@ -341,7 +342,9 @@ $height: calc(100vh - 260rpx);
   justify-content: space-between;
 }
 .my-info__introduction {
-  margin-top: 40rpx;
+  position: relative;
+  padding-top: .5rem;
+  margin-left: .5rem;
   color: --color(--qui-FC-333);
   word-break: break-all;
   transition: $switch-theme-time;

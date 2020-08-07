@@ -418,7 +418,7 @@ export default {
     myfavorite: 'My favorite',
     circleinfo: 'Circle information',
     search: 'Search',
-    privateMessage: 'privateMessage',
+    privateMessage: 'Message',
     circlemanagement: 'Circle management',
     topic: 'Topic',
     following: 'Following',

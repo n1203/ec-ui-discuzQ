@@ -108,7 +108,7 @@ export default {
   box-shadow: 0 0 10rpx #00000010;
   border: 1rpx solid #00000010;
   padding: 20rpx;
-  background: #fff;
+  background: --color(--qui-BG-40);
   height: 180rpx;
   .stick-content {
     font-size: 24rpx;

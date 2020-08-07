@@ -45,17 +45,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Comsenz/discuz-uniapp.git"
+    "url": "git+https://github.com/SouWinds/ec-ui-discuzQ.git"
   },
   "keywords": [
     "vue"
   ],
-  "author": "discuz",
+  "author": "discuz & EngineChina",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Comsenz/discuz-uniapp/issues"
+    "url": "https://github.com/SouWinds/ec-ui-discuzQ/issues"
   },
-  "homepage": "http://discuz.chat/docs/",
+  "homepage": "https://q.e-spy.cn/",
   "dependencies": {
     "@dcloudio/uni-app-plus": "^2.0.0-27520200518001",
     "@dcloudio/uni-h5": "^2.0.0-27520200518001",

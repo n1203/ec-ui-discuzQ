@@ -27,10 +27,10 @@
           v-model="reason"
         />
       </view>
-      <view class="register-box-btn" id="TencentCaptcha" @click="register">
+      <view class="register-box-btnOne" id="TencentCaptcha" @click="register">
         {{ i18n.t('user.register') }}
       </view>
-      <view class="register-box-exist" @click="jump2Login" v-if="code !== 'undefined'">
+      <view class="register-box-btnTwo" @click="jump2Login" v-if="code !== 'undefined'">
         {{ i18n.t('user.exist') }}
       </view>
     </view>
@@ -257,6 +257,7 @@ export default {
   height: 100vh;
   font-size: $fg-f28;
   background-color: --color(--qui-BG-2);
+  background: linear-gradient(206.53deg, #ffffff 0%, #ffffff 32%, #eefff9 51%, #fff0f0 72%, #c6e8ff 100%);
 
   &-h {
     padding: 60rpx 0rpx 80rpx 40rpx;
@@ -279,14 +280,25 @@ export default {
     }
   }
 
-  &-btn {
+  &-btnOne {
     width: 670rpx;
     height: 90rpx;
     margin: 50rpx auto 0rpx;
     line-height: 90rpx;
     color: --color(--qui-FC-FFF);
     text-align: center;
-    background-color: --color(--qui-MAIN);
+    background-color: --color(--qui-BG-BTN);
+    border-radius: 5rpx;
+  }
+
+  &-btnTwo {
+    width: 670rpx;
+    height: 90rpx;
+    margin: 50rpx auto 0rpx;
+    line-height: 90rpx;
+    color: --color(--qui-FC-FFF);
+    text-align: center;
+    background-color: --color(--qui-FC-TAG);
     border-radius: 5rpx;
   }
 

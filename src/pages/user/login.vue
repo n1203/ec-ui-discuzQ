@@ -19,10 +19,10 @@
           v-model="password"
         />
       </view>
-      <view class="login-box-btn" @click="login">
+      <view class="login-box-btnOne" @click="login">
         {{ i18n.t('user.login') }}
       </view>
-      <view class="login-box-ft" v-if="register">
+      <view class="login-box-btnTwo" v-if="register">
         <view @click="jump2Register">
           {{ i18n.t('user.noexist') }}
         </view>
@@ -164,7 +164,7 @@ export default {
 .login-box {
   height: 100vh;
   font-size: $fg-f28;
-  background-color: --color(--qui-BG-2);
+  background: linear-gradient(206.53deg, #ffffff 0%, #ffffff 32%, #eefff9 51%, #fff0f0 72%, #c6e8ff 100%);
 
   &-h {
     padding: 60rpx 0rpx 80rpx 40rpx;
@@ -187,26 +187,26 @@ export default {
     }
   }
 
-  &-btn {
+  &-btnOne {
     width: 670rpx;
     height: 90rpx;
     margin: 50rpx auto 0rpx;
     line-height: 90rpx;
     color: --color(--qui-FC-FFF);
     text-align: center;
-    background-color: --color(--qui-MAIN);
+    background-color: --color(--qui-BG-BTN);
     border-radius: 5rpx;
   }
 
-  &-ft {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: 20rpx 40rpx 0rpx;
-    color: --color(--qui-LINK);
+  &-btnTwo {
+    width: 670rpx;
+    height: 90rpx;
+    margin: 50rpx auto 0rpx;
+    line-height: 90rpx;
+    color: --color(--qui-FC-FFF);
+    text-align: center;
+    background-color: --color(--qui-FC-TAG);
+    border-radius: 5rpx;
   }
 }
-
-.login-box-btn:active {
-  opacity: 0.8;
-}</style>
+</style>

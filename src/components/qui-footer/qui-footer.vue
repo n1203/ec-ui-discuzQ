@@ -344,7 +344,7 @@ export default {
   text-align: center;
   font-size: 58rpx;
   background-color: --color(--qui-BG-HIGH-LIGHT);
-  box-shadow: 0 0 40rpx --color(--qui-BOR-A3CAFF);
+  box-shadow: 0 0 40rpx --color(--qui-BOR-CCDD);
   border-radius: 30rpx;
   width: 100rpx;
   line-height: 60rpx;

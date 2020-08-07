@@ -18,7 +18,7 @@
               <text class="themeItem__header__title__username">
                 {{ userName }}
               </text>
-              <text :class="['badge', [user.groups[0].name]]">{{user.groups[0].name}}</text>
+              <text :class="['badge', [name]]">{{name}}</text>
               <text v-if="isAdmin && themeType == '1'" class="themeItem__header__title__isAdmin">
                 <text v-for="(item, index) in userGroups" :key="index">
                   {{ item.isDisplay ? `(${item.name})` : '' }}
@@ -426,8 +426,10 @@ export default {
     },
     // 作者个人信息
     user: {
-      type: Object,
-      default: {},
+      type: [Array, Object],
+      default: () => {
+        return {};
+      },
     }
   },
 
@@ -445,9 +447,12 @@ export default {
       imageStatus: true,
       currentTop: 0,
       currentBottom: 0,
+      name: '普通会员', // 角色
     };
   },
-
+  onShow(){
+    this.name = this.user.groups ? this.user.groups[0].name : ''
+  },
   computed: {
     // 语言包
     t() {

@@ -18,11 +18,11 @@
       <view class="my-info">
         <view class="my-info__box">
           <view class="my-info__box__detail fbh">
-            <qui-avatar :user="userInfo"/>
+            <qui-avatar :user="userInfo" />
             <view class="fbv fbjc">
               <view class="my-info__box__detail-username">
                 {{ userInfo.username }}
-                <view :class="['badge', [userInfo.groups[0].name]]">
+                <view :class="['badge', [userInfo.groupsName]]">
                   {{ userInfo.groupsName }}
                 </view>
               </view>
@@ -134,7 +134,11 @@
             slot-right
             :border="false"
           >
-            <u-switch @change="changeCheck" v-model="currentTheme" active-color="#1E78F3"></u-switch>
+            <u-switch
+              @change="changeCheck"
+              v-model="currentTheme"
+              active-color="#1E78F3"
+            ></u-switch>
           </qui-cell-item>
         </view>
         <view class="my-items__wrap">
@@ -211,6 +215,8 @@ export default {
       register_type: 0, // 注册模式
       site_mode: '', // 站点模式
       lang: false,
+      username: '',
+      userGroupName: '',
     };
   },
   computed: {
@@ -340,7 +346,7 @@ $height: calc(100vh - 260rpx);
   justify-content: space-between;
   padding: 20rpx;
   padding-top: 60rpx;
-  height: 180rpx;
+  // height: 180rpx;
   margin-bottom: 100rpx;
   font-size: $fg-f28;
   // background: --color(--qui-BG-HIGH-LIGHT);
@@ -363,9 +369,10 @@ $height: calc(100vh - 260rpx);
 }
 .my-info__introduction {
   position: relative;
-  padding-top: .5rem;
-  margin-left: .5rem;
-  color: --color(--qui-FC-333);
+  padding-top: 0.5rem;
+  margin-left: 0.5rem;
+  font-size: 24rpx;
+  color: --color(--qui-FC-GRAY);
   word-break: break-all;
   transition: $switch-theme-time;
 }
@@ -392,7 +399,7 @@ $height: calc(100vh - 260rpx);
   border-radius: 20rpx;
   margin-left: 10rpx;
   padding: 3px 6px;
-  transform: scale(.8);
+  transform: scale(0.8);
 }
 .管理员 {
   border: #1878f3 1px solid;

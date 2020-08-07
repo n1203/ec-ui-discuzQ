@@ -83,7 +83,9 @@ export default {
   height: 180rpx;
   // width: 80%;
 }
-
+.sticky__isSticky {
+  position: relative;
+}
 .stick-head {
   line-height: 40rpx;
 }
@@ -113,11 +115,19 @@ export default {
   .stick-content {
     font-size: 24rpx;
     color: #999;
-    height: 66rpx;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    text-overflow: ellipsis;
     overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    display: -webkit-box;
+
+    -webkit-line-clamp: 2;
+
+    overflow: hidden;
+
+    /*! autoprefixer: off */
+
+    -webkit-box-orient: vertical;
   }
 }
 .acticv-sticky {
@@ -129,6 +139,9 @@ export default {
 }
 
 .meta {
+  position: absolute;
+  bottom: 20rpx;
+  left: 20rpx;
   &-item {
     margin-right: 20rpx;
     &-count {

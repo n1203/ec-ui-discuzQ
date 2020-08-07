@@ -88,7 +88,7 @@ export default {
   line-height: 40rpx;
 }
 .stick-badge {
-  background: --color(--qui-HIGH-LIGHT);
+  background: --color(--qui-BG-HIGH-LIGHT);
   font-size: 20rpx;
   padding: 0rpx 10rpx;
   border-radius: 10rpx;

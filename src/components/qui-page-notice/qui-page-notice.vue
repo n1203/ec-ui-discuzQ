@@ -218,6 +218,9 @@ export default {
     uni.$off('updateNoticePage');
     // #endif
   },
+  onShow() {
+    this.ontrueGetList();
+  },
   methods: {
     // 调用 会话列表 的接口
     getDialogList() {

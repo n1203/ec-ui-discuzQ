@@ -4,8 +4,8 @@
     <uni-nav-bar
       :title="i18n.t('profile.mine')"
       fixed="true"
-      :color="checked ? '#fff' : '#000'"
-      :background-color="checked ? '#2e2f30' : '#fff'"
+      :color="currentTheme ? '#fff' : '#000'"
+      :background-color="currentTheme ? '#2e2f30' : '#fff'"
       status-bar
     ></uni-nav-bar>
     <!-- #endif -->
@@ -134,7 +134,7 @@
             slot-right
             :border="false"
           >
-            <u-switch @change="changeCheck" v-model="checked" active-color="#1E78F3"></u-switch>
+            <u-switch @change="changeCheck" v-model="currentTheme" active-color="#1E78F3"></u-switch>
           </qui-cell-item>
         </view>
         <view class="my-items__wrap">
@@ -204,7 +204,7 @@ export default {
         { title: this.i18n.t('profile.likes'), brief: '0' },
       ],
       current: 0,
-      checked: false,
+      currentTheme: false, // 当前主题是否为暗色
       changeLang: false, //  当前多语言
       isWeixin: false, // 默认不是微信浏览器
       offiaccount_close: false, // 默认不开启微信公众号
@@ -240,6 +240,10 @@ export default {
 
     // 多语言默认值
     if (i18n.locale !== 'zh') this.lang = true;
+  },
+  onShow() {
+    // ? NOTE: 当页面展示时，获取当前主题
+    this.ontrueGetList();
   },
   // #endif
   methods: {
@@ -296,7 +300,7 @@ export default {
     },
     // 组件初始化数据
     ontrueGetList() {
-      this.checked = this.theme !== THEME_DEFAULT;
+      this.currentTheme = this.theme !== THEME_DEFAULT;
     },
     // 获取最新主题数那些
     refreshNum() {

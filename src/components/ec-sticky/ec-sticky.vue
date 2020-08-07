@@ -113,7 +113,7 @@ export default {
   .stick-content {
     font-size: 24rpx;
     color: #999;
-    height: 80rpx;
+    height: 66rpx;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     text-overflow: ellipsis;

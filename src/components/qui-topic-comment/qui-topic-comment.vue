@@ -3,7 +3,10 @@
     <view class="themeItem">
       <view class="themeItem__header">
         <view class="themeItem__header__img" @click="personJump">
-          <qui-avatar :user="{ username: userName, avatarUrl: commentAvatarUrl }" />
+          <qui-avatar
+            :user="{ username: userName, avatarUrl: commentAvatarUrl }"
+            :is-real="isReal"
+          />
         </view>
         <view class="themeItem__header__title">
           <view class="themeItem__header__title__top">
@@ -78,7 +81,7 @@
 </template>
 
 <script>
-import { time2MorningOrAfternoon } from '@/utils/time';
+import { time2DateAndHM } from '@/utils/time';
 
 export default {
   props: {
@@ -106,6 +109,11 @@ export default {
     userName: {
       type: String,
       default: '',
+    },
+    // 实名认证
+    isReal: {
+      type: Boolean,
+      default: false,
     },
     // 回复的用户的角色
     userRole: {
@@ -186,7 +194,7 @@ export default {
     },
     // 时间转化
     localTime() {
-      return time2MorningOrAfternoon(this.commentTime);
+      return time2DateAndHM(this.commentTime);
     },
   },
   watch: {
@@ -203,7 +211,6 @@ export default {
       handler(newVal) {
         this.refreshStatus = newVal;
         if (this.refreshStatus === true) {
-          console.log('刷新');
           this.$forceUpdate();
         }
       },

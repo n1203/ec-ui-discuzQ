@@ -6,6 +6,7 @@
       :pay-status="(thread.price > 0 && thread.paid) || thread.price == 0"
       :user-name="thread.user ? thread.user.username : ''"
       :theme-image="thread.user ? thread.user.avatarUrl : ''"
+      :is-real="thread.user ? thread.user.isReal : false"
       :theme-btn="thread.canHide || ''"
       :theme-reply-btn="thread.canReply || ''"
       :user-groups="thread.user && thread.user.groups"
@@ -26,7 +27,6 @@
       :duration="thread.threadVideo && thread.threadVideo.duration"
       :is-deleted="thread.isDeleted"
       :scroll-top="scrollTop"
-      :is-attention-visible="false"
       @click="handleClickShare(thread._jv.id)"
       @handleIsGreat="
         handleIsGreat(
@@ -43,21 +43,7 @@
       @videoPlay="handleVideoPlay"
     ></qui-content>
     <uni-popup ref="popupContent" type="bottom">
-      <view class="popup-share">
-        <view class="popup-share-content">
-          <button class="popup-share-button" open-type="share" plain="true"></button>
-          <view v-for="(item, index) in bottomData" :key="index" class="popup-share-content-box">
-            <view class="popup-share-content-image">
-              <view class="popup-share-box" @click="shareContent(index)">
-                <qui-icon class="content-image" :name="item.icon" size="46" color="#777"></qui-icon>
-              </view>
-            </view>
-            <text class="popup-share-content-text">{{ item.text }}</text>
-          </view>
-        </view>
-        <view class="popup-share-content-space"></view>
-        <text class="popup-share-btn" @click="cancel('share')">{{ i18n.t('home.cancel') }}</text>
-      </view>
+      <qui-share @close="cancel" share-type="content" :now-thread-id="nowThreadId"></qui-share>
     </uni-popup>
   </view>
 </template>
@@ -68,6 +54,7 @@ import wxshare from '@/mixin/wxshare-h5';
 import loginAuth from '@/mixin/loginAuth-h5';
 // #endif
 import forums from '@/mixin/forums';
+import { getCurUrl } from '@/utils/getCurUrl';
 
 export default {
   mixins: [
@@ -102,20 +89,6 @@ export default {
       playIndex: null,
       nowThreadId: '',
       tabIndex: 0, // 选中标签栏的序列,默认显示第一个
-      bottomData: [
-        {
-          text: this.i18n.t('home.generatePoster'),
-          icon: 'icon-poster',
-          name: 'wx',
-          id: 1,
-        },
-        {
-          text: this.i18n.t('home.wxShare'),
-          icon: 'icon-wx-friends',
-          name: 'wx',
-          id: 2,
-        },
-      ],
     };
   },
   methods: {
@@ -147,15 +120,6 @@ export default {
     close() {
       this.$refs.auth.close();
     },
-    // 内容部分分享海报,跳到分享海报页面
-    shareContent(index) {
-      if (index === 0) {
-        uni.navigateTo({
-          url: `/pages/share/topic?id=${this.nowThreadId}`,
-        });
-      }
-      this.cancel();
-    },
     // 内容部分点赞按钮点击事件
     handleIsGreat(id, canLike, isLiked, index) {
       if (!this.$store.getters['session/get']('isLogin')) {
@@ -163,7 +127,7 @@ export default {
         this.$store.getters['session/get']('auth').open();
         // #endif
         // #ifdef H5
-        if (!this.handleLogin()) {
+        if (!this.handleLogin(getCurUrl())) {
           return;
         }
         // #endif
@@ -199,17 +163,6 @@ export default {
       this.$emit('handleClickShare', id);
       this.nowThreadId = id;
       this.$refs.popupContent.open();
-      // 付费模式下不显示微信分享
-      if (this.forums.set_site.site_mode === 'pay') {
-        this.bottomData = [
-          {
-            text: this.i18n.t('home.generatePoster'),
-            icon: 'icon-poster',
-            name: 'wx',
-            id: 1,
-          },
-        ];
-      }
       // #endif
       // #ifdef H5
       const shareThread = this.$store.getters['jv/get'](`threads/${id}`);

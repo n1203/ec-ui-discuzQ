@@ -34,7 +34,12 @@
         :key="index"
         @tap="toProfile(item.id)"
       >
-        <qui-avatar class="search-item__users__avatar" :user="item" size="70" />
+        <qui-avatar
+          class="search-item__users__avatar"
+          :user="item"
+          size="70"
+          :is-real="item.isReal"
+        />
         <qui-cell-item :title="item.username" arrow :addon="item.groupName"></qui-cell-item>
       </view>
       <qui-load-more :status="loadingType" :show-icon="false" v-if="loadingType"></qui-load-more>

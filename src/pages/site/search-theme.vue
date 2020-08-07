@@ -176,7 +176,7 @@ $height: calc(100vh - 110rpx);
   padding-right: 40rpx;
   padding-left: 0;
   margin: 0;
-  border-top: 0;
+  border: 0;
   box-shadow: none;
 }
 /deep/ .themeCount .themeItem__footer {

@@ -21,10 +21,10 @@
             <qui-avatar :user="userInfo"/>
             <view class="fbv fbjc">
               <view class="my-info__box__detail-username">
-                {{userInfo.username}}
-              <view :class="['badge', [userInfo.groups[0].name]]">
-                {{userInfo.groupsName}}
-              </view>
+                {{ userInfo.username }}
+                <view :class="['badge', [userInfo.groups[0].name]]">
+                  {{ userInfo.groupsName }}
+                </view>
               </view>
               <view class="my-info__introduction" v-if="userInfo.signature">
                 {{ userInfo.signature }}
@@ -50,6 +50,26 @@
           ></qui-tabs>
         </view>
       </view>
+
+      <!-- <view class="my-info">
+        <view class="my-info__box">
+          <view class="my-info__box__detail">
+            <qui-avatar :user="userInfo" :is-real="userInfo.isReal" />
+            <qui-cell-item
+              :title="userInfo.username || ''"
+              :brief="userInfo.groupsName"
+              :border="false"
+              class="my-info__box__detail-username"
+            ></qui-cell-item>
+          </view>
+        </view>
+        <view class="my-info__introduction" v-if="userInfo.signature">
+          {{ userInfo.signature }}
+        </view>
+      </view>
+      <view class="my-tabs">
+        <qui-tabs :values="items" @clickItem="onClickItem" :brief="true" :current="-1"></qui-tabs>
+      </view> -->
       <view class="my-items">
         <view class="my-items__wrap">
           <navigator url="/pages/my/profile" hover-class="none">
@@ -156,7 +176,7 @@
     <uni-popup ref="popup" type="center">
       <uni-popup-dialog
         type="warn"
-        content="点击下面的确定解绑按钮后，您将解除微信与本账号的绑定。如果您没有设置密码或其他登录方法，将无法再次登录本账号！"
+        :content="i18n.t('user.loginOutTips')"
         :before-close="true"
         @close="handleClickCancel"
         @confirm="handleClickOk"
@@ -226,12 +246,12 @@ export default {
     // 切换多语言
     changeLangs(e) {
       this.$localeUse(e ? 'en' : 'zh');
-      window.location.reload();
+      // window.location.reload();
       // localeUse(e ? 'en' : 'zh');
     },
     changeCheck(e) {
       getApp().globalData.themeChanged(e ? THEME_DARK : THEME_DEFAULT);
-      window.location.reload();
+      // window.location.reload();
     },
     onClickItem(e) {
       uni.navigateTo({
@@ -256,14 +276,10 @@ export default {
     // #endif
     // #ifdef H5
     handleClickOk() {
-      this.$store
-        .dispatch('jv/delete', `users/${this.userId}/wechat`)
-        .then(res => {
-          console.log('解绑成功', res);
-          this.handleClickCancel();
-          this.$store.dispatch('session/logout').then(() => window.location.reload());
-        })
-        .catch(err => console.log(err));
+      this.$store.dispatch('jv/delete', `users/${this.userId}/wechat`).then(() => {
+        this.handleClickCancel();
+        this.$store.dispatch('session/logout').then(() => window.location.reload());
+      });
     },
     // #endif
     // #ifdef H5
@@ -369,9 +385,10 @@ $height: calc(100vh - 260rpx);
   align-items: center;
   background: #fff !important;
   color: yellow;
-  border-radius: 10px;
-  margin-left: 10px;
+  border-radius: 20rpx;
+  margin-left: 10rpx;
   padding: 3px 6px;
+  transform: scale(.8);
 }
 .管理员 {
   border: #1878f3 1px solid;
@@ -382,6 +399,7 @@ $height: calc(100vh - 260rpx);
   color: #ccc;
 }
 .my-tabs {
+  // background: --color(--qui-BG-2);
   background: --color(--qui-BG-FFF);
   border-radius: 20rpx;
   overflow: hidden;

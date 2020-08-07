@@ -93,7 +93,7 @@
     </view>
     <uni-popup ref="popCode" type="center">
       <uni-popup-dialog
-        type="warning"
+        type="warn"
         :before-close="true"
         :content="codeTips"
         @close="handleInviteCancel"
@@ -113,6 +113,7 @@ import wxshare from '@/mixin/wxshare-h5';
 import appCommonH from '@/utils/commonHelper';
 import loginAuth from '@/mixin/loginAuth-h5';
 // #endif
+import { getCurUrl } from '@/utils/getCurUrl';
 
 export default {
   components: { uniPopupDialog },
@@ -140,6 +141,12 @@ export default {
     this.getInviteInfo(params.code);
     // #ifdef  H5
     this.isWeixin = appCommonH.isWeixin().isWeixin;
+    // #endif
+    // #ifdef MP-WEIXIN
+    wx.showShareMenu({
+      withShareTicket: true,
+      menus: ['shareAppMessage', 'shareTimeline'],
+    });
     // #endif
   },
   onReady() {
@@ -266,7 +273,7 @@ export default {
         this.$store.getters['session/get']('auth').open();
         // #endif
         // #ifdef H5
-        this.handleLogin(this.code);
+        this.handleLogin(getCurUrl(), this.code);
         // #endif
       } else {
         // 已经登陆的情况

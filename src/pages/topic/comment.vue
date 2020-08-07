@@ -1,13 +1,14 @@
 <template>
   <qui-page :data-qui-theme="theme" class="content bg">
     <view v-if="loaded && status">
-      <scroll-view
+      <!--<scroll-view
         scroll-y="true"
         scroll-with-animation="true"
         show-scrollbar="false"
         class="scroll-y"
         @scrolltolower="pullDown"
-      >
+      >-->
+      <view class="scroll-y">
         <view class="content" v-if="status">
           <view class="ft-gap">
             <view class="bg-white">
@@ -20,19 +21,49 @@
               </view>
               <qui-topic-content
                 :topic-status="thread.isApproved"
+                :follow-show="post.user.follow != null"
                 :avatar-url="post.user.avatarUrl"
                 :user-name="post.user.username"
+                :is-real="post.user.isReal"
                 :theme-time="post.createdAt"
                 :theme-content="post.contentHtml"
                 :user-role="post.user.groups"
                 :images-list="post.images"
                 @personJump="personJump(post.user._jv.id)"
-              ></qui-topic-content>
+              >
+                <view slot="follow" :key="followStatus" v-if="post.user.follow != null">
+                  <view
+                    class="themeItem__header__follow"
+                    @tap="post.user.follow === 0 ? addFollow(post.user) : deleteFollow(post.user)"
+                  >
+                    <qui-icon
+                      class="icon-follow"
+                      :name="post.user.follow === 0 ? 'icon-follow' : 'icon-each-follow'"
+                      :color="
+                        post.user.follow === 0
+                          ? '#777'
+                          : post.user.follow === 1
+                          ? themeColor
+                          : '#ff8888'
+                      "
+                    ></qui-icon>
+                    <text>
+                      {{
+                        post.user.follow === 0
+                          ? i18n.t('profile.following')
+                          : post.user.follow === 1
+                          ? i18n.t('profile.followed')
+                          : i18n.t('profile.mutualfollow')
+                      }}
+                    </text>
+                  </view>
+                </view>
+              </qui-topic-content>
               <view class="thread-box" v-if="loadDetailStatus && !thread.isApproved == 0">
                 <view class="thread" v-if="thread.isApproved == 1">
                   <view class="thread__header">
                     <view class="thread__header__img" @click="personJump(thread.user._jv.id)">
-                      <qui-avatar :user="thread.user" />
+                      <qui-avatar :user="thread.user" :is-real="thread.user.isReal" />
                     </view>
                     <view class="thread__header__title">
                       <view class="thread__header__title__top">
@@ -76,7 +107,7 @@
                   :type="t.giveLike"
                   :person-num="post.likeCount"
                   :limit-count="limitShowNum"
-                  :person-list="post.likedUsers"
+                  :person-list="likedUsers"
                   :btn-show="false"
                   @personJump="personJump"
                 ></qui-person-list>
@@ -110,11 +141,34 @@
             </view>
             <!-- 评论 -->
             <view class="comment">
-              <view
-                class="comment-num"
-                :style="{ paddingBottom: post.postCount > 1 ? '0' : '40rpx' }"
-              >
-                {{ post.replyCount }}{{ t.item }}{{ t.comment }}
+              <view class="comment-top">
+                <view
+                  class="comment-num"
+                  :style="{ paddingBottom: post.postCount > 1 ? '0' : '40rpx' }"
+                >
+                  {{ post.replyCount }}{{ t.item }}{{ t.comment }}
+                </view>
+                <view class="comment-sort" v-if="thread.postCount > 1">
+                  <view class="comment-sort-operaCl" @click="sortOperaClick">
+                    <qui-icon
+                      name="icon-sort1"
+                      class="icon-management"
+                      color="#777"
+                      size="30"
+                    ></qui-icon>
+                  </view>
+                  <view>
+                    <qui-drop-down
+                      posival="absolute"
+                      :show="sortSeleShow"
+                      :list="sortSelectList"
+                      :top="60"
+                      :right="0"
+                      :width="220"
+                      @click="sortSelectChoice"
+                    ></qui-drop-down>
+                  </view>
+                </view>
               </view>
               <view v-if="postComments.length > 0">
                 <view v-for="(commentPost, index) in postComments" :key="index">
@@ -124,6 +178,7 @@
                     :post-id="commentPost._jv.id"
                     :comment-avatar-url="commentPost.user.avatarUrl"
                     :user-name="commentPost.user.username"
+                    :is-real="commentPost.user.isReal"
                     :is-liked="commentPost.isLiked"
                     :user-role="commentPost.user.groups"
                     :comment-time="commentPost.createdAt"
@@ -161,17 +216,17 @@
               </view>
             </view>
           </view>
+          <qui-load-more
+            :status="loadingType"
+            :content-text="{
+              contentdown: c.contentdown,
+              contentrefresh: c.contentrefresh,
+              contentnomore: contentnomoreVal,
+            }"
+          ></qui-load-more>
         </view>
-
-        <qui-load-more
-          :status="loadingType"
-          :content-text="{
-            contentdown: c.contentdown,
-            contentrefresh: c.contentrefresh,
-            contentnomore: contentnomoreVal,
-          }"
-        ></qui-load-more>
-      </scroll-view>
+      </view>
+      <!--</scroll-view>-->
       <!--#ifdef MP-WEIXIN-->
       <!--适配小程序底部弹框-->
       <view class="det-ft"></view>
@@ -248,6 +303,15 @@
           </button>
         </view>
       </uni-popup>
+      <uni-popup ref="deletePopup" type="center">
+        <uni-popup-dialog
+          type="warn"
+          :content="deleteTip"
+          :before-close="true"
+          @close="handleClickCancel"
+          @confirm="handleClickOk"
+        ></uni-popup-dialog>
+      </uni-popup>
     </view>
     <view
       v-else-if="(loadingStatus && !loaded && !thread.isDeleted) || (loadingStatus && !status)"
@@ -266,10 +330,13 @@
 import { status, utils } from '@/library/jsonapi-vuex/index';
 import { mapState, mapMutations } from 'vuex';
 import user from '@/mixin/user';
-import { time2MorningOrAfternoon } from '@/utils/time';
+import { time2DateAndHM } from '@/utils/time';
 import { DISCUZ_REQUEST_HOST } from '@/common/const';
+import uniPopupDialog from '@/components/uni-popup/uni-popup-dialog';
+import { getCurUrl } from '@/utils/getCurUrl';
 
 export default {
+  components: { uniPopupDialog },
   mixins: [user],
   data() {
     return {
@@ -330,11 +397,29 @@ export default {
       commentStatus: {}, //回复状态
       commentId: '', //当前评论的Id
       loadingType: 'more', // 上拉加载状态
+      scrollTop: 0,
       pageNum: 1, //这是主题回复当前页数
       pageSize: 20, //这是主题回复每页数据条数
       contentnomoreVal: '', //数据加载状态提示 暂无评论/没有更多数据
       url: '',
       imageStatus: true, // 头像地址错误时显示默认头像
+      likedUsers: [],
+      deleteId: '', // 删除时的Id（包括主题id，评论Id，和图片id）
+      deleteType: '', // 删除时的类型，3为评论的回复删除，4为评论删除
+      deletePostType: '', // 删除回复时传给请求接口的类型
+      deletePostCanStatus: '', // 是否可以删除该条内容
+      deletePostIsStatus: '', // 删除时的状态
+      deletePost: '', // 删除时的整个post数据
+      deleteIndex: '', // 删除图片时的Index
+      deleteTip: '确定删除吗？', // 删除提示
+      sortSeleShow: false, // 排序菜单状态
+      sortSelectList: [
+        { text: this.i18n.t('topic.sortTimeSequence'), type: '0', canOpera: true },
+        { text: this.i18n.t('topic.sortTimeReverse'), type: '1', canOpera: true },
+      ], // 评论排序菜单
+      sortVal: 'createdAt', // 排序值
+      followStatus: '', // 当前关注状态
+      curUrl: '', // 当前页面的路由
     };
   },
   computed: {
@@ -342,8 +427,9 @@ export default {
       getAtMemberData: state => state.atMember.atMemberData,
     }),
     post() {
-      const commentId = this.commentId;
-      return utils.deepCopy(this.$store.getters['jv/get'](`posts/${commentId}`));
+      const post = this.$store.getters['jv/get'](`posts/${this.commentId}`);
+      this.likedUsers = post.likedUsers;
+      return post;
     },
     // postList() {
     //   // console.log(this.$store.getters['jv/get']('posts'));
@@ -360,11 +446,12 @@ export default {
     // 时间转化
     localTime() {
       if (this.thread.createdAt) {
-        return time2MorningOrAfternoon(this.thread.createdAt);
+        return time2DateAndHM(this.thread.createdAt);
       }
     },
   },
   onLoad(option) {
+    this.curUrl = getCurUrl();
     this.threadId = option.threadId;
     this.commentId = option.commentId;
     this.loadPost();
@@ -379,6 +466,30 @@ export default {
     this.formData = {
       type: 1,
     };
+  },
+  // 下拉刷新
+  onPullDownRefresh() {
+    const _this = this;
+    _this.pageNum = 1;
+    _this.postComments = [];
+    setTimeout(function() {
+      _this.loadPost();
+      _this.loadThread();
+      _this.loadPostComments();
+      uni.stopPullDownRefresh();
+    }, 1000);
+  },
+  // 上拉加载
+  onReachBottom() {
+    if (this.loadingType !== 'more') {
+      return;
+    }
+    this.pageNum += 1;
+    this.loadPostComments();
+  },
+  // 监听页面滚动，参数为Object
+  onPageScroll(event) {
+    this.scrollTop = event.scrollTop;
   },
   onUnload() {
     this.$store.dispatch('forum/setError', { loading: false });
@@ -490,7 +601,7 @@ export default {
       );
     },
 
-    // post操作调用接口（包括type 1评论点赞，2删除回复，3删除回复的评论，4评论的回复点赞）
+    // post操作调用接口（包括type 1评论点赞，2删除评论，3删除评论的某条回复，4评论的回复点赞）
     postOpera(id, type, canStatus, isStatus, commentPost) {
       if (type == '1' && !canStatus) {
         this.$refs.toast.show({ message: this.t.noReplyLikePermission });
@@ -534,13 +645,13 @@ export default {
             // 当前评论点赞
             this.isLiked = data.isLiked;
             if (this.isLiked) {
-              this.post.likedUsers.unshift(this.user);
+              this.likedUsers.unshift(this.user);
               orgignPost._jv.relationships.likedUsers.data.unshift({
                 type: this.user._jv.type,
                 id: this.user._jv.id,
               });
             } else {
-              this.post.likedUsers.forEach((value, key, item) => {
+              this.likedUsers.forEach((value, key, item) => {
                 value.id == this.user.id && item.splice(key, 1);
               });
               orgignPost._jv.relationships.likedUsers.data.forEach((value, key, item) => {
@@ -550,8 +661,12 @@ export default {
           } else if (type == '2') {
             if (data.isDeleted) {
               uni.navigateBack({
-                url: '/pages/topic/index?id=' + this.threadId,
+                delta: 1,
               });
+
+              // uni.navigateBack({
+              //   url: '/pages/topic/index?id=' + this.threadId,
+              // });
               this.$refs.toast.show({ message: this.t.deleteSuccessAndJumpToTopic });
             } else {
               this.$refs.toast.show({ message: this.t.deleteFailed });
@@ -651,9 +766,12 @@ export default {
         'filter[isApproved]': 1,
         'filter[thread]': this.threadId,
         'filter[reply]': this.commentId,
+        'page[number]': this.pageNum,
+        'page[limit]': this.pageSize,
         'filter[isDeleted]': 'no',
         'filter[isComment]': 'yes',
         include: ['replyUser', 'user.groups', 'user', 'images'],
+        sort: this.sortVal,
       };
       this.loadPostCommentStatus = status.run(() =>
         this.$store.dispatch('jv/get', ['posts', { params }]).then(data => {
@@ -677,7 +795,93 @@ export default {
       });
       return arr;
     },
+    // 添加关注
+    addFollow(userInfo) {
+      if (!this.$store.getters['session/get']('isLogin')) {
+        // #ifdef MP-WEIXIN
+        this.$store.getters['session/get']('auth').open();
+        // #endif
+        // #ifdef H5
+        if (!this.handleLogin(this.curUrl)) {
+          return;
+        }
+        // #endif
+        return;
+      }
+      const originUser = this.$store.getters['jv/get'](`users/${userInfo.id}`);
+      const params = {
+        _jv: {
+          type: 'follow',
+        },
+        type: 'user_follow',
+        to_user_id: userInfo.id,
+      };
+      this.$store.dispatch('jv/post', params).then(res => {
+        if (res.is_mutual == 0) {
+          this.post.user.follow = 1;
+          originUser.follow = 1;
+          this.followStatus = 1;
+        } else {
+          this.post.user.follow = 2;
+          originUser.follow = 2;
+          this.followStatus = 2;
+        }
+      });
+    },
+    // 取消关注
+    deleteFollow(userInfo) {
+      const originUser = this.$store.getters['jv/get'](`users/${userInfo.id}`);
+      this.$store.dispatch('jv/delete', `follow/${userInfo.id}/1`).then(() => {
+        this.post.user.follow = 0;
+        originUser.follow = 0;
+        this.followStatus = 0;
+      });
+    },
+    // 点击排序
+    sortOperaClick() {
+      this.sortSeleShow = !this.sortSeleShow;
+    },
+    // 管理菜单内标签点击事件
+    sortSelectChoice(param) {
+      if (!this.$store.getters['session/get']('isLogin')) {
+        // #ifdef MP-WEIXIN
+        this.$store.getters['session/get']('auth').open();
+        // #endif
+        // #ifdef H5
+        if (!this.handleLogin(this.curUrl)) {
+          return;
+        }
+        // #endif
+      }
+      this.sortSeleShow = false;
 
+      if (param.type === '0') {
+        if (this.sortVal === 'createdAt') {
+          this.$refs.toast.show({ message: this.t.itsAlreadyWantedSort });
+        } else {
+          this.refreshVal = false;
+
+          this.$nextTick(() => {
+            this.refreshVal = true;
+          });
+          this.sortVal = 'createdAt';
+          this.postComments = [];
+          this.loadPostComments();
+        }
+      } else if (param.type === '1') {
+        if (this.sortVal === '-createdAt') {
+          this.$refs.toast.show({ message: this.t.itsAlreadyWantedSort });
+        } else {
+          this.refreshVal = false;
+          this.sortVal = '-createdAt';
+          this.postComments = [];
+          this.loadPostComments();
+          this.$nextTick(() => {
+            this.refreshVal = true;
+          });
+        }
+      }
+    },
     // 跳转到用户主页
     personJump(id) {
       uni.navigateTo({
@@ -715,9 +919,14 @@ export default {
     // 删除图片
     uploadClear(list, del) {
       const id = list.id;
-      this.delAttachments(id, del).then(() => {
-        this.$refs.upload.clear(del);
-      });
+      this.deleteType = 0;
+      this.deleteId = id;
+      this.deleteIndex = del;
+      this.$refs.deletePopup.open();
+      this.deleteTip = this.i18n.t('core.deleteImgSure');
+      // this.delAttachments(id, del).then(() => {
+      //   this.$refs.upload.clear(del);
+      // });
     },
     // 删除图片
     delAttachments(id) {
@@ -747,13 +956,49 @@ export default {
     postLikeClick(postId, type, canStatus, isStatus) {
       this.postOpera(postId, type, canStatus, isStatus);
     },
-    // 删除当前回复
+    // 删除当前评论
     deleteReply(postId, canStatus) {
-      this.postOpera(postId, '2');
+      this.$refs.deletePopup.open();
+      this.deleteType = '2';
+      this.deleteId = postId;
+      this.deleteTip = this.i18n.t('core.deleteCommentSure');
+      // this.postOpera(postId, '2');
     },
-    // 删除回复的评论
+    // 删除评论的回复
     deleteComment(postId, type, canStatus, isStatus, commentPost) {
-      this.postOpera(postId, '3', canStatus, isStatus, commentPost);
+      this.$refs.deletePopup.open();
+      this.deleteId = postId;
+      this.deleteType = '3';
+      this.deletePostCanStatus = canStatus;
+      this.deletePostIsStatus = isStatus;
+      this.deletePost = commentPost;
+      this.deleteTip = this.i18n.t('core.deleteReplySure');
+      // this.postOpera(postId, '3', canStatus, isStatus, commentPost);
+    },
+    handleClickOk() {
+      this.$refs.deletePopup.close();
+      if (this.deleteType === '2') {
+        // 删除类型为当前评论
+        this.postOpera(this.deleteId, '2');
+      } else if (this.deleteType === '3') {
+        // 删除类型为评论的回复
+        this.postOpera(
+          this.deleteId,
+          '3',
+          this.deletePostCanStatus,
+          this.deletePostIsStatus,
+          this.deletePost,
+        );
+      } else if (this.deleteType === 0) {
+        // 删除类型为回复时上传的图片
+        this.delAttachments(this.deleteId, this.deleteIndex).then(() => {
+          this.$refs.upload.clear(this.deleteIndex);
+        });
+      }
+    },
+
+    handleClickCancel() {
+      this.$refs.deletePopup.close();
     },
     // 评论的回复
     replyComment(postId, canStatus) {
@@ -797,14 +1042,14 @@ export default {
       this.commentIndex = commentIndex;
       this.postOpera(postId, '4', canLike, isLiked, commentPost);
     },
-    // 下拉加载
-    pullDown() {
-      if (this.loadingType !== 'more') {
-        return;
-      }
-      this.pageNum += 1;
-      this.loadPostComments();
-    },
+    // // 下拉加载
+    // pullDown() {
+    //   if (this.loadingType !== 'more') {
+    //     return;
+    //   }
+    //   this.pageNum += 1;
+    //   this.loadPostComments();
+    // },
     // 头像失效
     imageError() {
       this.imageStatus = false;
@@ -974,12 +1219,27 @@ page {
   background: --color(--qui-BG-2);
   box-sizing: border-box;
 }
-.comment-num {
+.comment-top {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   padding: 0 40rpx;
+}
+.comment-num {
   font-size: $fg-f28;
   font-weight: bold;
   line-height: 37rpx;
 }
+.comment-sort {
+  position: relative;
+  z-index: 1;
+}
+// .comment-num {
+//   padding: 0 40rpx;
+//   font-size: $fg-f28;
+//   font-weight: bold;
+//   line-height: 37rpx;
+// }
 .comment-child {
   display: flex;
   flex-direction: column;
@@ -1045,7 +1305,7 @@ page {
 }
 .ft-gap {
   width: 100%;
-  margin-bottom: 80rpx;
+  // margin-bottom: 80rpx;
 }
 .det-ft {
   position: fixed;
@@ -1307,5 +1567,17 @@ page {
   right: 0;
   width: 31rpx;
   height: 41rpx;
+}
+.themeItem__header__follow {
+  align-self: flex-start;
+  width: 168rpx;
+  line-height: 1;
+  text-align: right;
+  flex-shrink: 0;
+
+  .icon-follow {
+    margin-right: 7rpx;
+    font-size: $fg-f26;
+  }
 }
 </style>

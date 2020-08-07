@@ -210,7 +210,7 @@ $height: calc(100vh - 190rpx);
 $height: calc(100vh - 150rpx);
 /* #endif */
 .orderlist /deep/ {
-  min-height: auto;
+  min-height: 100vh;
   .cell-item {
     padding-right: 40rpx;
   }
@@ -239,7 +239,6 @@ $height: calc(100vh - 150rpx);
     margin-bottom: 30rpx;
     color: --color(--qui-FC-333);
     background: --color(--qui-BG-2);
-    border-bottom: 2rpx solid #ededed;
   }
   .orderlist-wrap .cell-item__body {
     height: 78rpx;

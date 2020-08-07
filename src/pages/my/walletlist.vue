@@ -223,7 +223,7 @@ $height: calc(100vh - 150rpx);
 /* #endif */
 
 .walletlist /deep/ {
-  min-height: auto;
+  min-height: 100vh;
   .cell-item {
     padding-right: 40rpx;
   }

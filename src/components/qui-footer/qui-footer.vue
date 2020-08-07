@@ -3,7 +3,7 @@
     <view
       class="ft"
       :style="{
-        bottom: bottom + 'rpx',
+        paddingBottom: bottom + 'rpx',
       }"
     >
       <view
@@ -58,7 +58,7 @@
           </view>
         </view>
         <view class="popup-share-content-space"></view>
-        <text class="popup-share-btn" @click="cancel('share')">{{ i18n.t('cancel') }}</text>
+        <text class="popup-share-btn" @click="cancel('share')">{{ i18n.t('home.cancel') }}</text>
       </view>
     </uni-popup>
     <qui-toast ref="toast"></qui-toast>
@@ -68,9 +68,18 @@
 import forums from '@/mixin/forums';
 import user from '@/mixin/user';
 import { mapState, mapMutations } from 'vuex';
+// #ifdef H5
+import loginAuth from '@/mixin/loginAuth-h5';
+// #endif
 
 export default {
-  mixins: [forums, user],
+  mixins: [
+    forums,
+    user,
+    // #ifdef  H5
+    loginAuth,
+    // #endif
+  ],
   props: {
     bottom: {
       type: Number,
@@ -192,7 +201,14 @@ export default {
     // 首页底部发帖按钮弹窗
     footerOpen() {
       if (!this.$store.getters['session/get']('isLogin')) {
+        // #ifdef MP-WEIXIN
         this.$store.getters['session/get']('auth').open();
+        // #endif
+        // #ifdef H5
+        if (!this.handleLogin()) {
+          return;
+        }
+        // #endif
         return;
       }
       if (this.forums.other.publish_need_real_name) {
@@ -236,7 +252,7 @@ export default {
       }
       if (this.forums.other.can_create_thread_long) {
         this.bottomData.push({
-          text: this.i18n.t('home.post'),
+          text: this.i18n.t('home.invitation'),
           icon: 'icon-post',
           name: 'post',
           type: 1,
@@ -352,4 +368,15 @@ export default {
   background: red;
   border-radius: 50%;
 }
+.red-circle-wx {
+  /* #ifdef MP-WEIXIN */
+  left: calc(29% + 24rpx);
+  /* #endif */
+}
+// .red-num {
+//   position: absolute;
+//   top: -22rpx;
+//   left: calc(23% + 12rpx);
+//   color: --color(--qui-BOR-FFF);
+// }
 </style>

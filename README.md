@@ -1,8 +1,8 @@
 # EC-UI for discuzQ
 
 <div style="text-align: center">
-  <img src="https://badgen.net/badge/EC-UI%20For%20DisuczQ/V0.0.0-alpha-20200731/blue">
-  <img src="https://badgen.net/badge/DisuczQ/V1.0.200723/green">
+  <img src="https://badgen.net/badge/EC-UI%20For%20DisuczQ/V0.0.0-alpha-20200807/blue">
+  <img src="https://badgen.net/badge/DisuczQ/V1.0.200806/green">
   <img src="https://badgen.net/badge/Vuejs/V2.6.11/cyan">
   <img src="https://badgen.net/badge/uniapp/V2.0.0/yellow">
 </div>

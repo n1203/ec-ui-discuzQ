@@ -57,8 +57,13 @@ export default {
     handleClickShare(id) {
       this.$emit('handleClickShare', id);
     },
+    pullDownRefresh() {
+      this.pageNum = 1;
+      this.data = [];
+      this.loadlikes('pullDownRefresh');
+    },
     // 加载当前点赞数据
-    loadlikes() {
+    loadlikes(type) {
       this.loadingType = 'loading';
       const params = {
         include: [
@@ -82,6 +87,9 @@ export default {
           }
           this.loadingType = res.length === this.pageSize ? 'more' : 'nomore';
           this.data = [...this.data, ...res];
+          if (type && type === 'pullDownRefresh') {
+            uni.stopPullDownRefresh();
+          }
         });
     },
     greatCallBack(isLiked, index) {

@@ -10,6 +10,7 @@
     <view v-else-if="styleText" :class="'avatar' + ' qui-avatar-' + size" :style="styleText">
       {{ usernameAt }}
     </view>
+    <image v-if="isReal" src="@/static/auth.svg" class="auth-icon"></image>
   </view>
 </template>
 
@@ -34,6 +35,10 @@ export default {
     size: {
       type: [Number, String],
       default: 80,
+    },
+    isReal: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {
@@ -70,6 +75,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.qui-avatar {
+  position: relative;
+}
 .qui-avatar .avatar,
 .qui-ava {
   border-radius: 50%;
@@ -96,5 +104,13 @@ export default {
   color: #fff;
   text-align: center;
   background-color: #e7edf3;
+}
+.auth-icon {
+  position: absolute;
+  right: 0;
+  bottom: 4rpx;
+  // z-index: 8;
+  width: 22rpx;
+  height: 26rpx;
 }
 </style>

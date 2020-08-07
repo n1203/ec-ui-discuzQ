@@ -1,7 +1,7 @@
 <template>
   <qui-page :data-qui-theme="theme" class="pages-content">
-    <qui-page-message v-if="!query.id"></qui-page-message>
-    <view v-else>
+    <qui-page-message v-if="!query.id || loadedErr"></qui-page-message>
+    <view v-else class="scroll-y">
       <view class="topic-content-header">
         <view class="topic-content-header_title">#{{ topic.content }}#</view>
         <navigator url="/pages/topic/list">
@@ -80,6 +80,8 @@ export default {
       loadingtype: 'more',
       nowThreadId: 0, // 点击主题ID
       meta: '',
+      scrollTop: 0,
+      loadedErr: false,
     };
   },
   computed: {
@@ -105,17 +107,32 @@ export default {
     // #endif
     this.query = query;
     if (!query.id) {
+      console.log('11111111111111');
       this.$store.dispatch('forum/setError', {
         code: 'type_404',
         status: 500,
       });
+      this.loadedErr = true;
     } else {
+      console.log('2222222222222');
       this.loadThreads();
-      this.$store.dispatch('jv/get', `topics/${query.id}`).then(res => {
-        uni.setNavigationBarTitle({
-          title: res.content,
+      this.$store
+        .dispatch('jv/get', `topics/${query.id}`)
+        .then(res => {
+          uni.setNavigationBarTitle({
+            title: res.content,
+          });
+        })
+        .catch(err => {
+          console.log('走了catct');
+          this.loadedErr = true;
+          if (err.statusCode === 404) {
+            this.$store.dispatch('forum/setError', {
+              code: 'type_404',
+              status: 500,
+            });
+          }
         });
-      });
     }
 
     // #ifdef H5
@@ -150,7 +167,7 @@ export default {
     },
     loadThreads() {
       const params = {
-        'filter[isSticky]': 'no',
+        // 'filter[isSticky]': 'no',
         'filter[isApproved]': 1,
         'filter[isDeleted]': 'no',
         'filter[topicId]': this.query.id,
@@ -209,6 +226,19 @@ export default {
     };
   },
   // #endif
+
+  // 下拉刷新
+  onPullDownRefresh() {
+    const _this = this;
+    _this.pageNum = 1;
+    _this.topicData = [];
+    setTimeout(() => {
+      _this.uploadItem();
+      _this.loadThreads();
+      uni.stopPullDownRefresh();
+    }, 1000);
+  },
+  // 上拉加载
   onReachBottom() {
     if (this.meta) {
       if (this.meta.pageCount > 1) {
@@ -218,6 +248,11 @@ export default {
     } else {
       this.loadingtype = 'noMore';
     }
+  },
+
+  // 监听页面滚动，参数为Object
+  onPageScroll(event) {
+    this.scrollTop = event.scrollTop;
   },
 };
 </script>
@@ -303,5 +338,8 @@ $otherHeight: 292rpx;
     width: 35%;
     margin: 20vh auto 30rpx;
   }
+}
+.scroll-y {
+  max-height: 100vh;
 }
 </style>

@@ -28,6 +28,7 @@
               :icon="item.toUser.avatarUrl ? item.toUser.avatarUrl : '/static/noavatar.gif'"
               :value="item.toUser.groups[0].name"
               :label="item.toUser.label"
+              :is-real="item.toUser.isReal"
             >
               <checkbox slot="rightIcon" :value="JSON.stringify(item)"></checkbox>
             </qui-avatar-cell>
@@ -41,6 +42,7 @@
               :icon="item.avatarUrl ? item.avatarUrl : '/static/noavatar.gif'"
               :value="item.groups[0].name"
               :label="item.label"
+              :is-real="item.isReal"
             >
               <checkbox slot="rightIcon" :value="JSON.stringify(item)"></checkbox>
             </qui-avatar-cell>

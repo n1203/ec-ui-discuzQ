@@ -41,6 +41,8 @@
 </template>
 
 <script>
+import { i18n } from '@/locale';
+
 export default {
   name: 'QuiUploader',
   props: {
@@ -138,6 +140,7 @@ export default {
   },
   methods: {
     uploadDelete(index) {
+      this.uploadList.sort(this.compare('order'));
       const beforeUpload = this.uploadList[index];
       if (!this.asyncClear) {
         this.uploadBeforeList.splice(index, 1);
@@ -150,9 +153,10 @@ export default {
       }
     },
     clear(index) {
+      this.uploadList.sort(this.compare('order'));
       const beforeUpload = this.uploadList[index];
       this.uploadBeforeList.splice(index, 1);
-      this.uploadList.splice(index, 1);
+      this.numberdata.splice(index, 1);
       return beforeUpload;
     },
 
@@ -169,15 +173,21 @@ export default {
         indicator: 'default',
       });
     },
-
+    compare(property) {
+      return (a, b) => {
+        const value1 = a[property];
+        const value2 = b[property];
+        return value1 - value2;
+      };
+    },
     // 上传图片到本地
     uploadClick() {
       const _this = this;
       // 获取上一次上传图片的长度，用于比较这次上传长度。
       const beforeUploadFile = _this.uploadBeforeList.length;
       if (_this.uploadList.length < _this.count || _this.name === 'avatar') {
-        // 上传图片到本地
-        uni.chooseImage({
+        // #ifdef MP-WEIXIN
+        wx.chooseImage({
           count: _this.count - _this.uploadBeforeList.length,
           sizeType: ['original', 'compressed'],
           sourceType: ['album', 'camera'],
@@ -211,16 +221,62 @@ export default {
             });
 
             Promise.race(promise).then(() => {
-              console.log(promise, '这是的', _this.uploadBeforeList.length, '----', _this.count);
               // 返回上传成功列表和成功状态值
               if (_this.uploadBeforeList.length > _this.count) {
                 _this.uploadList = _this.uploadList.slice(0, _this.count);
               }
-              console.log(_this.uploadList, '这是组件内');
               _this.$emit('change', _this.uploadList, true);
             });
           },
         });
+        // #endif
+        // #ifndef MP-WEIXIN
+        // 上传图片到本地
+        uni.chooseImage({
+          count: _this.count - _this.uploadBeforeList.length,
+          sizeType: ['original', 'compressed'],
+          sourceType: ['album', 'camera'],
+          success(res) {
+            // 上传图片后返回false状态
+            _this.$emit('uploadClick', false);
+            // 自定义开始上传的效果和回调
+            _this.$emit('chooseSuccess');
+            const promise = res.tempFiles.map((item, index) => {
+              _this.lastOrder += 1;
+              return new Promise((resolve, reject) => {
+                res.tempFiles[index].uploadPercent = 0;
+                res.tempFiles[index].uploadStatus = false;
+                _this.uploadBeforeList.push(res.tempFiles[index]);
+                _this.numberdata.push({ state: 0 });
+                _this.newindex.push(res.tempFiles[index]);
+                const sun = _this.newindex;
+                console.log(sun);
+                // if (_this.uploadBeforeList.length > _this.count) {
+                //   _this.uploadBeforeList = _this.uploadBeforeList.slice(0, _this.count);
+                //   _this.numberdata = _this.numberdata.slice(0, _this.count);
+                //   _this.newindex = _this.newindex.slice(0, _this.count);
+                // }
+                _this.upload(
+                  res.tempFilePaths[index],
+                  _this.uploadBeforeList.length - 1,
+                  beforeUploadFile,
+                  _this.lastOrder,
+                  resolve,
+                  reject,
+                );
+              });
+            });
+
+            Promise.race(promise).then(() => {
+              // 返回上传成功列表和成功状态值
+              if (_this.uploadBeforeList.length > _this.count) {
+                _this.uploadList = _this.uploadList.slice(0, _this.count);
+              }
+              _this.$emit('change', _this.uploadList, true);
+            });
+          },
+        });
+        // #endif
       }
     },
     // 上传图片到服务器
@@ -238,6 +294,7 @@ export default {
         success(res) {
           if (res.statusCode >= 200 && res.statusCode < 300) {
             setTimeout(() => {
+              console.log(_this.newindex, '删除之后的数组');
               if (index < _this.uploadBeforeList.length) {
                 _this.uploadBeforeList[index].uploadPercent = 100;
                 _this.numberdata[index].state = 100;
@@ -258,15 +315,14 @@ export default {
                 _this.uploadBeforeList[_this.indexs].uploadPercent = 100;
                 _this.numberdata[_this.indexs].state = 100;
               }
-              console.log(JSON.parse(res.data), '~~~~~~~~~');
               const resObj = {
                 id: JSON.parse(res.data).data.id,
                 type: JSON.parse(res.data).data.type,
-                order: _this.lastOrder,
+                order: imgOrder,
               };
-              // console.log(resObj, '这是新增的对象');
               _this.uploadList.push(resObj);
               if (_this.uploadList.length > _this.count) {
+                _this.uploadList.sort(_this.compare('order'));
                 _this.uploadBeforeList = _this.uploadBeforeList.slice(0, _this.count);
                 _this.uploadList = _this.uploadList.slice(0, _this.count);
                 _this.numberdata = _this.numberdata.slice(0, _this.count);
@@ -278,11 +334,12 @@ export default {
             }, 500);
           } else {
             _this.number += 1;
+            console.log(_this.uploadBeforeList);
             const resObj = JSON.parse(res.data);
             if (resObj.errors[0].detail) {
               uni.showToast({
                 icon: 'none',
-                title: `${resObj.errors[0].code}\n${resObj.errors[0].detail[0]}`,
+                title: `${i18n.t(`core.${resObj.errors[0].code}`)}\n${resObj.errors[0].detail[0]}`,
               });
             } else {
               uni.showToast({ icon: 'none', title: resObj.errors[0].code });
@@ -313,7 +370,6 @@ export default {
             _this.$emit('uploadFail', res, _this.uploadList);
             return reject(res);
           }
-          _this.newindex = [];
           _this.formDataAppend = {};
           // 抛出接口信息
           _this.$emit('uploadSuccess', res, _this.uploadList);
@@ -345,7 +401,6 @@ export default {
             }
           }
         }
-        console.log(_this.uploadBeforeList, '!!!!!!!!!!!');
       });
     },
   },
@@ -456,5 +511,10 @@ export default {
     border: 1px solid --color(--qui-BOR-ED);
     border-radius: 5rpx;
   }
+}
+.van-uploader__input {
+  width: 200rpx;
+  height: 200rpx;
+  background: burlywood;
 }
 </style>

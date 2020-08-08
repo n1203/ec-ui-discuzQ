@@ -27,7 +27,7 @@
         :title="i18n.t('manage.siteintroduction')"
         :addon="siteInfo.site_introduction"
       ></qui-cell-item>
-      <qui-cell-item
+      <!-- <qui-cell-item
         :title="i18n.t('manage.creationtime')"
         :addon="siteInfo.createdAt"
       ></qui-cell-item>
@@ -38,8 +38,8 @@
             ? i18n.t('manage.publicmode')
             : i18n.t('manage.paymentmode')
         "
-      ></qui-cell-item>
-      <qui-cell-item :title="i18n.t('manage.circlemaster')" slot-right>
+      ></qui-cell-item> -->
+      <!-- <qui-cell-item :title="i18n.t('manage.circlemaster')" slot-right>
         <view class="site-item__owner" @click.stop="jumpUserPage(siteInfo.userId, $event)">
           <qui-avatar
             class="site-item__owner-avatar"
@@ -48,8 +48,8 @@
           />
           <text class="site-item__owner-name">{{ siteInfo.username }}</text>
         </view>
-      </qui-cell-item>
-      <navigator url="/pages/manage/users" hover-class="none">
+      </qui-cell-item> -->
+      <!-- <navigator url="/pages/manage/users" hover-class="none">
         <qui-cell-item class="member" :title="i18n.t('home.theme')" slot-right arrow>
           <view
             v-for="(item, index) in siteInfo.users"
@@ -60,14 +60,14 @@
             <qui-avatar class="site-item__person__content-avatar" :user="item" size="60" />
           </view>
         </qui-cell-item>
-      </navigator>
+      </navigator> -->
       <qui-cell-item :title="i18n.t('manage.myRole')" :addon="userInfo.groupName"></qui-cell-item>
       <qui-cell-item
         :title="i18n.t('manage.joinedTime')"
         :addon="userInfo.joinedTime"
         v-if="siteInfo.set_site && siteInfo.set_site.site_mode === 'pay' && userInfo.joinedAt"
       ></qui-cell-item>
-      <qui-cell-item
+      <!-- <qui-cell-item
         :title="i18n.t('manage.periodvalidity')"
         :addon="userInfo.expiredTime"
         v-if="siteInfo.set_site && siteInfo.set_site.site_mode === 'pay'"
@@ -81,7 +81,7 @@
         <view v-for="(item, index) in permissionInfo" :key="index" class="site-item__permission">
           <text>{{ i18n.t(`permission.${item}`) }}</text>
         </view>
-      </qui-cell-item>
+      </qui-cell-item> -->
     </view>
   </qui-page>
 </template>

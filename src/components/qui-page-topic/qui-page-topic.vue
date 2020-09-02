@@ -47,13 +47,9 @@
           </view>
         </navigator>
         <view class="topic-page-list-item_details" v-if="item.lastThread.length">
-          <view class="fbh fbac">
-            <qui-avatar
-              size="50"
-              :user="{ avatarUrl: item.user.avatarUrl, username: item.user.username }"
-            />
+          <!-- <view class="fbh fbac">
             <view class="topic-page-list-item_details_username">{{ item.user.username }}</view>
-          </view>
+          </view> -->
           <navigator :url="'/pages/topic/index?id=' + item.lastThread[0]._jv.id">
             <qui-uparse
               class="topic-page-list-item_details_text"

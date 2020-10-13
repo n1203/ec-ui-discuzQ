@@ -46,17 +46,6 @@ index.html
 
 1. 查看视频教程 [哔哩哔哩](https://www.bilibili.com/video/BV1V54y1D7UV)
 
-## 使用案例
 
-- [MaxCourse](https://q.e-spy.cn)
-- [无障有爱](https://web.xy1189.com/)
-- [收单学堂](https://shoudanxuetang.com/)
-- [Qilanim 启浪](https://www.qilanim.com/)
-- [实在人](https//www.10z.ren)
-- 暂无更多，使用的站长快来联系添加～～～
 
-## 联系我们
-
-- 微信群
-
-  ![image-20200727201820100](static/image/20200803204250.jpg)
+  [![EngineChina/ec-ui-discuzQ](https://gitee.com/EngineChina/ec-ui-discuzQ/widgets/widget_card.svg?colors=eae9d7,2e2f29,272822,484a45,eae9d7,747571)](https://gitee.com/EngineChina/ec-ui-discuzQ)

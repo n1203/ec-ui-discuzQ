@@ -20,8 +20,11 @@
 </template>
 
 <script>
+import user from '@/mixin/user';
+
 export default {
   name: 'QuiTabs',
+  mixins: [user],
   props: {
     current: {
       type: Number,
@@ -60,6 +63,8 @@ export default {
     },
   },
   created() {
+    // console.log('user', this.user);
+    // debugger;
     this.currentIndex = this.current;
   },
   methods: {

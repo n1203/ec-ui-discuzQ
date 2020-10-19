@@ -1,7 +1,7 @@
 <template>
   <view>
     <view v-if="imagesList.length == 1">
-      <view class="themeItem__content__imgone">
+      <!-- <view class="themeItem__content__imgone">
         <image
           class="themeItem__content__imgone__item"
           v-for="(image, index) in imagesList"
@@ -12,7 +12,7 @@
           @click="previewPicture(previewStatus, index)"
           lazy-load
         ></image>
-      </view>
+      </view> -->
     </view>
     <view v-if="imagesList.length == 2">
       <view class="themeItem__content__imgtwo">

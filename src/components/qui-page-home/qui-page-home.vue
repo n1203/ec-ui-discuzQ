@@ -135,7 +135,7 @@
     <!-- </view> -->
     <view class="main" id="main">
       <qui-content
-        v-for="(item, index) in threads"
+        v-for="(item, index) in todoList"
         :ref="'myVideo' + index"
         :key="index"
         :currentindex="index"
@@ -150,6 +150,7 @@
         :theme-time="item.createdAt"
         :theme-content="item.type == 1 ? item.title : item.firstPost.summary"
         :thread-type="item.type"
+        :thread="item"
         :media-url="item.threadVideo && item.threadVideo.media_url"
         :is-great="item.firstPost.isLiked"
         :theme-like="item.firstPost.likeCount"
@@ -181,6 +182,7 @@
         @videoPlay="handleVideoPlay"
         :is-attention-visible="true"
         :item="item"
+        @remove="removeContentById"
       ></qui-content>
       <qui-load-more :status="loadingType"></qui-load-more>
     </view>
@@ -333,6 +335,7 @@ export default {
       shareShow: false, // h5内分享提示信息
       shareTitle: '', // h5内分享复制链接
       isWeixin: '', // 是否是微信浏览器内
+      todoList: [],
       filterList: [
         {
           title: this.i18n.t('home.filterPlate'),
@@ -532,6 +535,18 @@ export default {
       setCategoryId: 'session/SET_CATEGORYID',
       setCategoryIndex: 'session/SET_CATEGORYINDEX',
     }),
+
+    // 删除方法
+    removeContentById(item) {
+      // 过滤item._jv.id
+      this.todoList = this.todoList.filter(e => {
+        return item._jv.id !== e._jv.id;
+      });
+      // 同步获取hideContents的内容 （key）
+      const storage = uni.getStorageSync('hideContents') || [];
+      storage.push(item._jv.id); // 追加item._jv.id
+      uni.setStorageSync('hideContents', storage); // 将storage的内容存储到hideContents中 （key，date）
+    },
     topMargin() {
       return ';';
     },
@@ -542,7 +557,6 @@ export default {
       if (!this.navbarHeight) {
         return;
       }
-
       if (event.scrollTop + this.navbarHeight + 20 >= this.navTop) {
         this.headerShow = false;
         this.navBarTransform = 'none';
@@ -876,6 +890,14 @@ export default {
           this.threads = [...this.threads, ...res];
         }
         this.isResetList = false;
+
+        const storage = uni.getStorageSync('hideContents'); // 同步获取hideContents的内容 （key）
+        // console.log(this.threads);
+        // 过滤e._jv.id，传入新的数据
+        this.todoList = this.threads.filter(e => {
+          // console.log(e);
+          return storage.indexOf(e._jv.id) === -1;
+        });
       });
     },
     // 内容部分点赞按钮点击事件

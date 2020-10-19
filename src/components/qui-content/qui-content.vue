@@ -1,5 +1,12 @@
 <template>
-  <view ref="themeCount" class="themeCount" v-if="!isDeleted">
+  <view ref="themeCount" class="themeCount" v-if="!isDeleted" v-show="isClose">
+    <!-- 删除列表块 -->
+    <qui-icon
+      class="qui-icon close_icon"
+      name="icon-close"
+      size="32"
+      @click="remove(thread)"
+    ></qui-icon>
     <image
       class="addFine"
       src="@/static/essence.png"
@@ -8,20 +15,27 @@
       lazy-load
     ></image>
     <view class="themeItem" @click="backgroundClick">
-      <view class="fbh">
+      <view class="fbh" @click="evterEvent(event)">
         <view class="themeItem__header fb1 fbjc" @click="headClick" @click.stop="">
           <view class="themeItem__header__img">
-            <qui-avatar size="70" :user="{ avatarUrl: themeImage, username: userName }" :is-real="isReal" />
+            <qui-avatar
+              size="70"
+              :user="{ avatarUrl: themeImage, username: userName }"
+              :is-real="isReal"
+            />
           </view>
           <view class="themeItem__header__title">
             <view class="themeItem__header__title__top">
               <text class="themeItem__header__title__username">
                 {{ userName }}
               </text>
-              <text :class="['badge', [name]]">{{name}}</text>
-              <text v-if="isAdmin && themeType == '1'" class="themeItem__header__title__isAdmin">
-                <text v-for="(item, index) in userGroups" :key="index">
-                  {{ item.isDisplay ? `(${item.name})` : '' }}
+              <!-- <text :class="['badge', [name]]">{{ name }}</text> -->
+              <text
+                v-if="isAdmin && themeType == '1'"
+                class="themeItem__header__title__isAdmin badge"
+              >
+                <text v-for="(item, index) in userGroups" :key="index" :class="['badge', [name]]">
+                  {{ item.isDisplay ? `${item.name}` : '' }}
                 </text>
               </text>
               <text v-if="themeType !== '1'" class="themeItem__header__title__isAdmin">
@@ -39,11 +53,36 @@
               ></qui-icon>
               <view class="themeItem__header__title__reward">{{ themeReward }}</view>
             </view>
-            <view class="themeItem__header__title__time">{{ localTime }}</view>
+            <view class="attention_ivtion fbh">
+              <!-- 粉丝数 -->
+              <text>
+                粉丝
+                <span style="padding-left:0.2rem">
+                  {{
+                    thread.user.fansCount >= 10000
+                      ? thread.user.fansCount / 10000 + 'w'
+                      : thread.user.fansCount
+                  }}
+                </span>
+              </text>
+              <!-- 发贴数 -->
+              <text style="margin-left:0.5rem">
+                帖子
+                <span style="padding-left:0.2rem">
+                  {{
+                    thread.user.threadCount >= 10000
+                      ? thread.user.threadCount / 10000 + 'w'
+                      : thread.user.threadCount
+                  }}
+                </span>
+              </text>
+              <view class="themeItem__header__title__time" style="margin-left:0.5rem">
+                {{ localTime }}
+              </view>
+            </view>
           </view>
         </view>
-         <!-- follow 关注状态 0：未关注 1：已关注 2：互相关注 -->
-                  
+        <!-- follow 关注状态 0：未关注 1：已关注 2：互相关注 -->
         <!-- <view
           v-if="isAttentionVisible"
           class="themeItem__attention"
@@ -89,9 +128,8 @@
             <navigator class="navPost">
               {{ themeContent }}
             </navigator>
-
           </view>
-            <!-- <rich-text :nodes="themeContent" v-else></rich-text> -->
+          <!-- <rich-text :nodes="themeContent" v-else></rich-text> -->
           <qui-uparse :content="themeContent" v-else></qui-uparse>
         </view>
         <view
@@ -103,6 +141,7 @@
           <image class="theme__mark__open" src="/static/video.svg"></image>
           <image class="themeItem__content__coverimg" :src="coverImage" lazy-load></image>
         </view>
+        <!-- 视频区域 -->
         <view class="content__video" v-if="threadType === 2 && payStatus">
           <video
             :poster="coverImage"
@@ -135,6 +174,7 @@
             @click.stop=""
           ></video>
         </view>
+        <!-- 图片区域 -->
         <view v-if="imagesList.length == 1">
           <view class="themeItem__content__imgone">
             <image
@@ -195,7 +235,7 @@
       </view>
 
       <view class="themeItem__comment" @click.stop=""></view>
-
+      <!-- 点赞，评论，分享区域 -->
       <view class="themeItem__footer" @click.stop="">
         <view v-if="themeType === '1'" class="themeItem__footer__themeType1">
           <view
@@ -206,27 +246,28 @@
             ]"
             @click="handleIsGreat"
           >
-            <qui-icon class="qui-icon" name="icon-liked" size="28" v-if="isGreat"></qui-icon>
-            <qui-icon class="qui-icon" name="icon-like" size="28" v-else></qui-icon>
+            <qui-icon class="qui-icon" name="icon-liked" size="32" v-if="isGreat"></qui-icon>
+            <qui-icon class="qui-icon" name="icon-like" size="32" v-else></qui-icon>
             <!-- {{ isGreat ? t.giveLikeAlready : t.like }} -->
-            {{ themeLike === 0 ? '' : themeLike }}
+            {{ themeLike === 0 ? '点赞' : themeLike }}
           </view>
 
           <view
             class="themeItem__footer__themeType1__item themeItem__footer__themeType1__comment"
             @click="commentClick"
           >
-            <qui-icon class="qui-icon" name="icon-message" size="28" color="#AAA"></qui-icon>
+            <qui-icon class="qui-icon" name="icon-message" size="32" color="#AAA"></qui-icon>
             <!-- {{ t.comment }} -->
-            {{ themeComment === 0 ? '' : themeComment }}
+            {{ themeComment === 0 ? '评论' : themeComment }}
           </view>
 
           <view
             class="themeItem__footer__themeType1__item themeItem__footer__themeType1__share"
             @click="handleClickShare"
           >
-            <qui-icon class="qui-icon" name="icon-share" size="28" color="#AAA"></qui-icon>
+            <qui-icon class="qui-icon" name="icon-share" size="32" color="#AAA"></qui-icon>
             <!-- {{ t.share }} -->
+            {{ themeshare === 0 ? '分享' : themeshare }}
           </view>
         </view>
 
@@ -245,7 +286,6 @@
       </view>
     </view>
   </view>
-</view>
 </template>
 
 <script>
@@ -276,6 +316,10 @@ export default {
     isReal: {
       type: Boolean,
       default: false,
+    },
+    thread: {
+      type: Object,
+      default: () => {},
     },
     // 是否加精
     themeEssence: {
@@ -343,6 +387,10 @@ export default {
     },
     // 评论数量
     themeComment: {
+      type: Number,
+      default: 0,
+    },
+    themeshare: {
       type: Number,
       default: 0,
     },
@@ -430,7 +478,7 @@ export default {
       default: () => {
         return {};
       },
-    }
+    },
   },
 
   data: () => {
@@ -448,10 +496,12 @@ export default {
       currentTop: 0,
       currentBottom: 0,
       name: '普通会员', // 角色
+      isClose: true,
+      todoList: [],
     };
   },
-  onShow(){
-    this.name = this.user.groups ? this.user.groups[0].name : ''
+  onShow() {
+    this.name = this.user.groups ? this.user.groups[0].name : '';
   },
   computed: {
     // 语言包
@@ -509,7 +559,14 @@ export default {
     }
     // #endif
   },
+  // onLoad() {
+  //   const storage = uni.getStorageSync('hideCant');
+  //   this.todoList = filterList.filter(e => storage.indexOf(e.id) === -1);
+  // },
   methods: {
+    closeIcon(item) {
+      uni.setStorageSync('hideCant', item.id);
+    },
     // 添加关注
     async addFollow(evt) {
       const follows = await this.$emit('addFollow', evt);
@@ -530,6 +587,10 @@ export default {
     // 点击评论跳转到详情页
     commentClick(evt) {
       this.$emit('commentClick', evt);
+    },
+    // 点击删除icon来删除列表
+    remove(evt) {
+      this.$emit('remove', evt);
     },
     // 点击内容区域跳转到详情页
     contentClick(evt) {
@@ -573,6 +634,11 @@ export default {
     imageError() {
       this.imageStatus = false;
     },
+    // 列表的显示与隐藏
+    // closeIcon() {
+    //   this.isClose = !this.isClose;
+    //   console.log(this.isClose);
+    // },
   },
 };
 </script>
@@ -660,10 +726,10 @@ export default {
       }
 
       &__time {
-        padding-top: 4rpx;
-        font-size: 24rpx;
+        padding-top: 0.05rem;
+        font-size: 10rpx;
         font-weight: 400;
-        line-height: 31rpx;
+        // line-height: 31rpx;
         color: --color(--qui-FC-AAA);
         transition: $switch-theme-time;
       }
@@ -690,7 +756,7 @@ export default {
 
   &__content {
     &__text {
-      padding-bottom: 20rpx;
+      padding-bottom: 10rpx;
       overflow: hidden;
       font-family: $font-family;
       font-size: 28rpx;
@@ -716,18 +782,16 @@ export default {
     &__imgone {
       display: flex;
       justify-content: flex-start;
-      margin-top: 10rpx;
       line-height: 0;
       &__item {
         max-width: 80%;
         max-height: 80%;
-        border-radius: 10rpx;
+        border-radius: 20rpx;
       }
     }
     &__imgtwo {
       display: flex;
       justify-content: space-between;
-      margin-top: 20rpx;
       line-height: 0;
       &__item {
         display: block;
@@ -735,7 +799,7 @@ export default {
         height: 211rpx;
         margin-bottom: 10rpx;
         background: #fff;
-        border-radius: 10rpx;
+        border-radius: 20rpx;
       }
     }
     &__imgmore {
@@ -744,7 +808,6 @@ export default {
       justify-content: space-between;
       align-content: flex-start;
       flex-wrap: wrap;
-      margin-top: 30rpx;
       line-height: 0;
       &__item {
         display: block;
@@ -753,7 +816,7 @@ export default {
         margin-right: 1.33%;
         margin-bottom: 10rpx;
         background: #fff;
-        border-radius: 10rpx;
+        border-radius: 20rpx;
       }
     }
 
@@ -825,6 +888,11 @@ export default {
   align-items: center;
 }
 
+.themeItem__content__text {
+  font-size: 17px;
+  margin-top: -0.5rem;
+}
+
 .navPost {
   display: inline-block;
   max-width: 75%;
@@ -843,6 +911,7 @@ export default {
 }
 /deep/ .uni-video-cover {
   z-index: 0;
+  border-radius: 10px;
 }
 .theme__mark {
   position: absolute;
@@ -863,12 +932,13 @@ export default {
   margin-left: -40rpx;
 }
 
-.themeItem__header__title__top{
+.themeItem__header__title__top {
   align-items: center;
 }
 
 .themeItem__header__title__username {
   align-items: center;
+  font-size: 16px;
 }
 
 .badge {
@@ -878,9 +948,10 @@ export default {
   background: #fff !important;
   color: yellow;
   border-radius: 10px;
-  margin-left: -5px;
+  font-size: 16px;
+  margin-left: -10px;
   padding: 3px 6px;
-  transform: scale(.5);
+  transform: scale(0.5);
 }
 .管理员 {
   border: #1878f3 1px solid;
@@ -889,5 +960,25 @@ export default {
 .普通会员 {
   border: #ccc 1px solid;
   color: #ccc;
+}
+.themeItem__footer {
+  margin: -0.7rem 2rem 0 2rem;
+}
+.content__video video {
+  border-radius: 10px;
+  margin-top: -0.5rem;
+}
+.close_icon {
+  position: absolute;
+  top: 1.1rem;
+  right: 0.8rem;
+}
+.attention_ivtion {
+  font-size: 10px;
+  font-weight: 400;
+  padding-top: 0.2rem;
+  color: var(--qui-FC-AAA);
+  transition: 0.5s;
+  margin-left: 2px;
 }
 </style>

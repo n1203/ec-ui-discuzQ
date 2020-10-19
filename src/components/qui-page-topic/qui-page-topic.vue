@@ -1,7 +1,7 @@
 <template>
   <!-- <qui-page :header="false" :data-qui-theme="theme" class="pages-list"> -->
   <qui-page :header="false" class="pages-list">
-    <view class="qui-topic-page-box">
+    <!-- <view class="qui-topic-page-box">
       <view class="qui-topic-page-box__hd">
         <view class="qui-topic-page-box__hd__sc">
           <qui-icon class="icon-search" name="icon-search" size="30"></qui-icon>
@@ -16,11 +16,13 @@
           />
         </view>
       </view>
-    </view>
+    </view> -->
     <view class="topic-list-page">
-      <view class="topic-list-page-header">
+      <view class="topic-list-page-maintitle">#精选话题#</view>
+      <view class="topic-list-page-subtitle">匠心甄选 给你好看</view>
+      <!-- <view class="topic-list-page-header">
         <view class="topic-list-page-header_title">{{ i18n.t('topic.topicList') }}</view>
-        <!-- 排序功能后续补上完善 -->
+        排序功能后续补上完善
         <view class="topic-list-page-header_sortBox" @click="toggleDropDown">
           <view>
             <qui-icon class="icon-sort" name="icon-sort" size="30"></qui-icon>
@@ -35,7 +37,7 @@
             </view>
           </view>
         </view>
-      </view>
+      </view> -->
       <view style="clear: both;"></view>
       <view class="topic-page-list-item" v-for="(item, i) in topicData" :key="i">
         <navigator :url="'/pages/topic/content?id=' + item._jv.id">
@@ -68,7 +70,6 @@
         </view>
         <view class="topic-page-list-item_other">
           <view class="topic-page-list-item_heat">
-            {{ i18n.t('topic.hot') }}
             <text>
               {{
                 item.view_count > 10000
@@ -76,9 +77,9 @@
                   : item.view_count
               }}
             </text>
+            {{ i18n.t('topic.hot') }}
           </view>
           <view class="topic-page-list-item_content">
-            {{ i18n.t('core.content') }}
             <text>
               {{
                 item.thread_count > 1000
@@ -86,6 +87,7 @@
                   : item.thread_count
               }}
             </text>
+            {{ i18n.t('core.content') }}            
           </view>
         </view>
       </view>
@@ -385,5 +387,15 @@ $otherHeight: 292rpx;
       background-color: #fff;
     }
   }
+}
+.topic-list-page-maintitle,.topic-list-page-subtitle {
+  text-align: center;
+}
+.topic-list-page-maintitle {
+  margin: 0 0 0.3rem;
+  padding-top: 1rem;
+  letter-spacing: 0.2rem;
+  font-size: 1.1rem;
+  font-weight: bold;
 }
 </style>

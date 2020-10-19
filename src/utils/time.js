@@ -35,7 +35,8 @@ export const time2MinuteOrHour = time => {
  */
 export const time2DateAndHM = originTime => {
   const time = originTime.replace(/T/, ' ').replace(/Z/, '');
-  return `${time.substring(0, 10)} ${time.substring(11, 16)}`;
+  // return `${time.substring(0, 10)} ${time.substring(11, 16)}`;
+  return `${time.substring(5, 10)} ${time.substring(11, 16)}`;
 };
 
 /**

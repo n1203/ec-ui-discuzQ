@@ -24,102 +24,102 @@ export default {
   data: () => {
     return {
       datas: [
-        'icon-unfold',
-        'icon-fold',
-        'icon-loading2',
+        'icon-unfold', // 箭头下
+        'icon-fold', // 箭头下
+        'icon-loading2', // 红心原点
         'icon-loading1',
         'icon-loading',
-        'icon-load',
-        'icon-rmb',
-        'icon-percent',
-        'icon-success',
-        'icon-fail',
-        'icon-mine',
-        'icon-search',
-        'icon-folding-r',
-        'icon-fill',
+        'icon-load', // “,"
+        'icon-rmb', // ¥
+        'icon-percent', // %
+        'icon-success', // 圆型空心勾
+        'icon-fail', // 圆型空心错
+        'icon-mine', // 我的
+        'icon-search', // 搜索
+        'icon-folding-r', // 箭头右
+        'icon-fill', // 实心圆点
         'icon-wx-pay',
         'icon-wallet-pay',
-        'icon-reward',
-        'icon-pay',
-        'icon-management',
-        'icon-image',
-        'icon-comments',
-        'icon-collection',
-        'icon-collectioned',
-        'icon-waring',
-        'icon-follow',
-        'icon-each-follow',
-        'icon-cancel-follow',
-        'icon-selected',
-        'icon-play',
-        'icon-oval',
-        'icon-expression',
-        'icon-call',
-        'icon-add',
-        'icon-delete',
-        'icon-wx-friends',
-        'icon-word',
-        'icon-video',
-        'icon-share1',
-        'icon-share',
-        'icon-screen',
-        'icon-publish',
-        'icon-poster',
-        'icon-post',
-        'icon-message',
-        'icon-message1',
-        'icon-link',
-        'icon-like',
-        'icon-liked',
-        'icon-img',
-        'icon-home',
-        'icon-close',
-        'icon-wxPay',
-        'icon-walletPay',
-        'icon-message-n',
-        'icon-noData',
-        'icon-circle',
-        'icon-back',
-        'icon-close1',
-        'icon-wei',
-        'icon-more',
-        'icon-resources',
-        'icon-ZIP',
-        'icon-XLSX',
-        'icon-XLS',
-        'icon-TXT',
-        'icon-RAR',
-        'icon-PSD',
-        'icon-PPT',
-        'icon-PDF',
-        'icon-MP4',
-        'icon-MP3',
-        'icon-LINK',
-        'icon-IPA',
-        'icon-EXE',
-        'icon-EPS',
-        'icon-DOC',
-        'icon-DOCX',
-        'icon-CDR',
-        'icon-CAD',
-        'icon-APK',
-        'icon-AI',
-        'icon-7ZIP',
-        'icon-sort',
-        'icon-bold',
-        'icon-title',
-        'icon-italic',
-        'icon-quote',
-        'icon-code',
-        'icon-link1',
-        'icon-unordered-list',
-        'icon-ordered-list',
-        'icon-fujian',
-        'icon-undeline',
-        'icon-strikethrough',
-        'icon-sort1',
-        'icon-home-icon',
+        'icon-reward', // 爱心
+        'icon-pay', // 圆型空心¥
+        'icon-management', // 设置
+        'icon-image', // 图片
+        'icon-comments', // 消息
+        'icon-collection', // 五角星
+        'icon-collectioned', // 实心五角星
+        'icon-waring', // ！
+        'icon-follow', // 爱心➕
+        'icon-each-follow', // 爱心
+        'icon-cancel-follow', // 爱心➖
+        'icon-selected', // 圆型实心勾
+        'icon-play', // 播放
+        'icon-oval', // 实心点
+        'icon-expression', // 笑脸
+        'icon-call', // @
+        'icon-add', // +
+        'icon-delete', // 删除（垃圾箱图标）
+        'icon-wx-friends', // 微信朋友
+        'icon-word', // 段落文字
+        'icon-video', // 视频播放按钮
+        'icon-share1', // 分享
+        'icon-share', // 分享
+        'icon-screen', // 分类
+        'icon-publish', // 圆形空心+
+        'icon-poster', // 图片
+        'icon-post', // 文件
+        'icon-message', // 消息
+        'icon-message1', // 消息
+        'icon-link', // 链接
+        'icon-like', // 点赞
+        'icon-liked', // 点赞
+        'icon-img', // 图片
+        'icon-home', // 首页
+        'icon-close', // x
+        'icon-close1', // 实心x
+        'icon-wxPay', // 微信支付
+        'icon-walletPay', // 微信钱包
+        'icon-message-n', // 消息（有消息显示实心点）
+        'icon-noData', // 苦脸
+        'icon-circle', // 实心圆点
+        'icon-back', // 返回
+        'icon-wei', // 话题#
+        'icon-more', // ...
+        'icon-resources', // ？文件
+        'icon-ZIP', // 压缩包
+        'icon-XLSX', // xls文件
+        'icon-XLS', // xls文件
+        'icon-TXT', // txt文件
+        'icon-RAR', // rar文件
+        'icon-PSD', // psd文件
+        'icon-PPT', // ppt文件
+        'icon-PDF', // pdf文件
+        'icon-MP4', // mp4文件
+        'icon-MP3', // mp3文件
+        'icon-LINK', // link文件
+        'icon-IPA', // ipa文件
+        'icon-EXE', // exe文件
+        'icon-EPS', // eps文件
+        'icon-DOC', // doc文件
+        'icon-DOCX', // docx文件
+        'icon-CDR', // cdr文件
+        'icon-CAD', // cad文件
+        'icon-APK', // apk文件
+        'icon-AI', // ai文件
+        'icon-7ZIP', // 7zip文件
+        'icon-sort', // 排序
+        'icon-bold', // B
+        'icon-title', // H
+        'icon-italic', // I
+        'icon-quote', // "
+        'icon-code', // </>
+        'icon-link1', // 链接🔗
+        'icon-unordered-list', // 分类
+        'icon-ordered-list', // 分类
+        'icon-fujian', // 链接
+        'icon-undeline', // 字母U下标
+        'icon-strikethrough', // S
+        'icon-sort1', // 降序
+        'icon-home-icon', // 首页
       ],
     };
   },

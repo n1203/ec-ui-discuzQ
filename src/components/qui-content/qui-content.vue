@@ -845,7 +845,7 @@ export default {
     &__themeType1 {
       display: flex;
       justify-content: space-between;
-      margin-top: 60rpx;
+      margin-top: 50rpx;
 
       &__item {
         font-family: $font-family;
@@ -974,6 +974,8 @@ export default {
   right: 0.8rem;
 }
 .attention_ivtion {
+  display: flex;
+  align-items: center;
   font-size: 10px;
   font-weight: 400;
   padding-top: 0.2rem;

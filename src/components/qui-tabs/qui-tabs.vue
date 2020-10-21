@@ -63,7 +63,7 @@ export default {
     },
   },
   created() {
-    // console.log('user', this.user);
+    console.log('user', this.user);
     // debugger;
     this.currentIndex = this.current;
   },

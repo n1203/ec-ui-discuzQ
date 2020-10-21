@@ -280,8 +280,9 @@ export default {
   // height: 180rpx;
   // background-size: 100% auto;
   .logo {
-    max-height: 50rpx;
-    padding-top: 10rpx;
+    max-height: 80rpx;
+    margin-left: -1.5rem;
+    // padding-top: 10rpx;
   }
   .circleDet {
     padding: 49rpx 20rpx 47rpx;

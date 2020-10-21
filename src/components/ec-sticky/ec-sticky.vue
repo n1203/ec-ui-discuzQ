@@ -140,8 +140,8 @@ export default {
 
 .meta {
   position: absolute;
-  bottom: 20rpx;
-  left: 20rpx;
+  bottom: 10rpx;
+  left: 30rpx;
   &-item {
     margin-right: 20rpx;
     &-count {

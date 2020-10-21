@@ -60,7 +60,7 @@
                 <span style="padding-left:0.2rem">
                   {{
                     thread.user.fansCount >= 10000
-                      ? thread.user.fansCount / 10000 + 'w'
+                      ? thread.user.fansCount / 10000 + ' w'
                       : thread.user.fansCount
                   }}
                 </span>
@@ -71,7 +71,7 @@
                 <span style="padding-left:0.2rem">
                   {{
                     thread.user.threadCount >= 10000
-                      ? thread.user.threadCount / 10000 + 'w'
+                      ? thread.user.threadCount / 10000 + ' w'
                       : thread.user.threadCount
                   }}
                 </span>
@@ -96,7 +96,7 @@
       <view class="themeItem__content" @click.stop="" @click="contentClick">
         <view class="themeItem__content__text">
           <view class="themeItem__content__text__longessay" v-if="threadType === 1">
-            <view class="themeItem__content__text__longessay__publish">
+            <!-- <view class="themeItem__content__text__longessay__publish">
               <svg
                 t="1595264739906"
                 class="icon"
@@ -116,17 +116,22 @@
                   d="M809.984 204.8a181.248 181.248 0 0 0-250.368 0L409.6 353.792a177.152 177.152 0 0 0 0 250.368 51.2 51.2 0 0 0 72.704-72.192 74.752 74.752 0 0 1 0-105.472l151.04-151.04a76.288 76.288 0 0 1 105.472 0 74.752 74.752 0 0 1 0 105.472l-36.352 36.352a51.2 51.2 0 0 0 72.192 72.704l36.352-36.352A177.152 177.152 0 0 0 809.984 204.8z"
                   p-id="2328"
                 ></path>
-              </svg>
-              <!-- {{ i18n.t('home.released') }} -->
-            </view>
+              </svg> -->
+            <!-- {{ i18n.t('home.released') }} -->
+            <!-- </view> -->
             <!-- <qui-icon
               name="icon-link"
               :color="theme === $u.light() ? '#00479B' : '#1E78F3'"
               size="28"
               style="padding-left: 8rpx;"
             ></qui-icon> -->
-            <navigator class="navPost">
-              {{ themeContent }}
+            <navigator class="navPost fbv">
+              <h4 class="navPost_title">
+                {{ themeContent }}
+              </h4>
+              <p class="navPost_text">
+                {{ thread.firstPost.content }}
+              </p>
             </navigator>
           </view>
           <!-- <rich-text :nodes="themeContent" v-else></rich-text> -->
@@ -727,7 +732,7 @@ export default {
 
       &__time {
         padding-top: 0.05rem;
-        font-size: 10rpx;
+        font-size: 12px;
         font-weight: 400;
         // line-height: 31rpx;
         color: --color(--qui-FC-AAA);
@@ -756,19 +761,19 @@ export default {
 
   &__content {
     &__text {
-      padding-bottom: 10rpx;
+      // padding-bottom: 10rpx;
       overflow: hidden;
       font-family: $font-family;
-      font-size: 28rpx;
+      font-size: 15px;
       font-weight: 400;
       line-height: 45rpx;
       color: --color(--qui-FC-333);
       word-wrap: break-word;
       &__longessay {
         display: flex;
-        line-height: 50px;
-        text-indent: 10px;
-        background: #0001;
+        line-height: 30px;
+        text-indent: 16px;
+        // background: #0001;
         word-break: break-all;
         border-radius: 5px;
       }
@@ -889,18 +894,19 @@ export default {
 }
 
 .themeItem__content__text {
-  font-size: 17px;
+  font-size: 15px;
   margin-top: -0.5rem;
+  margin-bottom: 0.2rem;
 }
 
 .navPost {
-  display: inline-block;
-  max-width: 75%;
+  display: flex;
+  max-width: 90%;
   padding-left: 8rpx;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
-  color: --color(--qui-LINK);
+  // white-space: nowrap;
+  // color: --color(--qui-LINK);
 }
 .themeItem__content__coverimg {
   width: 100%;
@@ -982,5 +988,21 @@ export default {
   color: var(--qui-FC-AAA);
   transition: 0.5s;
   margin-left: 2px;
+}
+.navPost_title {
+  font-size: 17px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.navPost .navPost_text {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  text-align: justify;
+  text-justify: inter-ideograph;
+  font-size: 14px;
 }
 </style>

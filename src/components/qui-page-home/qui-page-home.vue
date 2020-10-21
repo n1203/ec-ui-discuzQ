@@ -36,6 +36,7 @@
       :header-show="headerShow"
       @click="open"
       @closeShare="closeShare"
+      class="header"
     >
       <!-- :style="headerShow ? '' : 'width:100%;position:fixed;z-index:9;top:' + navbarHeight + 'px;'" -->
       <view class="nav" id="navId">
@@ -76,7 +77,7 @@
             active-color="#1878F3"
           ></u-tabs>
         </view> -->
-    <ec-publish v-if="isPublish" />
+    <!-- <ec-publish v-if="isPublish" /> -->
 
     <!-- <view class="sticky"> -->
     <!-- <view

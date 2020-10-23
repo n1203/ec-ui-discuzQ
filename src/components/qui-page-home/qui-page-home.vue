@@ -20,6 +20,7 @@
         status-bar
       ></uni-nav-bar2>
     </view> -->
+    <ec-header />
     <qui-header-two
       :head-img="forums.set_site ? forums.set_site.site_header_logo : ''"
       :background-head-full-img="forums.set_site ? forums.set_site.site_background_image : ''"
@@ -36,8 +37,8 @@
       :header-show="headerShow"
       @click="open"
       @closeShare="closeShare"
-      class="header"
     >
+      <!-- <qui-search /> -->
       <!-- :style="headerShow ? '' : 'width:100%;position:fixed;z-index:9;top:' + navbarHeight + 'px;'" -->
       <view class="nav" id="navId">
         <u-tabs
@@ -49,6 +50,15 @@
           height="72"
           active-color="#1878F3"
         ></u-tabs>
+        <view class="fbh fbje icon_screen">
+          <qui-icon
+            class="icon_shezhi"
+            name="icon-shezhi_4"
+            size="38"
+            :color="show ? '#000' : '#999'"
+            @tap="showFilter"
+          ></qui-icon>
+        </view>
       </view>
     </qui-header-two>
     <!-- <view
@@ -61,7 +71,7 @@
     <!-- <view class="nav__box">
           <qui-icon
             class="nav__box__icon"
-            name="icon-screen"
+            name="icon-shezhi_4"
             size="28"
             :color="show ? '#FFF' : '#89c6ff'"
             @tap="showFilter"
@@ -85,6 +95,16 @@
           :style="headerShow ? 'margin-top:20rpx' : 'margin-top:130rpx'"
           v-if="sticky.length > 0"
         > -->
+    <!-- 置顶帖 -->
+    <view class="fbh updata_box">
+      <view class="fbh pdtwo">
+        <qui-icon class="icon" name="icon-huatibang" size="70" color="#f99020"></qui-icon>
+        <view class="new fbv">
+          <h3 class="newtitle">最新动态</h3>
+          <p class="newtext">EC-UI 贴心为您服务</p>
+        </view>
+      </view>
+    </view>
     <ec-sticky :items="sticky" :handle-click="stickyClick" />
     <!-- <view class="sticky" v-if="sticky.length > 0">
         <scroll-view scroll-x="true">
@@ -306,6 +326,10 @@ export default {
     navTheme: {
       type: String,
       default: '',
+    },
+    onHandleClickSetting: {
+      type: Function,
+      default: () => {},
     },
   },
   data() {
@@ -1064,7 +1088,7 @@ $padding-bottom: 160rpx;
 }
 .scroll-tab {
   z-index: 100;
-  height: 72rpx;
+  height: 120rpx;
   text-align: center;
   white-space: nowrap;
   // border-bottom: 2rpx solid --color(--qui-BOR-EEE);
@@ -1146,5 +1170,33 @@ $padding-bottom: 160rpx;
 }
 .copyright_margin {
   margin-top: -$padding-bottom;
+}
+.icon_screen {
+  position: absolute;
+  top: 28%;
+  right: 2%;
+}
+
+.updata_box {
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  // margin-bottom: 0.7rem;
+  .pdtwo {
+    padding: 20rpx 20rpx 10rpx 10rpx;
+    .new {
+      padding-top: 7rpx;
+      padding-left: 10rpx;
+      // background: red;
+      .newtext {
+        margin-top: 12rpx;
+        font-size: 14rpx;
+        color: rgb(184, 184, 184);
+      }
+      .newtitle {
+        font-size: 30rpx;
+      }
+    }
+  }
 }
 </style>

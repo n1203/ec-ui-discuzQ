@@ -42,7 +42,7 @@
                   color="red"
                   size="14"
                 ></qui-icon>
-                <qui-icon :name="item.icon" color="#fff" size="42"></qui-icon>
+                <qui-icon :name="item.icon" :color="item.color" size="80"></qui-icon>
               </view>
               <view class="ec-notice-box__item__text">
                 {{ i18n.t(item.title) }}
@@ -58,6 +58,9 @@
               ></qui-icon>
             </qui-cell-item> -->
           </view>
+        </view>
+        <view class="conversation">
+          <h4 class="conversation_text">我的会话列表</h4>
         </view>
         <!-- 如果没有会话 -->
         <view v-if="dialogList.length === 0" style="text-align: center; padding: 30px; color: #ccc">
@@ -145,7 +148,8 @@ export default {
           type: 'related',
           unReadNum: 0,
           border: true,
-          icon: 'icon-call',
+          icon: 'icon-weimingming',
+          color: '#fd9809',
         },
         {
           id: 2,
@@ -153,7 +157,8 @@ export default {
           type: 'replied',
           unReadNum: 0,
           border: true,
-          icon: 'icon-message',
+          icon: 'icon-bianpinghuatubiaosheji-1',
+          color: '#16acff',
         },
         {
           id: 3,
@@ -161,7 +166,8 @@ export default {
           type: 'liked',
           unReadNum: 0,
           border: true,
-          icon: 'icon-like',
+          icon: 'icon-bianpinghuatubiaosheji-',
+          color: '#16acff',
         },
         {
           id: 4,
@@ -169,7 +175,8 @@ export default {
           type: 'rewarded,withdrawal',
           unReadNum: 0,
           border: true,
-          icon: 'icon-walletPay',
+          icon: 'icon-bianpinghuatubiaosheji-3',
+          color: '#ee0755',
         },
         {
           id: 5,
@@ -177,7 +184,8 @@ export default {
           type: 'system',
           unReadNum: 0,
           border: false,
-          icon: 'icon-management',
+          icon: 'icon-bianpinghuatubiaosheji-2',
+          color: '#f02659',
         },
       ],
       loadingType: 'more', // 上拉加载状态
@@ -436,12 +444,12 @@ export default {
   &__item {
     text-align: center;
     &__icon {
-      background: #1878f3;
+      // background: #1878f3;
       text-align: center;
       width: 40px;
-      height: 40px;
+      // height: 40px;
       margin: 0 auto;
-      border-radius: 10px;
+      border-radius: 25px;
       line-height: 40px;
       position: relative;
       &__circle {
@@ -457,7 +465,23 @@ export default {
   }
 }
 .notice-box__list {
-  margin: 20rpx 0;
+  // margin: 20rpx 0;
   padding: 20rpx 0;
+}
+
+.conversation {
+  display: flex;
+  width: 100%;
+  height: 100rpx;
+  align-items: center;
+  background: #ffffff;
+  margin-top: 20rpx;
+  // margin-bottom: 10rpx;
+  .conversation_text {
+    font-size: 30rpx;
+    font-weight: 400;
+    color: rgb(131, 128, 128);
+    padding-left: 30rpx;
+  }
 }
 </style>

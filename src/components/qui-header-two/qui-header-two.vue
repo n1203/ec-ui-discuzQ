@@ -5,7 +5,7 @@
         class="logoBox"
         :style="headerShow ? '' : 'width:100%;position:fixed;z-index:9;top:' + 0 + 'px;'"
       >
-        <view v-if="headerShow" class="fbh fbjc logoBox__header">
+        <!-- <view v-if="headerShow" class="fbh fbjc logoBox__header">
           <view class="logoBox__header__icon">
             <image
               class="logo"
@@ -16,15 +16,15 @@
           </view>
           <view class="fbh fb1 fbje">
             <view @click="onHandleClickSearch" class="logoBox__header__icon iconMenu">
-              <qui-icon name="icon-search" size="36" color="#fff"></qui-icon>
-              <!-- <span>{{ this.$i18n.t('ec.tags') }}</span> -->
+              <qui-icon name="icon-sousuo" size="36" color="#fff"></qui-icon>
+              <span>{{ this.$i18n.t('ec.tags') }}</span>
             </view>
             <view @click="onHandleClickSetting" class="logoBox__header__icon iconMenn">
-              <qui-icon name="icon-screen" size="36" color="#fff"></qui-icon>
-              <!-- <span>{{ this.$i18n.t('ec.tags') }}</span> -->
+              <qui-icon name="icon-shezhi_4" size="36" color="#fff"></qui-icon>
+              <span>{{ this.$i18n.t('ec.tags') }}</span>
             </view>
           </view>
-        </view>
+        </view> -->
         <view
           :style="
             `background-image: url(${backgroundHeadFullImg}); background-position-y: -120rpx;`
@@ -316,7 +316,8 @@ export default {
   }
 }
 .solt {
-  background: rgba(0, 0, 0, 0.2);
+  // background: rgba(0, 0, 0, 0.2);
+  background: #fff;
   backdrop-filter: saturate(180%) blur(20px);
 }
 .iconMenu {

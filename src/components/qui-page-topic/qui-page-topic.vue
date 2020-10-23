@@ -42,6 +42,7 @@
             <!-- <view class="topic-page-list-item_title_icon">
               <qui-icon name="icon-wei" size="28" color="#fff" />
             </view> -->
+            <text>★</text>
             <!-- <text>{{ item.content }}</text> -->
           </view>
         </navigator>
@@ -393,7 +394,7 @@ $otherHeight: 292rpx;
   justify-content: center;
   align-items: center;
   background-color: orange;
-  font-size: 0.5rem;
+  font-size: 0.9rem;
   float: right;
   border-radius: 0 0 0.7rem 0.7rem;
 }

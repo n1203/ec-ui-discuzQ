@@ -97,12 +97,12 @@ export default {
     ...mapMutations({
       setFooterIndex: 'footerTab/SET_FOOTERINDEX',
     }),
-    // onHandleClickSearch() {
-    //   uni.navigateTo({
-    //     url: '/pages/site/search',
-    //   });
-    //   this.show = false;
-    // },
+    onHandleClickSearch() {
+      uni.navigateTo({
+        url: '/pages/site/search',
+      });
+      this.show = false;
+    },
     // onHandleClickMessage() {
     //   uni.navigateTo({
     //     url: '',

@@ -72,14 +72,17 @@
       </view> -->
       <view class="my-items">
         <view class="my-items__wrap">
-          <navigator url="/pages/my/profile" hover-class="none">
-            <qui-cell-item
-              left-icon="icon-wenzhang_2"
-              icon-color="#000"
-              :title="i18n.t('profile.myprofile')"
-              arrow
-              icon-background-color=""
-            ></qui-cell-item>
+          <navigator url="/pages/my/profile" hover-class="none" class="fbh">
+            <view class="fbh themlist">
+              <qui-cell-item
+                left-icon="icon-wenzhang_2"
+                icon-color="#000"
+                :title="i18n.t('profile.myprofile')"
+                arrow
+                icon-background-color=""
+              ></qui-cell-item>
+              <qui-icon class="fbh icon_right" name="icon-icon-arrow-right2"></qui-icon>
+            </view>
           </navigator>
           <navigator url="/pages/my/wallet" hover-class="none" v-if="forums.paycenter.wxpay_close">
             <qui-cell-item
@@ -88,30 +91,39 @@
               arrow
             ></qui-cell-item>
           </navigator>
-          <navigator url="/pages/my/favorite" hover-class="none">
-            <qui-cell-item
-              :title="i18n.t('profile.myfavorite')"
-              arrow
-              left-icon="icon-dingyue"
-              :border="false"
-            ></qui-cell-item>
+          <navigator url="/pages/my/favorite" hover-class="none" class="fbh">
+            <view class="fbh themlist">
+              <qui-cell-item
+                :title="i18n.t('profile.myfavorite')"
+                arrow
+                left-icon="icon-dingyue"
+                :border="false"
+              ></qui-cell-item>
+              <qui-icon class="fbh icon_right" name="icon-icon-arrow-right2"></qui-icon>
+            </view>
           </navigator>
         </view>
         <view class="my-items__wrap">
-          <navigator url="/pages/site/index" hover-class="none">
-            <qui-cell-item
-              left-icon="icon-ziyuan_2"
-              :title="i18n.t('profile.circleinfo')"
-              arrow
-            ></qui-cell-item>
+          <navigator url="/pages/site/index" hover-class="none" class="fbh">
+            <view class="fbh themlist">
+              <qui-cell-item
+                left-icon="icon-ziyuan_2"
+                :title="i18n.t('profile.circleinfo')"
+                arrow
+              ></qui-cell-item>
+              <qui-icon class="fbh icon_right" name="icon-icon-arrow-right2"></qui-icon>
+            </view>
           </navigator>
-          <navigator url="/pages/site/search" hover-class="none">
-            <qui-cell-item
-              :title="i18n.t('profile.search')"
-              arrow
-              left-icon="icon-sousuo_2"
-              :border="forums.other && forums.other.can_create_invite ? true : false"
-            ></qui-cell-item>
+          <navigator url="/pages/site/search" hover-class="none" class="fbh">
+            <view class="fbh themlist">
+              <qui-cell-item
+                :title="i18n.t('profile.search')"
+                arrow
+                left-icon="icon-sousuo_2"
+                :border="forums.other && forums.other.can_create_invite ? true : false"
+              ></qui-cell-item>
+              <qui-icon class="fbh icon_right" name="icon-icon-arrow-right2"></qui-icon>
+            </view>
           </navigator>
           <navigator
             v-if="forums.other && forums.other.can_create_invite"
@@ -437,5 +449,15 @@ $height: calc(100vh - 260rpx);
     background-size: 100%;
   }
 }
-
+.themlist {
+  display: flex;
+  width: 100vw;
+  justify-content: space-between;
+}
+.icon_right {
+  display: flex;
+  align-items: center;
+  margin-right: 25rpx;
+  color: #ccc;
+}
 </style>

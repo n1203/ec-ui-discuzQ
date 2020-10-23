@@ -1,7 +1,7 @@
 <template>
   <!-- <qui-page :header="false" :data-qui-theme="theme" class="pages-list"> -->
   <qui-page :header="false" class="pages-list">
-    <!-- <view class="qui-topic-page-box">
+    <view class="qui-topic-page-box">
       <view class="qui-topic-page-box__hd">
         <view class="qui-topic-page-box__hd__sc">
           <qui-icon class="icon-search" name="icon-search" size="30"></qui-icon>
@@ -16,13 +16,10 @@
           />
         </view>
       </view>
-    </view> -->
+    </view>
     <view class="topic-list-page">
-      <view class="topic-list-page-maintitle">#精选话题#</view>
-      <view class="topic-list-page-subtitle">匠心甄选 给你好看</view>
-      <!-- <view class="topic-list-page-header">
+      <view class="topic-list-page-header">
         <view class="topic-list-page-header_title">{{ i18n.t('topic.topicList') }}</view>
-        排序功能后续补上完善
         <view class="topic-list-page-header_sortBox" @click="toggleDropDown">
           <view>
             <qui-icon class="icon-sort" name="icon-sort" size="30"></qui-icon>
@@ -37,15 +34,15 @@
             </view>
           </view>
         </view>
-      </view> -->
+      </view>
       <view style="clear: both;"></view>
       <view class="topic-page-list-item" v-for="(item, i) in topicData" :key="i">
         <navigator :url="'/pages/topic/content?id=' + item._jv.id">
           <view class="topic-page-list-item_title fbh">
-            <view class="topic-page-list-item_title_icon">
+            <!-- <view class="topic-page-list-item_title_icon">
               <qui-icon name="icon-wei" size="28" color="#fff" />
-            </view>
-            <text>{{ item.content }}</text>
+            </view> -->
+            <!-- <text>{{ item.content }}</text> -->
           </view>
         </navigator>
         <view class="topic-page-list-item_details" v-if="item.lastThread.length">
@@ -68,7 +65,7 @@
             v-if="item.lastThread[0].firstPost.images.length"
           ></qui-image>
         </view>
-        <view class="topic-page-list-item_other">
+        <view class="topic-page-list-item_other" style="padding-left: 0.5rem;">
           <view class="topic-page-list-item_heat">
             <text>
               {{
@@ -254,11 +251,11 @@ $otherHeight: 292rpx;
   }
 }
 .topic-page-list-item {
-  padding: 30rpx;
+  padding: 0 30rpx;
   margin: 20rpx 0;
   background: --color(--qui-BG-2);
   border-radius: 6rpx;
-  box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4rpx 8rpx rgba(255, 255, 255, 0.05);
   box-sizing: border-box;
   &_title {
     font-size: 35rpx;
@@ -388,14 +385,19 @@ $otherHeight: 292rpx;
     }
   }
 }
-.topic-list-page-maintitle,.topic-list-page-subtitle {
-  text-align: center;
+.topic-page-list-item_title {
+  display: flex;
+  width: 50rpx;
+  min-height: 70rpx;
+  margin-top: 0.1rpx;
+  justify-content: center;
+  align-items: center;
+  background-color: orange;
+  font-size: 0.5rem;
+  float: right;
+  border-radius: 0 0 0.7rem 0.7rem;
 }
-.topic-list-page-maintitle {
-  margin: 0 0 0.3rem;
-  padding-top: 1rem;
-  letter-spacing: 0.2rem;
-  font-size: 1.1rem;
-  font-weight: bold;
+.topic-page-list-item_details_text {
+  text-align: justify;
 }
 </style>

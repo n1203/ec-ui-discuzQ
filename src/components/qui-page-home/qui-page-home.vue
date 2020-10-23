@@ -97,7 +97,7 @@
         > -->
     <!-- 置顶帖 -->
     <view class="fbh updata_box">
-      <view class="fbh pdtwo">
+      <view class="fbh dynamic">
         <qui-icon class="icon" name="icon-huatibang" size="70" color="#f99020"></qui-icon>
         <view class="new fbv">
           <h3 class="newtitle">最新动态</h3>
@@ -1182,8 +1182,8 @@ $padding-bottom: 160rpx;
   height: 100%;
   background: #fff;
   // margin-bottom: 0.7rem;
-  .pdtwo {
-    padding: 20rpx 20rpx 10rpx 10rpx;
+  .dynamic {
+    padding: 20rpx 20rpx 10rpx 20rpx;
     .new {
       padding-top: 7rpx;
       padding-left: 10rpx;

@@ -901,7 +901,7 @@ export default {
 
 .navPost {
   display: flex;
-  max-width: 90%;
+  width: 100%;
   padding-left: 8rpx;
   overflow: hidden;
   text-overflow: ellipsis;

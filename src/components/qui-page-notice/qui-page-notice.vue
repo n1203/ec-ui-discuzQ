@@ -60,6 +60,7 @@
           </view>
         </view>
         <view class="conversation">
+          <qui-icon name="icon-huat_1" class="icon" color="#cc000a" size="45"></qui-icon>
           <h4 class="conversation_text">我的会话列表</h4>
         </view>
         <!-- 如果没有会话 -->
@@ -481,6 +482,9 @@ export default {
     font-size: 30rpx;
     font-weight: 400;
     color: rgb(131, 128, 128);
+    padding-left: 20rpx;
+  }
+  .icon {
     padding-left: 30rpx;
   }
 }

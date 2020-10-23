@@ -15,7 +15,7 @@
       </view> -->
     </view>
     <view v-if="imagesList.length == 2">
-      <view class="themeItem__content__imgtwo">
+      <!-- <view class="themeItem__content__imgtwo">
         <image
           class="themeItem__content__imgtwo__item"
           v-for="(image, index) in imagesList"
@@ -26,10 +26,10 @@
           @click="previewPicture(previewStatus, index)"
           lazy-load
         ></image>
-      </view>
+      </view> -->
     </view>
     <view v-if="imagesList.length >= 3">
-      <view class="themeItem__content__imgmore">
+      <!-- <view class="themeItem__content__imgmore">
         <image
           class="themeItem__content__imgmore__item"
           v-for="(image, index) in imagesList"
@@ -46,7 +46,7 @@
           v-if="imagesList.length % 3 != 0"
           lazy-load
         ></image>
-      </view>
+      </view> -->
     </view>
   </view>
 </template>

@@ -39,20 +39,19 @@
       <view class="topic-page-list-item" v-for="(item, i) in topicData" :key="i">
         <navigator :url="'/pages/topic/content?id=' + item._jv.id">
           <view class="topic-page-list-item_title fbh">
-            <!-- <view class="topic-page-list-item_title_icon">
+            <view class="topic-page-list-item_title_icon">
               <qui-icon name="icon-wei" size="28" color="#fff" />
-            </view> -->
-            <text>★</text>
-            <!-- <text>{{ item.content }}</text> -->
+            </view>
+            <text>{{ item.content }}</text>
           </view>
         </navigator>
         <view class="topic-page-list-item_details" v-if="item.lastThread.length">
           <view class="fbh fbac">
-            <qui-avatar
+            <!-- <qui-avatar
               size="50"
               :user="{ avatarUrl: item.user.avatarUrl, username: item.user.username }"
-            />
-            <view class="topic-page-list-item_details_username">{{ item.user.username }}</view>
+            /> -->
+            <!-- <view class="topic-page-list-item_details_username">{{ item.user.username }}</view> -->
           </view>
           <navigator :url="'/pages/topic/index?id=' + item.lastThread[0]._jv.id">
             <qui-uparse
@@ -109,7 +108,7 @@ export default {
         contentdown: this.i18n.t('topic.noMoreData'),
       },
       keyword: '',
-      sort: '-viewCount',
+      sort: '-viewCount'
     };
   },
   created() {
@@ -385,18 +384,6 @@ $otherHeight: 292rpx;
       background-color: #fff;
     }
   }
-}
-.topic-page-list-item_title {
-  display: flex;
-  width: 50rpx;
-  min-height: 70rpx;
-  margin-top: 0.1rpx;
-  justify-content: center;
-  align-items: center;
-  background-color: orange;
-  font-size: 0.9rem;
-  float: right;
-  border-radius: 0 0 0.7rem 0.7rem;
 }
 .topic-page-list-item_details_text {
   text-align: justify;

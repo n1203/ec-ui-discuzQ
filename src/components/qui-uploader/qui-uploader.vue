@@ -35,7 +35,7 @@
       </view>
     </block>
     <view class="qui-uploader-box__add" @click="uploadClick" v-if="uploadBeforeList.length < count">
-      <qui-icon name="icon-add" color="#B5B5B5" size="40"></qui-icon>
+      <qui-icon name="icon-jia" color="#B5B5B5" size="40"></qui-icon>
     </view>
   </view>
 </template>

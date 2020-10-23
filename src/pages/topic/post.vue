@@ -14,22 +14,22 @@
         <view class="post-box__hd-l">
           <qui-icon
             class="post-box__hd-l__icon"
-            name="icon-expression"
-            size="40"
+            name="icon-biaoqing_3"
+            size="45"
             :color="emojiShow ? '#1878F3' : '#777'"
             @click="emojiclick"
           ></qui-icon>
           <qui-icon
             class="post-box__hd-l__icon"
-            name="icon-call"
+            name="icon-weimingming"
             size="40"
             color="#777"
             @click="callClick"
           ></qui-icon>
           <qui-icon
             class="post-box__hd-l__icon"
-            name="icon-wei"
-            size="40"
+            name="icon-huatibang"
+            size="45"
             color="#777"
             @click="topicPage"
           ></qui-icon>

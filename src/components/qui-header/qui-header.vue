@@ -26,7 +26,7 @@
       </text>
 
       <view class="circleDet-share" @click="open">
-        <qui-icon class="qui-icon" name="icon-share1" size="26" :color="iconcolor"></qui-icon>
+        <qui-icon class="qui-icon" name="icon-fenxiang" size="26" :color="iconcolor"></qui-icon>
         {{ t.share }}
       </view>
       <view class="mask" v-if="shareShow" @click="closeShare">

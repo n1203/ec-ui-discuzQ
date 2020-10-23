@@ -338,7 +338,7 @@ export default {
     cancel: '取消',
     tabsCircle: '首页',
     tabsNews: '消息',
-    tabsMy: '我',
+    tabsMy: '我的',
     tabTopic: '话题',
     filterPlate: '版块',
     filterType: '类型',

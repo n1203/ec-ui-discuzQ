@@ -7,7 +7,7 @@
         <view class="search-box">
           <view class="search-box__content">
             <view class="icon-content-search">
-              <qui-icon name="icon-search" size="30" color="#bbb"></qui-icon>
+              <qui-icon name="icon-sousuo" size="30" color="#bbb"></qui-icon>
             </view>
             <input
               type="text"
@@ -18,7 +18,7 @@
               :value="searchText"
             />
             <view @tap="cancelSearch" v-if="searchText" class="search-box__content-delete">
-              <qui-icon name="icon-close1" size="32" color="#ccc"></qui-icon>
+              <qui-icon name="icon-cuo" size="32" color="#ccc"></qui-icon>
             </view>
           </view>
           <view class="search-box__cancel" v-if="searchText" @tap="cancelSearch">
@@ -56,7 +56,7 @@
         <view class="search-box">
           <view class="search-box__content">
             <view class="icon-content-search">
-              <qui-icon name="icon-search" size="30" color="#bbb"></qui-icon>
+              <qui-icon name="icon-sousuo" size="30" color="#bbb"></qui-icon>
             </view>
             <input
               type="text"
@@ -67,7 +67,7 @@
               :value="searchText"
             />
             <view @tap="cancelSearch" v-if="searchText" class="search-box__content-delete">
-              <qui-icon name="icon-close1" size="32" color="#ccc"></qui-icon>
+              <qui-icon name="icon-cuo" size="32" color="#ccc"></qui-icon>
             </view>
           </view>
           <view class="search-box__cancel" v-if="searchText" @tap="cancelSearch">

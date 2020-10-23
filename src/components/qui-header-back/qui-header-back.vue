@@ -6,7 +6,7 @@
           <qui-icon
             :name="iconLeft"
             size="34"
-            class="icon-left"
+            class="icon-fanhui"
             :color="theme === $u.light() ? '#333' : '#fff'"
           ></qui-icon>
           <text>{{ title || i18n.t('discuzq.pageHeader.title') }}</text>
@@ -19,29 +19,29 @@
         <view class="qui-back__body__right-pop">
           <view class="qui-back__body__right-pop-item" @tap="backPage('/pages/home/index', '0')">
             <qui-icon
-              name="icon-home"
+              name="icon-shouye_4"
               size="34"
               :color="theme === $u.light() ? '#777' : '#fff'"
             ></qui-icon>
           </view>
           <view
             :class="['qui-back__body__right-pop-item', redCircle ? 'message' : '']"
-            @tap="backPage('/pages/home/index', '1')"
+            @tap="backPage('/pages/home/index', '3')"
             v-if="isLogin"
           >
             <qui-icon
-              name="icon-message"
+              name="icon-xiaoxi"
               size="32"
               :color="theme === $u.light() ? '#777' : '#fff'"
             ></qui-icon>
           </view>
           <view
             class="qui-back__body__right-pop-item"
-            @tap="backPage('/pages/home/index', '2')"
+            @tap="backPage('/pages/home/index', '4')"
             v-if="isLogin"
           >
             <qui-icon
-              name="icon-mine"
+              name="icon-icon31"
               size="34"
               :color="theme === $u.light() ? '#777' : '#fff'"
             ></qui-icon>

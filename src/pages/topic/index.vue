@@ -141,11 +141,11 @@
               >
                 <qui-icon
                   v-if="thread.isFavorite"
-                  name="icon-collectioned"
+                  name="icon-collection-b"
                   class="qui-icon"
                 ></qui-icon>
 
-                <qui-icon v-else name="icon-collection" class="qui-icon"></qui-icon>
+                <qui-icon v-else name="icon-shoucang_2" class="qui-icon"></qui-icon>
                 <view v-if="thread.isFavorite">{{ t.collectionAlready }}</view>
                 <view v-else>{{ t.collection }}</view>
               </view>
@@ -163,10 +163,10 @@
               <view class="comment-sort" v-if="thread.postCount > 1">
                 <view class="comment-sort-operaCl" @click="sortOperaClick">
                   <qui-icon
-                    name="icon-sort1"
+                    name="icon-iconasc"
                     class="icon-management"
                     color="#777"
-                    size="30"
+                    size="35"
                   ></qui-icon>
                 </view>
                 <view>
@@ -252,19 +252,20 @@
             "
           >
             <qui-icon
-              :name="thread.firstPost.isLiked ? 'icon-liked' : 'icon-like'"
+              :name="thread.firstPost.isLiked ? 'icon-dianzanle' : 'icon-dianzan_2'"
               class="qui-icon"
+              size="32"
             ></qui-icon>
             <view class="ft-child-word">
               {{ thread.firstPost.isLiked ? t.giveLikeAlready : t.giveLike }}
             </view>
           </view>
           <view class="det-ft-child flex" @click="threadComment(thread._jv.id)">
-            <qui-icon name="icon-comments" class="qui-icon"></qui-icon>
+            <qui-icon name="icon-pinglun" class="qui-icon" size="32"></qui-icon>
             <view class="ft-child-word">{{ t.writeComment }}</view>
           </view>
           <view class="det-ft-child flex" @click="shareClick">
-            <qui-icon name="icon-share" class="qui-icon"></qui-icon>
+            <qui-icon name="icon-fenxiang" class="qui-icon" size="32"></qui-icon>
             <view class="ft-child-word">{{ t.share }}</view>
           </view>
         </view>

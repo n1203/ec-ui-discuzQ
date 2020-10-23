@@ -16,21 +16,21 @@
           class="ft-box-icon"
           @click="select(item, index)"
           :name="item.tabsIcon"
-          size="48"
+          size="42"
           v-if="item.tabsName"
           :class="{ select: true, active: index === footerIndex }"
         ></qui-icon>
         <qui-icon
-          name="icon-add"
-          size="36"
+          name="icon-bianji_5"
+          size="42"
           color="#fff"
           v-if="!item.tabsName"
           class="ft-box-spacal"
           @click="footerOpen"
         />
-        <!-- <text class="ft-box-content" :class="{ select: true, active: index === footerIndex }">
+        <text class="ft-box-content" :class="{ select: true, active: index === footerIndex }">
           {{ item.tabsName }}
-        </text> -->
+        </text>
         <view v-if="redCircle && item.id === 4" name="icon-circle" class="red-circle"></view>
       </view>
 
@@ -93,14 +93,14 @@ export default {
       tabs: [
         {
           tabsName: 'home.tabsCircle',
-          tabsIcon: 'icon-home',
+          tabsIcon: 'icon-shouye_4',
           id: 1,
           url: '/pages/home/index',
           // routePath: 'pages/home/index', // 仅用作标识不用来跳转
         },
         {
           tabsName: 'home.tabTopic',
-          tabsIcon: 'icon-wei',
+          tabsIcon: 'icon-diamond',
           id: 2,
           url: '/pages/site/topic/list',
           // routePath: 'pages/my/index', // 仅用作标识不用来跳转
@@ -114,14 +114,14 @@ export default {
         },
         {
           tabsName: 'home.tabsNews',
-          tabsIcon: 'icon-message',
+          tabsIcon: 'icon-xiaoxi',
           id: 4,
           url: '/pages/notice/index',
           // routePath: 'pages/notice/index', // 仅用作标识不用来跳转
         },
         {
           tabsName: 'home.tabsMy',
-          tabsIcon: 'icon-mine',
+          tabsIcon: 'icon-icon31',
           id: 5,
           url: '/pages/my/index',
           // routePath: 'pages/my/index', // 仅用作标识不用来跳转
@@ -245,15 +245,15 @@ export default {
       if (this.forums.other.can_create_thread) {
         this.bottomData.push({
           text: this.i18n.t('home.word'),
-          icon: 'icon-word',
+          icon: 'icon-duoxingwenzi',
           name: 'text',
           type: 0,
         });
       }
       if (this.forums.other.can_create_thread_long) {
         this.bottomData.push({
-          text: this.i18n.t('home.invitation'),
-          icon: 'icon-post',
+          text: this.i18n.t('home.post'),
+          icon: 'icon-huifudetiezi',
           name: 'post',
           type: 1,
         });
@@ -261,7 +261,7 @@ export default {
       if (this.forums.other.can_create_thread_video) {
         this.bottomData.push({
           text: this.i18n.t('home.video'),
-          icon: 'icon-video',
+          icon: 'icon-shipin',
           name: 'video',
           type: 2,
         });
@@ -269,7 +269,7 @@ export default {
       if (this.forums.other.can_create_thread_image) {
         this.bottomData.push({
           text: this.i18n.t('home.picture'),
-          icon: 'icon-img',
+          icon: 'icon-tupian1',
           name: 'image',
           type: 3,
         });
@@ -348,6 +348,7 @@ export default {
   border-radius: 30rpx;
   width: 100rpx;
   line-height: 60rpx;
+  margin-top: 0.3rem;
   color: #fff;
   display: block;
 }

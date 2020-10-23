@@ -22,15 +22,15 @@
               <view class="meta-item fbh">
                 <qui-icon
                   class="qui-icon"
-                  name="icon-liked"
+                  name="icon-dianzan"
                   size="24"
                   v-if="item.firstPost.isLiked"
                 ></qui-icon>
-                <qui-icon class="qui-icon" name="icon-like" size="24" v-else></qui-icon>
+                <qui-icon class="qui-icon" name="icon-dianzan_2" size="28" v-else></qui-icon>
                 <view class="meta-item-count">{{ item.firstPost.likeCount || '' }}</view>
               </view>
               <view class="meta-item fbh">
-                <qui-icon class="qui-icon" name="icon-message" size="24"></qui-icon>
+                <qui-icon class="qui-icon" name="icon-pinglun" size="28"></qui-icon>
                 <view class="meta-item-count">
                   {{ item.postCount || '' }}
                 </view>
@@ -146,7 +146,7 @@ export default {
     margin-right: 20rpx;
     &-count {
       font-size: 24rpx;
-      padding: 0 20rpx;
+      padding: 0 10rpx;
     }
   }
 }

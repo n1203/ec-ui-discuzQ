@@ -3,8 +3,9 @@
     <!-- 删除列表块 -->
     <qui-icon
       class="qui-icon close_icon"
-      name="icon-close"
+      name="icon-cuo"
       size="32"
+      color="#9999"
       @click="remove(thread)"
     ></qui-icon>
     <image
@@ -251,8 +252,8 @@
             ]"
             @click="handleIsGreat"
           >
-            <qui-icon class="qui-icon" name="icon-liked" size="32" v-if="isGreat"></qui-icon>
-            <qui-icon class="qui-icon" name="icon-like" size="32" v-else></qui-icon>
+            <qui-icon class="qui-icon" name="icon-dianzanle" size="32" v-if="isGreat"></qui-icon>
+            <qui-icon class="qui-icon" name="icon-dianzan_2" size="32" v-else></qui-icon>
             <!-- {{ isGreat ? t.giveLikeAlready : t.like }} -->
             {{ themeLike === 0 ? '点赞' : themeLike }}
           </view>
@@ -261,7 +262,7 @@
             class="themeItem__footer__themeType1__item themeItem__footer__themeType1__comment"
             @click="commentClick"
           >
-            <qui-icon class="qui-icon" name="icon-message" size="32" color="#AAA"></qui-icon>
+            <qui-icon class="qui-icon" name="icon-pinglun" size="32" color="#AAA"></qui-icon>
             <!-- {{ t.comment }} -->
             {{ themeComment === 0 ? '评论' : themeComment }}
           </view>
@@ -270,7 +271,7 @@
             class="themeItem__footer__themeType1__item themeItem__footer__themeType1__share"
             @click="handleClickShare"
           >
-            <qui-icon class="qui-icon" name="icon-share" size="32" color="#AAA"></qui-icon>
+            <qui-icon class="qui-icon" name="icon-fenxiang" size="32" color="#AAA"></qui-icon>
             <!-- {{ t.share }} -->
             {{ themeshare === 0 ? '分享' : themeshare }}
           </view>
@@ -663,7 +664,7 @@ export default {
 }
 .themeItem {
   padding: 30rpx;
-  margin: 0 0 30rpx;
+  margin: 0 0 20rpx;
   background: --color(--qui-BG-2);
   // border-radius: 6rpx;
   box-shadow: 0rpx 4rpx 8rpx rgba(0, 0, 0, 0.05);

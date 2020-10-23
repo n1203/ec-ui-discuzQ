@@ -308,6 +308,7 @@ scroll-view {
 
 .u-scroll-box {
   position: relative;
+  margin-top: 0.5rem;
 }
 
 /* #ifdef H5 */
@@ -333,12 +334,14 @@ $screen: 80rpx;
   position: relative;
   display: inline-block;
   text-align: center;
-  color: --color(--qui-FC-DDD);
+  // color: --color(--qui-FC-DDD);
+  color: #999;
   transition-property: background-color, color;
   transition: $switch-theme-time;
 }
 .tabActive {
-  color: --color(--qui-FC-FFF);
+  // color: --color(--qui-FC-FFF);
+  color: black;
 }
 .tabBarBg {
   background-color: --color(--qui-TAB-BAR);

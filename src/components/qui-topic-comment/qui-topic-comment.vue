@@ -27,8 +27,8 @@
         <view class="themeItem__header__r">
           <view v-if="commentStatus == 0" class="comment-status">{{ t.inReview }}</view>
           <view v-else @click="commentLikeClick" class="comment-like">
-            <qui-icon v-if="isLiked" name="icon-liked" class="like"></qui-icon>
-            <qui-icon v-else name="icon-like" class="like" size="30"></qui-icon>
+            <qui-icon v-if="isLiked" name="icon-dianzanle" class="like"></qui-icon>
+            <qui-icon v-else name="icon-dianzan_2" class="like" size="30"></qui-icon>
             <view class="comment-like-count">
               {{ commentLikeCount == 0 ? t.like : commentLikeCount }}
             </view>
@@ -67,11 +67,11 @@
         <view v-else></view>
         <view class="themeItem__footer__r">
           <view class="footer__r__child" v-if="canDelete" @click="deleteComment">
-            <qui-icon class="icon" name="icon-delete" size="26" color="#AAA"></qui-icon>
+            <qui-icon class="icon" name="icon-lajitong" size="35" color="#AAA"></qui-icon>
             <view class="themeItem__footer__con">{{ t.delete }}</view>
           </view>
           <view class="footer__r__child" @click="replyComment" v-if="commentShow">
-            <qui-icon class="icon" name="icon-comments" size="26" color="#AAA"></qui-icon>
+            <qui-icon class="icon" name="icon-xiaoxi1" size="32" color="#AAA"></qui-icon>
             <view class="themeItem__footer__con">{{ t.reply }}</view>
           </view>
         </view>

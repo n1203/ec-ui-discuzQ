@@ -118,7 +118,7 @@
                   class="det-con-ft-child"
                   @click="deleteReply(post._jv.id, post.canHide)"
                 >
-                  <qui-icon name="icon-delete" class="qui-icon"></qui-icon>
+                  <qui-icon name="icon-lajitong" class="qui-icon"></qui-icon>
                   <view>{{ t.delete }}</view>
                 </view>
                 <view
@@ -152,7 +152,7 @@
                   <view class="comment-sort-operaCl" @click="sortOperaClick">
                     <qui-icon
                       name="icon-sort1"
-                      class="icon-management"
+                      class="icon-shezhi_3"
                       color="#777"
                       size="30"
                     ></qui-icon>
@@ -246,7 +246,7 @@
                   @click="expressionClick"
                 ></qui-icon>
                 <qui-icon
-                  name="icon-call"
+                  name="icon-biaoqing_3"
                   :size="40"
                   class="comm-icon"
                   @click="callClick"

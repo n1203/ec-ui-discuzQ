@@ -21,7 +21,7 @@
       <view class="themeItem__header__opera" v-if="managementShow">
         <view class="det-hd-operaCli">
           <view class="det-hd-management" @click="selectClick">
-            <qui-icon name="icon-management" class="icon-management"></qui-icon>
+            <qui-icon name="icon-guanli" class="icon-management"></qui-icon>
             <view>{{ t.management }}</view>
           </view>
           <view>
@@ -81,7 +81,7 @@
       <view class="themeItem__header__opera" v-if="managementShow">
         <view class="det-hd-operaCli">
           <view class="det-hd-management" @click="selectClick">
-            <qui-icon name="icon-management" class="icon-management"></qui-icon>
+            <qui-icon name="icon-guanli" class="icon-management"></qui-icon>
             <view>{{ t.management }}</view>
           </view>
           <view>

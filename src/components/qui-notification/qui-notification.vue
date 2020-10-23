@@ -162,7 +162,7 @@
       </view>
       <!-- 删除按钮 -->
       <view class="list-box__ft">
-        <qui-icon name="icon-delete" size="26" @click="deleteNotification(item.id)"></qui-icon>
+        <qui-icon name="icon-lajitong" size="32" @click="deleteNotification(item.id)"></qui-icon>
         <text class="list-box__ft__text" @click="deleteNotification(item.id)">
           {{ i18n.t('notice.delete') }}
         </text>

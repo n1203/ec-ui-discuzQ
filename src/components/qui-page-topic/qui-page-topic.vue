@@ -457,8 +457,7 @@ $otherHeight: 292rpx;
   }
   &_other {
     display: flex;
-    padding-left: 5rpx;
-    padding-top: 10rpx;
+    padding-top: 5rpx;
   }
 }
 .ranking {

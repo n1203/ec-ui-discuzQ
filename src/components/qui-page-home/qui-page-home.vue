@@ -1192,6 +1192,7 @@ $padding-bottom: 160rpx;
         margin-top: 12rpx;
         font-size: 14rpx;
         color: rgb(184, 184, 184);
+        padding-left: 2rpx;
       }
       .newtitle {
         font-size: 30rpx;

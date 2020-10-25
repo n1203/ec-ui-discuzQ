@@ -82,7 +82,14 @@ export default {
 .qui-ava {
   border-radius: 50%;
 }
-
+.qui-avatar-120 {
+  width: 120rpx;
+  height: 120rpx;
+}
+.qui-avatar-100 {
+  width: 100rpx;
+  height: 100rpx;
+}
 .qui-avatar-80 {
   width: 80rpx;
   height: 80rpx;

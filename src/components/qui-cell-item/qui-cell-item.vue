@@ -155,8 +155,8 @@ export default {
 
 .cell-item__body__content-brief,
 .cell-item__body__right-brief {
-  margin-top: 6rpx;
-  font-size: $fg-f24;
+  // margin-top: 6rpx;
+  font-size: $fg-f20;
   color: --color(--qui-FC-AAA);
 }
 

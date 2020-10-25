@@ -18,7 +18,7 @@
       <view class="my-info">
         <view class="my-info__box">
           <view class="my-info__box__detail fbh">
-            <qui-avatar :user="userInfo" />
+            <qui-avatar :user="userInfo" :size="120" />
             <view class="fbv fbjc">
               <view class="my-info__box__detail-username">
                 {{ userInfo.username }}
@@ -29,6 +29,18 @@
               <view class="my-info__introduction" v-if="userInfo.signature">
                 {{ userInfo.signature }}
               </view>
+              <!-- <view class="thrtw-box">
+                <view class="fbv ctw">
+                  <text class="fw3 fs20 pt8">
+                    {{ userInfo.signature || '该用户还未填写签名哦！' }}
+                  </text>
+                </view>
+                <qui-icon
+                  class="icon ctw thr-icon"
+                  name="icon-icon-arrow-right2"
+                  size="34"
+                ></qui-icon>
+              </view> -->
             </view>
             <!-- <qui-cell-item
               :title="userInfo.username || ''"
@@ -86,7 +98,7 @@
           </navigator>
           <navigator url="/pages/my/wallet" hover-class="none" v-if="forums.paycenter.wxpay_close">
             <qui-cell-item
-              left-icon="icon-rmb"
+              left-icon="icon-qianbao"
               :title="i18n.t('profile.mywallet')"
               arrow
             ></qui-cell-item>
@@ -362,18 +374,19 @@ $height: calc(100vh - 260rpx);
   margin-bottom: 100rpx;
   font-size: $fg-f28;
   // background: --color(--qui-BG-HIGH-LIGHT);
-  animation: identifier 100s infinite linear;
+  // animation: identifier 100s infinite linear;
   // animation-direction: 5s;
   // animation-delay: 0s;
   // animation-iteration-count: 100;
   // animation-direction: alternate;
-  background: linear-gradient(
-    101.35deg,
-    --color(--qui-BG-HIGH-LIGHT) 14.66%,
-    #0a9393 29.72972972972973%,
-    #11e397 34%,
-    #000066 100%
-  );
+  // background: linear-gradient(
+  //   101.35deg,
+  //   --color(--qui-BG-HIGH-LIGHT) 14.66%,
+  //   #0a9393 29.72972972972973%,
+  //   #11e397 34%,
+  //   #000066 100%
+  // );
+  background: linear-gradient(to right, rgb(62, 135, 250), rgb(95, 226, 226)); //背景颜色向右渐变
 }
 .my-info__box {
   display: flex;
@@ -387,6 +400,11 @@ $height: calc(100vh - 260rpx);
   color: --color(--qui-FC-GRAY);
   word-break: break-all;
   transition: $switch-theme-time;
+  text-align: justify; //两端对齐
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
 }
 .my-info__box__detail {
   position: relative;
@@ -399,11 +417,13 @@ $height: calc(100vh - 260rpx);
 .my-info__box__detail-username {
   display: flex;
   align-items: center;
+  font-size: 45rpx;
   padding-left: 20rpx;
   color: #fff;
+  // background: red;
 }
 .badge {
-  font-size: 14px;
+  font-size: 10rpx;
   line-height: 14px;
   align-items: center;
   background: #fff !important;
@@ -459,5 +479,28 @@ $height: calc(100vh - 260rpx);
   align-items: center;
   margin-right: 25rpx;
   color: #ccc;
+}
+.thrtw-box {
+  display: flex;
+  max-width: 11rem;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: #fff;
+}
+// 定义最多显示两行，多出的用...显示
+.thrtw-box text {
+  text-align: justify; //两端对齐
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+.thr-icon {
+  // padding-left: 5.3rem;
+  position: absolute;
+  right: 1.8rem;
+  color: #fff;
 }
 </style>

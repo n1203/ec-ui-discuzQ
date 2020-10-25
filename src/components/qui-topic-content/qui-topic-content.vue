@@ -12,7 +12,7 @@
             v-for="(group, index) in userRole"
             :key="index"
           >
-            {{ group.isDisplay ? `（${group.name}）` : '' }}
+            {{ group.isDisplay ? `${group.name}` : '' }}
           </text>
         </view>
         <view class="themeItem__header__title__time">{{ localTime }}</view>
@@ -68,14 +68,32 @@
             {{ userName }}
           </text>
           <text
-            class="themeItem__header__title__isAdmin"
+            class="themeItem__header__title__isAdmin badge"
             v-for="(group, index) in userRole"
             :key="index"
           >
-            {{ group.isDisplay ? `（${group.name}）` : '' }}
+            <text class="identity">
+              {{ group.isDisplay ? `${group.name}` : '' }}
+            </text>
           </text>
         </view>
         <view class="themeItem__header__title__time">{{ localTime }}</view>
+        <!-- <view class="attention_ivtion fbh">
+          <text>
+            <span style="padding-left:10rpx">
+              粉丝
+            </span>
+          </text>
+
+          <text style="margin-left:10rpx">
+            <span style="padding-left:10rpx">
+              帖子
+            </span>
+          </text>
+          <view class="themeItem__header__title__time" style="margin-left:0.5rem">
+            {{ localTime }}
+          </view>
+        </view> -->
       </view>
       <slot name="follow"></slot>
       <view class="themeItem__header__opera" v-if="managementShow">
@@ -290,6 +308,12 @@ export default {
       type: String,
       default: '',
     },
+    user: {
+      type: [Array, Object],
+      default: () => {
+        return {};
+      },
+    },
     // 实名认证
     isReal: {
       type: Boolean,
@@ -500,6 +524,7 @@ export default {
         display: flex;
         flex-direction: row;
         justify-content: flex-start;
+        align-items: center;
         height: 37rpx;
         margin-bottom: 10rpx;
         margin-left: 2rpx;
@@ -732,5 +757,41 @@ export default {
 }
 .theme__content__videocover {
   position: relative;
+}
+.badge {
+  height: 18px;
+  line-height: 18px;
+  align-items: center;
+  background: #fff !important;
+  // color: yellow;
+  border-radius: 10px;
+  font-size: 16px;
+  margin-left: -10px;
+  padding: 10rpx 10rpx;
+  transform: scale(0.5);
+}
+.identity {
+  border: #ccc 1px solid;
+  padding: 6rpx 10rpx;
+  color: #ccc;
+  border-radius: 20rpx;
+}
+// .管理员 {
+//   border: #1878f3 1px solid;
+//   color: #1878f3;
+// }
+// .普通会员 {
+//   border: #ccc 1px solid;
+//   color: #ccc;
+// }
+.attention_ivtion {
+  display: flex;
+  align-items: center;
+  font-size: 10px;
+  font-weight: 400;
+  padding-top: 0.2rem;
+  color: var(--qui-FC-AAA);
+  transition: 0.5s;
+  // margin-left: 2px;
 }
 </style>

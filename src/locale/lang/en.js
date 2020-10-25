@@ -214,7 +214,7 @@ export default {
     newTopic: '新话题',
     allTopics: '全部话题',
     contents: '内容数',
-    topicList: '话题列表',
+    topicList: '话题榜单',
     persenUnit: '人',
     delete: '删除',
     management: '管理',

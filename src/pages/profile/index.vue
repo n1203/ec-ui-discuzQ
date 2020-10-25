@@ -34,7 +34,7 @@
                   >
                     <qui-icon
                       class="text"
-                      :name="userInfo.follow == 0 ? 'icon-follow' : 'icon-each-follow'"
+                      :name="userInfo.follow == 0 ? 'icon-guanzhu' : 'icon-guanzhu_ed'"
                       size="28"
                       :color="
                         userInfo.follow == 0

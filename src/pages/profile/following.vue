@@ -41,7 +41,7 @@
             </text>
             <qui-icon
               class="text"
-              :name="followingItem.toUser.follow == 0 ? 'icon-follow' : 'icon-each-follow'"
+              :name="followingItem.toUser.follow == 0 ? 'icon-guanzhu' : 'icon-guanzhu_ed'"
               size="24"
               :color="
                 followingItem.toUser.follow == 0

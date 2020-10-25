@@ -1,7 +1,7 @@
 <template>
   <!-- <qui-page :header="false" :data-qui-theme="theme" class="pages-list"> -->
   <qui-page :header="false" class="pages-list">
-    <view class="qui-topic-page-box">
+    <!-- <view class="qui-topic-page-box">
       <view class="qui-topic-page-box__hd">
         <view class="qui-topic-page-box__hd__sc">
           <qui-icon class="icon-search" name="icon-search" size="30"></qui-icon>
@@ -16,13 +16,30 @@
           />
         </view>
       </view>
+    </view> -->
+    <view class="topic_list">
+      <view class="fbv topic_center">
+        <view class="topic_zhuanshi">
+          <qui-icon name="icon-zhuanshi" size="190" color="#f99020"></qui-icon>
+        </view>
+        <view class="fbh topic_text">
+          <qui-icon name="icon-star" class="icon-star" size="55"></qui-icon>
+          <h2>话题风云榜单</h2>
+          <qui-icon name="icon-star" class="icon-star" size="55"></qui-icon>
+        </view>
+      </view>
     </view>
     <view class="topic-list-page">
-      <view class="topic-list-page-header">
-        <view class="topic-list-page-header_title">{{ i18n.t('topic.topicList') }}</view>
-        <view class="topic-list-page-header_sortBox" @click="toggleDropDown">
+      <view class="topic-list-page-header fbh">
+        <view class="topic-list-page-header_title fbh">
+          <view class="fbh">
+            <qui-icon name="icon-xunzhang3" size="60" color="#f99020"></qui-icon>
+          </view>
+          <h2 class="txt fbh">{{ i18n.t('topic.topicList') }}</h2>
+        </view>
+        <view class="topic-list-page-header_sortBox fbh" @click="toggleDropDown">
           <view>
-            <qui-icon class="icon-sort" name="icon-sort" size="30"></qui-icon>
+            <qui-icon class="icon-sort" name="icon-jiangxu2" size="30"></qui-icon>
             <text>{{ i18n.t('core.sort') }}</text>
           </view>
           <view class="dropDownBox" v-show="dropDownShow">
@@ -35,37 +52,95 @@
           </view>
         </view>
       </view>
-      <view style="clear: both;"></view>
-      <view class="topic-page-list-item" v-for="(item, i) in topicData" :key="i">
-        <navigator :url="'/pages/topic/content?id=' + item._jv.id">
+      <!-- <view style="clear: both;"></view> -->
+      <view class="topic-page-list-item">
+        <view v-for="(item, i) in topicData" :key="i">
+          <!-- <navigator :url="'/pages/topic/content?id=' + item._jv.id">
           <view class="topic-page-list-item_title fbh">
             <view class="topic-page-list-item_title_icon">
               <qui-icon name="icon-wei" size="28" color="#fff" />
             </view>
-            <text>{{ item.content }}</text>
+            获取用户头像
+            <view class="user_img" size="80" :user="{ avatarUrl: item.user.avatarUrl }">
+              <image
+                v-if="avatarUrl"
+                :src="item.user.avatarUrl"
+                :class="'qui-ava qui-avatar-' + size"
+                @error="error"
+              ></image>
+            </view>
+            <text># {{ item.content }} #</text>
           </view>
-        </navigator>
-        <view class="topic-page-list-item_details" v-if="item.lastThread.length">
-          <view class="fbh fbac">
-            <!-- <qui-avatar
-              size="50"
+        </navigator> -->
+
+          <view class="topic-page-list-item_details" v-if="item.lastThread.length">
+            <view class="fbh">
+              <!-- <qui-avatar
+              class="user_img"
+              size="80"
               :user="{ avatarUrl: item.user.avatarUrl, username: item.user.username }"
             /> -->
-            <!-- <view class="topic-page-list-item_details_username">{{ item.user.username }}</view> -->
+              <!-- <view class="topic-page-list-item_details_username">{{ item.user.username }}</view> -->
+              <!-- 获取数组下标，得到排名序号 -->
+              <view class="ranking">
+                <view class="figure" v-if="i > 2" :style="rankColor(i)">
+                  <h3>{{ i + 1 }}</h3>
+                </view>
+                <qui-icon
+                  v-if="i < 3"
+                  :name="rankIcon(i)"
+                  :style="rankColor(i)"
+                  size="62"
+                ></qui-icon>
+              </view>
+              <!-- 获取用户头像 -->
+              <view class="user_img" size="80" :user="{ avatarUrl: item.user.avatarUrl }">
+                <image
+                  v-if="avatarUrl"
+                  :src="item.user.avatarUrl"
+                  :class="'qui-ava qui-avatar-' + size"
+                  @error="error"
+                ></image>
+              </view>
+              <view class="fbv">
+                <h4># {{ item.content }} #</h4>
+                <navigator :url="'/pages/topic/index?id=' + item.lastThread[0]._jv.id">
+                  <qui-uparse
+                    class="topic-page-list-item_details_text"
+                    :content="item.lastThread[0].firstPost.summary"
+                  ></qui-uparse>
+                </navigator>
+              </view>
+            </view>
+            <qui-image
+              class="topic-page-list-item_details_image"
+              :images-list="item.lastThread[0].firstPost.images"
+              v-if="item.lastThread[0].firstPost.images.length"
+            ></qui-image>
+            <view class="topic-page-list-item_other">
+              <view class="topic-page-list-item_heat">
+                <text>
+                  {{
+                    item.view_count > 10000
+                      ? Number(item.view_count / 10000) + i18n.t('core.thousand')
+                      : item.view_count
+                  }}
+                </text>
+                {{ i18n.t('topic.hot') }}
+              </view>
+              <view class="topic-page-list-item_content">
+                <text>
+                  {{
+                    item.thread_count > 1000
+                      ? Number(item.thread_count / 1000) + 'k'
+                      : item.thread_count
+                  }}
+                </text>
+                {{ i18n.t('core.content') }}
+              </view>
+            </view>
           </view>
-          <navigator :url="'/pages/topic/index?id=' + item.lastThread[0]._jv.id">
-            <qui-uparse
-              class="topic-page-list-item_details_text"
-              :content="item.lastThread[0].firstPost.summary"
-            ></qui-uparse>
-          </navigator>
-          <qui-image
-            class="topic-page-list-item_details_image"
-            :images-list="item.lastThread[0].firstPost.images"
-            v-if="item.lastThread[0].firstPost.images.length"
-          ></qui-image>
-        </view>
-        <view class="topic-page-list-item_other" style="padding-left: 0.5rem;">
+          <!-- <view class="topic-page-list-item_other" style="padding-left: 0.5rem;">
           <view class="topic-page-list-item_heat">
             <text>
               {{
@@ -84,8 +159,9 @@
                   : item.thread_count
               }}
             </text>
-            {{ i18n.t('core.content') }}            
+            {{ i18n.t('core.content') }}
           </view>
+        </view> -->
         </view>
       </view>
     </view>
@@ -95,10 +171,26 @@
 </template>
 
 <script>
+import user from '@/mixin/user';
+import stringToColor from '@/utils/stringToColor';
+
 let timer = null;
 let currentPage = 1;
+const sizes = {
+  80: 'font-size: 48rpx;line-height: 80rpx;',
+  70: 'font-size: 44rpx;line-height: 70rpx;',
+  60: 'font-size: 40rpx;line-height: 60rpx;',
+  50: 'font-size: 36rpx;line-height: 50rpx;',
+};
 
 export default {
+  mixins: [user],
+  props: {
+    size: {
+      type: [Number, String],
+      default: 80,
+    },
+  },
   data() {
     return {
       dropDownShow: false,
@@ -108,8 +200,19 @@ export default {
         contentdown: this.i18n.t('topic.noMoreData'),
       },
       keyword: '',
-      sort: '-viewCount'
+      sort: '-viewCount',
+      isShow: true,
     };
+  },
+  computed: {
+    avatarUrl() {
+      return this.user.avatarUrl && this.user.avatarUrl.indexOf('/static/noavatar.gif') !== 0;
+    },
+    usernameAt() {
+      return this.user.username
+        ? this.user.username.charAt(0).toUpperCase()
+        : this.i18n.t('core.noavatar');
+    },
   },
   created() {
     this.ontrueGetList();
@@ -118,6 +221,42 @@ export default {
     });
   },
   methods: {
+    // 获取数组下标
+    // indexbtn(i) {
+    //   console.log(i);
+    // },
+    rankColor(i) {
+      if (i === 0) {
+        return { color: '#cc000a' };
+      }
+      if (i === 1) {
+        return { color: '#a8a8a8' };
+      }
+      if (i === 2) {
+        return { color: '#e27c2a' };
+      }
+    },
+    rankIcon(i) {
+      if (i === 0) {
+        return 'icon-guanjun2';
+      }
+      if (i === 1) {
+        return 'icon-yajun';
+      }
+      if (i === 2) {
+        return 'icon-jijun3';
+      }
+    },
+    style() {
+      const color = stringToColor(this.usernameAt);
+      return `background-color: #${color};${sizes[this.size]}`;
+    },
+    error() {
+      this.user.avatarUrl = false;
+    },
+    click() {
+      this.$emit('click');
+    },
     toggleDropDown() {
       this.dropDownShow = !this.dropDownShow;
     },
@@ -181,10 +320,10 @@ export default {
 @import '@/styles/base/variable/global.scss';
 .dropDownBox {
   position: absolute;
-  top: 50rpx;
-  right: -20rpx;
+  top: 430rpx;
+  right: 20rpx;
   z-index: 10;
-  width: 180rpx;
+  width: 140rpx;
   padding: 10rpx;
   text-align: center;
   background: --color(--qui-BG-2);
@@ -231,18 +370,21 @@ $otherHeight: 292rpx;
   color: #333;
 }
 .topic-list-page-header {
-  margin: 24rpx;
+  align-items: center;
+  justify-content: space-between;
   &_title {
-    float: left;
+    align-items: center;
     margin: 20rpx;
-    margin-bottom: 8rpx;
-    font-size: 28rpx;
+    margin-bottom: 4rpx;
+    // font-size: 28rpx;
+    letter-spacing: 8rpx;
+  }
+  h2 {
+    margin-left: 10rpx;
   }
   &_sortBox {
-    position: relative;
-    float: right;
     margin: 20rpx;
-    margin-bottom: 8rpx;
+    margin-bottom: 4rpx;
     font-size: 28rpx;
     color: #1878f3;
   }
@@ -251,10 +393,11 @@ $otherHeight: 292rpx;
   }
 }
 .topic-page-list-item {
-  padding: 0 30rpx;
+  padding: 10rpx 30rpx;
   margin: 20rpx 0;
   background: --color(--qui-BG-2);
-  border-radius: 6rpx;
+  border-top-left-radius: 25rpx;
+  border-top-right-radius: 25rpx;
   box-shadow: 0 4rpx 8rpx rgba(255, 255, 255, 0.05);
   box-sizing: border-box;
   &_title {
@@ -272,32 +415,68 @@ $otherHeight: 292rpx;
     }
   }
   &_details {
-    margin: 20rpx 0;
-    background: --color(--qui-BG-ED);
-    padding: 20rpx;
-    border-radius: 10rpx;
+    margin: 10rpx 0;
+    // background: --color(--qui-BG-ED);
+    padding: 10rpx 10rpx 10rpx 20rpx;
+    position: relative;
     &_username {
       font-size: 24rpx;
       line-height: 50rpx;
       margin-left: 20rpx;
     }
+    h4 {
+      padding-left: 10rpx;
+      padding-bottom: 10rpx;
+    }
     &_text {
-      margin-top: 6rpx;
-      overflow: hidden;
-      font-size: 24rpx;
-      color: --color(--qui-FC-333);
+      // margin-top: 6rpx;
+      // overflow: hidden;
+      // font-size: 24rpx;
+      // color: --color(--qui-FC-333);
+      // text-overflow: ellipsis;
+      // -webkit-line-clamp: 2;
+      margin-left: 10rpx;
+      width: 100%;
+      height: 100%;
       text-overflow: ellipsis;
-      -webkit-line-clamp: 2;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      text-align: justify;
+      font-size: 18rpx;
+      color: --color(--qui-FC-333);
     }
   }
+
   &_heat,
   &_content {
-    margin-right: 37rpx;
+    margin-right: 25rpx;
     font-size: 24rpx;
     color: --color(--qui-FC-AAA);
   }
   &_other {
     display: flex;
+    padding-left: 5rpx;
+    padding-top: 10rpx;
+  }
+}
+.ranking {
+  position: absolute;
+  top: -6.5%;
+  left: 1.5%;
+  z-index: 10;
+  .figure {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50rpx;
+    height: 50rpx;
+    border-radius: 25rpx;
+    background-color: #ccc;
+    color: #fff;
+    top: 10%;
+    font-size: 26rpx;
   }
 }
 .topic-content-item {
@@ -385,7 +564,69 @@ $otherHeight: 292rpx;
     }
   }
 }
+
 .topic-page-list-item_details_text {
   text-align: justify;
+}
+.topic_list {
+  display: flex;
+  width: 100vw;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(to top, #f57c1a, rgb(243, 243, 3) 70%);
+  .topic_center {
+    padding: 50rpx;
+    align-items: center;
+    justify-content: center;
+    .topic_zhuanshi {
+      margin-top: 40rpx;
+    }
+    .topic_text {
+      align-items: center;
+      justify-content: center;
+      margin-top: -60rpx;
+      .icon-star {
+        color: #fff;
+      }
+      h2 {
+        padding: 0 10rpx 0 10rpx;
+        font-size: 70rpx;
+        color: #fff;
+        letter-spacing: 10rpx;
+      }
+    }
+  }
+}
+.qui-avatar {
+  position: relative;
+}
+.qui-avatar .avatar,
+.qui-ava {
+  border-radius: 15rpx;
+  margin-right: 10rpx;
+}
+
+.qui-avatar-80 {
+  width: 140rpx;
+  height: 140rpx;
+}
+.qui-avatar-70 {
+  width: 90rpx;
+  height: 90rpx;
+}
+.qui-avatar-60 {
+  width: 70rpx;
+  height: 70rpx;
+}
+.qui-avatar-50 {
+  width: 60rpx;
+  height: 60rpx;
+}
+
+.qui-avatar .avatar {
+  color: #fff;
+  text-align: center;
+  background-color: #e7edf3;
 }
 </style>

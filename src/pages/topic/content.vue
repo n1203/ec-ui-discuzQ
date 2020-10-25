@@ -3,7 +3,7 @@
     <qui-page-message v-if="!query.id || loadedErr"></qui-page-message>
     <view v-else class="scroll-y">
       <view class="topic-content-header">
-        <view class="topic-content-header_title">#{{ topic.content }}#</view>
+        <view class="topic-content-header_title"># {{ topic.content }} #</view>
         <navigator url="/pages/topic/list">
           <view class="topic-content-header_toAll">{{ i18n.t('topic.allTopics') }} ></view>
         </navigator>
@@ -19,7 +19,7 @@
           <view class="details_title">
             <qui-icon
               class="post-box__hd-l__icon"
-              name="icon-share1"
+              name="icon-fenxiang"
               size="26"
               color="#777"
             ></qui-icon>

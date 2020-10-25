@@ -43,8 +43,8 @@
               class="text"
               :name="
                 (followerItem.fromUser && followerItem.fromUser.follow) == 0
-                  ? 'icon-follow'
-                  : 'icon-each-follow'
+                  ? 'icon-guanzhu'
+                  : 'icon-guanzhu_ed'
               "
               size="24"
               :color="

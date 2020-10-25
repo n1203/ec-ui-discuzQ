@@ -312,7 +312,7 @@
           <view class="popup-dialog__cont">
             <qui-icon
               class="popup-dialog__cont-rmb"
-              name="icon-rmb"
+              name="icon-qianbao"
               size="40"
               v-if="setType === 'pay'"
             ></qui-icon>

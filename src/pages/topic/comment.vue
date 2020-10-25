@@ -37,8 +37,8 @@
                     @tap="post.user.follow === 0 ? addFollow(post.user) : deleteFollow(post.user)"
                   >
                     <qui-icon
-                      class="icon-follow"
-                      :name="post.user.follow === 0 ? 'icon-follow' : 'icon-each-follow'"
+                      class="icon-guanzhu"
+                      :name="post.user.follow === 0 ? 'icon-guanzhu' : 'icon-guanzhu_ed'"
                       :color="
                         post.user.follow === 0
                           ? '#777'
@@ -1575,7 +1575,7 @@ page {
   text-align: right;
   flex-shrink: 0;
 
-  .icon-follow {
+  .icon-guanzhu {
     margin-right: 7rpx;
     font-size: $fg-f26;
   }

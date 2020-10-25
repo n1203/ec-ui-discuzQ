@@ -16,7 +16,7 @@
           class="ft-box-icon"
           @click="select(item, index)"
           :name="item.tabsIcon"
-          size="42"
+          size="50"
           v-if="item.tabsName"
           :class="{ select: true, active: index === footerIndex }"
         ></qui-icon>
@@ -28,7 +28,11 @@
           class="ft-box-spacal"
           @click="footerOpen"
         />
-        <text class="ft-box-content" :class="{ select: true, active: index === footerIndex }">
+        <text
+          class="ft-box-content"
+          @click="select(item, index)"
+          :class="{ select: true, active: index === footerIndex }"
+        >
           {{ item.tabsName }}
         </text>
         <view v-if="redCircle && item.id === 4" name="icon-circle" class="red-circle"></view>
@@ -306,7 +310,7 @@ export default {
   // position: absolute;
   position: fixed;
   bottom: 0;
-  z-index: 1;
+  z-index: 20;
   display: flex;
   width: 100%;
   height: 90rpx;
@@ -334,8 +338,8 @@ export default {
 }
 .ft-box-content {
   align-self: center;
-  margin-top: 10rpx;
-  font-size: 26rpx;
+  margin-top: 8rpx;
+  font-size: 16rpx;
   line-height: 26rpx;
   color: --color(--qui-FC-777);
   text-align: center;

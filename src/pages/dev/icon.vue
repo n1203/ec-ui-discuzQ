@@ -48,7 +48,7 @@ export default {
         'icon-collection', // 五角星
         'icon-collectioned', // 实心五角星
         'icon-waring', // ！
-        'icon-follow', // 爱心➕
+        'icon-guanzhu', // 爱心➕
         'icon-each-follow', // 爱心
         'icon-cancel-follow', // 爱心➖
         'icon-selected', // 圆型实心勾

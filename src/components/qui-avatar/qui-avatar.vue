@@ -8,7 +8,7 @@
       @error="error"
     ></image>
     <view v-else-if="styleText" :class="'avatar' + ' qui-avatar-' + size" :style="styleText">
-      {{ usernameAt }}
+      <text>{{ usernameAt }}</text>
     </view>
     <image v-if="isReal" src="@/static/auth.svg" class="auth-icon"></image>
   </view>
@@ -76,11 +76,16 @@ export default {
 
 <style lang="scss" scoped>
 .qui-avatar {
-  position: relative;
+  // position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .qui-avatar .avatar,
 .qui-ava {
   border-radius: 50%;
+  justify-content: center;
+  align-items: center;
 }
 .qui-avatar-120 {
   width: 120rpx;
@@ -109,7 +114,10 @@ export default {
 
 .qui-avatar .avatar {
   color: #fff;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  font-size: 50rpx;
+  justify-content: center;
   background-color: #e7edf3;
 }
 .auth-icon {

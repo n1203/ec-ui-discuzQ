@@ -96,7 +96,6 @@
               <!-- 获取用户头像 -->
               <view class="user_img" size="80" :user="{ avatarUrl: item.user.avatarUrl }">
                 <image
-                  v-if="avatarUrl"
                   :src="item.user.avatarUrl"
                   :class="'qui-ava qui-avatar-' + size"
                   @error="error"

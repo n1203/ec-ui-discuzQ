@@ -66,9 +66,9 @@
                     thread.user.follow === 0 ? addFollow(thread.user) : deleteFollow(thread.user)
                   "
                 >
-                  <qui-icon
-                    class="icon-follow"
-                    :name="thread.user.follow === 0 ? 'icon-follow' : 'icon-each-follow'"
+                  <!-- <qui-icon
+                    class="icon-guanzhu"
+                    :name="thread.user.follow === 0 ? 'icon-guanzhu' : 'icon-guanzhu_ed'"
                     :color="
                       thread.user.follow === 0
                         ? '#777'
@@ -76,6 +76,11 @@
                         ? themeColor
                         : '#ff8888'
                     "
+                  ></qui-icon> -->
+                  <qui-icon
+                    class="icon-guanzhu"
+                    :name="thread.user.follow === 0 ? 'icon-guanzhu' : 'icon-guanzhu_ed'"
+                    :color="thread.user.follow === 0 ? '#777' : '#ff8888'"
                   ></qui-icon>
                   <text>
                     {{
@@ -336,7 +341,7 @@
               </text>
             </view>
             <view class="popup-dialog__cont">
-              <qui-icon class="popup-dialog__cont-rmb" name="icon-rmb" size="40"></qui-icon>
+              <qui-icon class="popup-dialog__cont-rmb" name="icon-qianbao" size="40"></qui-icon>
               <input
                 class="popup-dialog__cont-input"
                 v-model="inputPrice"
@@ -2887,9 +2892,10 @@ page {
   line-height: 1;
   text-align: right;
   flex-shrink: 0;
-  .icon-follow {
+  .icon-guanzhu {
     margin-right: 7rpx;
     font-size: $fg-f26;
+    color: red;
   }
 }
 // .scroll-y {

@@ -145,7 +145,7 @@
             <qui-cell-item
               :title="i18n.t('profile.circlemanagement')"
               arrow
-              left-icon="icon-message"
+              left-icon="icon-guanli"
               :border="false"
             ></qui-cell-item>
           </navigator>

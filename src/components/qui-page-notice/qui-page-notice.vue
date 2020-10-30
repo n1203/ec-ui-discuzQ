@@ -37,7 +37,7 @@
               <view class="ec-notice-box__item__icon">
                 <qui-icon
                   v-if="item.unReadNum && item.unReadNum > 0"
-                  name="icon-circle"
+                  name="icon-dian"
                   class="red-circle ec-notice-box__item__icon__circle"
                   color="red"
                   size="14"
@@ -51,7 +51,7 @@
             <!-- <qui-cell-item :title="i18n.t(item.title)" :border="item.border" arrow slot-right>
               <qui-icon
                 v-if="item.unReadNum && item.unReadNum > 0"
-                name="icon-circle"
+                name="icon-dian"
                 class="red-circle"
                 color="red"
                 size="14"
@@ -107,7 +107,7 @@
               <view class="dialog-box__header__r">
                 <view class="dialog-box__header__info__time">{{ dialog.time }}</view>
                 <qui-icon
-                  name="icon-circle"
+                  name="icon-dian"
                   class="red-circle"
                   v-if="dialog.readAt === null"
                   color="red"
@@ -149,7 +149,7 @@ export default {
           type: 'related',
           unReadNum: 0,
           border: true,
-          icon: 'icon-weimingming',
+          icon: 'icon-notice-aite',
           color: '#fd9809',
         },
         {
@@ -158,7 +158,7 @@ export default {
           type: 'replied',
           unReadNum: 0,
           border: true,
-          icon: 'icon-bianpinghuatubiaosheji-1',
+          icon: 'icon-huifuxiaoxi',
           color: '#16acff',
         },
         {
@@ -167,8 +167,8 @@ export default {
           type: 'liked',
           unReadNum: 0,
           border: true,
-          icon: 'icon-bianpinghuatubiaosheji-',
-          color: '#16acff',
+          icon: 'icon-guanzhu-',
+          color: '#ee0755',
         },
         {
           id: 4,
@@ -176,7 +176,7 @@ export default {
           type: 'rewarded,withdrawal',
           unReadNum: 0,
           border: true,
-          icon: 'icon-bianpinghuatubiaosheji-3',
+          icon: 'icon-hongbao111',
           color: '#ee0755',
         },
         {
@@ -185,8 +185,8 @@ export default {
           type: 'system',
           unReadNum: 0,
           border: false,
-          icon: 'icon-bianpinghuatubiaosheji-2',
-          color: '#f02659',
+          icon: 'icon-xitongtongzhi',
+          color: '#fec90a',
         },
       ],
       loadingType: 'more', // 上拉加载状态
@@ -447,11 +447,11 @@ export default {
     &__icon {
       // background: #1878f3;
       text-align: center;
-      width: 40px;
+      // width: 40px;
       // height: 40px;
       margin: 0 auto;
       border-radius: 25px;
-      line-height: 40px;
+      // line-height: 40px;
       position: relative;
       &__circle {
         position: absolute;

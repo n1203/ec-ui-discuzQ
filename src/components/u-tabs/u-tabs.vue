@@ -308,7 +308,7 @@ scroll-view {
 
 .u-scroll-box {
   position: relative;
-  margin-top: 0.5rem;
+  // margin-top: 0.5rem;
 }
 
 /* #ifdef H5 */

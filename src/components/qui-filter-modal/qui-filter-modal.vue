@@ -185,6 +185,7 @@ export default {
   max-height: 800rpx;
   padding: 30rpx;
   overflow-y: auto;
+  border-radius: 25rpx;
   background: --color(--qui-BG-2);
   box-sizing: border-box;
   animation: fadeZoom 0.15s linear;
@@ -209,7 +210,7 @@ export default {
   color: --color(--qui-BG-2);
   text-align: center;
   background: --color(--qui-BG-BTN);
-  border-radius: 5rpx;
+  border-radius: 15rpx;
 }
 .filter-modal__content__item {
   text-align: left;
@@ -219,19 +220,20 @@ export default {
   padding-bottom: 40rpx;
   font-size: $fg-f28;
   font-weight: bold;
+  
 }
 .filter-modal__content__item-detail {
   display: inline-block;
-  height: 70rpx;
+  height: 60rpx;
   padding: 0 20rpx;
   margin-right: 20rpx;
   margin-bottom: 20rpx;
   font-size: $fg-f26;
-  line-height: 70rpx;
+  line-height: 60rpx;
   color: --color(--qui-FC-TAG);
   background: --color(--qui-BG-F9F);
   border: 2rpx solid --color(--qui-BOR-CCDD);
-  border-radius: 7rpx;
+  border-radius: 15rpx;
   &.active {
     color: --color(--qui-FC-FFF);
     background: --color(--qui-MAIN);

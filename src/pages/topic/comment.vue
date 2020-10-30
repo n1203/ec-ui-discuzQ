@@ -74,11 +74,11 @@
                           {{ thread.user.username }}
                         </span>
                         <span
-                          class="thread__header__title__isAdmin"
+                          class="thread__header__title__isAdmin badge"
                           v-for="(group, gindex) in thread.user.groups"
                           :key="gindex"
                         >
-                          {{ group.isDisplay ? `（${group.name}）` : '' }}
+                          {{ group.isDisplay ? `${group.name}` : '' }}
                         </span>
                       </view>
                       <view class="thread__header__title__time">
@@ -126,7 +126,7 @@
                   @click="postLikeClick(post._jv.id, '1', post.canLike, post.isLiked)"
                 >
                   <qui-icon
-                    :name="post.isLiked ? 'icon-liked' : 'icon-like'"
+                    :name="post.isLiked ? 'icon-dianzan_2' : 'icon-dianzan'"
                     class="qui-icon"
                   ></qui-icon>
                   <view class="ft-child-word">
@@ -134,7 +134,7 @@
                   </view>
                 </view>
                 <view class="det-con-ft-child" @click="replyComment(post._jv.id, thread.canReply)">
-                  <qui-icon name="icon-comments" class="qui-icon"></qui-icon>
+                  <qui-icon name="icon-xiaoxi1" class="qui-icon"></qui-icon>
                   <view>{{ t.reply }}</view>
                 </view>
               </view>
@@ -1496,6 +1496,7 @@ page {
         display: flex;
         flex-direction: row;
         justify-content: flex-start;
+        align-items: center;
         height: 37rpx;
         margin-bottom: 10rpx;
         margin-left: 2rpx;
@@ -1560,6 +1561,19 @@ page {
       word-break: break-all;
     }
   }
+}
+.badge {
+  height: 18px;
+  line-height: 18px;
+  align-items: center;
+  background: #fff !important;
+  border: #ccc 1px solid;
+  border-radius: 10px;
+  font-size: 16px;
+  margin-left: -10px;
+  margin-bottom: 10rpx;
+  padding: 8rpx 12rpx;
+  transform: scale(0.5);
 }
 .addFine {
   position: absolute;

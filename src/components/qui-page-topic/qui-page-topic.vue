@@ -86,13 +86,14 @@
                 <view class="figure" v-if="i > 2" :style="rankColor(i)">
                   <h3>{{ i + 1 }}</h3>
                 </view>
-                <qui-icon
-                  v-if="i < 3"
-                  :name="rankIcon(i)"
-                  :style="rankColor(i)"
-                  size="62"
-                ></qui-icon>
               </view>
+              <qui-icon
+                v-if="i < 3"
+                :name="rankIcon(i)"
+                :style="rankColor(i)"
+                class="ranking ranking_tothree"
+                size="75"
+              ></qui-icon>
               <!-- 获取用户头像 -->
               <view class="user_img" size="80" :user="{ avatarUrl: item.user.avatarUrl }">
                 <image
@@ -226,24 +227,24 @@ export default {
     // },
     rankColor(i) {
       if (i === 0) {
-        return { color: '#cc000a' };
+        return { color: 'red', left: '-1.3%', top: '-6%' };
       }
       if (i === 1) {
-        return { color: '#a8a8a8' };
+        return { color: '#f8af2a', left: '-1.3%', top: '-6%' };
       }
       if (i === 2) {
-        return { color: '#e27c2a' };
+        return { color: '#b7804d', left: '-1.3%', top: '-6%' };
       }
     },
     rankIcon(i) {
       if (i === 0) {
-        return 'icon-guanjun2';
+        return 'icon-guanjun1';
       }
       if (i === 1) {
         return 'icon-yajun';
       }
       if (i === 2) {
-        return 'icon-jijun3';
+        return 'icon-jijun';
       }
     },
     style() {
@@ -428,12 +429,6 @@ $otherHeight: 292rpx;
       padding-bottom: 10rpx;
     }
     &_text {
-      // margin-top: 6rpx;
-      // overflow: hidden;
-      // font-size: 24rpx;
-      // color: --color(--qui-FC-333);
-      // text-overflow: ellipsis;
-      // -webkit-line-clamp: 2;
       margin-left: 10rpx;
       width: 100%;
       height: 100%;
@@ -461,8 +456,6 @@ $otherHeight: 292rpx;
 }
 .ranking {
   position: absolute;
-  top: -6.5%;
-  left: 1.5%;
   z-index: 10;
   .figure {
     display: flex;
@@ -470,7 +463,7 @@ $otherHeight: 292rpx;
     justify-content: center;
     width: 50rpx;
     height: 50rpx;
-    border-radius: 25rpx;
+    border-radius: 15rpx;
     background-color: #ccc;
     color: #fff;
     top: 10%;

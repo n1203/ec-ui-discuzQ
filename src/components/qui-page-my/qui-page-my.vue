@@ -423,14 +423,14 @@ $height: calc(100vh - 260rpx);
   // background: red;
 }
 .badge {
-  font-size: 10rpx;
-  line-height: 14px;
+  font-size: 16rpx;
+  line-height: 16rpx;
   align-items: center;
   background: #fff !important;
   color: yellow;
   border-radius: 20rpx;
   margin-left: 10rpx;
-  padding: 3px 6px;
+  padding: 8rpx 10rpx;
   transform: scale(0.8);
 }
 .管理员 {

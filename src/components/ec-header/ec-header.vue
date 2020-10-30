@@ -257,7 +257,7 @@ export default {
 }
 .ipt {
   display: flex;
-  width: 70%;
+  width: 75%;
   align-items: center;
   background-color: rgba(104, 96, 96, 0.05);
   border-radius: 50px;

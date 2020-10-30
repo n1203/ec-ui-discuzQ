@@ -35,7 +35,7 @@
         >
           {{ item.tabsName }}
         </text>
-        <view v-if="redCircle && item.id === 4" name="icon-circle" class="red-circle"></view>
+        <view v-if="redCircle && item.id === 4" name="icon-dian" class="red-circle"></view>
       </view>
 
       <!-- <view class="ft-box-spacal" @click="footerOpen">

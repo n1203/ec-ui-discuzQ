@@ -12,9 +12,13 @@
       <view class="cell-item__body__left" v-if="slotLeft">
         <slot></slot>
       </view>
-      <view class="cell-item__body__content" @tap="contentClick">
+      <view class="cell-item__body__content fbh" @tap="contentClick">
         <view class="cell-item__body__content-title" v-if="title" v-text="title"></view>
-        <view class="cell-item__body__content-brief" v-if="brief" v-text="brief"></view>
+        <view
+          class="cell-item__body__content-brief identityAdmin"
+          v-if="brief"
+          v-text="brief"
+        ></view>
       </view>
       <view class="cell-item__body__right" v-if="slotRight">
         <slot></slot>
@@ -189,5 +193,18 @@ export default {
   padding: 20rpx;
   border-radius: 100rpx;
   background-blend-mode: overlay, hard-light, normal;
+}
+.identityAdmin {
+  height: 18px;
+  line-height: 18px;
+  align-items: center;
+  background: #fff !important;
+  border: #ccc 1px solid;
+  border-radius: 10px;
+  font-size: 14px;
+  margin-left: -14rpx;
+  margin-top: -10rpx;
+  padding: 6rpx 14rpx;
+  transform: scale(0.5);
 }
 </style>

@@ -47,7 +47,7 @@
           :current="categoryIndex"
           @change="toggleTab"
           is-scroll="isScroll"
-          height="72"
+          height="70"
           active-color="#1878F3"
         ></u-tabs>
         <view class="fbh fbje icon_screen">
@@ -205,6 +205,7 @@
         :item="item"
         @remove="removeContentById"
       ></qui-content>
+
       <qui-load-more :status="loadingType"></qui-load-more>
     </view>
     <!-- #ifdef H5-->
@@ -430,6 +431,7 @@ export default {
     },
   },
   created() {
+    console.log('user', this.user);
     if (['http://localhost:8080/', 'https://q.e-spy.cn/'].indexOf(window.location.href) !== -1) {
       this.isPublish = true;
     }
@@ -560,7 +562,6 @@ export default {
       setCategoryId: 'session/SET_CATEGORYID',
       setCategoryIndex: 'session/SET_CATEGORYINDEX',
     }),
-
     // 删除方法
     removeContentById(item) {
       // 过滤item._jv.id
@@ -1088,7 +1089,7 @@ $padding-bottom: 160rpx;
 }
 .scroll-tab {
   z-index: 100;
-  height: 120rpx;
+  // height: 120rpx;
   text-align: center;
   white-space: nowrap;
   // border-bottom: 2rpx solid --color(--qui-BOR-EEE);
@@ -1173,7 +1174,7 @@ $padding-bottom: 160rpx;
 }
 .icon_screen {
   position: absolute;
-  top: 28%;
+  top: 14%;
   right: 2%;
 }
 

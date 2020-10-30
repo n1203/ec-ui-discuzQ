@@ -767,6 +767,7 @@ export default {
   border-radius: 10px;
   font-size: 16px;
   margin-left: -10px;
+  margin-bottom: 10rpx;
   padding: 10rpx 10rpx;
   transform: scale(0.5);
 }

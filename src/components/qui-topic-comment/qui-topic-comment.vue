@@ -15,7 +15,7 @@
             </text>
 
             <text
-              class="themeItem__header__title__isAdmin"
+              class="themeItem__header__title__isAdmin badge"
               v-for="(group, index) in userRole"
               :key="index"
             >
@@ -313,6 +313,7 @@ export default {
         height: 37rpx;
         margin-bottom: 10rpx;
         margin-left: 2rpx;
+        align-items: center;
         font-size: 28rpx;
         line-height: 37rpx;
       }
@@ -393,6 +394,19 @@ export default {
       }
     }
   }
+}
+.badge {
+  height: 18px;
+  line-height: 18px;
+  align-items: center;
+  background: #fff !important;
+  border: #ccc 1px solid;
+  border-radius: 10px;
+  font-size: 16px;
+  margin-left: -14rpx;
+  margin-bottom: 10rpx;
+  padding: 8rpx 12rpx;
+  transform: scale(0.5);
 }
 .themeItem__footer {
   display: flex;

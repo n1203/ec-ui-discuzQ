@@ -6,6 +6,7 @@
       :currentindex="index"
       :thread="item"
       :scroll-top="scrollTopPosition"
+      :is-visible="false"
       @toTopic="toTopic"
       @greatCallBack="greatCallBack"
       @handleClickShare="handleClickShare"
@@ -26,6 +27,10 @@ export default {
     scrollTop: {
       type: Number,
       default: 0,
+    },
+    isVisible: {
+      type: Boolean,
+      default: true,
     },
   },
   data() {

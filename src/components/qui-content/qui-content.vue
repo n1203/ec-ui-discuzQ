@@ -7,6 +7,7 @@
       size="32"
       color="#9999"
       @click="remove(thread)"
+      v-if="isVisible"
     ></qui-icon>
     <image
       class="addFine"
@@ -308,6 +309,11 @@ export default {
       },
       default: '1',
     },
+    // 定义删除图标显示状态
+    isVisible: {
+      type: Boolean,
+      default: true,
+    },
     // 用户名
     userName: {
       type: String,
@@ -503,7 +509,6 @@ export default {
       currentBottom: 0,
       name: '普通会员', // 角色
       isClose: true,
-      todoList: [],
     };
   },
   onShow() {
@@ -596,7 +601,20 @@ export default {
     },
     // 点击删除icon来删除列表
     remove(evt) {
-      this.$emit('remove', evt);
+      const that = this;
+      uni.showModal({
+        title: '提示',
+        content: '您确定要执行该操作吗？该操作会永久删除哦！',
+        success(res) {
+          if (res.confirm) {
+            that.$emit('remove', evt);
+            // console.log('用户点击确定');
+          } else if (res.cancel) {
+            // console.log('用户点击取消');
+          }
+        },
+      });
+      // this.$emit('remove', evt);
     },
     // 点击内容区域跳转到详情页
     contentClick(evt) {
@@ -955,9 +973,10 @@ export default {
   background: #fff !important;
   color: yellow;
   border-radius: 10px;
-  font-size: 16px;
-  margin-left: -10px;
-  padding: 3px 6px;
+  font-size: 24rpx;
+  margin-left: -14rpx;
+  margin-bottom: 12rpx;
+  padding: 8rpx 16rpx;
   transform: scale(0.5);
 }
 .管理员 {
@@ -994,7 +1013,11 @@ export default {
   font-size: 17px;
   text-overflow: ellipsis;
   overflow: hidden;
-  white-space: nowrap;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  text-align: justify;
+  text-justify: inter-ideograph;
 }
 .navPost .navPost_text {
   text-overflow: ellipsis;

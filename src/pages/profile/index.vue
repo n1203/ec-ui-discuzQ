@@ -74,6 +74,7 @@
               <topic
                 :user-id="userId"
                 :scroll-top="scrollTop"
+                :is-visible="false"
                 @changeFollow="changeFollow"
                 ref="topic"
                 @handleClickShare="handleClickShare"

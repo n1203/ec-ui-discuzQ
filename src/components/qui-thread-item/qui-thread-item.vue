@@ -28,6 +28,7 @@
       :duration="thread.threadVideo && thread.threadVideo.duration"
       :is-deleted="thread.isDeleted"
       :scroll-top="scrollTop"
+      :is-visible="false"
       @click="handleClickShare(thread._jv.id)"
       @handleIsGreat="
         handleIsGreat(
@@ -66,6 +67,10 @@ export default {
     // #endif
   ],
   props: {
+    isVisible: {
+      type: Boolean,
+      default: true,
+    },
     thread: {
       type: Object,
       default: () => {

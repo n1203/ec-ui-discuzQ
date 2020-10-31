@@ -21,8 +21,8 @@
           ></qui-icon>
           <qui-icon
             class="post-box__hd-l__icon"
-            name="icon-weimingming"
-            size="40"
+            name="icon-notice-aite"
+            size="45"
             color="#777"
             @click="callClick"
           ></qui-icon>

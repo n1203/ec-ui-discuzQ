@@ -165,7 +165,7 @@
             ></u-switch>
           </qui-cell-item>
         </view>
-        <view class="my-items__wrap">
+        <!-- <view class="my-items__wrap">
           <qui-cell-item
             left-icon="icon-zhongyingwenyuyan"
             :title="i18n.t('profile.enableEnLang')"
@@ -174,7 +174,7 @@
           >
             <u-switch @change="changeLangs" v-model="lang" active-color="#1E78F3"></u-switch>
           </qui-cell-item>
-        </view>
+        </view> -->
         <!-- #ifdef H5-->
         <!-- 微信内：无感模式不展示按钮，其他模式展示退出并解绑按钮，微信外：任何模式都展示退出登录按钮 -->
         <view class="logout">

@@ -83,14 +83,14 @@
               <!-- <view class="topic-page-list-item_details_username">{{ item.user.username }}</view> -->
               <!-- 获取数组下标，得到排名序号 -->
               <view class="ranking">
-                <view class="figure" v-if="i > 2" :style="rankColor(i)">
+                <view class="figure" v-if="i > 2" :style="rankColor">
                   <h3>{{ i + 1 }}</h3>
                 </view>
               </view>
               <qui-icon
                 v-if="i < 3"
                 :name="rankIcon(i)"
-                :style="rankColor(i)"
+                :style="rankColor"
                 class="ranking ranking_tothree"
                 size="75"
               ></qui-icon>
@@ -226,27 +226,65 @@ export default {
     //   console.log(i);
     // },
     rankColor(i) {
-      if (i === 0) {
-        return { color: 'red', left: '-1.3%', top: '-6%' };
-      }
-      if (i === 1) {
-        return { color: '#f8af2a', left: '-1.3%', top: '-6%' };
-      }
-      if (i === 2) {
-        return { color: '#b7804d', left: '-1.3%', top: '-6%' };
+      switch (i) {
+        case 0:
+          if (i === 0) {
+            return { color: 'red', left: '-1.3%', top: '-6%' };
+          }
+          break;
+        case 1:
+          if (i === 1) {
+            return { color: '#f8af2a', left: '-1.3%', top: '-6%' };
+          }
+          break;
+        case 2:
+          if (i === 2) {
+            return { color: '#b7804d', left: '-1.3%', top: '-6%' };
+          }
+          break;
+        default:
+          break;
       }
     },
+    // if (i === 0) {
+    //   return { color: 'red', left: '-1.3%', top: '-6%' };
+    // }
+    // if (i === 1) {
+    //   return { color: '#f8af2a', left: '-1.3%', top: '-6%' };
+    // }
+    // if (i === 2) {
+    //   return { color: '#b7804d', left: '-1.3%', top: '-6%' };
+    // }
     rankIcon(i) {
-      if (i === 0) {
-        return 'icon-guanjun1';
-      }
-      if (i === 1) {
-        return 'icon-yajun';
-      }
-      if (i === 2) {
-        return 'icon-jijun';
+      switch (i) {
+        case 0:
+          if (i === 0) {
+            return 'icon-guanjun1';
+          }
+          break;
+        case 1:
+          if (i === 1) {
+            return 'icon-yajun';
+          }
+          break;
+        case 2:
+          if (i === 2) {
+            return 'icon-jijun';
+          }
+          break;
+        default:
+          break;
       }
     },
+    // if (i === 0) {
+    //   return 'icon-guanjun1';
+    // }
+    // if (i === 1) {
+    //   return 'icon-yajun';
+    // }
+    // if (i === 2) {
+    //   return 'icon-jijun';
+    // }
     style() {
       const color = stringToColor(this.usernameAt);
       return `background-color: #${color};${sizes[this.size]}`;

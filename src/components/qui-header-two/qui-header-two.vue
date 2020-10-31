@@ -1,6 +1,7 @@
 <template>
   <view>
-    <view :class="['header', headerH5]" :style="`background: url(${backgroundHeadFullImg})`">
+    <!-- <view :class="['header', headerH5]" :style="`background: url(${backgroundHeadFullImg})`"> -->
+    <view :class="['header', headerH5]">
       <view
         class="logoBox"
         :style="headerShow ? '' : 'width:100%;position:fixed;z-index:9;top:' + 0 + 'px;'"
@@ -25,11 +26,12 @@
             </view>
           </view>
         </view> -->
-        <view
+        <!-- <view
           :style="
             `background-image: url(${backgroundHeadFullImg}); background-position-y: -120rpx;`
           "
-        >
+        > -->
+        <view class="soltbox">
           <view class="solt" id="soltNav">
             <slot></slot>
           </view>

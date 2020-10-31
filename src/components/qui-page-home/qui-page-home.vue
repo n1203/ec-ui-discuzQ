@@ -1184,7 +1184,7 @@ $padding-bottom: 160rpx;
   background: #fff;
   // margin-bottom: 0.7rem;
   .dynamic {
-    padding: 20rpx 20rpx 10rpx 20rpx;
+    padding: 6rpx 20rpx 10rpx 20rpx;
     .new {
       padding-top: 7rpx;
       padding-left: 10rpx;

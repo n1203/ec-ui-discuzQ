@@ -455,8 +455,8 @@ export default {
       position: relative;
       &__circle {
         position: absolute;
-        top: -15px;
-        right: -5px;
+        // top: -15px;
+        right: 0px;
       }
     }
     &__text {

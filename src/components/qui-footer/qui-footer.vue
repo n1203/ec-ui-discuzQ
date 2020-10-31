@@ -313,7 +313,7 @@ export default {
   z-index: 20;
   display: flex;
   width: 100%;
-  height: 90rpx;
+  height: 110rpx;
   background-color: --color(--qui-BG-2);
   box-shadow: 0 -3px 6px rgba(0, 0, 0, 0.05);
   justify-content: space-around;
@@ -322,7 +322,7 @@ export default {
   position: relative;
   display: flex;
   width: 20%;
-  height: 70rpx;
+  height: 90rpx;
   margin-top: 10rpx;
   flex-direction: column;
   justify-content: center;

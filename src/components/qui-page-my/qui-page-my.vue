@@ -427,20 +427,22 @@ $height: calc(100vh - 260rpx);
   line-height: 16rpx;
   align-items: center;
   background: #fff !important;
-  color: yellow;
+  // color: yellow;
+  border: #ccc 1px solid;
+  color: #ccc;
   border-radius: 20rpx;
   margin-left: 10rpx;
   padding: 8rpx 10rpx;
   transform: scale(0.8);
 }
-.管理员 {
-  border: #1878f3 1px solid;
-  color: #1878f3;
-}
-.普通会员 {
-  border: #ccc 1px solid;
-  color: #ccc;
-}
+// .管理员 {
+//   border: #1878f3 1px solid;
+//   color: #1878f3;
+// }
+// .普通会员 {
+//   border: #ccc 1px solid;
+//   color: #ccc;
+// }
 .my-tabs {
   // background: --color(--qui-BG-2);
   background: --color(--qui-BG-FFF);

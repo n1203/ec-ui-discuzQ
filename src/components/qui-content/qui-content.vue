@@ -36,7 +36,7 @@
                 v-if="isAdmin && themeType == '1'"
                 class="themeItem__header__title__isAdmin badge"
               >
-                <text v-for="(item, index) in userGroups" :key="index" :class="['badge', [name]]">
+                <text v-for="(item, index) in userGroups" :key="index" :class="[[name]]">
                   {{ item.isDisplay ? `${item.name}` : '' }}
                 </text>
               </text>
@@ -971,22 +971,24 @@ export default {
   line-height: 18px;
   align-items: center;
   background: #fff !important;
-  color: yellow;
+  // color: yellow;
   border-radius: 10px;
   font-size: 24rpx;
   margin-left: -14rpx;
   margin-bottom: 12rpx;
   padding: 8rpx 16rpx;
-  transform: scale(0.5);
-}
-.管理员 {
-  border: #1878f3 1px solid;
-  color: #1878f3;
-}
-.普通会员 {
   border: #ccc 1px solid;
   color: #ccc;
+  transform: scale(0.5);
 }
+// .管理员 {
+//   border: #1878f3 1px solid;
+//   color: #1878f3;
+// }
+// .普通会员 {
+//   border: #ccc 1px solid;
+//   color: #ccc;
+// }
 .themeItem__footer {
   margin: -0.7rem 2rem 0 2rem;
 }

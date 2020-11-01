@@ -20,6 +20,18 @@
         status-bar
       ></uni-nav-bar2>
     </view> -->
+    <!-- <view class="status_bar">
+      这里是状态栏
+    </view> -->
+    <!-- #ifdef MP-WEIXIN -->
+    <uni-nav-bar
+      :title="i18n.t('home.tabsCircle')"
+      fixed
+      :color="navTheme === $u.light() ? '#000000' : '#ffffff'"
+      :background-color="navTheme === $u.light() ? '#ffffff' : '#2e2f30'"
+      status-bar
+    ></uni-nav-bar>
+    <!-- #endif -->
     <ec-header />
     <qui-header-two
       :head-img="forums.set_site ? forums.set_site.site_header_logo : ''"
@@ -40,7 +52,11 @@
     >
       <!-- <qui-search /> -->
       <!-- :style="headerShow ? '' : 'width:100%;position:fixed;z-index:9;top:' + navbarHeight + 'px;'" -->
-      <view class="nav" id="navId">
+      <view
+        class="nav"
+        id="navId"
+        :style="headerShow ? '' : 'width:100%;position:fixed;z-index:9;top:' + navbarHeight + 'px;'"
+      >
         <u-tabs
           class="scroll-tab"
           :list="categories"
@@ -1200,5 +1216,9 @@ $padding-bottom: 160rpx;
       }
     }
   }
+}
+.status_bar {
+  height: var(--status-bar-height);
+  width: 100%;
 }
 </style>

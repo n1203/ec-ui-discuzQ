@@ -104,7 +104,7 @@ export default {
     },
     iconColor: {
       type: String,
-      default: '#000',
+      default: '',
     },
     iconBackgroundColor: {
       type: String,

@@ -475,7 +475,8 @@ export default {
   width: 100%;
   height: 100rpx;
   align-items: center;
-  background: #ffffff;
+  // background: #ffffff;
+  background: --color(--qui-BG-40);
   margin-top: 20rpx;
   // margin-bottom: 10rpx;
   .conversation_text {

@@ -1016,7 +1016,7 @@ $padding-bottom: 160rpx;
   z-index: 1;
   width: 100%;
   overflow: hidden;
-  // background: --color(--qui-BG-2);
+  background: --color(--qui-BG-2);
   /* #ifdef MP-WEIXIN */
   // border-bottom: 2rpx solid --color(--qui-BOR-ED);
   /* #endif */
@@ -1030,8 +1030,8 @@ $padding-bottom: 160rpx;
     float: right;
     width: 80rpx;
     height: 70rpx;
-    // background: --color(--qui-BG-2);
-    background: --color(--qui-BG-HIGH-LIGHT);
+    background: --color(--qui-BG-2);
+    // background: --color(--qui-BG-HIGH-LIGHT);
     &__icon {
       margin-left: 24rpx;
       line-height: 70rpx;
@@ -1197,14 +1197,13 @@ $padding-bottom: 160rpx;
 .updata_box {
   width: 100%;
   height: 100%;
-  background: #fff;
+  background: --color(--qui-BG-40);
   // margin-bottom: 0.7rem;
   .dynamic {
     padding: 6rpx 20rpx 10rpx 20rpx;
     .new {
       padding-top: 7rpx;
       padding-left: 10rpx;
-      // background: red;
       .newtext {
         margin-top: 12rpx;
         font-size: 14rpx;
@@ -1216,9 +1215,5 @@ $padding-bottom: 160rpx;
       }
     }
   }
-}
-.status_bar {
-  height: var(--status-bar-height);
-  width: 100%;
 }
 </style>

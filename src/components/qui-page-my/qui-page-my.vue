@@ -88,7 +88,6 @@
             <view class="fbh themlist">
               <qui-cell-item
                 left-icon="icon-wenzhang_2"
-                icon-color="#000"
                 :title="i18n.t('profile.myprofile')"
                 arrow
                 icon-background-color=""
@@ -503,6 +502,6 @@ $height: calc(100vh - 260rpx);
   // padding-left: 5.3rem;
   position: absolute;
   right: 1.8rem;
-  color: #fff;
+  // color: #fff;
 }
 </style>

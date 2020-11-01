@@ -366,7 +366,7 @@ export default {
 }
 .red-circle {
   position: absolute;
-  top: -10rpx;
+  top: -4rpx;
   left: calc(50% + 18rpx);
   width: 14rpx;
   height: 14rpx;

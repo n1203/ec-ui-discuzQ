@@ -467,7 +467,7 @@ export default {
 }
 .notice-box__list {
   // margin: 20rpx 0;
-  padding: 20rpx 0;
+  padding: 20rpx 20rpx;
 }
 
 .conversation {

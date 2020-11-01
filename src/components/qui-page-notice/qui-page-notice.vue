@@ -108,7 +108,7 @@
                 <view class="dialog-box__header__info__time">{{ dialog.time }}</view>
                 <qui-icon
                   name="icon-dian"
-                  class="red-circle"
+                  class="red-circle notice_red"
                   v-if="dialog.readAt === null"
                   color="red"
                   size="14"
@@ -342,7 +342,7 @@ export default {
   }
 
   &__list {
-    padding-left: 40rpx;
+    padding: 20rpx 0 20rpx 0;
     background: --color(--qui-BG-2);
     border-bottom: 2rpx solid --color(--qui-BOR-ED);
     transition: $switch-theme-time;
@@ -410,6 +410,7 @@ export default {
     }
 
     &__r {
+      position: relative;
       display: flex;
       flex-direction: row;
       align-items: center;
@@ -442,6 +443,8 @@ export default {
 .ec-notice-box {
   width: 17%;
   padding: 1%;
+  margin-left: 15rpx;
+  // padding: 10rpx 10rpx;
   &__item {
     text-align: center;
     &__icon {
@@ -465,11 +468,12 @@ export default {
     }
   }
 }
-.notice-box__list {
-  // margin: 20rpx 0;
-  padding: 20rpx 20rpx;
-}
 
+.notice_red {
+  position: absolute;
+  top: 16rpx;
+  right: -28rpx;
+}
 .conversation {
   display: flex;
   width: 100%;

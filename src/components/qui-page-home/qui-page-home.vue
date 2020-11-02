@@ -65,7 +65,7 @@
           is-scroll="isScroll"
           height="70"
           active-color="#1878F3"
-        ></u-tabs>
+        />
         <view class="fbh fbje icon_screen">
           <qui-icon
             class="icon_shezhi"
@@ -447,10 +447,10 @@ export default {
     },
   },
   created() {
-    console.log('user', this.user);
-    if (['http://localhost:8080/', 'https://q.e-spy.cn/'].indexOf(window.location.href) !== -1) {
-      this.isPublish = true;
-    }
+    // console.log('user', this.user);
+    // if (['http://localhost:8080/', 'https://q.e-spy.cn/'].indexOf(window.location.href) !== -1) {
+    //   this.isPublish = true;
+    // }
 
     // #ifdef  H5
     this.isWeixin = appCommonH.isWeixin().isWeixin;
@@ -529,6 +529,9 @@ export default {
     // #endif
   },
   mounted() {
+    // if (['http://localhost:8080/', 'https://q.e-spy.cn/'].indexOf(window.location.href) !== -1) {
+    //   this.isPublish = true;
+    // }
     this.$u.event.$on('tagClick', tagId => {
       this.isResetList = true;
       this.loadCategories();

@@ -902,7 +902,6 @@ export default {
       setCategoryIndex: 'session/SET_CATEGORYINDEX',
       setFooterIndex: 'footerTab/SET_FOOTERINDEX',
     }),
-
     // 表情接口请求
     // getEmoji() {
     //   this.$store.dispatch('jv/get', ['emoji', {}]).then(data => {

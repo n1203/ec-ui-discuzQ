@@ -231,10 +231,10 @@ export default {
       });
     }
     // #ifdef H5
-    // const index = window.location.href.split('?')[1];
-    // if (index) {
-    //   this.setFooterIndex(parseInt(index, 10));
-    // }
+    const index = window.location.href.split('?')[1];
+    if (index) {
+      this.setFooterIndex(parseInt(index, 10));
+    }
     // #endif
   },
   methods: {
@@ -261,7 +261,7 @@ export default {
         try {
           this.$refs[this.currentTab].ontrueGetList();
         } catch (err) {
-          console.log('ontrueGetList', err)
+          console.log('ontrueGetList', err);
         }
         isTabBar.push(type);
       }

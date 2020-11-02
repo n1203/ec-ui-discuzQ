@@ -322,7 +322,7 @@ export default {
   position: relative;
   display: flex;
   width: 20%;
-  height: 90rpx;
+  // height: 90rpx;
   margin-top: 10rpx;
   flex-direction: column;
   justify-content: center;
@@ -351,7 +351,8 @@ export default {
   box-shadow: 0 0 40rpx --color(--qui-BOR-CCDD);
   border-radius: 30rpx;
   width: 100rpx;
-  line-height: 60rpx;
+  height: 60rpx;
+  line-height: 1.5rem;
   margin-top: 0.3rem;
   color: #fff;
   display: block;

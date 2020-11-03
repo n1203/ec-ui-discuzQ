@@ -52,13 +52,13 @@ index.html
 
 #### 项目截图
 
-![image-20200727201820100](static/image/20201103-1.jpg)
-![image-20200727201820100](static/image/20201103-2.jpg)
-![image-20200727201820100](static/image/20201103-3.jpg)
-![image-20200727201820100](static/image/20201103-4.jpg)
-![image-20200727201820100](static/image/20201103-5.jpg)
-![image-20200727201820100](static/image/20201103-6.jpg)
-![image-20200727201820100](static/image/20201103-7.jpg)
+![image-20200727201820100](static/image/20201103-1.png)
+![image-20200727201820100](static/image/20201103-2.png)
+![image-20200727201820100](static/image/20201103-3.png)
+![image-20200727201820100](static/image/20201103-4.png)
+![image-20200727201820100](static/image/20201103-5.png)
+![image-20200727201820100](static/image/20201103-6.png)
+![image-20200727201820100](static/image/20201103-7.png)
 
 ### 开发团队
 - 南风

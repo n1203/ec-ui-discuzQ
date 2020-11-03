@@ -441,9 +441,10 @@ export default {
 }
 
 .ec-notice-box {
-  width: 17%;
+  //width: 17%;
+  flex: 1;
   padding: 1%;
-  margin-left: 15rpx;
+  //margin-left: 15rpx;
   // padding: 10rpx 10rpx;
   &__item {
     text-align: center;

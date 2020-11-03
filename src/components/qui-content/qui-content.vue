@@ -1,5 +1,14 @@
 <template>
-  <view ref="themeCount" class="themeCount" v-if="!isDeleted">
+  <view ref="themeCount" class="themeCount" v-if="!isDeleted" v-show="isClose">
+    <!-- 删除列表块 -->
+    <qui-icon
+      class="qui-icon close_icon"
+      name="icon-cuo"
+      size="32"
+      color="#9999"
+      @click="remove(thread)"
+      v-if="isVisible"
+    ></qui-icon>
     <image
       class="addFine"
       src="@/static/essence.png"
@@ -8,19 +17,27 @@
       lazy-load
     ></image>
     <view class="themeItem" @click="backgroundClick">
-      <view class="fbh">
-        <view class="themeItem__header" @click="headClick" @click.stop="">
+      <view class="fbh" @click="evterEvent(event)">
+        <view class="themeItem__header fb1 fbjc" @click="headClick" @click.stop="">
           <view class="themeItem__header__img">
-            <qui-avatar size="70" :user="{ avatarUrl: themeImage, username: userName }" />
+            <qui-avatar
+              size="70"
+              :user="{ avatarUrl: themeImage, username: userName }"
+              :is-real="isReal"
+            />
           </view>
           <view class="themeItem__header__title">
             <view class="themeItem__header__title__top">
               <text class="themeItem__header__title__username">
                 {{ userName }}
               </text>
-              <text v-if="isAdmin && themeType == '1'" class="themeItem__header__title__isAdmin">
-                <text v-for="(item, index) in userGroups" :key="index">
-                  {{ item.isDisplay ? `(${item.name})` : '' }}
+              <!-- <text :class="['badge', [name]]">{{ name }}</text> -->
+              <text
+                v-if="isAdmin && themeType == '1'"
+                class="themeItem__header__title__isAdmin badge"
+              >
+                <text v-for="(item, index) in userGroups" :key="index" :class="[[name]]">
+                  {{ item.isDisplay ? `${item.name}` : '' }}
                 </text>
               </text>
               <text v-if="themeType !== '1'" class="themeItem__header__title__isAdmin">
@@ -38,26 +55,51 @@
               ></qui-icon>
               <view class="themeItem__header__title__reward">{{ themeReward }}</view>
             </view>
-            <view class="themeItem__header__title__time">{{ localTime }}</view>
+            <view class="attention_ivtion fbh">
+              <!-- 粉丝数 -->
+              <text>
+                粉丝
+                <span style="padding-left:0.2rem">
+                  {{
+                    thread.user.fansCount >= 10000
+                      ? thread.user.fansCount / 10000 + ' w'
+                      : thread.user.fansCount
+                  }}
+                </span>
+              </text>
+              <!-- 发贴数 -->
+              <text style="margin-left:0.5rem">
+                帖子
+                <span style="padding-left:0.2rem">
+                  {{
+                    thread.user.threadCount >= 10000
+                      ? thread.user.threadCount / 10000 + ' w'
+                      : thread.user.threadCount
+                  }}
+                </span>
+              </text>
+              <view class="themeItem__header__title__time" style="margin-left:0.5rem">
+                {{ localTime }}
+              </view>
+            </view>
           </view>
         </view>
-  <!-- follow 关注状态 0：未关注 1：已关注 2：互相关注 -->
-                  
+        <!-- follow 关注状态 0：未关注 1：已关注 2：互相关注 -->
         <!-- <view
           v-if="isAttentionVisible"
           class="themeItem__attention"
           @click="addFollow"
           @click.stop=""
         >
-          关注
+          关注 {{item.user.canFollow}}
         </view> -->
       </view>
 
-        <view class="themeItem__content" @click.stop="" @click="contentClick">
-          <view class="themeItem__content__text">
-            <view class="themeItem__content__text__longessay" v-if="threadType === 1">
-              <view class="themeItem__content__text__longessay__publish">
-                <svg
+      <view class="themeItem__content" @click.stop="" @click="contentClick">
+        <view class="themeItem__content__text">
+          <view class="themeItem__content__text__longessay" v-if="threadType === 1">
+            <!-- <view class="themeItem__content__text__longessay__publish">
+              <svg
                 t="1595264739906"
                 class="icon"
                 fill="#fff"
@@ -76,169 +118,176 @@
                   d="M809.984 204.8a181.248 181.248 0 0 0-250.368 0L409.6 353.792a177.152 177.152 0 0 0 0 250.368 51.2 51.2 0 0 0 72.704-72.192 74.752 74.752 0 0 1 0-105.472l151.04-151.04a76.288 76.288 0 0 1 105.472 0 74.752 74.752 0 0 1 0 105.472l-36.352 36.352a51.2 51.2 0 0 0 72.192 72.704l36.352-36.352A177.152 177.152 0 0 0 809.984 204.8z"
                   p-id="2328"
                 ></path>
-              </svg>
-              <!-- {{ i18n.t('home.released') }} -->
-              </view>
-              <!-- <qui-icon
+              </svg> -->
+            <!-- {{ i18n.t('home.released') }} -->
+            <!-- </view> -->
+            <!-- <qui-icon
               name="icon-link"
               :color="theme === $u.light() ? '#00479B' : '#1E78F3'"
               size="28"
               style="padding-left: 8rpx;"
             ></qui-icon> -->
-              <navigator class="navPost">
+            <navigator class="navPost fbv">
+              <h4 class="navPost_title">
                 {{ themeContent }}
-              </navigator>
-              
-            </view>
-            <!-- <rich-text :nodes="themeContent" v-else></rich-text> -->
-            <qui-uparse :content="themeContent" v-else></qui-uparse>
+              </h4>
+              <p class="navPost_text">
+                {{ thread.firstPost.content }}
+              </p>
+            </navigator>
           </view>
-          <view
-            class="theme__content__videocover"
-            v-if="threadType == 2 && !payStatus && coverImage != null"
+          <!-- <rich-text :nodes="themeContent" v-else></rich-text> -->
+          <qui-uparse :content="themeContent" v-else></qui-uparse>
+        </view>
+        <view
+          class="theme__content__videocover"
+          v-if="threadType == 2 && !payStatus && coverImage != null"
+          :style="videoWidth >= videoHeight ? 'width:100%' : 'max-width: 50%'"
+        >
+          <view class="theme__mark"></view>
+          <image class="theme__mark__open" src="/static/video.svg"></image>
+          <image class="themeItem__content__coverimg" :src="coverImage" lazy-load></image>
+        </view>
+        <!-- 视频区域 -->
+        <view class="content__video" v-if="threadType === 2 && payStatus">
+          <video
+            :poster="coverImage"
+            controls
+            v-if="threadType === 2 && payStatus"
+            :id="'myVideo' + currentindex"
+            :duration="duration"
+            preload="none"
+            bindpause="handlepause"
+            playsinline
+            webkit-playsinline
+            x5-playsinline
+            :page-gesture="false"
+            :show-fullscreen-btn="true"
+            :show-play-btn="true"
+            :autoplay="false"
+            auto-pause-if-open-native
+            auto-pause-if-navigate
+            :enable-play-gesture="false"
+            :vslide-gesture="false"
+            :vslide-gesture-in-fullscreen="false"
+            object-fit="cover"
+            :direction="videoWidth > videoHeight ? 90 : 0"
+            x5-video-player-type="h5-page"
+            :src="mediaUrl"
             :style="videoWidth >= videoHeight ? 'width:100%' : 'max-width: 50%'"
-          >
-            <view class="theme__mark"></view>
-            <image class="theme__mark__open" src="/static/video.svg"></image>
-            <image class="themeItem__content__coverimg" :src="coverImage" lazy-load></image>
-          </view>
-          <view class="content__video" v-if="threadType === 2 && payStatus">
-            <video
-              :poster="coverImage"
-              v-if="threadType === 2 && payStatus"
-              :id="'myVideo' + currentindex"
-              :duration="duration"
-              preload="none"
-              bindpause="handlepause"
-              playsinline
-              webkit-playsinline
-              x5-playsinline
-              :page-gesture="false"
-              :show-fullscreen-btn="true"
-              :show-play-btn="true"
-              :autoplay="false"
-              auto-pause-if-open-native
-              auto-pause-if-navigate
-              :enable-play-gesture="false"
-              :vslide-gesture="false"
-              :vslide-gesture-in-fullscreen="false"
-              object-fit="cover"
-              :direction="videoWidth > videoHeight ? 90 : 0"
-              x5-video-player-type="h5-page"
-              :src="mediaUrl"
-              :style="videoWidth >= videoHeight ? 'width:100%' : 'max-width: 70%'"
-              bindfullscreenchange="fullScreen"
-              bindended="closeVideo"
-              @play="playVideo"
+            bindfullscreenchange="fullScreen"
+            bindended="closeVideo"
+            @play="playVideo"
+            @click.stop=""
+          ></video>
+        </view>
+        <!-- 图片区域 -->
+        <view v-if="imagesList.length == 1">
+          <view class="themeItem__content__imgone">
+            <image
+              class="themeItem__content__imgone__item"
+              v-for="(image, index) in imagesList"
+              :key="index"
+              :mode="modeVal"
+              :src="image.thumbUrl"
+              @click="previewPicture(index)"
               @click.stop=""
-            ></video>
+              lazy-load
+              alt
+            ></image>
           </view>
-          <view v-if="imagesList.length == 1">
-            <view class="themeItem__content__imgone">
-              <image
-                class="themeItem__content__imgone__item"
-                v-for="(image, index) in imagesList"
-                :key="index"
-                :mode="modeVal"
-                :src="image.thumbUrl"
-                @click="previewPicture(index)"
-                @click.stop=""
-                lazy-load
-                alt
-              ></image>
-            </view>
+        </view>
+        <view v-if="imagesList.length == 2">
+          <view class="themeItem__content__imgtwo">
+            <image
+              class="themeItem__content__imgtwo__item"
+              v-for="(image, index) in imagesList"
+              :key="index"
+              :mode="modeVal"
+              :src="image.thumbUrl"
+              @click="previewPicture(index)"
+              @click.stop=""
+              lazy-load
+              alt
+            ></image>
           </view>
-          <view v-if="imagesList.length == 2">
-            <view class="themeItem__content__imgtwo">
-              <image
-                class="themeItem__content__imgtwo__item"
-                v-for="(image, index) in imagesList"
-                :key="index"
-                :mode="modeVal"
-                :src="image.thumbUrl"
-                @click="previewPicture(index)"
-                @click.stop=""
-                lazy-load
-                alt
-              ></image>
-            </view>
-          </view>
-          <view v-if="imagesList.length >= 3">
-            <view class="themeItem__content__imgmore">
-              <image
-                class="themeItem__content__imgmore__item"
-                v-for="(image, index) in imagesList"
-                :key="index"
-                :mode="modeVal"
-                :src="image.thumbUrl"
-                @click="previewPicture(index)"
-                @click.stop=""
-                lazy-load
-                alt
-              ></image>
-              <image
-                class="themeItem__content__imgmore__item"
-                v-if="imagesList.length % 3 != 0"
-                @click.stop=""
-                lazy-load
-              ></image>
-            </view>
-          </view>
-
-          <view class="themeItem__content__tags" v-if="themeType === '0' && getCategoryId === 0">
-            <view class="themeItem__content__tags__item" v-for="(item, index) in tags" :key="index">
-              {{ item.name }}
-            </view>
+        </view>
+        <view v-if="imagesList.length >= 3">
+          <view class="themeItem__content__imgmore">
+            <image
+              class="themeItem__content__imgmore__item"
+              v-for="(image, index) in imagesList"
+              :key="index"
+              :mode="modeVal"
+              :src="image.thumbUrl"
+              @click="previewPicture(index)"
+              @click.stop=""
+              lazy-load
+              alt
+            ></image>
+            <view
+              class="themeItem__content__imgmore__item"
+              v-if="imagesList.length % 3 != 0"
+              @click.stop=""
+              lazy-load
+            ></view>
           </view>
         </view>
 
-        <view class="themeItem__comment" @click.stop=""></view>
+        <view class="themeItem__content__tags" v-if="themeType === '0' && getCategoryId === 0">
+          <view class="themeItem__content__tags__item" v-for="(item, index) in tags" :key="index">
+            {{ item.name }}
+          </view>
+        </view>
+      </view>
 
-        <view class="themeItem__footer" @click.stop="">
-          <view v-if="themeType === '1'" class="themeItem__footer__themeType1">
-            <view
-              :class="[
-                'themeItem__footer__themeType1__item',
-                'themeItem__footer__themeType1__great',
-                isGreat && 'themeItem__footer__themeType1__greated',
-              ]"
-              @click="handleIsGreat"
-            >
-              <qui-icon class="qui-icon" name="icon-liked" size="28" v-if="isGreat"></qui-icon>
-              <qui-icon class="qui-icon" name="icon-like" size="28" v-else></qui-icon>
-              <!-- {{ isGreat ? t.giveLikeAlready : t.like }} -->
-              {{ themeLike === 0 ? '' : themeLike }}
-            </view>
-
-            <view
-              class="themeItem__footer__themeType1__item themeItem__footer__themeType1__comment"
-              @click="commentClick"
-            >
-              <qui-icon class="qui-icon" name="icon-message" size="28" color="#AAA"></qui-icon>
-              <!-- {{ t.comment }} -->
-              {{ themeComment === 0 ? '' : themeComment }}
-            </view>
-
-            <view
-              class="themeItem__footer__themeType1__item themeItem__footer__themeType1__share"
-              @click="handleClickShare"
-            >
-              <qui-icon class="qui-icon" name="icon-share" size="28" color="#AAA"></qui-icon>
-              <!-- {{ t.share }} -->
-            </view>
+      <view class="themeItem__comment" @click.stop=""></view>
+      <!-- 点赞，评论，分享区域 -->
+      <view class="themeItem__footer" @click.stop="">
+        <view v-if="themeType === '1'" class="themeItem__footer__themeType1">
+          <view
+            :class="[
+              'themeItem__footer__themeType1__item',
+              'themeItem__footer__themeType1__great',
+              isGreat && 'themeItem__footer__themeType1__greated',
+            ]"
+            @click="handleIsGreat"
+          >
+            <qui-icon class="qui-icon" name="icon-dianzanle" size="32" v-if="isGreat"></qui-icon>
+            <qui-icon class="qui-icon" name="icon-dianzan_2" size="32" v-else></qui-icon>
+            <!-- {{ isGreat ? t.giveLikeAlready : t.like }} -->
+            {{ themeLike === 0 ? '点赞' : themeLike }}
           </view>
 
-          <view v-if="themeType === '2'" class="themeItem__footer__themeType2">
-            <view class="themeItem__footer__themeType2__item">
-              <qui-icon
-                class="qui-icon"
-                :name="themeReplyBtn"
-                size="28"
-                color="#AAA"
-                @click="handleClick"
-              ></qui-icon>
-              {{ themeDeleteBtn }}
-            </view>
+          <view
+            class="themeItem__footer__themeType1__item themeItem__footer__themeType1__comment"
+            @click="commentClick"
+          >
+            <qui-icon class="qui-icon" name="icon-pinglun" size="32" color="#AAA"></qui-icon>
+            <!-- {{ t.comment }} -->
+            {{ themeComment === 0 ? '评论' : themeComment }}
+          </view>
+
+          <view
+            class="themeItem__footer__themeType1__item themeItem__footer__themeType1__share"
+            @click="handleClickShare"
+          >
+            <qui-icon class="qui-icon" name="icon-fenxiang" size="32" color="#AAA"></qui-icon>
+            <!-- {{ t.share }} -->
+            {{ themeshare === 0 ? '分享' : themeshare }}
+          </view>
+        </view>
+
+        <view v-if="themeType === '2'" class="themeItem__footer__themeType2">
+          <view class="themeItem__footer__themeType2__item">
+            <qui-icon
+              class="qui-icon"
+              :name="themeReplyBtn"
+              size="28"
+              color="#AAA"
+              @click="handleClick"
+            ></qui-icon>
+            {{ themeDeleteBtn }}
           </view>
         </view>
       </view>
@@ -247,8 +296,8 @@
 </template>
 
 <script>
+import { time2DateAndHM } from '@/utils/time';
 import { status } from '@/library/jsonapi-vuex/index';
-import { time2MorningOrAfternoon } from '@/utils/time';
 import { mapState } from 'vuex';
 
 export default {
@@ -260,6 +309,11 @@ export default {
       },
       default: '1',
     },
+    // 定义删除图标显示状态
+    isVisible: {
+      type: Boolean,
+      default: true,
+    },
     // 用户名
     userName: {
       type: String,
@@ -269,6 +323,15 @@ export default {
     themeImage: {
       type: String,
       default: '',
+    },
+    // 头像实名认证加v
+    isReal: {
+      type: Boolean,
+      default: false,
+    },
+    thread: {
+      type: Object,
+      default: () => {},
     },
     // 是否加精
     themeEssence: {
@@ -336,6 +399,10 @@ export default {
     },
     // 评论数量
     themeComment: {
+      type: Number,
+      default: 0,
+    },
+    themeshare: {
       type: Number,
       default: 0,
     },
@@ -417,6 +484,13 @@ export default {
       type: String,
       default: '',
     },
+    // 作者个人信息
+    user: {
+      type: [Array, Object],
+      default: () => {
+        return {};
+      },
+    },
   },
 
   data: () => {
@@ -433,9 +507,13 @@ export default {
       imageStatus: true,
       currentTop: 0,
       currentBottom: 0,
+      name: '普通会员', // 角色
+      isClose: true,
     };
   },
-
+  onShow() {
+    this.name = this.user.groups ? this.user.groups[0].name : '';
+  },
   computed: {
     // 语言包
     t() {
@@ -443,7 +521,7 @@ export default {
     },
     // 时间转化
     localTime() {
-      return time2MorningOrAfternoon(this.themeTime);
+      return time2DateAndHM(this.themeTime);
     },
     ...mapState({
       getCategoryId: state => state.session.categoryId,
@@ -492,7 +570,14 @@ export default {
     }
     // #endif
   },
+  // onLoad() {
+  //   const storage = uni.getStorageSync('hideCant');
+  //   this.todoList = filterList.filter(e => storage.indexOf(e.id) === -1);
+  // },
   methods: {
+    closeIcon(item) {
+      uni.setStorageSync('hideCant', item.id);
+    },
     // 添加关注
     async addFollow(evt) {
       const follows = await this.$emit('addFollow', evt);
@@ -513,6 +598,23 @@ export default {
     // 点击评论跳转到详情页
     commentClick(evt) {
       this.$emit('commentClick', evt);
+    },
+    // 点击删除icon来删除列表
+    remove(evt) {
+      const that = this;
+      uni.showModal({
+        title: '提示',
+        content: '您确定要执行该操作吗？该操作会永久删除哦！',
+        success(res) {
+          if (res.confirm) {
+            that.$emit('remove', evt);
+            // console.log('用户点击确定');
+          } else if (res.cancel) {
+            // console.log('用户点击取消');
+          }
+        },
+      });
+      // this.$emit('remove', evt);
     },
     // 点击内容区域跳转到详情页
     contentClick(evt) {
@@ -556,6 +658,11 @@ export default {
     imageError() {
       this.imageStatus = false;
     },
+    // 列表的显示与隐藏
+    // closeIcon() {
+    //   this.isClose = !this.isClose;
+    //   console.log(this.isClose);
+    // },
   },
 };
 </script>
@@ -575,7 +682,7 @@ export default {
 }
 .themeItem {
   padding: 30rpx;
-  margin: 0 0 30rpx;
+  margin: 0 0 20rpx;
   background: --color(--qui-BG-2);
   // border-radius: 6rpx;
   box-shadow: 0rpx 4rpx 8rpx rgba(0, 0, 0, 0.05);
@@ -586,6 +693,7 @@ export default {
     color: $uni-color-primary;
     border: 1px solid $uni-color-primary;
     border-radius: 4px;
+    font-size: 24rpx;
   }
   &__header {
     display: inline-flex;
@@ -642,10 +750,10 @@ export default {
       }
 
       &__time {
-        padding-top: 4rpx;
-        font-size: 24rpx;
+        padding-top: 0.05rem;
+        font-size: 12px;
         font-weight: 400;
-        line-height: 31rpx;
+        // line-height: 31rpx;
         color: --color(--qui-FC-AAA);
         transition: $switch-theme-time;
       }
@@ -672,19 +780,19 @@ export default {
 
   &__content {
     &__text {
-      padding-bottom: 20rpx;
+      // padding-bottom: 10rpx;
       overflow: hidden;
       font-family: $font-family;
-      font-size: 28rpx;
+      font-size: 15px;
       font-weight: 400;
       line-height: 45rpx;
       color: --color(--qui-FC-333);
       word-wrap: break-word;
       &__longessay {
         display: flex;
-        line-height: 50px;
-        text-indent: 10px;
-        background: #0001;
+        line-height: 30px;
+        text-indent: 16px;
+        // background: #0001;
         word-break: break-all;
         border-radius: 5px;
       }
@@ -698,18 +806,16 @@ export default {
     &__imgone {
       display: flex;
       justify-content: flex-start;
-      margin-top: 10rpx;
       line-height: 0;
       &__item {
         max-width: 80%;
         max-height: 80%;
-        border-radius: 5rpx;
+        border-radius: 20rpx;
       }
     }
     &__imgtwo {
       display: flex;
       justify-content: space-between;
-      margin-top: 20rpx;
       line-height: 0;
       &__item {
         display: block;
@@ -717,7 +823,7 @@ export default {
         height: 211rpx;
         margin-bottom: 10rpx;
         background: #fff;
-        border-radius: 5rpx;
+        border-radius: 20rpx;
       }
     }
     &__imgmore {
@@ -726,7 +832,6 @@ export default {
       justify-content: space-between;
       align-content: flex-start;
       flex-wrap: wrap;
-      margin-top: 30rpx;
       line-height: 0;
       &__item {
         display: block;
@@ -735,7 +840,7 @@ export default {
         margin-right: 1.33%;
         margin-bottom: 10rpx;
         background: #fff;
-        border-radius: 5rpx;
+        border-radius: 20rpx;
       }
     }
 
@@ -764,11 +869,11 @@ export default {
     &__themeType1 {
       display: flex;
       justify-content: space-between;
-      margin-top: 60rpx;
+      margin-top: 50rpx;
 
       &__item {
         font-family: $font-family;
-        font-size: 14px;
+        font-size: 28rpx;
         // font-size: $fg-f28;
         font-weight: 400;
         line-height: 37rpx;
@@ -807,14 +912,20 @@ export default {
   align-items: center;
 }
 
+.themeItem__content__text {
+  font-size: 15px;
+  margin-top: -0.5rem;
+  margin-bottom: 0.2rem;
+}
+
 .navPost {
-  display: inline-block;
-  max-width: 75%;
+  display: flex;
+  width: 100%;
   padding-left: 8rpx;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
-  color: --color(--qui-LINK);
+  // white-space: nowrap;
+  // color: --color(--qui-LINK);
 }
 .themeItem__content__coverimg {
   width: 100%;
@@ -825,6 +936,7 @@ export default {
 }
 /deep/ .uni-video-cover {
   z-index: 0;
+  border-radius: 10px;
 }
 .theme__mark {
   position: absolute;
@@ -843,5 +955,80 @@ export default {
   height: 80rpx;
   margin-top: -40rpx;
   margin-left: -40rpx;
+}
+
+.themeItem__header__title__top {
+  align-items: center;
+}
+
+.themeItem__header__title__username {
+  align-items: center;
+  font-size: 16px;
+}
+
+.badge {
+  height: 18px;
+  line-height: 18px;
+  align-items: center;
+  background: #fff !important;
+  // color: yellow;
+  border-radius: 10px;
+  font-size: 24rpx;
+  margin-left: -14rpx;
+  margin-bottom: 12rpx;
+  padding: 8rpx 16rpx;
+  border: #ccc 1px solid;
+  color: #ccc;
+  transform: scale(0.5);
+}
+// .管理员 {
+//   border: #1878f3 1px solid;
+//   color: #1878f3;
+// }
+// .普通会员 {
+//   border: #ccc 1px solid;
+//   color: #ccc;
+// }
+.themeItem__footer {
+  margin: -0.7rem 2rem 0 2rem;
+}
+.content__video video {
+  border-radius: 10px;
+  margin-top: -0.5rem;
+}
+.close_icon {
+  position: absolute;
+  top: 1.1rem;
+  right: 0.8rem;
+}
+.attention_ivtion {
+  display: flex;
+  align-items: center;
+  font-size: 10px;
+  font-weight: 400;
+  padding-top: 0.2rem;
+  color: var(--qui-FC-AAA);
+  transition: 0.5s;
+  margin-left: 2px;
+}
+.navPost_title {
+  font-size: 17px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  text-align: justify;
+  text-justify: inter-ideograph;
+}
+.navPost .navPost_text {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  text-align: justify;
+  text-justify: inter-ideograph;
+  font-size: 14px;
 }
 </style>

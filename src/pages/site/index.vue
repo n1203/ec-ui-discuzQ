@@ -18,30 +18,7 @@
     ></qui-header>
     <!-- 分享弹窗 -->
     <uni-popup ref="popupHead" type="bottom">
-      <view class="popup-share">
-        <view class="popup-share-content" style="box-sizing: border-box;">
-          <button
-            class="popup-share-button"
-            open-type="share"
-            v-if="siteInfo.set_site && siteInfo.set_site.site_mode !== 'pay'"
-          ></button>
-          <view v-for="(item, index) in bottomData" :key="index" class="popup-share-content-box">
-            <view class="popup-share-content-image">
-              <view class="popup-share-box" @click="shareHead(index)">
-                <qui-icon
-                  class="content-image"
-                  :name="item.icon"
-                  size="46"
-                  :color="theme === $u.light() ? '#aaa' : '#777'"
-                ></qui-icon>
-              </view>
-            </view>
-            <text class="popup-share-content-text">{{ item.text }}</text>
-          </view>
-        </view>
-        <view class="popup-share-content-space"></view>
-        <text class="popup-share-btn" @click="cancel('share')">{{ i18n.t('home.cancel') }}</text>
-      </view>
+      <qui-share @close="cancel"></qui-share>
     </uni-popup>
     <!-- 站点信息 -->
     <view class="site-item">
@@ -54,7 +31,6 @@
         :title="i18n.t('manage.creationtime')"
         :addon="siteInfo.createdAt"
       ></qui-cell-item>
-      <qui-cell-item :title="i18n.t('manage.ui')" addon="EC-UI"></qui-cell-item>
       <qui-cell-item
         :title="i18n.t('manage.circlemode')"
         :addon="
@@ -107,7 +83,6 @@
         </view>
       </qui-cell-item>
     </view>
-    <ec-copyright />
   </qui-page>
 </template>
 
@@ -128,19 +103,7 @@ export default {
   ],
   data() {
     return {
-      title: '站点信息',
-      bottomData: [
-        {
-          text: this.i18n.t('home.generatePoster'),
-          icon: 'icon-poster',
-          name: 'wx',
-        },
-        {
-          text: this.i18n.t('home.wxShare'),
-          icon: 'icon-wx-friends',
-          name: 'wx',
-        },
-      ],
+      title: this.i18n.t('manage.circleinfo'),
       shareBtn: 'icon-share1',
       isWeixin: '', // 是否是微信浏览器
       shareShow: false, // h5内分享提示信息
@@ -152,6 +115,12 @@ export default {
     this.getPermissions();
     // #ifdef H5
     this.isWeixin = appCommonH.isWeixin().isWeixin;
+    // #endif
+    // #ifdef MP-WEIXIN
+    wx.showShareMenu({
+      withShareTicket: true,
+      menus: ['shareAppMessage', 'shareTimeline'],
+    });
     // #endif
   },
   // 唤起小程序原声分享
@@ -176,7 +145,6 @@ export default {
   computed: {
     currentLoginId() {
       const userId = this.$store.getters['session/get']('userId');
-      console.log('获取当前登录的id', userId);
       return parseInt(userId, 10);
     },
     // 获取 站点信息
@@ -197,7 +165,6 @@ export default {
         info.username = info.set_site.site_author.username;
         info.userId = info.set_site.site_author.id;
       }
-      console.log('站点信息：', info);
       return info;
     },
     // 获取 用户信息
@@ -209,12 +176,11 @@ export default {
       if (info && info.expiredAt) {
         info.expiredTime = info.expiredAt.substr(0, 10);
       } else {
-        info.expiredTime = '永久有效';
+        info.expiredTime = this.i18n.t('site.permanent');
       }
       if (info && info.groups && info.groups.length > 0) {
         info.groupName = info.groups[0].name;
       }
-      console.log('用户信息：', info);
       return info;
     },
     // 获取 用户权限
@@ -235,13 +201,10 @@ export default {
                   });
                 }
               }
-            } else {
-              console.log('用户数据', value);
             }
           }
         }
       }
-      console.log('用户权限：', permissionList);
       return permissionList;
     },
   },
@@ -250,9 +213,10 @@ export default {
     getSiteInfo() {
       const params = {
         include: ['users'],
+        'filter[tag]': 'agreement',
       };
       this.$store.dispatch('jv/get', ['forum', { params }]).then(res => {
-        console.log('获取站点信息：', res);
+        console.log(res);
       });
     },
     // 调用 用户组权限 接口
@@ -262,22 +226,13 @@ export default {
         include: ['permission'],
       };
       this.$store.dispatch('jv/get', ['groups', { params }]).then(res => {
-        console.log('获取用户组权限：', res);
+        console.log(res);
       });
     },
     // 首页头部分享按钮弹窗
     open() {
       // #ifdef MP-WEIXIN
       this.$refs.popupHead.open();
-      if (this.forums.set_site.site_mode === 'pay') {
-        this.bottomData = [
-          {
-            text: this.i18n.t('home.generatePoster'),
-            icon: 'icon-poster',
-            name: 'wx',
-          },
-        ];
-      }
       // #endif
       // #ifdef H5
       if (this.isWeixin === true) {
@@ -293,18 +248,6 @@ export default {
     closeShare() {
       this.shareShow = false;
     },
-    // 头部分享海报
-    shareHead(index) {
-      if (index === 0) {
-        if (!this.$store.getters['session/get']('isLogin')) {
-          this.$store.getters['session/get']('auth').open();
-          return;
-        }
-        uni.navigateTo({
-          url: '/pages/share/site',
-        });
-      }
-    },
     // 取消按钮
     cancel() {
       this.$refs.popupHead.close();
@@ -312,7 +255,6 @@ export default {
     // 跳转到个人主页
     jumpUserPage(userId) {
       if (userId) {
-        // console.log('点击头像到个人主页', userId);
         uni.navigateTo({
           url: `/pages/profile/index?userId=${userId}`,
         });

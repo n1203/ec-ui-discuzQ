@@ -8,8 +8,9 @@
       @error="error"
     ></image>
     <view v-else-if="styleText" :class="'avatar' + ' qui-avatar-' + size" :style="styleText">
-      {{ usernameAt }}
+      <text>{{ usernameAt }}</text>
     </view>
+    <image v-if="isReal" src="@/static/auth.svg" class="auth-icon"></image>
   </view>
 </template>
 
@@ -17,10 +18,10 @@
 import stringToColor from '@/utils/stringToColor';
 
 const sizes = {
-  80: 'font-size: 24px;line-height: 80rpx;',
-  70: 'font-size: 22px;line-height: 70rpx;',
-  60: 'font-size: 20px;line-height: 60rpx;',
-  50: 'font-size: 18px;line-height: 50rpx;',
+  80: 'font-size: 48rpx;line-height: 80rpx;',
+  70: 'font-size: 44rpx;line-height: 70rpx;',
+  60: 'font-size: 40rpx;line-height: 60rpx;',
+  50: 'font-size: 36rpx;line-height: 50rpx;',
 };
 
 export default {
@@ -34,6 +35,10 @@ export default {
     size: {
       type: [Number, String],
       default: 80,
+    },
+    isReal: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {
@@ -70,11 +75,26 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.qui-avatar {
+  // position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .qui-avatar .avatar,
 .qui-ava {
   border-radius: 50%;
+  justify-content: center;
+  align-items: center;
 }
-
+.qui-avatar-120 {
+  width: 120rpx;
+  height: 120rpx;
+}
+.qui-avatar-100 {
+  width: 100rpx;
+  height: 100rpx;
+}
 .qui-avatar-80 {
   width: 80rpx;
   height: 80rpx;
@@ -94,7 +114,18 @@ export default {
 
 .qui-avatar .avatar {
   color: #fff;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  font-size: 50rpx;
+  justify-content: center;
   background-color: #e7edf3;
+}
+.auth-icon {
+  position: absolute;
+  right: 0;
+  bottom: 4rpx;
+  // z-index: 8;
+  width: 22rpx;
+  height: 26rpx;
 }
 </style>

@@ -5,9 +5,10 @@
     {
       "path": "pages/home/index",
       "style": {
-        "navigationStyle": "custom"
-        // "enablePullDownRefresh": true
-        // "onReachBottomDistance":126  //距离底部多远时触发 单位px
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": true,
+        "backgroundTextStyle": "dark",
+        "onReachBottomDistance": 100  //距离底部多远时触发 单位px
       }
     },
     {
@@ -16,7 +17,8 @@
         "navigationBarTitleText": "",
         "navigationBarBackgroundColor": "#fff",
         "navigationBarTextStyle": "black",
-        "navigationStyle": "default"
+        "navigationStyle": "default",
+        "enablePullDownRefresh": true
       }
     }, 
     {
@@ -25,7 +27,8 @@
         "navigationBarTitleText": "话题列表",
         "navigationBarBackgroundColor": "#fff",
         "navigationBarTextStyle": "black",
-        "navigationStyle": "default"
+        "navigationStyle": "default",
+        "enablePullDownRefresh": true
       }
     }, 
     {
@@ -85,13 +88,15 @@
     {
       "path": "pages/topic/index",
       "style": {
-        "navigationBarTitleText": "内容详情页"
+        "navigationBarTitleText": "内容详情页",
+        "enablePullDownRefresh": true
       }
     },
     {
       "path": "pages/topic/comment",
       "style": {
-        "navigationBarTitleText": "评论详情页"
+        "navigationBarTitleText": "评论详情页",
+        "enablePullDownRefresh": true
       }
     },
     //个人主页和我的部分页面
@@ -138,9 +143,17 @@
       }
     },
     {
+      "path": "pages/my/shield",
+      "style": {
+        "navigationBarTitleText": "屏蔽设置"
+      }
+    },
+    {
       "path": "pages/profile/index",
       "style": {
-        "navigationBarTitleText": "个人主页"
+        "navigationBarTitleText": "个人主页",
+        "enablePullDownRefresh": true,
+        "onReachBottomDistance": 80
       }
     },
     {
@@ -343,6 +356,12 @@
       "style": {
         "navigationBarTitleText": ""
       }
+    },
+      {
+        "path": "pages/dev/icon",
+        "style": {
+          "navigationBarTitleText": ""
+        }
     }
   ],
   "globalStyle": {

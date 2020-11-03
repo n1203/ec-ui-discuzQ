@@ -16,7 +16,7 @@
 .wxParse {
   width: 100%;
   /* font-family: Helvetica, 'PingFangSC', 'Microsoft Yahei', '微软雅黑', Arial, sans-serif; */
-  font-size: 1em;
+  font-size: 1.2em;
   line-height: 1.5;
   /* color: #333; */
   /* text-align: justify; */
@@ -30,8 +30,9 @@
   word-break: break-word;
 }
 .wxParse .p {
-  padding-bottom: 0.5em;
+  padding-bottom: 0.2em;
   clear: both;
+  text-indent: 1em;
 }
 .wxParse .inline {
   display: inline;
@@ -227,7 +228,7 @@
 .wxParse .tablebox {
   padding: 8px;
   overflow: auto;
-  font-size: 13px;
+  font-size: 26rpx;
   background: #f5f5f5;
   background-color: #f5f5f5;
 }

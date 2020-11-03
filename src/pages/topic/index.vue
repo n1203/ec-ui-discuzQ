@@ -1,13 +1,14 @@
 <template>
   <qui-page :data-qui-theme="theme" class="content">
     <view v-if="loaded">
-      <scroll-view
+      <!--<scroll-view
         scroll-y="true"
         scroll-with-animation="true"
         show-scrollbar="false"
         class="scroll-y"
         @scrolltolower="pullDown"
-      >
+      >-->
+      <view class="scroll-y">
         <view class="ft-gap">
           <view class="bg-white">
             <view class="detail-tip" v-if="thread.type == 2 && thread.threadVideo.status == 0">
@@ -22,11 +23,13 @@
             </view>
             <qui-topic-content
               :topic-status="thread.isApproved"
+              :follow-show="thread.user.follow != null"
               :pay-status="thread.price > 0 && thread.paid"
               :video-status="(thread.price > 0 && thread.paid) || thread.price == 0"
               :user-info="thread.user"
               :avatar-url="thread.user.avatarUrl"
               :user-name="thread.user.username"
+              :is-real="thread.user.isReal"
               :user-role="thread.user.groups"
               :theme-type="thread.type"
               :theme-time="thread.createdAt"
@@ -56,16 +59,16 @@
               @previewPicture="payClickShow"
               @tagClick="tagClick"
             >
-              <!--<view slot="follow" v-if="thread.user.follow != null">
+              <view slot="follow" :key="followStatus" v-if="thread.user.follow != null">
                 <view
                   class="themeItem__header__follow"
                   @tap="
                     thread.user.follow === 0 ? addFollow(thread.user) : deleteFollow(thread.user)
                   "
                 >
-                  <qui-icon
-                    class="icon-follow"
-                    :name="thread.user.follow === 0 ? 'icon-follow' : 'icon-each-follow'"
+                  <!-- <qui-icon
+                    class="icon-guanzhu"
+                    :name="thread.user.follow === 0 ? 'icon-guanzhu' : 'icon-guanzhu_ed'"
                     :color="
                       thread.user.follow === 0
                         ? '#777'
@@ -73,6 +76,11 @@
                         ? themeColor
                         : '#ff8888'
                     "
+                  ></qui-icon> -->
+                  <qui-icon
+                    class="icon-guanzhu"
+                    :name="thread.user.follow === 0 ? 'icon-guanzhu' : 'icon-guanzhu_ed'"
+                    :color="thread.user.follow === 0 ? '#777' : '#ff8888'"
                   ></qui-icon>
                   <text>
                     {{
@@ -84,11 +92,9 @@
                     }}
                   </text>
                 </view>
-              </view>-->
+              </view>
             </qui-topic-content>
-            <!-- <qui-button size="max" type="primary" class="publishBtn" @tap="payClickShow()">
-            {{ p.pay }}
-          </qui-button> -->
+
             <!-- 已支付用户列表 -->
             <view v-if="paidStatus">
               <qui-person-list
@@ -119,13 +125,13 @@
                 @btnClick="rewardClick"
               ></qui-person-list>
             </view>
-            <view v-if="thread.firstPost.likedUsers.length > 0">
+            <view v-if="likedUsers.length > 0">
               <!-- 点赞用户列表 -->
               <qui-person-list
                 :type="t.giveLike"
                 :person-num="thread.firstPost.likeCount"
                 :limit-count="limitShowNum"
-                :person-list="thread.firstPost.likedUsers"
+                :person-list="likedUsers"
                 :btn-show="false"
                 @personJump="personJump"
               ></qui-person-list>
@@ -140,11 +146,11 @@
               >
                 <qui-icon
                   v-if="thread.isFavorite"
-                  name="icon-collectioned"
+                  name="icon-collection-b"
                   class="qui-icon"
                 ></qui-icon>
 
-                <qui-icon v-else name="icon-collection" class="qui-icon"></qui-icon>
+                <qui-icon v-else name="icon-shoucang_2" class="qui-icon"></qui-icon>
                 <view v-if="thread.isFavorite">{{ t.collectionAlready }}</view>
                 <view v-else>{{ t.collection }}</view>
               </view>
@@ -159,13 +165,13 @@
               >
                 {{ thread.postCount - 1 }}{{ t.item }}{{ t.comment }}
               </view>
-              <!--<view class="comment-sort" v-if="thread.postCount > 1">
+              <view class="comment-sort" v-if="thread.postCount > 1">
                 <view class="comment-sort-operaCl" @click="sortOperaClick">
                   <qui-icon
-                    name="icon-sort1"
+                    name="icon-iconasc"
                     class="icon-management"
                     color="#777"
-                    size="30"
+                    size="35"
                   ></qui-icon>
                 </view>
                 <view>
@@ -179,7 +185,7 @@
                     @click="sortSelectChoice"
                   ></qui-drop-down>
                 </view>
-              </view>-->
+              </view>
             </view>
 
             <view v-if="posts.length > 0">
@@ -190,6 +196,7 @@
                   :post-id="post._jv.id"
                   :comment-avatar-url="post.user.avatarUrl"
                   :user-name="post.user.username"
+                  :is-real="post.user.isReal"
                   :is-liked="post.isLiked"
                   :user-role="post.user.groups"
                   :comment-time="post.createdAt"
@@ -219,22 +226,22 @@
             </view>-->
             </view>
           </view>
+          <qui-load-more
+            :status="loadingType"
+            :content-text="{
+              contentdown: c.contentdown,
+              contentrefresh: c.contentrefresh,
+              contentnomore: contentnomoreVal,
+            }"
+          ></qui-load-more>
         </view>
-
-        <qui-load-more
-          :status="loadingType"
-          :content-text="{
-            contentdown: c.contentdown,
-            contentrefresh: c.contentrefresh,
-            contentnomore: contentnomoreVal,
-          }"
-        ></qui-load-more>
-      </scroll-view>
+      </view>
+      <!--</scroll-view>-->
       <!--详情页底部-->
       <view
         class="det-ft"
         :style="{
-          bottom: detectionModel() ? '20rpx' : 0,
+          paddingBottom: detectionModel() ? '100rpx' : 0,
         }"
         v-if="footerShow"
       >
@@ -250,19 +257,20 @@
             "
           >
             <qui-icon
-              :name="thread.firstPost.isLiked ? 'icon-liked' : 'icon-like'"
+              :name="thread.firstPost.isLiked ? 'icon-dianzanle' : 'icon-dianzan_2'"
               class="qui-icon"
+              size="32"
             ></qui-icon>
             <view class="ft-child-word">
               {{ thread.firstPost.isLiked ? t.giveLikeAlready : t.giveLike }}
             </view>
           </view>
           <view class="det-ft-child flex" @click="threadComment(thread._jv.id)">
-            <qui-icon name="icon-comments" class="qui-icon"></qui-icon>
+            <qui-icon name="icon-pinglun" class="qui-icon" size="32"></qui-icon>
             <view class="ft-child-word">{{ t.writeComment }}</view>
           </view>
           <view class="det-ft-child flex" @click="shareClick">
-            <qui-icon name="icon-share" class="qui-icon"></qui-icon>
+            <qui-icon name="icon-fenxiang" class="qui-icon" size="32"></qui-icon>
             <view class="ft-child-word">{{ t.share }}</view>
           </view>
         </view>
@@ -333,7 +341,7 @@
               </text>
             </view>
             <view class="popup-dialog__cont">
-              <qui-icon class="popup-dialog__cont-rmb" name="icon-rmb" size="40"></qui-icon>
+              <qui-icon class="popup-dialog__cont-rmb" name="icon-qianbao" size="40"></qui-icon>
               <input
                 class="popup-dialog__cont-input"
                 v-model="inputPrice"
@@ -477,6 +485,15 @@
           <view class="code-tip">{{ p.wechatIdentificationQRcode }}</view>
         </view>
       </uni-popup>
+      <uni-popup ref="deletePopup" type="center">
+        <uni-popup-dialog
+          type="warn"
+          :content="deleteTip"
+          :before-close="true"
+          @close="handleClickCancel"
+          @confirm="handleClickOk"
+        ></uni-popup-dialog>
+      </uni-popup>
     </view>
     <view v-else-if="loadingStatus && !loaded && !thread.isDeleted" class="loading">
       <u-loading :size="60"></u-loading>
@@ -496,20 +513,25 @@ import forums from '@/mixin/forums';
 import detectionModel from '@/mixin/detectionModel';
 // #ifdef H5
 import wxshare from '@/mixin/wxshare-h5';
+import loginAuth from '@/mixin/loginAuth-h5';
 // #endif
 // #ifndef MP-WEIXIN
 import appCommonH from '@/utils/commonHelper';
 // #endif
+import uniPopupDialog from '@/components/uni-popup/uni-popup-dialog';
+import { getCurUrl } from '@/utils/getCurUrl';
 
 let payWechat = null;
 let payPhone = null;
 
 export default {
+  components: { uniPopupDialog },
   mixins: [
     user,
     forums,
     // #ifdef H5
     wxshare,
+    loginAuth,
     // #endif
     detectionModel,
   ],
@@ -527,6 +549,7 @@ export default {
       // topicStatus: 1, // 0 是不合法 1 是合法 2 是忽略
       posts: [], // 评论列表数据
       loadingType: 'more', // 上拉加载状态
+      scrollTop: 0,
       pageNum: 1, // 这是主题回复当前页数
       pageSize: 20, // 这是主题回复每页数据条数
       payThreadTypeText: '', // 主题支付类型不同，支付按钮文字显示不同的支付提示
@@ -668,6 +691,7 @@ export default {
       shareLogo: '', // 这是分享需要传的图片
       desc: '', // 这是分享需要传的描述
       rewardedUsers: [],
+      likedUsers: [],
       sortSeleShow: false, // 排序菜单状态
       sortSelectList: [
         { text: this.i18n.t('topic.sortTimeSequence'), type: '0', canOpera: true },
@@ -675,6 +699,18 @@ export default {
       ], // 评论排序菜单
       sortVal: 'createdAt', // 排序值
       refreshVal: true, // 是否刷新
+      deleteId: '', // 删除时的Id（包括主题id，评论Id，和图片id）
+      deleteType: '', // 删除时的类型，3为主题评论删除，4为主题删除
+      deletePostType: '', // 删除评论时传给请求接口的类型
+      deletePostCanStatus: '', // 是否可以删除该条内容
+      deletePostIsStatus: '', // 删除时的状态
+      deletePost: '', // 删除时的整个post数据
+      deleteIndex: '', // 删除图片时的Index
+      deleteTip: '确定删除吗？', // 删除提示
+      followStatus: '', // 当前关注状态
+      beRewarded: false,
+      curUrl: '', // 当前页面的路由
+      bottom: '',
     };
   },
   onReady() {},
@@ -687,7 +723,12 @@ export default {
     }),
     thread() {
       const thread = this.$store.getters['jv/get'](`threads/${this.threadId}`);
-      this.rewardedUsers = thread.rewardedUsers;
+      if (thread.rewardedUsers) {
+        this.rewardedUsers = thread.rewardedUsers;
+      }
+      if (thread.firstPost) {
+        this.likedUsers = thread.firstPost.likedUsers;
+      }
       return thread;
     },
     // 语言包
@@ -711,11 +752,27 @@ export default {
     },
     currentLoginId() {
       const userId = this.$store.getters['session/get']('userId');
-      console.log('获取当前登录的id', userId);
       return parseInt(userId, 10);
     },
   },
   onLoad(option) {
+    this.curUrl = getCurUrl();
+    this.rewardStatus = false;
+    this.paidStatus = false;
+    try {
+      const res = uni.getSystemInfoSync();
+      this.system = res.platform;
+      this.detectionmodel = this.forums.set_site.site_mode;
+      this.paymentmodel = this.forums.paycenter.wxpay_ios;
+      // #ifndef H5
+      if (this.detectionmodel === 'pay' && this.system === 'ios') {
+        this.$store.dispatch('forum/setError', { loading: false, code: 'dataerro' });
+        return;
+      }
+      // #endif
+    } catch (e) {
+      // error
+    }
     // #ifdef MP-WEIXIN
     wx.showShareMenu({
       withShareTicket: true,
@@ -770,25 +827,34 @@ export default {
     this.formData = {
       type: 1,
     };
-    try {
-      const res = uni.getSystemInfoSync();
-      this.system = res.platform;
-      this.detectionmodel = this.forums.set_site.site_mode;
-      this.paymentmodel = this.forums.paycenter.wxpay_ios;
-      // #ifndef H5
-      if (this.detectionmodel === 'pay' && this.system === 'ios') {
-        this.$store.dispatch('forum/setError', { loading: false, code: 'dataerro' });
-        return;
-      }
-      // #endif
-    } catch (e) {
-      // error
-    }
 
     // 编辑发帖回来后更新信息
     this.$u.event.$on('refreshFiles', () => {
       this.loadThread();
     });
+  },
+  // 下拉刷新
+  onPullDownRefresh() {
+    const _this = this;
+    _this.posts = [];
+    _this.pageNum = 1;
+    setTimeout(function() {
+      _this.loadThread();
+      _this.loadThreadPosts();
+      uni.stopPullDownRefresh();
+    }, 1000);
+  },
+  // 上拉加载
+  onReachBottom() {
+    if (this.loadingType !== 'more') {
+      return;
+    }
+    this.pageNum += 1;
+    this.loadThreadPosts();
+  },
+  // 监听页面滚动，参数为Object
+  onPageScroll(event) {
+    this.scrollTop = event.scrollTop;
   },
   created() {
     uni.$on('logind', () => {
@@ -836,7 +902,6 @@ export default {
       setCategoryIndex: 'session/SET_CATEGORYINDEX',
       setFooterIndex: 'footerTab/SET_FOOTERINDEX',
     }),
-
     // 表情接口请求
     // getEmoji() {
     //   this.$store.dispatch('jv/get', ['emoji', {}]).then(data => {
@@ -862,6 +927,7 @@ export default {
           'category',
           'threadVideo',
           'paidUsers',
+          'user.groups.permissionWithoutCategories',
         ],
       };
       const threadAction = status.run(() =>
@@ -872,7 +938,6 @@ export default {
 
       threadAction
         .then(data => {
-          console.log(data, '这是主题');
           if (data.isDeleted) {
             this.$store.dispatch('forum/setError', {
               code: 'thread_deleted',
@@ -896,6 +961,15 @@ export default {
               title: titleText,
             });
             // #endif
+            data.user.groups[0].permissionWithoutCategories.forEach((value, index) => {
+              if (value.permission === 'createThreadPaid') {
+                this.beRewarded = true;
+                return;
+              }
+            });
+            if (data.user.groups[0]._jv.id === '1') {
+              this.beRewarded = true;
+            }
             this.loaded = true;
             this.loadingStatus = false;
             // 分享数据
@@ -904,7 +978,7 @@ export default {
                 // 文字帖
                 this.contentVal = data.firstPost.summaryText;
                 this.desc = data.firstPost.summaryText;
-                this.logo = '';
+                this.shareLogo = '';
                 break;
               case 1:
                 // 长文帖
@@ -965,28 +1039,10 @@ export default {
           this.isLiked = data.firstPost.isLiked;
           if (!this.forums.paycenter.wxpay_close) {
             // 如果关闭了微信支付
-            console.log('关闭微信支付');
             this.rewardStatus = false;
             this.paidStatus = false;
-            // if (this.system === 'ios') {
-            //   // this.paidBtnStatus = false;
-            //   // this.rewardBtnStatus = false;
-            //   this.rewardStatus = false;
-            //   this.paidStatus = false;
-            // } else {
-            //   if (!data.paid || data.paidUsers.length > 0) {
-            //     this.rewardStatus = true;
-            //     this.paidStatus = false;
-            //     this.paidBtnStatus = true;
-            //   } else {
-            //     this.rewardStatus = false;
-            //     this.paidStatus = false;
-            //   }
-            // }
-          } else {
+          } else if (this.forums.paycenter.wxpay_close && this.beRewarded) {
             // 如果开启了微信支付
-            // console.log('开启微信支付');
-            // console.log(data.paid, '是否付费');
             if (!data.paid || data.paidUsers.length > 0) {
               // #ifndef H5
               if (this.system === 'ios') {
@@ -1011,6 +1067,7 @@ export default {
               }
               // #endif
             } else {
+              this.rewardStatus = true;
               this.paidStatus = false;
             }
             if (data.type === 3) {
@@ -1064,6 +1121,9 @@ export default {
               }
               // #endif
             }
+          } else {
+            this.rewardStatus = false;
+            this.paidBtnStatus = false;
           }
 
           if (data.firstPost.likedUsers.length < 1) {
@@ -1126,8 +1186,12 @@ export default {
           } else if (type === '2') {
             if (data.isDeleted) {
               uni.navigateBack({
-                url: `/pages/home/index`,
+                delta: 1,
               });
+
+              // uni.navigateBack({
+              //   url: `/pages/home/index`,
+              // });
             } else {
               // 主题删除失败
             }
@@ -1334,7 +1398,6 @@ export default {
         delete data._jv;
         this.loadingType = data.length === this.pageSize ? 'more' : 'nomore';
         this.posts = [...this.posts, ...data];
-        console.log(this.posts, '~~~~~~~~~~');
         if (data.length === 0) {
           this.contentnomoreVal = this.t.noComment;
         } else {
@@ -1613,21 +1676,42 @@ export default {
     // 管理菜单内标签点击事件
     selectChoice(param) {
       if (!this.$store.getters['session/get']('isLogin')) {
+        // #ifdef MP-WEIXIN
         this.$store.getters['session/get']('auth').open();
+        // #endif
+        // #ifdef H5
+        if (!this.handleLogin(this.curUrl)) {
+          return;
+        }
+        // #endif
       }
       if (param.type === '0') {
         uni.redirectTo({
           url: `/pages/topic/post?operating=edit&threadId=${this.thread._jv.id}`,
         });
-      } else {
+      } else if (param.type === '2' || param.type === '3') {
         this.threadOpera(this.threadId, param.canOpera, param.status, param.type);
+      } else if (param.type === '4') {
+        this.$refs.deletePopup.open();
+        this.deleteType = '4';
+        this.deleteId = this.threadId;
+        this.deletePostCanStatus = param.canOpera;
+        this.deletePostIsStatus = param.status;
+        this.deletePostType = param.type;
+        this.deleteTip = this.i18n.t('core.deleteContentSure');
       }
     },
     // 跳转到用户主页
     personJump(id) {
       if (!this.$store.getters['session/get']('isLogin')) {
+        // #ifdef MP-WEIXIN
         this.$store.getters['session/get']('auth').open();
-        return;
+        // #endif
+        // #ifdef H5
+        if (!this.handleLogin(this.curUrl)) {
+          return;
+        }
+        // #endif
       }
       uni.navigateTo({
         url: `/pages/profile/index?userId=${id}`,
@@ -1636,8 +1720,14 @@ export default {
     // 主题支付
     payClickShow() {
       if (!this.$store.getters['session/get']('isLogin')) {
+        // #ifdef MP-WEIXIN
         this.$store.getters['session/get']('auth').open();
-        return;
+        // #endif
+        // #ifdef H5
+        if (!this.handleLogin(this.curUrl)) {
+          return;
+        }
+        // #endif
       }
       this.payStatus = false;
       this.payShowStatus = true;
@@ -1656,7 +1746,6 @@ export default {
     },
     // 支付是否显示用户头像
     radioMyHead(val) {
-      console.log(val, '~~~~');
       // 是否显示用户头像
       this.isAnonymous = !val;
     },
@@ -1668,8 +1757,14 @@ export default {
     // 打赏
     rewardClick() {
       if (!this.$store.getters['session/get']('isLogin')) {
+        // #ifdef MP-WEIXIN
         this.$store.getters['session/get']('auth').open();
-        return;
+        // #endif
+        // #ifdef H5
+        if (!this.handleLogin(this.curUrl)) {
+          return;
+        }
+        // #endif
       }
       if (this.user._jv.id === this.thread.user._jv.id) {
         this.$refs.toast.show({ message: this.t.iCantRewardMyself });
@@ -1809,9 +1904,14 @@ export default {
     // 删除图片
     uploadClear(list, del) {
       const id = list.id;
-      this.delAttachments(id, del).then(() => {
-        this.$refs.upload.clear(del);
-      });
+      this.deleteType = 0;
+      this.deleteId = id;
+      this.deleteIndex = del;
+      this.$refs.deletePopup.open();
+      this.deleteTip = this.i18n.t('core.deleteImgSure');
+      // this.delAttachments(id, del).then(() => {
+      //   this.$refs.upload.clear(del);
+      // });
     },
     // 删除图片
     delAttachments(id) {
@@ -1839,8 +1939,14 @@ export default {
     // 跳转到评论详情页
     commentJump(threadId, postId) {
       if (!this.$store.getters['session/get']('isLogin')) {
+        // #ifdef MP-WEIXIN
         this.$store.getters['session/get']('auth').open();
-        return;
+        // #endif
+        // #ifdef H5
+        if (!this.handleLogin(`/pages/topic/comment?threadId=${threadId}&commentId=${postId}`)) {
+          return;
+        }
+        // #endif
       }
       uni.navigateTo({
         url: `/pages/topic/comment?threadId=${threadId}&commentId=${postId}`,
@@ -1849,8 +1955,14 @@ export default {
     // 评论点赞
     commentLikeClick(postId, type, canStatus, isStatus, index, post) {
       if (!this.$store.getters['session/get']('isLogin')) {
+        // #ifdef MP-WEIXIN
         this.$store.getters['session/get']('auth').open();
-        return;
+        // #endif
+        // #ifdef H5
+        if (!this.handleLogin(this.curUrl)) {
+          return;
+        }
+        // #endif
       }
       this.postIndex = index;
       this.postOpera(postId, type, canStatus, isStatus, post);
@@ -1858,16 +1970,35 @@ export default {
     // 删除评论
     deleteComment(postId, type, canStatus, isStatus, post) {
       if (!this.$store.getters['session/get']('isLogin')) {
+        // #ifdef MP-WEIXIN
         this.$store.getters['session/get']('auth').open();
-        return;
+        // #endif
+        // #ifdef H5
+        if (!this.handleLogin(this.curUrl)) {
+          return;
+        }
+        // #endif
       }
-      this.postOpera(postId, '3', canStatus, isStatus, post);
+      this.$refs.deletePopup.open();
+      this.deleteId = postId;
+      this.deleteType = '3';
+      this.deletePostCanStatus = canStatus;
+      this.deletePostIsStatus = isStatus;
+      this.deletePost = post;
+      this.deleteTip = this.i18n.t('core.deleteCommentSure');
+      // this.postOpera(postId, '3', canStatus, isStatus, post);
     },
     // 评论的回复
     replyComment(postId, postIndex) {
       if (!this.$store.getters['session/get']('isLogin')) {
+        // #ifdef MP-WEIXIN
         this.$store.getters['session/get']('auth').open();
-        return;
+        // #endif
+        // #ifdef H5
+        if (!this.handleLogin(this.curUrl)) {
+          return;
+        }
+        // #endif
       }
       if (!this.thread.canReply) {
         this.$refs.toast.show({ message: this.t.noReplyPermission });
@@ -1883,8 +2014,14 @@ export default {
     // 点击图片
     imageClick() {
       if (!this.$store.getters['session/get']('isLogin')) {
+        // #ifdef MP-WEIXIN
         this.$store.getters['session/get']('auth').open();
-        return;
+        // #endif
+        // #ifdef H5
+        if (!this.handleLogin(this.curUrl)) {
+          return;
+        }
+        // #endif
       }
       // this.previewImg();
     },
@@ -1912,24 +2049,42 @@ export default {
     // 主题点赞
     threadLikeClick(postId, canLike, isLiked) {
       if (!this.$store.getters['session/get']('isLogin')) {
+        // #ifdef MP-WEIXIN
         this.$store.getters['session/get']('auth').open();
-        return;
+        // #endif
+        // #ifdef H5
+        if (!this.handleLogin(this.curUrl)) {
+          return;
+        }
+        // #endif
       }
       this.postOpera(postId, '1', canLike, isLiked);
     },
     // 主题收藏
     threadCollectionClick(id, canStatus, isStatus, type) {
       if (!this.$store.getters['session/get']('isLogin')) {
+        // #ifdef MP-WEIXIN
         this.$store.getters['session/get']('auth').open();
-        return;
+        // #endif
+        // #ifdef H5
+        if (!this.handleLogin(this.curUrl)) {
+          return;
+        }
+        // #endif
       }
       this.threadOpera(id, canStatus, isStatus, type);
     },
     // 主题回复
     threadComment(threadId) {
       if (!this.$store.getters['session/get']('isLogin')) {
+        // #ifdef MP-WEIXIN
         this.$store.getters['session/get']('auth').open();
-        return;
+        // #endif
+        // #ifdef H5
+        if (!this.handleLogin(this.curUrl)) {
+          return;
+        }
+        // #endif
       }
       if (this.thread.canReply && this.thread.category.canReplyThread) {
         this.commentId = threadId;
@@ -1940,11 +2095,48 @@ export default {
         this.$refs.toast.show({ message: this.t.noReplyPermission });
       }
     },
+
+    handleClickOk() {
+      this.$refs.deletePopup.close();
+      if (this.deleteType === '4') {
+        this.threadOpera(
+          this.deleteId,
+          this.deletePostCanStatus,
+          this.deletePostIsStatus,
+          this.deleteType,
+        );
+      } else if (this.deleteType === '3') {
+        // 删除类型为主题评论
+        this.postOpera(
+          this.deleteId,
+          '3',
+          this.deletePostCanStatus,
+          this.deletePostIsStatus,
+          this.deletePost,
+        );
+      } else if (this.deleteType === 0) {
+        // 删除类型为评论时上传的图片
+        this.delAttachments(this.deleteId, this.deleteIndex).then(() => {
+          this.$refs.upload.clear(this.deleteIndex);
+        });
+      }
+    },
+
+    handleClickCancel() {
+      this.$refs.deletePopup.close();
+    },
+
     // 分享
     shareClick() {
       if (!this.$store.getters['session/get']('isLogin')) {
+        // #ifdef MP-WEIXIN
         this.$store.getters['session/get']('auth').open();
-        return;
+        // #endif
+        // #ifdef H5
+        if (!this.handleLogin(this.curUrl)) {
+          return;
+        }
+        // #endif
       }
       // #ifdef MP-WEIXIN
       this.$refs.sharePopup.open();
@@ -1995,14 +2187,14 @@ export default {
       this.cancel();
     },
 
-    // 下拉加载
-    pullDown() {
-      if (this.loadingType !== 'more') {
-        return;
-      }
-      this.pageNum += 1;
-      this.loadThreadPosts();
-    },
+    // // 下拉加载
+    // pullDown() {
+    //   if (this.loadingType !== 'more') {
+    //     return;
+    //   }
+    //   this.pageNum += 1;
+    //   this.loadThreadPosts();
+    // },
     codeImgChange(params) {
       if (!params.show) {
         clearInterval(payWechat);
@@ -2012,13 +2204,13 @@ export default {
       this.isLiked = liked;
       // 主题点赞
       if (this.isLiked) {
-        this.thread.firstPost.likedUsers.unshift(this.user);
+        this.likedUsers.unshift(this.user);
         this.thread.firstPost._jv.relationships.likedUsers.data.unshift({
           type: this.user._jv.type,
           id: this.user._jv.id,
         });
       } else {
-        this.thread.firstPost.likedUsers.forEach((value, key, item) => {
+        this.likedUsers.forEach((value, key, item) => {
           value.id == this.user.id && item.splice(key, 1);
         });
         this.thread.firstPost._jv.relationships.likedUsers.data.forEach((value, key, item) => {
@@ -2053,33 +2245,37 @@ export default {
     // 管理菜单内标签点击事件
     sortSelectChoice(param) {
       if (!this.$store.getters['session/get']('isLogin')) {
+        // #ifdef MP-WEIXIN
         this.$store.getters['session/get']('auth').open();
+        // #endif
+        // #ifdef H5
+        if (!this.handleLogin(this.curUrl)) {
+          return;
+        }
+        // #endif
       }
       this.sortSeleShow = false;
 
       if (param.type === '0') {
         if (this.sortVal === 'createdAt') {
-          console.log('1');
           this.$refs.toast.show({ message: this.t.itsAlreadyWantedSort });
         } else {
-          console.log('2');
           this.refreshVal = false;
-          // this.refreshVal = true;
 
           this.$nextTick(() => {
             this.refreshVal = true;
           });
           this.sortVal = 'createdAt';
+          this.posts = [];
           this.loadThreadPosts();
         }
       } else if (param.type === '1') {
         if (this.sortVal === '-createdAt') {
-          console.log('3');
           this.$refs.toast.show({ message: this.t.itsAlreadyWantedSort });
         } else {
-          console.log('4');
           this.refreshVal = false;
           this.sortVal = '-createdAt';
+          this.posts = [];
           this.loadThreadPosts();
           this.$nextTick(() => {
             this.refreshVal = true;
@@ -2089,11 +2285,18 @@ export default {
     },
     // 添加关注
     addFollow(userInfo) {
-      // #ifdef H5
       if (!this.$store.getters['session/get']('isLogin')) {
+        // #ifdef MP-WEIXIN
         this.$store.getters['session/get']('auth').open();
+        // #endif
+        // #ifdef H5
+        if (!this.handleLogin(this.curUrl)) {
+          return;
+        }
+        // #endif
+        return;
       }
-      // #endif
+      const originUser = this.$store.getters['jv/get'](`users/${userInfo.id}`);
       const params = {
         _jv: {
           type: 'follow',
@@ -2101,25 +2304,25 @@ export default {
         type: 'user_follow',
         to_user_id: userInfo.id,
       };
-      status
-        .run(() => this.$store.dispatch('jv/post', params))
-        .then(res => {
-          console.log(res, '这是结果');
-          if (res.is_mutual == 0) {
-            console.log(res, '~!~~111');
-            this.thread.user.follow = 1;
-          } else {
-            console.log(res, '~~~222');
-            this.thread.user.follow = 2;
-          }
-        });
+      this.$store.dispatch('jv/post', params).then(res => {
+        if (res.is_mutual == 0) {
+          this.thread.user.follow = 1;
+          originUser.follow = 1;
+          this.followStatus = 1;
+        } else {
+          this.thread.user.follow = 2;
+          originUser.follow = 2;
+          this.followStatus = 2;
+        }
+      });
     },
     // 取消关注
     deleteFollow(userInfo) {
-      console.log(userInfo, '这是取消');
+      const originUser = this.$store.getters['jv/get'](`users/${userInfo.id}`);
       this.$store.dispatch('jv/delete', `follow/${userInfo.id}/1`).then(() => {
-        console.log('成功了');
         this.thread.user.follow = 0;
+        originUser.follow = 0;
+        this.followStatus = 0;
       });
     },
   },
@@ -2380,7 +2583,7 @@ page {
   position: fixed;
   bottom: 0;
   left: 0;
-  z-index: 0;
+  z-index: 7;
   width: 100%;
   height: 80rpx;
   line-height: 80rpx;
@@ -2684,15 +2887,17 @@ page {
 }
 .themeItem__header__follow {
   align-self: flex-start;
-  width: 160rpx;
-  margin-right: 29rpx;
+  width: 168rpx;
   line-height: 1;
   text-align: right;
   flex-shrink: 0;
-
-  .icon-follow {
+  .icon-guanzhu {
     margin-right: 7rpx;
     font-size: $fg-f26;
+    color: red;
   }
 }
+// .scroll-y {
+//   max-height: 100vh;
+// }
 </style>

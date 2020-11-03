@@ -1,6 +1,6 @@
 <template>
   <view class="home">
-    <scroll-view
+    <!-- <scroll-view
       scroll-y="true"
       scroll-with-animation="true"
       show-scrollbar="false"
@@ -8,8 +8,8 @@
       @scroll="scroll"
       @scrolltolower="pullDown"
       @scrolltoupper="toUpper"
-    >
-      <!-- <view @tap="handleSearch">
+    > -->
+    <!-- <view @tap="handleSearch">
       <uni-nav-bar2
         class="status-bar"
         :style="'transform:' + navBarTransform"
@@ -20,54 +20,80 @@
         status-bar
       ></uni-nav-bar2>
     </view> -->
-      <qui-header-two
-        :head-img="forums.set_site ? forums.set_site.site_header_logo : ''"
-        :background-head-full-img="forums.set_site ? forums.set_site.site_background_image : ''"
-        :theme="theme"
-        :theme-num="forums.set_site ? forums.other.count_users : ''"
-        :post-num="forums.set_site ? forums.other.count_threads : ''"
-        :share-btn="shareBtn"
-        :share-show="shareShow"
-        :is-show-more="false"
-        :is-show-back="false"
-        :is-show-home="false"
-        :on-handle-click-setting="showFilter"
-        :on-handle-click-search="searchClick"
-        :suspended="suspended"
-        :header-show="headerShow"
-        @click="open"
-        @closeShare="closeShare"
+    <!-- <view class="status_bar">
+      这里是状态栏
+    </view> -->
+    <!-- #ifdef MP-WEIXIN -->
+    <uni-nav-bar
+      :title="i18n.t('home.tabsCircle')"
+      fixed
+      :color="navTheme === $u.light() ? '#000000' : '#ffffff'"
+      :background-color="navTheme === $u.light() ? '#ffffff' : '#2e2f30'"
+      status-bar
+    ></uni-nav-bar>
+    <!-- #endif -->
+    <ec-header />
+    <qui-header-two
+      :head-img="forums.set_site ? forums.set_site.site_header_logo : ''"
+      :background-head-full-img="forums.set_site ? forums.set_site.site_background_image : ''"
+      :theme="theme"
+      :theme-num="forums.set_site ? forums.other.count_users : ''"
+      :post-num="forums.set_site ? forums.other.count_threads : ''"
+      :share-btn="shareBtn"
+      :share-show="shareShow"
+      :is-show-more="false"
+      :is-show-back="false"
+      :is-show-home="false"
+      :on-handle-click-setting="showFilter"
+      :on-handle-click-search="searchClick"
+      :header-show="headerShow"
+      @click="open"
+      @closeShare="closeShare"
+    >
+      <!-- <qui-search /> -->
+      <!-- :style="headerShow ? '' : 'width:100%;position:fixed;z-index:9;top:' + navbarHeight + 'px;'" -->
+      <view
+        class="nav"
+        id="navId"
+        :style="headerShow ? '' : 'width:100%;position:fixed;z-index:9;top:' + navbarHeight + 'px;'"
       >
-        <!-- :style="headerShow ? '' : 'width:100%;position:fixed;z-index:9;top:' + navbarHeight + 'px;'" -->
-        <view class="nav" id="navId">
-          <u-tabs
-            class="scroll-tab"
-            :list="categories"
-            :current="categoryIndex"
-            @change="toggleTab"
-            is-scroll="isScroll"
-            height="72"
-            active-color="#1878F3"
-          ></u-tabs>
+        <u-tabs
+          class="scroll-tab"
+          :list="categories"
+          :current="categoryIndex"
+          @change="toggleTab"
+          is-scroll="isScroll"
+          height="70"
+          active-color="#1878F3"
+        />
+        <view class="fbh fbje icon_screen">
+          <qui-icon
+            class="icon_shezhi"
+            name="icon-shezhi_4"
+            size="38"
+            :color="show ? '#000' : '#999'"
+            @tap="showFilter"
+          ></qui-icon>
         </view>
-      </qui-header-two>
-      <!-- <view
+      </view>
+    </qui-header-two>
+    <!-- <view
           class="nav"
           id="navId"
           :style="
             headerShow ? '' : 'width:100%;position:fixed;z-index:9;top:' + navbarHeight + 'px;'
           "
         > -->
-      <!-- <view class="nav__box">
+    <!-- <view class="nav__box">
           <qui-icon
             class="nav__box__icon"
-            name="icon-screen"
+            name="icon-shezhi_4"
             size="28"
             :color="show ? '#FFF' : '#89c6ff'"
             @tap="showFilter"
           ></qui-icon>
         </view> -->
-      <!-- <u-tabs
+    <!-- <u-tabs
             class="scroll-tab"
             :list="categories"
             :current="categoryIndex"
@@ -77,16 +103,26 @@
             active-color="#1878F3"
           ></u-tabs>
         </view> -->
-      <ec-publish v-if="isPublish" />
+    <!-- <ec-publish v-if="isPublish" /> -->
 
-      <!-- <view class="sticky"> -->
-      <!-- <view
+    <!-- <view class="sticky"> -->
+    <!-- <view
           class="sticky"
           :style="headerShow ? 'margin-top:20rpx' : 'margin-top:130rpx'"
           v-if="sticky.length > 0"
         > -->
-      <ec-sticky :items="sticky" :handle-click="stickyClick" />
-      <!-- <view class="sticky" v-if="sticky.length > 0">
+    <!-- 置顶帖 -->
+    <view class="fbh updata_box">
+      <view class="fbh dynamic">
+        <qui-icon class="icon" name="icon-huatibang" size="70" color="#f99020"></qui-icon>
+        <view class="new fbv">
+          <h3 class="newtitle">最新动态</h3>
+          <p class="newtext">EC-UI 贴心为您服务</p>
+        </view>
+      </view>
+    </view>
+    <ec-sticky :items="sticky" :handle-click="stickyClick" />
+    <!-- <view class="sticky" v-if="sticky.length > 0">
         <scroll-view scroll-x="true">
           <view class="sticky__box fbh">
             <view
@@ -110,7 +146,7 @@
         </scroll-view>
       </view> -->
 
-      <!-- <view class="sticky" v-if="sticky.length > 0">
+    <!-- <view class="sticky" v-if="sticky.length > 0">
         <scroll-view scroll-x="true">
           <view class="sticky__box fbh">
             <view
@@ -132,64 +168,81 @@
           </view>
         </scroll-view>
       </view> -->
-      <!-- </view> -->
-      <view class="main" id="main">
-        <qui-content
-          v-for="(item, index) in threads"
-          :ref="'myVideo' + index"
-          :key="index"
-          :currentindex="index"
-          :pay-status="(item.price > 0 && item.paid) || item.price == 0"
-          :user-name="item.user.username"
-          :theme-image="item.user.avatarUrl"
-          :theme-btn="item.canHide || ''"
-          :theme-reply-btn="item.canReply || ''"
-          :user-groups="item.user && item.user.groups"
-          :theme-time="item.createdAt"
-          :theme-content="item.type == 1 ? item.title : item.firstPost.summary"
-          :thread-type="item.type"
-          :media-url="item.threadVideo && item.threadVideo.media_url"
-          :is-great="item.firstPost.isLiked"
-          :theme-like="item.firstPost.likeCount"
-          :theme-comment="item.postCount - 1"
-          :tags="[item.category]"
-          :images-list="item.firstPost.images"
-          :theme-essence="item.isEssence"
-          :video-width="item.threadVideo && item.threadVideo.width"
-          :video-height="item.threadVideo && item.threadVideo.height"
-          :video-id="item.threadVideo && item.threadVideo._jv.id"
-          :cover-image="item.threadVideo && item.threadVideo.cover_url"
-          :duration="item.threadVideo && item.threadVideo.duration"
-          :is-deleted="item.isDeleted"
-          :scroll-top="scrollTop"
-          @click="handleClickShare(item._jv.id)"
-          @handleIsGreat="
-            handleIsGreat(
-              item.firstPost._jv.id,
-              item.firstPost.canLike,
-              item.firstPost.isLiked,
-              item.firstPost.likeCount,
-            )
-          "
-          @commentClick="commentClick(item._jv.id)"
-          @contentClick="contentClick(item)"
-          @backgroundClick="contentClick(item)"
-          @headClick="headClick(item.user._jv.id)"
-          @addFollow="addFollow(item.user._jv.id)"
-          @videoPlay="handleVideoPlay"
-        ></qui-content>
-        <qui-load-more :status="loadingType"></qui-load-more>
-      </view>
-      <!-- #ifdef H5-->
-      <view class="record" v-if="forums.set_site ? forums.set_site.site_record : '' !== ''">
-        <!-- <text>{{ i18n.t('home.record') }}</text> -->
-        <a class="record__url" href="http://www.beian.miit.gov.cn" target="_blank">
+    <!-- </view> -->
+    <!-- </view> -->
+    <view class="main" id="main">
+      <qui-content
+        v-for="(item, index) in todoList"
+        :ref="'myVideo' + index"
+        :key="index"
+        :currentindex="index"
+        :pay-status="(item.price > 0 && item.paid) || item.price == 0"
+        :user-name="item.user.username"
+        :user="item.user"
+        :is-real="item.user.isReal"
+        :theme-image="item.user.avatarUrl"
+        :theme-btn="item.canHide || ''"
+        :theme-reply-btn="item.canReply || ''"
+        :user-groups="item.user && item.user.groups"
+        :theme-time="item.createdAt"
+        :theme-content="item.type == 1 ? item.title : item.firstPost.summary"
+        :thread-type="item.type"
+        :thread="item"
+        :media-url="item.threadVideo && item.threadVideo.media_url"
+        :is-great="item.firstPost.isLiked"
+        :theme-like="item.firstPost.likeCount"
+        :theme-comment="item.postCount - 1"
+        :tags="[item.category]"
+        :images-list="item.firstPost.images"
+        :theme-essence="item.isEssence"
+        :video-width="item.threadVideo && item.threadVideo.width"
+        :video-height="item.threadVideo && item.threadVideo.height"
+        :video-id="item.threadVideo && item.threadVideo._jv.id"
+        :cover-image="item.threadVideo && item.threadVideo.cover_url"
+        :duration="item.threadVideo && item.threadVideo.duration"
+        :is-deleted="item.isDeleted"
+        :scroll-top="scrollTop"
+        @click="handleClickShare(item._jv.id)"
+        @handleIsGreat="
+          handleIsGreat(
+            item.firstPost._jv.id,
+            item.firstPost.canLike,
+            item.firstPost.isLiked,
+            item.firstPost.likeCount,
+          )
+        "
+        @commentClick="commentClick(item._jv.id)"
+        @contentClick="contentClick(item)"
+        @backgroundClick="contentClick(item)"
+        @headClick="headClick(item.user._jv.id)"
+        @addFollow="addFollow(item.user._jv.id)"
+        @videoPlay="handleVideoPlay"
+        :is-attention-visible="true"
+        :item="item"
+        @remove="removeContentById"
+      ></qui-content>
+
+      <qui-load-more :status="loadingType"></qui-load-more>
+    </view>
+    <!-- #ifdef H5-->
+    <view class="record" v-if="forums.set_site ? forums.set_site.site_record : '' !== ''">
+      <!-- <text>{{ i18n.t('home.record') }}</text> -->
+      <view class="record__box">
+        <a class="record__box-url" href="http://www.beian.miit.gov.cn" target="_blank">
           {{ forums.set_site ? forums.set_site.site_record : '' }}
         </a>
       </view>
-      <!-- #endif -->
-      <!-- </view> -->
-    </scroll-view>
+      <!-- <view class="record__box1">
+        <a class="record__box-url" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44030002000001" target="_blank">
+          粤公网安备 44030002000001号
+        </a>
+      </view> -->
+    </view>
+    <view class="copyright" :class="forums.set_site.site_record ? '' : 'copyright_margin'">
+      <text>{{ i18n.t('home.copyright') }}</text>
+    </view>
+    <!-- #endif -->
+    <!-- </scroll-view> -->
     <qui-filter-modal
       v-model="show"
       @confirm="confirm"
@@ -291,11 +344,16 @@ export default {
       type: String,
       default: '',
     },
+    onHandleClickSetting: {
+      type: Function,
+      default: () => {},
+    },
   },
   data() {
     return {
       navBarTransform,
-      suspended: false, // 是否吸顶状态
+      isPublish: false,
+      // suspended: false, // 是否吸顶状态
       checkoutTheme: false, // 切换主题  搭配是否吸顶使用
       threadType: '', // 主题类型 0普通 1长文 2视频 3图片（'' 不筛选）
       threadEssence: '', // 筛选精华 '' 不筛选 yes 精华 no 非精华
@@ -312,13 +370,14 @@ export default {
       showSearch: true, // 筛选显示搜索
       navbarHeight, // 顶部导航栏的高度
       headerShow: true, // 是否显示标题图(背景+logo)，不显示标题图时，分类切换栏需要固定顶部
-      navTop: 38, // 切换分类导航的top
+      navTop: 128, // 切换分类导航的top
       navHeight: 0, // 切换分类导航的高度
       nowThreadId: '', // 当前点击主题ID
       filterTop: '', // 筛选弹窗的位置
       shareShow: false, // h5内分享提示信息
       shareTitle: '', // h5内分享复制链接
       isWeixin: '', // 是否是微信浏览器内
+      todoList: [],
       filterList: [
         {
           title: this.i18n.t('home.filterPlate'),
@@ -329,7 +388,7 @@ export default {
           data: [
             { label: this.i18n.t('home.all'), value: '', selected: true },
             { label: this.i18n.t('home.text'), value: '0', selected: false },
-            { label: this.i18n.t('home.post'), value: '1', selected: false },
+            { label: this.i18n.t('home.invitation'), value: '1', selected: false },
             { label: this.i18n.t('home.video'), value: '2', selected: false },
             { label: this.i18n.t('home.picture'), value: '3', selected: false },
           ],
@@ -366,19 +425,33 @@ export default {
       categories: [],
       playIndex: null,
       scrollTop: 0,
-      isPublish: false,
     };
   },
   computed: {
     ...mapState({
       categoryId: state => state.session.categoryId,
       categoryIndex: state => state.session.categoryIndex,
+      footerIndex: state =>
+        state.footerTab.footerIndex ? parseInt(state.footerTab.footerIndex, 10) : 0,
     }),
+    setIndex: {
+      get() {
+        const index = this.$store.state.footerTab.footerIndex;
+        return index;
+      },
+      set(index) {
+        if (index === 1 || index === 2) {
+          this.headerShow = true;
+        }
+      },
+    },
   },
   created() {
-    if (['http://localhost:8080/', 'https://q.e-spy.cn/'].indexOf(window.location.href) !== -1) {
-      this.isPublish = true;
-    }
+    // console.log('user', this.user);
+    // if (['http://localhost:8080/', 'https://q.e-spy.cn/'].indexOf(window.location.href) !== -1) {
+    //   this.isPublish = true;
+    // }
+
     // #ifdef  H5
     this.isWeixin = appCommonH.isWeixin().isWeixin;
     this.isPhone = appCommonH.isWeixin().isPhone;
@@ -436,7 +509,10 @@ export default {
     this.wxShare({
       title: this.forums.set_site ? this.forums.set_site.site_name : '',
       desc: this.forums.set_site ? this.forums.set_site.site_introduction : '',
-      logo: this.forums.set_site ? this.forums.set_site.site_logo : '',
+      logo:
+        this.forums.set_site && this.forums.set_site.site_logo
+          ? this.forums.set_site.site_logo
+          : '',
     });
     // #endif
     this.ontrueGetList();
@@ -446,10 +522,19 @@ export default {
   },
   destroyed() {
     uni.$off('logind');
+    // #ifdef H5
+    uni.$off('updateIndex');
+    uni.$off('updateNoticePage');
+    uni.$off('updateMy');
+    // #endif
   },
   mounted() {
+    // if (['http://localhost:8080/', 'https://q.e-spy.cn/'].indexOf(window.location.href) !== -1) {
+    //   this.isPublish = true;
+    // }
     this.$u.event.$on('tagClick', tagId => {
       this.isResetList = true;
+      this.loadCategories();
       this.setCategoryId(tagId);
       this.setCategoryIndex(this.getCategorieIndex(tagId));
       // 首页主题置顶列表
@@ -458,32 +543,66 @@ export default {
       this.loadThreads();
     });
 
-    // this.$uGetRect('#soltNav').then(rect => {
-    //   this.navTop = rect.top;
-    //   this.navHeight = rect.height;
-    // });
-    // if (this.forums.set_site) {
-    //   uni.setNavigationBarTitle({
-    //     title: this.forums.set_site.site_name,
-    //   });
-    // }
+    if (this.footerIndex === 0) {
+      // console.log('fffffffffffff');
+      this.$uGetRect('#navId').then(rect => {
+        this.navTop = rect.top;
+        // console.log(this.navTop, 'this.navTopthis.navTopthis.navTopthis.navTop');
+        this.navHeight = rect.height;
+      });
+    }
+
+    if (this.forums.set_site) {
+      uni.setNavigationBarTitle({
+        title: this.forums.set_site.site_name,
+      });
+    }
+
+    // #ifdef H5
+    uni.$on('updateIndex', () => {
+      this.headerShow = true;
+    });
+    uni.$on('updateNoticePage', () => {
+      // console.log('99999');
+      this.headerShow = true;
+    });
+    uni.$on('updateMy', () => {
+      // console.log('我的我的');
+      this.headerShow = true;
+    });
+
+    // #endif
+    // uni.$on('onpullDownRefresh', () => {
+    //   this.navBarTransform = 'none';
+    // })
   },
   methods: {
     ...mapMutations({
       setCategoryId: 'session/SET_CATEGORYID',
       setCategoryIndex: 'session/SET_CATEGORYINDEX',
     }),
+    // 删除方法
+    removeContentById(item) {
+      // 过滤item._jv.id
+      this.todoList = this.todoList.filter(e => {
+        return item._jv.id !== e._jv.id;
+      });
+      // 同步获取hideContents的内容 （key）
+      const storage = uni.getStorageSync('hideContents') || [];
+      storage.push(item._jv.id); // 追加item._jv.id
+      uni.setStorageSync('hideContents', storage); // 将storage的内容存储到hideContents中 （key，date）
+    },
     topMargin() {
       return ';';
     },
     scroll(event) {
-      this.scrollTop = event.detail.scrollTop;
+      // if (this.footerIndex === 0) {
+      this.scrollTop = event.scrollTop;
       // #ifdef MP-WEIXIN
       if (!this.navbarHeight) {
         return;
       }
-
-      if (event.detail.scrollTop + this.navbarHeight + 20 >= this.navTop) {
+      if (event.scrollTop + this.navbarHeight + 20 >= this.navTop) {
         this.headerShow = false;
         this.navBarTransform = 'none';
       } else {
@@ -493,23 +612,21 @@ export default {
       // #endif
 
       // #ifdef H5
-      if (event.detail.scrollTop >= this.navTop) {
+      if (event.scrollTop >= this.navTop) {
         this.headerShow = false;
+        // console.log('falsefalsefalse');
         this.navBarTransform = 'none';
       } else {
         this.headerShow = true;
+        // console.log('truetruetruetrue');
         this.navBarTransform = `translate3d(0, -${this.navbarHeight}px, 0)`;
       }
       // #endif
+      // }
     },
     // 滑动到顶部
     toUpper() {
       this.headerShow = true;
-      // console.log('refresh');
-      // this.ontrueGetList();
-      // setTimeout(function() {
-      // uni.startPullDownRefresh();
-      // }, 1000);
     },
     // 初始化选中的选项卡
     getCategorieIndex(tagId) {
@@ -569,7 +686,6 @@ export default {
           url: `/pages/topic/index?id=${thread._jv.id}`,
         });
       } else {
-        // this.$store.getters['session/get']('auth').open();
         this.$refs.toast.show({ message: this.i18n.t('home.noPostingTopic') });
       }
     },
@@ -577,11 +693,6 @@ export default {
     headClick(id) {
       uni.navigateTo({
         url: `/pages/profile/index?userId=${id}`,
-      });
-    },
-    handleSearch() {
-      uni.navigateTo({
-        url: '/pages/site/search',
       });
     },
     // 首页头部分享按钮弹窗
@@ -621,8 +732,14 @@ export default {
     shareHead(index) {
       if (index === 0) {
         if (!this.$store.getters['session/get']('isLogin')) {
+          // #ifdef MP-WEIXIN
           this.$store.getters['session/get']('auth').open();
-          return;
+          // #endif
+          // #ifdef H5
+          if (!this.handleLogin()) {
+            return;
+          }
+          // #endif
         }
         uni.navigateTo({
           url: '/pages/share/site',
@@ -818,6 +935,14 @@ export default {
           this.threads = [...this.threads, ...res];
         }
         this.isResetList = false;
+
+        const storage = uni.getStorageSync('hideContents'); // 同步获取hideContents的内容 （key）
+        // console.log(this.threads);
+        // 过滤e._jv.id，传入新的数据
+        this.todoList = this.threads.filter(e => {
+          // console.log(e);
+          return storage.indexOf(e._jv.id) === -1;
+        });
       });
     },
     // 内容部分点赞按钮点击事件
@@ -856,32 +981,9 @@ export default {
       }
       this.playIndex = index;
     },
-    // 添加关注
-    addFollow(id) {
-      // #ifdef H5
-      if (!this.$store.getters['session/get']('isLogin')) {
-        if (!this.handleLogin()) {
-          return;
-        }
-      }
-      // #endif
-      const params = {
-        _jv: {
-          type: 'follow',
-        },
-        type: 'user_follow',
-        to_user_id: id,
-      };
-      status
-        .run(() => this.$store.dispatch('jv/post', params))
-        .then(() => {
-          this.getUserInfo(this.userId);
-          if (this.$refs.followers) this.$refs.followers.getFollowerList('change');
-          return { success: true };
-        });
-    },
     // 组件初始化请求接口
     ontrueGetList() {
+      this.headerShow = true;
       this.isResetList = true;
       // 首页导航栏分类列表
       this.loadCategories();
@@ -896,11 +998,16 @@ export default {
 <style lang="scss">
 @import '@/styles/base/variable/global.scss';
 @import '@/styles/base/theme/fn.scss';
+/* #ifdef H5 */
+$padding-bottom: 180rpx;
+/* #endif */
+/* #ifdef MP-WEIXIN */
+$padding-bottom: 160rpx;
+/* #endif */
 .home {
   min-height: 100vh;
   color: --color(--qui-FC-333);
-  background-color: #f6f6f6;
-  // background-color: --color(--qui-BG-1);
+  background-color: --color(--qui-BG-1);
 }
 .status-bar {
   position: fixed;
@@ -912,9 +1019,10 @@ export default {
   z-index: 1;
   width: 100%;
   overflow: hidden;
-  // background: --color(--qui-BG-2);
-  // background: --color(--qui-BG-HIGH-LIGHT);
+  background: --color(--qui-BG-2);
+  /* #ifdef MP-WEIXIN */
   // border-bottom: 2rpx solid --color(--qui-BOR-ED);
+  /* #endif */
   transition: box-shadow 0.2s, -webkit-transform 0.2s;
 
   &__box {
@@ -925,8 +1033,8 @@ export default {
     float: right;
     width: 80rpx;
     height: 70rpx;
-    // background: --color(--qui-BG-2);
-    background: --color(--qui-BG-HIGH-LIGHT);
+    background: --color(--qui-BG-2);
+    // background: --color(--qui-BG-HIGH-LIGHT);
     &__icon {
       margin-left: 24rpx;
       line-height: 70rpx;
@@ -942,41 +1050,23 @@ export default {
 }
 
 .sticky {
-  // margin: 30rpx auto;
   // margin: 20rpx auto;
   // border-top: 2rpx solid --color(--qui-BOR-ED);
   // border-bottom: 2rpx solid --color(--qui-BOR-ED);
-  // padding: 10px 0;
 }
 .sticky__box {
-  padding-right: 20px;
-  // background: --color(--qui-BG-2);
+  background: --color(--qui-BG-2);
 }
-.sticky__isSticky__empty {
-  display: flex;
-  width: 0;
-  height: 80rpx;
-  margin: 10rpx auto;
-  border-radius: 5rpx;
-  // margin-left: 30rpx;
-  font-size: $fg-f26;
-  line-height: 80rpx;
-  padding: 1px;
-  margin: -1px;
-}
+
 .sticky__isSticky {
   display: flex;
-  width: 600rpx;
+  width: 710rpx;
   height: 80rpx;
-  margin: 10rpx auto;
-  border-radius: 5rpx;
-  // margin-left: 30rpx;
+  margin-left: 30rpx;
   font-size: $fg-f26;
   line-height: 80rpx;
-  background: #0001;
-  padding: 0 10px;
-  margin: 10px;
-  // border-bottom: 2rpx solid --color(--qui-BOR-ED);
+  background: --color(--qui-BG-2);
+  border-bottom: 2rpx solid --color(--qui-BOR-ED);
   // border-radius: 6rpx;
   // box-shadow: 0rpx 2rpx 4rpx rgba(0, 0, 0, 0.05);
   &__box {
@@ -987,11 +1077,9 @@ export default {
     // margin-left: 20rpx;
     font-size: $fg-f20;
     line-height: 35rpx;
-    color: #fff;
-    // color: --color(--qui-FC-777);
+    color: --color(--qui-FC-777);
     text-align: center;
-    // background: --color(--qui-BG-777);
-    background: #1878f3;
+    background: --color(--qui-BG-777);
     border-radius: 6rpx;
     transition: $switch-theme-time;
   }
@@ -1020,11 +1108,9 @@ export default {
 }
 .scroll-tab {
   z-index: 100;
-  height: 72rpx;
+  // height: 120rpx;
   text-align: center;
   white-space: nowrap;
-
-  // border-bottom: 1rpx solid #fff;
   // border-bottom: 2rpx solid --color(--qui-BOR-EEE);
 }
 .scroll-tab-item {
@@ -1034,7 +1120,6 @@ export default {
   font-size: $fg-f26;
   line-height: 30rpx;
   color: #fff;
-  // line-height: 77rpx;
   // color: --color(--qui-FC-777);
 }
 .active .scroll-tab-line {
@@ -1044,18 +1129,19 @@ export default {
 .uni-tab-bar .active {
   font-size: $fg-f28;
   font-weight: bold;
-  // color: --color(--qui-BG-HIGH-LIGHT);
   color: #fff;
+  // color: --color(--qui-BG-HIGH-LIGHT);
 }
 .main {
-  margin-bottom: 130rpx;
+  padding-bottom: $padding-bottom;
+  background: --color(--qui-BG-1);
 }
 
-.scroll-y {
-  // max-height: calc(100vh - 497rpx);
-  // max-height: calc(100vh - 100rpx);
-  height: calc(100vh - 90rpx);
-}
+// .scroll-y {
+//   // max-height: calc(100vh - 497rpx);
+//   // max-height: calc(100vh - 100rpx);
+//   height: calc(100vh - 90rpx);
+// }
 
 .nav .filter-modal {
   position: absolute;
@@ -1071,23 +1157,66 @@ export default {
   white-space: nowrap;
 }
 .record {
+  display: flex;
   width: 100%;
   height: 40rpx;
-  margin-top: -100rpx;
+  margin-top: -$padding-bottom;
   font-size: $fg-f26;
   color: --color(--qui-FC-B2);
   text-align: center;
-  &record__url {
-    color: --color(--qui-BG-HIGH-LIGHT);
+  justify-content: center;
+  &__box {
+    margin-right: 20rpx;
+    &-url {
+      color: --color(--qui-BG-HIGH-LIGHT);
+    }
+  }
+  &__box1 {
+    &-url {
+      color: --color(--qui-BG-HIGH-LIGHT);
+    }
   }
   a {
     color: --color(--qui-FC-B2);
     text-decoration: none;
   }
 }
-.area {
-  width: 10px;
-  height: 10px;
-  display: block;
+.copyright {
+  width: 100%;
+  height: 40rpx;
+  font-size: $fg-f26;
+  color: --color(--qui-FC-B2);
+  text-align: center;
+}
+.copyright_margin {
+  margin-top: -$padding-bottom;
+}
+.icon_screen {
+  position: absolute;
+  top: 14%;
+  right: 2%;
+}
+
+.updata_box {
+  width: 100%;
+  height: 100%;
+  background: --color(--qui-BG-40);
+  // margin-bottom: 0.7rem;
+  .dynamic {
+    padding: 6rpx 20rpx 10rpx 20rpx;
+    .new {
+      padding-top: 7rpx;
+      padding-left: 10rpx;
+      .newtext {
+        margin-top: 12rpx;
+        font-size: 14rpx;
+        color: rgb(184, 184, 184);
+        padding-left: 2rpx;
+      }
+      .newtitle {
+        font-size: 30rpx;
+      }
+    }
+  }
 }
 </style>

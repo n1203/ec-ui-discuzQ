@@ -113,13 +113,16 @@ export default {
             });
           }
           // #ifdef H5
-          uni.navigateBack({
-            delta: 1,
+          // uni.navigateBack({
+          //   delta: 1,
+          // });
+          uni.redirectTo({
+            url: `/pages/my/profile`,
           });
           // #endif
           // #ifndef H5
-          uni.navigateBack({
-            delta: 1,
+          uni.redirectTo({
+            url: `/pages/my/profile`,
             success() {
               const pages = getCurrentPages();
               pages[1].onLoad();
@@ -155,9 +158,13 @@ export default {
 @import '@/styles/base/variable/global.scss';
 @import '@/styles/base/theme/fn.scss';
 .page-newpwd /deep/ {
+  background-color: --color(--qui-BG-2);
+  box-sizing: border-box;
   .setuppas {
     width: 100vw;
+    /* #ifndef H5 */
     height: 100vh;
+    /* #endif */
     background-color: --color(--qui-BG-2);
     box-sizing: border-box;
   }

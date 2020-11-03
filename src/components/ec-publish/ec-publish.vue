@@ -47,14 +47,14 @@ export default {
   background: #0001;
   color: #555;
   padding: 10px;
-  font-size: 14px;
+  font-size: 28rpx;
   text-align: center;
   box-sizing: border-box;
   border-radius: 5px;
   width: 30%;
 }
 .omit {
-  font-size: 12px;
+  font-size: 24rpx;
   width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;

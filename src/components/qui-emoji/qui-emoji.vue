@@ -108,7 +108,7 @@ export default {
 @import '@/styles/base/variable/global.scss';
 @import '@/styles/base/theme/fn.scss';
 .emoji-box {
-  z-index: 1500;
+  z-index: 150;
   width: 100%;
   height: 370rpx;
   padding: 10rpx 0;

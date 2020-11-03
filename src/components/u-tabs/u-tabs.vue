@@ -192,12 +192,27 @@ export default {
   watch: {
     // 监听tab的变化，重新计算tab菜单的布局信息，因为实际使用中菜单可能是通过
     // 后台获取的（如新闻app顶部的菜单），获取返回需要一定时间，所以list变化时，重新获取布局信息
-    list() {
-      // 用$nextTick等待视图更新完毕后再计算tab的局部信息，否则可能因为tab还没生成就获取，就会有问题
-      this.$nextTick(() => {
-        this.init();
-      });
+    list: {
+      handler(newVal){
+        // 用$nextTick等待视图更新完毕后再计算tab的局部信息，否则可能因为tab还没生成就获取，就会有问题
+        this.$nextTick(() => {
+          // this.clickTab({
+          //   index: this.currentIndex,
+          //   id: newVal[this.currentIndex]._jv.id
+          // })
+          const timer = setTimeout(()=>{
+            this.init();
+          },200)
+        });
+      },
+      deep: true,
     },
+    // list() {
+    //   // 用$nextTick等待视图更新完毕后再计算tab的局部信息，否则可能因为tab还没生成就获取，就会有问题
+    //   this.$nextTick(() => {
+    //     this.init();
+    //   });
+    // },
     current: {
       immediate: true,
       handler(nVal) {
@@ -225,7 +240,6 @@ export default {
     },
     // 点击某一个tab菜单
     clickTab(dataInfo) {
-      console.log(dataInfo.index);
       this.currentIndex = dataInfo.index;
       // 发送事件给父组件
       this.$emit('change', dataInfo);
@@ -265,7 +279,7 @@ export default {
       // 当前活动item的中点点到左边的距离减去滑块宽度的一半，即可得到滑块所需的移动距离
       const left = tabInfo.left + tabInfo.width / 2 - this.parentLeft;
       // 计算当前活跃item到组件左边的距离
-      this.scrollBarLeft = tabInfo.left + 15; // left - uni.upx2px(this.barWidth) / 2;
+      this.scrollBarLeft = tabInfo.left + 15 - this.tabQueryInfo[0].left; // left - uni.upx2px(this.barWidth) / 2;
 
       this.barWidth = tabWidth - 30;
     },
@@ -294,6 +308,7 @@ scroll-view {
 
 .u-scroll-box {
   position: relative;
+  // margin-top: 0.5rem;
 }
 
 /* #ifdef H5 */
@@ -309,7 +324,7 @@ scroll-view /deep/ ::-webkit-scrollbar {
 /* #endif */
 $screen: 80rpx;
 .u-scroll-view {
-  // width: calc(100vw - #{$screen});
+  width: calc(100vw - #{$screen});
   height: 100rpx;
   white-space: nowrap;
   position: relative;
@@ -319,19 +334,17 @@ $screen: 80rpx;
   position: relative;
   display: inline-block;
   text-align: center;
-  color: #fff9;
-  // color: --color(--qui-FC-777);
+  // color: --color(--qui-FC-DDD);
+  color: #999;
   transition-property: background-color, color;
   transition: $switch-theme-time;
 }
 .tabActive {
-  color: #fff;
-  // color: --color(--qui-TAB);
+  // color: --color(--qui-FC-FFF);
+  color: black;
 }
 .tabBarBg {
-  background-color: #fff;
-  
-  // background-color: --color(--qui-TAB-BAR);
+  background-color: --color(--qui-TAB-BAR);
 }
 .u-tab-bar {
   position: absolute;

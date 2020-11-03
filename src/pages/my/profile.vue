@@ -21,7 +21,7 @@
         :addon="profile.username"
       ></qui-cell-item>
       <qui-cell-item :title="i18n.t('profile.avatar')" slot-right arrow @tap="changeAvatar">
-        <qui-avatar class="my-profile__avatar" :user="profile" />
+        <qui-avatar class="my-profile__avatar" :user="profile" :is-real="profile.isReal" />
       </qui-cell-item>
       <!-- qcloud_sms 是否开启短信服务  没有绑定手机号码，跳到“设置新手机”页,反之跳到修改手机号页面，-->
       <navigator

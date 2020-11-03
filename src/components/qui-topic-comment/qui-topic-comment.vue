@@ -3,7 +3,10 @@
     <view class="themeItem">
       <view class="themeItem__header">
         <view class="themeItem__header__img" @click="personJump">
-          <qui-avatar :user="{ username: userName, avatarUrl: commentAvatarUrl }" />
+          <qui-avatar
+            :user="{ username: userName, avatarUrl: commentAvatarUrl }"
+            :is-real="isReal"
+          />
         </view>
         <view class="themeItem__header__title">
           <view class="themeItem__header__title__top">
@@ -12,11 +15,11 @@
             </text>
 
             <text
-              class="themeItem__header__title__isAdmin"
+              class="themeItem__header__title__isAdmin badge"
               v-for="(group, index) in userRole"
               :key="index"
             >
-              {{ group.isDisplay ? `（${group.name}）` : '' }}
+              {{ group.isDisplay ? `${group.name}` : '' }}
             </text>
           </view>
           <view class="themeItem__header__title__time">{{ localTime }}</view>
@@ -24,8 +27,8 @@
         <view class="themeItem__header__r">
           <view v-if="commentStatus == 0" class="comment-status">{{ t.inReview }}</view>
           <view v-else @click="commentLikeClick" class="comment-like">
-            <qui-icon v-if="isLiked" name="icon-liked" class="like"></qui-icon>
-            <qui-icon v-else name="icon-like" class="like" size="30"></qui-icon>
+            <qui-icon v-if="isLiked" name="icon-dianzanle" class="like"></qui-icon>
+            <qui-icon v-else name="icon-dianzan_2" class="like" size="30"></qui-icon>
             <view class="comment-like-count">
               {{ commentLikeCount == 0 ? t.like : commentLikeCount }}
             </view>
@@ -64,11 +67,11 @@
         <view v-else></view>
         <view class="themeItem__footer__r">
           <view class="footer__r__child" v-if="canDelete" @click="deleteComment">
-            <qui-icon class="icon" name="icon-delete" size="26" color="#AAA"></qui-icon>
+            <qui-icon class="icon" name="icon-lajitong" size="35" color="#AAA"></qui-icon>
             <view class="themeItem__footer__con">{{ t.delete }}</view>
           </view>
           <view class="footer__r__child" @click="replyComment" v-if="commentShow">
-            <qui-icon class="icon" name="icon-comments" size="26" color="#AAA"></qui-icon>
+            <qui-icon class="icon" name="icon-xiaoxi1" size="32" color="#AAA"></qui-icon>
             <view class="themeItem__footer__con">{{ t.reply }}</view>
           </view>
         </view>
@@ -78,7 +81,7 @@
 </template>
 
 <script>
-import { time2MorningOrAfternoon } from '@/utils/time';
+import { time2DateAndHM } from '@/utils/time';
 
 export default {
   props: {
@@ -106,6 +109,11 @@ export default {
     userName: {
       type: String,
       default: '',
+    },
+    // 实名认证
+    isReal: {
+      type: Boolean,
+      default: false,
     },
     // 回复的用户的角色
     userRole: {
@@ -186,7 +194,7 @@ export default {
     },
     // 时间转化
     localTime() {
-      return time2MorningOrAfternoon(this.commentTime);
+      return time2DateAndHM(this.commentTime);
     },
   },
   watch: {
@@ -203,7 +211,6 @@ export default {
       handler(newVal) {
         this.refreshStatus = newVal;
         if (this.refreshStatus === true) {
-          console.log('刷新');
           this.$forceUpdate();
         }
       },
@@ -306,6 +313,7 @@ export default {
         height: 37rpx;
         margin-bottom: 10rpx;
         margin-left: 2rpx;
+        align-items: center;
         font-size: 28rpx;
         line-height: 37rpx;
       }
@@ -386,6 +394,19 @@ export default {
       }
     }
   }
+}
+.badge {
+  height: 18px;
+  line-height: 18px;
+  align-items: center;
+  background: #fff !important;
+  border: #ccc 1px solid;
+  border-radius: 10px;
+  font-size: 16px;
+  margin-left: -14rpx;
+  margin-bottom: 10rpx;
+  padding: 8rpx 12rpx;
+  transform: scale(0.5);
 }
 .themeItem__footer {
   display: flex;

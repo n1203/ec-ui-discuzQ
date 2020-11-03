@@ -22,7 +22,10 @@ export default () => {
       if (!type || !id) {
         throw `deleteRecord: Missing type or id: ${record}`
       }
-      Vue.delete(state[type], id)
+      const hasProperty = Object.prototype.hasOwnProperty.call(state[type], id);
+      if(hasProperty) {
+        Vue.delete(state[type], id);
+      }
     },
     /**
      * Add record(s) to the store, according to `mergeRecords` config option

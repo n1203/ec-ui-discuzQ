@@ -1,16 +1,12 @@
 <template>
   <view
     :class="['header', headerH5]"
-    :style="{ 'background-image': 'url(' + backgroundHeadFullImg + ')' }"
+    :style="
+      backgroundHeadFullImg
+        ? `background-image: url(${backgroundHeadFullImg})`
+        : `background: ${color ? color : '--color(--qui-FC-FFF)'}`
+    "
   >
-    <!-- #ifdef H5-->
-    <!-- <qui-header-back
-      :title="title"
-      :is-show-home="isShowHome"
-      :is-show-back="isShowBack"
-      :is-show-more="isShowMore"
-    ></qui-header-back> -->
-    <!-- #endif -->
     <view class="logoBox">
       <image
         class="logo"
@@ -30,7 +26,7 @@
       </text>
 
       <view class="circleDet-share" @click="open">
-        <qui-icon class="qui-icon" name="icon-share1" size="26" :color="iconcolor"></qui-icon>
+        <qui-icon class="qui-icon" name="icon-fenxiang" size="26" :color="iconcolor"></qui-icon>
         {{ t.share }}
       </view>
       <view class="mask" v-if="shareShow" @click="closeShare">
@@ -102,6 +98,10 @@ export default {
       type: Boolean,
       default: true,
     },
+    color: {
+      type: String,
+      default: '',
+    },
   },
   data: () => {
     return {
@@ -132,8 +132,8 @@ export default {
   position: relative;
   width: 100%;
   height: 400rpx;
-  background: #1878f3;
-  background-size: 100%;
+  // background: #1878f3;
+  background-size: cover;
   .logo {
     display: block;
     // width: 100%;
@@ -212,7 +212,7 @@ export default {
 }
 .header-h5 {
   height: 256rpx;
-  background-size: 100%;
+  background-size: cover;
   .logo {
     max-height: 74rpx;
     padding-top: 58rpx;

@@ -1,11 +1,12 @@
 <template>
   <view>
-    <view :class="['header', headerH5]" :style="`background: url(${backgroundHeadFullImg})`">
+    <!-- <view :class="['header', headerH5]" :style="`background: url(${backgroundHeadFullImg})`"> -->
+    <view :class="['header', headerH5]">
       <view
         class="logoBox"
         :style="headerShow ? '' : 'width:100%;position:fixed;z-index:9;top:' + 0 + 'px;'"
       >
-        <view v-if="headerShow" class="fbh fbjc logoBox__header">
+        <!-- <view v-if="headerShow" class="fbh fbjc logoBox__header">
           <view class="logoBox__header__icon">
             <image
               class="logo"
@@ -16,20 +17,21 @@
           </view>
           <view class="fbh fb1 fbje">
             <view @click="onHandleClickSearch" class="logoBox__header__icon iconMenu">
-              <qui-icon name="icon-search" size="36" color="#fff"></qui-icon>
-              <!-- <span>{{ this.$i18n.t('ec.tags') }}</span> -->
+              <qui-icon name="icon-sousuo" size="36" color="#fff"></qui-icon>
+              <span>{{ this.$i18n.t('ec.tags') }}</span>
             </view>
             <view @click="onHandleClickSetting" class="logoBox__header__icon iconMenn">
-              <qui-icon name="icon-screen" size="36" color="#fff"></qui-icon>
-              <!-- <span>{{ this.$i18n.t('ec.tags') }}</span> -->
+              <qui-icon name="icon-shezhi_4" size="36" color="#fff"></qui-icon>
+              <span>{{ this.$i18n.t('ec.tags') }}</span>
             </view>
           </view>
-        </view>
-        <view
+        </view> -->
+        <!-- <view
           :style="
             `background-image: url(${backgroundHeadFullImg}); background-position-y: -120rpx;`
           "
-        >
+        > -->
+        <view class="soltbox">
           <view class="solt" id="soltNav">
             <slot></slot>
           </view>
@@ -280,8 +282,9 @@ export default {
   // height: 180rpx;
   // background-size: 100% auto;
   .logo {
-    max-height: 50rpx;
-    padding-top: 10rpx;
+    max-height: 80rpx;
+    margin-left: -1.5rem;
+    // padding-top: 10rpx;
   }
   .circleDet {
     padding: 49rpx 20rpx 47rpx;
@@ -297,11 +300,11 @@ export default {
       color: #80c5ff;
       text-indent: 10px;
       border-radius: 3px;
-      font-size: 12px;
+      font-size: 24rpx;
     }
     &__icon {
       color: #fff;
-      font-size: 14px;
+      font-size: 28rpx;
       text-align: center;
       height: 70rpx;
       max-width: 100px;
@@ -315,7 +318,8 @@ export default {
   }
 }
 .solt {
-  background: rgba(0, 0, 0, 0.2);
+  // background: rgba(0, 0, 0, 0.2);
+  background: #fff;
   backdrop-filter: saturate(180%) blur(20px);
 }
 .iconMenu {

@@ -1,8 +1,8 @@
 # EC-UI for discuzQ
 
 <div style="text-align: center">
-  <img src="https://badgen.net/badge/EC-UI%20For%20DisuczQ/V0.0.0-alpha-20200731/blue">
-  <img src="https://badgen.net/badge/DisuczQ/V1.0.200723/green">
+  <img src="https://badgen.net/badge/EC-UI%20For%20DisuczQ/V0.0.0-alpha-20200807/blue">
+  <img src="https://badgen.net/badge/DisuczQ/V1.0.200806/green">
   <img src="https://badgen.net/badge/Vuejs/V2.6.11/cyan">
   <img src="https://badgen.net/badge/uniapp/V2.0.0/yellow">
 </div>
@@ -47,5 +47,20 @@ index.html
 1. 查看视频教程 [哔哩哔哩](https://www.bilibili.com/video/BV1V54y1D7UV)
 
 
+- [MaxCourse](https://q.e-spy.cn)
+- [无障有爱](https://web.xy1189.com/)
+- [实在人](https://www.10z.ren)
+- 暂无更多，使用的站长快来联系添加～～～
 
-  [![EngineChina/ec-ui-discuzQ](https://gitee.com/EngineChina/ec-ui-discuzQ/widgets/widget_card.svg?colors=eae9d7,2e2f29,272822,484a45,eae9d7,747571)](https://gitee.com/EngineChina/ec-ui-discuzQ)
+## 开发团队
+- 南风
+- 丹阳
+- 幻尘
+- 肆意
+- 暂无更多，希望更多的人加入到我们到开发者行列，一起共建！
+
+## 联系我们
+
+- 微信群
+
+  ![image-20200727201820100](static/image/20201102.jpg)

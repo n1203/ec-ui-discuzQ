@@ -1,14 +1,24 @@
 <template>
-  <qui-page :data-qui-theme="theme"></qui-page>
+  <qui-page :data-qui-theme="theme" :header="false"></qui-page>
 </template>
 <script>
 import user from '@/mixin/user';
 import forums from '@/mixin/forums';
 import appCommonH from '@/utils/commonHelper';
+// #ifdef H5
 import loginAuth from '@/mixin/loginAuth-h5';
+// #endif
+import { SITE_PAY } from '@/common/const';
 
 export default {
-  mixins: [user, forums, appCommonH, loginAuth],
+  mixins: [
+    user,
+    forums,
+    appCommonH,
+    // #ifdef H5
+    loginAuth,
+    // #endif
+  ],
   data() {
     return {
       state: true,
@@ -22,9 +32,8 @@ export default {
         .then(res => {
           const err = res.data;
           if (err.errors) {
-            const { nickname } = err.errors[0].user;
-            const wxtoken = err.errors[0].token;
             if (err.errors[0].code === 'no_bind_user') {
+              const wxtoken = err.errors[0].token;
               let code = '';
               uni.getStorage({
                 key: 'inviteCode',
@@ -32,11 +41,34 @@ export default {
                   code = resData.data || '';
                 },
               });
-              this.login(nickname, wxtoken, code);
+              const pages = getCurrentPages();
+              const url = pages[pages.length - 1].route;
+              this.login(url, wxtoken, code);
+            }
+            if (err.errors[0].code === 'register_validate') {
+              uni.showToast({
+                icon: 'none',
+                title: this.i18n.t('core.register_validate'),
+                duration: 2000,
+              });
             }
           } else if (res && res.data && res.data.data && res.data.data.id) {
-            console.log('登录成功', res);
             this.logind();
+            if (this.user && this.user.paid) {
+              this.isPaid = this.user.paid;
+            }
+            if (this.site_mode !== SITE_PAY) {
+              const pages = getCurrentPages();
+              const url = pages[pages.length - 1].route;
+              uni.navigateTo({
+                url,
+              });
+            }
+            if (this.site_mode === SITE_PAY && !this.isPaid) {
+              uni.navigateTo({
+                url: '/pages/site/info',
+              });
+            }
             uni.showToast({
               title: this.i18n.t('user.loginSuccess'),
               duration: 2000,

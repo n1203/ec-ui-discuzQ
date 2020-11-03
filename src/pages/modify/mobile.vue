@@ -12,7 +12,14 @@
         <view :class="userphon ? 'modify-phon-sun' : 'modify-phon-sun1'">
           {{ userphon ? userphon : i18n.t('modify.phonnumberempty') }}
         </view>
-        <button class="modify-phon-send" v-if="sun" @click="btnButton" :disabled="noclick">
+        <button
+          class="modify-phon-send"
+          v-if="sun"
+          @click="sendsms"
+          :disabled="noclick"
+          id="TencentCaptcha"
+          :data-appid="(forums.qcloud && forums.qcloud.qcloud_captcha_app_id) || ''"
+        >
           {{ i18n.t('modify.sendverificode') }}
         </button>
         <button class="modify-phon-send" disabled v-else>
@@ -44,8 +51,18 @@
 
 <script>
 import { status } from '@/library/jsonapi-vuex/index';
+import forums from '@/mixin/forums';
+// #ifdef  H5
+import tcaptchs from '@/utils/tcaptcha';
+// #endif
 
 export default {
+  mixins: [
+    forums,
+    // #ifdef  H5
+    tcaptchs,
+    // #endif
+  ],
   data() {
     return {
       userid: '',
@@ -64,11 +81,28 @@ export default {
       inisIphone: false,
       noclick: false,
       detail: '',
+      captcha: null, // 腾讯云验证码实例
+      ticket: '',
+      randstr: '',
+      captchaResult: {},
     };
   },
   onLoad() {
     this.userid = this.usersid;
     this.senduser();
+    // 接受验证码captchaResult
+    this.$u.event.$on('captchaResult', result => {
+      console.log(result, 'resultresultresultresultresult');
+      this.ticket = result.ticket;
+      this.randstr = result.randstr;
+      console.log('111');
+      this.btnButton();
+      this.verstype();
+    });
+    this.$u.event.$on('closeChaReault', () => {
+      // this.postLoading = false;
+      uni.hideLoading();
+    });
   },
   computed: {
     usersid() {
@@ -100,7 +134,6 @@ export default {
         this.sun = !this.sun;
         this.second = 60;
       }, 60000);
-      this.sendsms();
     },
     // 获取用户信息
     senduser() {
@@ -122,27 +155,19 @@ export default {
     },
     // 发送短信接口
     sendsms() {
-      const params = {
-        _jv: {
-          type: 'sms/send',
-        },
-        type: 'verify',
-      };
-      const postphon = status.run(() => this.$store.dispatch('jv/post', params));
-      postphon
-        .then(res => {
-          this.num -= 1;
-          this.second = res._jv.json.data.attributes.interval;
-        })
-        .catch(err => {
-          if (err.statusCode === 500) {
-            uni.showToast({
-              icon: this.icon,
-              title: this.lateron,
-              duration: this.duration,
-            });
-          }
-        });
+      console.log('9999');
+      if (this.forums.qcloud.qcloud_captcha) {
+        if (!this.ticket || !this.randstr) {
+          console.log('腾讯云验证已经开启');
+          this.verification();
+          return false;
+        }
+      } else {
+        console.log('腾讯云验证未开启');
+        this.second = 60;
+        this.btnButton();
+        this.verstype();
+      }
     },
     btndata(num) {
       this.coum = num;
@@ -190,6 +215,74 @@ export default {
           }
         });
     },
+    // 发送短信
+    verstype() {
+      const params = {
+        _jv: {
+          type: 'sms/send',
+        },
+        type: 'verify',
+        captcha_ticket: this.ticket,
+        captcha_rand_str: this.randstr,
+      };
+      const postphon = status.run(() => this.$store.dispatch('jv/post', params));
+      postphon
+        .then(res => {
+          this.num -= 1;
+          this.second = res._jv.json.data.attributes.interval;
+          this.ticket = '';
+          this.randstr = '';
+        })
+        .catch(err => {
+          if (err.statusCode === 500) {
+            uni.showToast({
+              icon: this.icon,
+              title: this.lateron,
+              duration: this.duration,
+            });
+          }
+        });
+    },
+    verification() {
+      // #ifdef MP-WEIXIN
+      // const _this = this;
+      wx.navigateToMiniProgram({
+        appId: 'wx5a3a7366fd07e119',
+        path: '/pages/captcha/index',
+        envVersion: 'release',
+        extraData: {
+          appId: this.forums.qcloud.qcloud_captcha_app_id, // 您申请的验证码的 appId
+        },
+        success() {
+          console.log('验证码成功打开');
+        },
+        fail() {
+          uni.hideLoading();
+          // _this.postLoading = false;
+        },
+      });
+      // #endif
+      // #ifdef H5
+      // eslint-disable-next-line no-undef
+      this.captcha = new TencentCaptcha(this.forums.qcloud.qcloud_captcha_app_id, res => {
+        if (res.ret === 0) {
+          this.ticket = res.ticket;
+          this.randstr = res.randstr;
+          // 验证通过后发布
+          console.log('验证码发送');
+          this.second = 60;
+          this.btnButton();
+          this.verstype();
+        }
+        if (res.ret === 2) {
+          // this.postLoading = false;
+          // uni.hideLoading();
+        }
+      });
+      // 显示验证码
+      this.captcha.show();
+      // #endif
+    },
     toggleBox() {
       this.inshow = false;
     },
@@ -198,6 +291,14 @@ export default {
       empty.deleat();
     },
   },
+  // onUnload() {
+  //   this.$u.event.$off('captchaResult');
+  //   this.$u.event.$off('closeChaReault');
+  //   // 隐藏验证码
+  //   if (this.captcha) {
+  //     this.captcha.destroy();
+  //   }
+  // },
 };
 </script>
 
@@ -205,9 +306,13 @@ export default {
 @import '@/styles/base/variable/global.scss';
 @import '@/styles/base/theme/fn.scss';
 .page-mobile /deep/ {
+  background-color: --color(--qui-BG-2);
+  box-sizing: border-box;
   .input {
     width: 100vw;
+    /* #ifndef H5 */
     height: 100vh;
+    /* #endif */
     background-color: --color(--qui-BG-2);
     box-sizing: border-box;
   }

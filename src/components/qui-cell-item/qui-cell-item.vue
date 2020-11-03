@@ -1,12 +1,24 @@
 <template>
   <view :class="['cell-item', { border: border }, classItem]" @tap="$_click">
     <view class="cell-item__body">
+      <qui-icon
+        class="leftIcon"
+        :name="leftIcon"
+        size="36"
+        :color="iconColor"
+        v-if="leftIcon"
+        :style="{ background: iconBackgroundColor }"
+      ></qui-icon>
       <view class="cell-item__body__left" v-if="slotLeft">
         <slot></slot>
       </view>
-      <view class="cell-item__body__content" @tap="contentClick">
+      <view class="cell-item__body__content fbh" @tap="contentClick">
         <view class="cell-item__body__content-title" v-if="title" v-text="title"></view>
-        <view class="cell-item__body__content-brief" v-if="brief" v-text="brief"></view>
+        <view
+          class="cell-item__body__content-brief identityAdmin"
+          v-if="brief"
+          v-text="brief"
+        ></view>
       </view>
       <view class="cell-item__body__right" v-if="slotRight">
         <slot></slot>
@@ -85,6 +97,19 @@ export default {
       type: String,
       default: '',
     },
+    // 左侧图标
+    leftIcon: {
+      type: String,
+      default: '',
+    },
+    iconColor: {
+      type: String,
+      default: '',
+    },
+    iconBackgroundColor: {
+      type: String,
+      default: '',
+    },
   },
 
   methods: {
@@ -110,9 +135,10 @@ export default {
 @import '@/styles/base/theme/fn.scss';
 .cell-item {
   position: relative;
+  padding-left: 20rpx;
 }
 .cell-item.border {
-  border-bottom: 2rpx solid --color(--qui-BOR-ED);
+  // border-bottom: 2rpx solid --color(--qui-BOR-ED);
   // transition: $switch-theme-time;
 }
 
@@ -133,8 +159,8 @@ export default {
 
 .cell-item__body__content-brief,
 .cell-item__body__right-brief {
-  margin-top: 6rpx;
-  font-size: $fg-f24;
+  // margin-top: 6rpx;
+  font-size: $fg-f20;
   color: --color(--qui-FC-AAA);
 }
 
@@ -159,16 +185,26 @@ export default {
   margin: 0 20upx;
 }
 
-.cell-item.is-disabled .cell-item__body__content,
-.cell-item.is-disabled .cell-item__body__content-title,
-.cell-item.is-disabled .cell-item__body__content-brief,
-.cell-item.is-disabled .cell-item__body__left,
-.cell-item.is-disabled .cell-item__body__right,
-.cell-item.is-disabled .cell-item__body__right-brief,
-.cell-item.is-disabled .cell-item__children {
-  color: #c5cad5;
-}
 .arrow {
   margin-left: 20rpx;
+}
+.leftIcon {
+  margin-right: 20rpx;
+  padding: 20rpx;
+  border-radius: 100rpx;
+  background-blend-mode: overlay, hard-light, normal;
+}
+.identityAdmin {
+  height: 18px;
+  line-height: 18px;
+  align-items: center;
+  background: #fff !important;
+  border: #ccc 1px solid;
+  border-radius: 10px;
+  font-size: 14px;
+  margin-left: -14rpx;
+  margin-top: -10rpx;
+  padding: 6rpx 14rpx;
+  transform: scale(0.5);
 }
 </style>

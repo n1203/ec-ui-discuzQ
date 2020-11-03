@@ -3,31 +3,45 @@
     <view
       class="ft"
       :style="{
-        bottom: bottom + 'rpx',
+        paddingBottom: bottom + 'rpx',
       }"
     >
       <view
-        class="ft-box "
+        class="ft-box fbac fbjc"
         :class="{ select: true, active: index === footerIndex }"
         v-for="(item, index) in tabs"
         :key="index"
-        @click="select(item, index)"
       >
         <qui-icon
           class="ft-box-icon"
+          @click="select(item, index)"
           :name="item.tabsIcon"
-          size="48"
+          size="50"
+          v-if="item.tabsName"
           :class="{ select: true, active: index === footerIndex }"
         ></qui-icon>
-        <!-- <text class="ft-box-content" :class="{ select: true, active: index === footerIndex }">
+        <qui-icon
+          name="icon-bianji_5"
+          size="42"
+          color="#fff"
+          v-if="!item.tabsName"
+          class="ft-box-spacal"
+          @click="footerOpen"
+        />
+        <text
+          class="ft-box-content"
+          @click="select(item, index)"
+          :class="{ select: true, active: index === footerIndex }"
+        >
           {{ item.tabsName }}
-        </text> -->
-        <view v-if="redCircle && item.id === 4" name="icon-circle" class="red-circle"></view>
+        </text>
+        <view v-if="redCircle && item.id === 4" name="icon-dian" class="red-circle"></view>
       </view>
 
-      <view class="ft-box-spacal">
+      <!-- <view class="ft-box-spacal" @click="footerOpen">
+        <text class="">+</text>
         <image class="ft-box-spacal-icon" src="@/static/publish.svg" @click="footerOpen"></image>
-      </view>
+      </view> -->
     </view>
     <uni-popup ref="popup" type="bottom">
       <view class="popup-share">
@@ -48,7 +62,7 @@
           </view>
         </view>
         <view class="popup-share-content-space"></view>
-        <text class="popup-share-btn" @click="cancel('share')">{{ i18n.t('cancel') }}</text>
+        <text class="popup-share-btn" @click="cancel('share')">{{ i18n.t('home.cancel') }}</text>
       </view>
     </uni-popup>
     <qui-toast ref="toast"></qui-toast>
@@ -58,10 +72,18 @@
 import forums from '@/mixin/forums';
 import user from '@/mixin/user';
 import { mapState, mapMutations } from 'vuex';
-
+// #ifdef H5
+import loginAuth from '@/mixin/loginAuth-h5';
+// #endif
 
 export default {
-  mixins: [forums, user],
+  mixins: [
+    forums,
+    user,
+    // #ifdef  H5
+    loginAuth,
+    // #endif
+  ],
   props: {
     bottom: {
       type: Number,
@@ -75,20 +97,20 @@ export default {
       tabs: [
         {
           tabsName: 'home.tabsCircle',
-          tabsIcon: 'icon-home',
+          tabsIcon: 'icon-shouye_4',
           id: 1,
           url: '/pages/home/index',
           // routePath: 'pages/home/index', // 仅用作标识不用来跳转
         },
         {
           tabsName: 'home.tabTopic',
-          tabsIcon: 'icon-wei',
+          tabsIcon: 'icon-diamond',
           id: 2,
           url: '/pages/site/topic/list',
           // routePath: 'pages/my/index', // 仅用作标识不用来跳转
         },
         {
-          tabsName: 'publish',
+          tabsName: '',
           tabsIcon: 'null',
           id: 3,
           url: '/pages/site/search',
@@ -96,14 +118,14 @@ export default {
         },
         {
           tabsName: 'home.tabsNews',
-          tabsIcon: 'icon-message',
+          tabsIcon: 'icon-xiaoxi',
           id: 4,
           url: '/pages/notice/index',
           // routePath: 'pages/notice/index', // 仅用作标识不用来跳转
         },
         {
           tabsName: 'home.tabsMy',
-          tabsIcon: 'icon-mine',
+          tabsIcon: 'icon-icon31',
           id: 5,
           url: '/pages/my/index',
           // routePath: 'pages/my/index', // 仅用作标识不用来跳转
@@ -183,7 +205,14 @@ export default {
     // 首页底部发帖按钮弹窗
     footerOpen() {
       if (!this.$store.getters['session/get']('isLogin')) {
+        // #ifdef MP-WEIXIN
         this.$store.getters['session/get']('auth').open();
+        // #endif
+        // #ifdef H5
+        if (!this.handleLogin()) {
+          return;
+        }
+        // #endif
         return;
       }
       if (this.forums.other.publish_need_real_name) {
@@ -220,7 +249,7 @@ export default {
       if (this.forums.other.can_create_thread) {
         this.bottomData.push({
           text: this.i18n.t('home.word'),
-          icon: 'icon-word',
+          icon: 'icon-duoxingwenzi',
           name: 'text',
           type: 0,
         });
@@ -228,7 +257,7 @@ export default {
       if (this.forums.other.can_create_thread_long) {
         this.bottomData.push({
           text: this.i18n.t('home.post'),
-          icon: 'icon-post',
+          icon: 'icon-huifudetiezi',
           name: 'post',
           type: 1,
         });
@@ -236,7 +265,7 @@ export default {
       if (this.forums.other.can_create_thread_video) {
         this.bottomData.push({
           text: this.i18n.t('home.video'),
-          icon: 'icon-video',
+          icon: 'icon-shipin',
           name: 'video',
           type: 2,
         });
@@ -244,7 +273,7 @@ export default {
       if (this.forums.other.can_create_thread_image) {
         this.bottomData.push({
           text: this.i18n.t('home.picture'),
-          icon: 'icon-img',
+          icon: 'icon-tupian1',
           name: 'image',
           type: 3,
         });
@@ -281,10 +310,10 @@ export default {
   // position: absolute;
   position: fixed;
   bottom: 0;
-  z-index: 1;
+  z-index: 20;
   display: flex;
   width: 100%;
-  height: 90rpx;
+  height: 110rpx;
   background-color: --color(--qui-BG-2);
   box-shadow: 0 -3px 6px rgba(0, 0, 0, 0.05);
   justify-content: space-around;
@@ -293,11 +322,14 @@ export default {
   position: relative;
   display: flex;
   width: 20%;
-  height: 70rpx;
+  // height: 90rpx;
   margin-top: 10rpx;
   flex-direction: column;
   justify-content: center;
   align-content: center;
+  &:active {
+    transform: scale(0.9);
+  }
 }
 .ft-box-icon {
   align-self: center;
@@ -306,35 +338,51 @@ export default {
 }
 .ft-box-content {
   align-self: center;
-  margin-top: 10rpx;
-  font-size: 20rpx;
+  margin-top: 8rpx;
+  font-size: 16rpx;
   line-height: 26rpx;
   color: --color(--qui-FC-777);
   text-align: center;
 }
 .ft-box-spacal {
-  position: fixed;
-  bottom: 0rpx;
-  width: 120rpx;
-  height: 120rpx;
-  border-radius: 50%;
-  box-shadow: 0 -3px 6px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  font-size: 58rpx;
+  background-color: --color(--qui-BG-HIGH-LIGHT);
+  box-shadow: 0 0 40rpx --color(--qui-BOR-CCDD);
+  border-radius: 30rpx;
+  width: 100rpx;
+  height: 60rpx;
+  line-height: 1.5rem;
+  margin-top: 0.3rem;
+  color: #fff;
+  display: block;
 }
 .ft-box-spacal-icon {
   position: relative;
   width: 110rpx;
-  height: 110rpx;
+  height: 72rpx;
 }
 .active {
   color: --color(--qui-TAB);
 }
 .red-circle {
   position: absolute;
-  top: -10rpx;
+  top: -4rpx;
   left: calc(50% + 18rpx);
   width: 14rpx;
   height: 14rpx;
   background: red;
   border-radius: 50%;
 }
+.red-circle-wx {
+  /* #ifdef MP-WEIXIN */
+  left: calc(29% + 24rpx);
+  /* #endif */
+}
+// .red-num {
+//   position: absolute;
+//   top: -22rpx;
+//   left: calc(23% + 12rpx);
+//   color: --color(--qui-BOR-FFF);
+// }
 </style>

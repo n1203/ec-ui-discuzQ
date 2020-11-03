@@ -3,7 +3,7 @@
     <view class="search-box">
       <view class="search-box__content">
         <view class="icon-content-search">
-          <qui-icon name="icon-search" size="30" color="#bbb"></qui-icon>
+          <qui-icon name="icon-sousuo" size="30" color="#bbb"></qui-icon>
         </view>
         <input
           type="text"
@@ -14,7 +14,7 @@
           :value="searchValue"
         />
         <view @tap="clearSearch" v-if="searchValue" class="search-box__content-delete">
-          <qui-icon name="icon-close1" size="32" color="#ccc"></qui-icon>
+          <qui-icon name="icon-cuo" size="32" color="#ccc"></qui-icon>
         </view>
       </view>
       <view class="search-box__cancel" v-if="searchValue" @tap="clearSearch">
@@ -176,7 +176,7 @@ $height: calc(100vh - 110rpx);
   padding-right: 40rpx;
   padding-left: 0;
   margin: 0;
-  border-top: 0;
+  border: 0;
   box-shadow: none;
 }
 /deep/ .themeCount .themeItem__footer {

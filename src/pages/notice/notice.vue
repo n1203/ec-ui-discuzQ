@@ -16,14 +16,25 @@
           v-if="noticeList && noticeList.length > 0"
         ></qui-load-more>
       </scroll-view>
+      <uni-popup ref="popTips" type="center">
+        <uni-popup-dialog
+          type="warning"
+          :before-close="true"
+          :content="i18n.t('core.deleteNewsSure')"
+          @close="handleCancel"
+          @confirm="handleOk"
+        ></uni-popup-dialog>
+      </uni-popup>
     </view>
   </qui-page>
 </template>
 
 <script>
-import { time2MorningOrAfternoon } from '@/utils/time';
+import { time2DateAndHM } from '@/utils/time';
+import uniPopupDialog from '@/components/uni-popup/uni-popup-dialog';
 
 export default {
+  components: { uniPopupDialog },
   data() {
     return {
       navTitle: '', // 导航栏标题
@@ -32,15 +43,15 @@ export default {
       pageNum: 1, // 当前页数
       noticeList: [], // 通知列表
       type: '', // 当前的通知类型
+      noticeId: 0, // 通知id
     };
   },
   onLoad(params) {
-    console.log('通知列表的params：', params);
     const { title, type, unReadNum } = params;
     this.type = type;
     this.navTitle = title;
     if (parseInt(unReadNum, 10) > 0) {
-      this.navTitle = `${title}(${unReadNum}条)`;
+      this.navTitle = this.i18n.t('notice.item', { title, unReadNum });
     }
     uni.setNavigationBarTitle({
       title: this.navTitle,
@@ -57,20 +68,19 @@ export default {
       };
       this.$store.commit('jv/clearRecords', { _jv: { type: 'notification' } });
       this.$store.dispatch('jv/get', ['notification', { params }]).then(res => {
-        console.log('通知列表res', res);
         if (res && res._jv) {
           delete res._jv;
           for (let i = 0; i < res.length; i += 1) {
             res[i].username = res[i].user_name;
             res[i].avatarUrl = res[i].user_avatar;
             if (res[i].created_at) {
-              res[i].time = time2MorningOrAfternoon(res[i].created_at);
+              res[i].time = time2DateAndHM(res[i].created_at);
             }
             if (res[i].thread_created_at) {
-              res[i].thread_time = time2MorningOrAfternoon(res[i].thread_created_at);
+              res[i].thread_time = time2DateAndHM(res[i].thread_created_at);
             }
             if (res[i].reply_post_created_at) {
-              res[i].reply_time = time2MorningOrAfternoon(res[i].reply_post_created_at);
+              res[i].reply_time = time2DateAndHM(res[i].reply_post_created_at);
             }
             if (res[i].type === 'rewarded' && res[i].amount) {
               res[i].money = `￥${res[i].amount}`;
@@ -80,7 +90,6 @@ export default {
             }
           }
           this.noticeList = [...this.noticeList, ...res];
-          console.log('this.noticeList', this.noticeList);
           this.loadingType = res.length === this.pageSize ? 'more' : 'nomore';
           uni.$emit('notiRead');
         }
@@ -93,12 +102,18 @@ export default {
       }
       this.pageNum += 1;
       this.getNotices(this.type);
-      console.log('页码', this.pageNum);
     },
     // 删除通知
     deleteNotice(id) {
-      this.$store.dispatch('jv/delete', `notification/${id}`).then(res => {
-        console.log('删除成功', res);
+      this.noticeId = id;
+      this.$refs.popTips.open();
+    },
+    handleCancel() {
+      this.$refs.popTips.close();
+    },
+    handleOk() {
+      this.$refs.popTips.close();
+      this.$store.dispatch('jv/delete', `notification/${this.noticeId}`).then(res => {
         if (res) {
           this.pageNum = 1;
           this.noticeList = [];
@@ -122,5 +137,9 @@ export default {
   color: --color(--qui-FC-333);
   background-color: --color(--qui-BG-1);
   transition: $switch-theme-time;
+
+  /deep/ .uni-dialog-title {
+    color: #f2b968;
+  }
 }
 </style>

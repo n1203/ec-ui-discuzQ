@@ -2,7 +2,7 @@
   <view v-if="topicStatus != 1">
     <view class="themeItem__header">
       <view class="themeItem__header__img" @click="personJump">
-        <qui-avatar :user="{ username: userName, avatarUrl: avatarUrl }" />
+        <qui-avatar :user="{ username: userName, avatarUrl: avatarUrl }" :is-real="isReal" />
       </view>
       <view class="themeItem__header__title">
         <view class="themeItem__header__title__top" @click="personJump">
@@ -12,7 +12,7 @@
             v-for="(group, index) in userRole"
             :key="index"
           >
-            {{ group.isDisplay ? `（${group.name}）` : '' }}
+            {{ group.isDisplay ? `${group.name}` : '' }}
           </text>
         </view>
         <view class="themeItem__header__title__time">{{ localTime }}</view>
@@ -21,7 +21,7 @@
       <view class="themeItem__header__opera" v-if="managementShow">
         <view class="det-hd-operaCli">
           <view class="det-hd-management" @click="selectClick">
-            <qui-icon name="icon-management" class="icon-management"></qui-icon>
+            <qui-icon name="icon-guanli" class="icon-management"></qui-icon>
             <view>{{ t.management }}</view>
           </view>
           <view>
@@ -43,26 +43,63 @@
   <view class="themeItem" v-else>
     <view class="themeItem__header">
       <view class="themeItem__header__img" @click="personJump">
-        <qui-avatar :user="{ username: userName, avatarUrl: avatarUrl }" />
+        <qui-avatar :user="{ username: userName, avatarUrl: avatarUrl }" :is-real="isReal" />
       </view>
       <view class="themeItem__header__title">
         <view class="themeItem__header__title__top" @click="personJump">
-          <text class="themeItem__header__title__username">{{ userName }}</text>
+          <!--<text
+            class="themeItem__header__title__username"
+            v-if="followShow && !managementShow"
+            :style="{ maxWidth: '200rpx' }"
+          >
+            {{ userName }}
+          </text>
           <text
-            class="themeItem__header__title__isAdmin"
+            class="themeItem__header__title__username"
+            v-else-if="followShow && managementShow"
+            :style="{ maxWidth: '90rpx' }"
+          >
+            {{ userName }}
+          </text>
+          <text class="themeItem__header__title__username" v-else :style="{ maxWidth: '370rpx' }">
+            {{ userName }}
+          </text>-->
+          <text class="themeItem__header__title__username">
+            {{ userName }}
+          </text>
+          <text
+            class="themeItem__header__title__isAdmin badge"
             v-for="(group, index) in userRole"
             :key="index"
           >
-            {{ group.isDisplay ? `（${group.name}）` : '' }}
+            <text class="identity">
+              {{ group.isDisplay ? `${group.name}` : '' }}
+            </text>
           </text>
         </view>
         <view class="themeItem__header__title__time">{{ localTime }}</view>
+        <!-- <view class="attention_ivtion fbh">
+          <text>
+            <span style="padding-left:10rpx">
+              粉丝
+            </span>
+          </text>
+
+          <text style="margin-left:10rpx">
+            <span style="padding-left:10rpx">
+              帖子
+            </span>
+          </text>
+          <view class="themeItem__header__title__time" style="margin-left:0.5rem">
+            {{ localTime }}
+          </view>
+        </view> -->
       </view>
       <slot name="follow"></slot>
       <view class="themeItem__header__opera" v-if="managementShow">
         <view class="det-hd-operaCli">
           <view class="det-hd-management" @click="selectClick">
-            <qui-icon name="icon-management" class="icon-management"></qui-icon>
+            <qui-icon name="icon-guanli" class="icon-management"></qui-icon>
             <view>{{ t.management }}</view>
           </view>
           <view>
@@ -106,26 +143,31 @@
           :poster="coverImage"
           v-if="themeType == 2 && videoStatus"
           controls
-          preload="auto"
+          preload="none"
           bindpause="handlepause"
           playsinline
           webkit-playsinline
           x5-playsinline
           :page-gesture="false"
-          show-fullscreen-btn="true"
-          show-play-btn="true"
-          auto-pause-if-open-native="true"
-          auto-pause-if-navigate="true"
-          enable-play-gesture="false"
+          :show-fullscreen-btn="true"
+          :show-play-btn="true"
+          auto-pause-if-open-native
+          auto-pause-if-navigate
+          :enable-play-gesture="false"
           :vslide-gesture="false"
           :vslide-gesture-in-fullscreen="false"
           object-fit="cover"
           :direction="videoWidth > videoHeight ? 90 : 0"
           x5-video-player-type="h5-page"
+          bindfullscreenchange="fullScreen"
           :src="mediaUrl"
-          :style="videoWidth >= videoHeight ? 'width:100%' : 'max-width: 70%'"
+          :style="videoWidth >= videoHeight ? 'width:100%' : 'max-width: 50%'"
         ></video>
-        <qui-image :images-list="imagesList" :preview-status="videoStatus"></qui-image>
+        <qui-image
+          :images-list="imagesList"
+          :preview-status="videoStatus"
+          @previewPicture="previewPicture"
+        ></qui-image>
         <view
           v-if="!payStatus && threadPrice > 0 && themeType == 1"
           class="themeItem__content__con__cover"
@@ -186,7 +228,7 @@
 </template>
 
 <script>
-import { time2MorningOrAfternoon } from '@/utils/time';
+import { time2DateAndHM } from '@/utils/time';
 
 export default {
   props: {
@@ -201,6 +243,10 @@ export default {
         return ['0', '1'].indexOf(value) !== -1;
       },
       default: '0',
+    },
+    followShow: {
+      type: Boolean,
+      default: false,
     },
     // 主题类型
     // themeType: {
@@ -261,6 +307,17 @@ export default {
     userName: {
       type: String,
       default: '',
+    },
+    user: {
+      type: [Array, Object],
+      default: () => {
+        return {};
+      },
+    },
+    // 实名认证
+    isReal: {
+      type: Boolean,
+      default: false,
     },
     // 管理菜单
     selectList: {
@@ -345,9 +402,7 @@ export default {
       // topicStatus: '',
     };
   },
-  onLoad() {
-    // console.log(this.tags);
-  },
+  onLoad() {},
   computed: {
     t() {
       return this.i18n.t('topic');
@@ -357,7 +412,7 @@ export default {
     },
     // 时间转化
     localTime() {
-      return time2MorningOrAfternoon(this.themeTime);
+      return time2DateAndHM(this.themeTime);
     },
   },
   methods: {
@@ -402,33 +457,34 @@ export default {
       }
       // #endif
       // #ifdef MP-WEIXIN
-      // const that = this;
-      // wx.downloadFile({
-      //   url: item.url,
-      //   success(res) {
-      //     if (res.statusCode === 200) {
-      //       console.log(res.tempFilePath);
-      //       that.$refs.toast.show({
-      //         message: that.i18n.t('profile.downloadSuccess'),
-      //       });
-      //       wx.openDocument({
-      //         filePath: res.tempFilePath,
-      //         success() {
-      //           console.log('打开文档成功');
-      //         },
-      //       });
-      //     }
-      //   },
-      //   error() {
-      //     that.$refs.toast.show({
-      //       message: that.i18n.t('profile.downloadError'),
-      //     });
-      //   },
-      // });
-      this.$refs.toast.show({
-        message: this.i18n.t('profile.filedownloadtipswx'),
+      const that = this;
+      wx.downloadFile({
+        url: item.url,
+        success(res) {
+          if (res.statusCode === 200) {
+            that.$refs.toast.show({
+              message: that.i18n.t('profile.downloadSuccess'),
+            });
+            // wx.openDocument({
+            //   filePath: res.tempFilePath,
+            //   success() {
+            //   },
+            // });
+          }
+        },
+        error() {
+          that.$refs.toast.show({
+            message: that.i18n.t('profile.downloadError'),
+          });
+        },
       });
+      // this.$refs.toast.show({
+      //   message: this.i18n.t('profile.filedownloadtipswx'),
+      // });
       // #endif
+    },
+    previewPicture() {
+      this.$emit('previewPicture');
     },
   },
 };
@@ -451,7 +507,7 @@ export default {
     &__img {
       width: 80rpx;
       height: 80rpx;
-      margin-right: 18rpx;
+      // margin-right: 18rpx;
       background: #ccc;
       border-radius: 100%;
       image {
@@ -463,10 +519,12 @@ export default {
 
     &__title {
       flex: 1;
+      margin-left: 18rpx;
       &__top {
         display: flex;
         flex-direction: row;
         justify-content: flex-start;
+        align-items: center;
         height: 37rpx;
         margin-bottom: 10rpx;
         margin-left: 2rpx;
@@ -489,6 +547,7 @@ export default {
       &__isAdmin {
         font-weight: 400;
         color: --color(--qui-FC-AAA);
+        white-space: nowrap;
       }
 
       &__time {
@@ -501,6 +560,7 @@ export default {
     &__opera {
       align-self: flex-start;
       width: 100rpx;
+      margin-left: 29rpx;
       text-align: right;
       flex-shrink: 0;
 
@@ -540,7 +600,7 @@ export default {
       }
       &__surtip {
         position: relative;
-        z-index: 8;
+        z-index: 6;
         padding-top: 37rpx;
         padding-bottom: 20rpx;
         font-size: $fg-f28;
@@ -697,5 +757,42 @@ export default {
 }
 .theme__content__videocover {
   position: relative;
+}
+.badge {
+  height: 18px;
+  line-height: 18px;
+  align-items: center;
+  background: #fff !important;
+  // color: yellow;
+  border-radius: 10px;
+  font-size: 16px;
+  margin-left: -10px;
+  margin-bottom: 10rpx;
+  padding: 10rpx 10rpx;
+  transform: scale(0.5);
+}
+.identity {
+  border: #ccc 1px solid;
+  padding: 6rpx 10rpx;
+  color: #ccc;
+  border-radius: 20rpx;
+}
+// .管理员 {
+//   border: #1878f3 1px solid;
+//   color: #1878f3;
+// }
+// .普通会员 {
+//   border: #ccc 1px solid;
+//   color: #ccc;
+// }
+.attention_ivtion {
+  display: flex;
+  align-items: center;
+  font-size: 10px;
+  font-weight: 400;
+  padding-top: 0.2rem;
+  color: var(--qui-FC-AAA);
+  transition: 0.5s;
+  // margin-left: 2px;
 }
 </style>

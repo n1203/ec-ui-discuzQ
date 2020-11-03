@@ -3,7 +3,7 @@
     <view class="sticky" v-if="items.length > 0">
       <swiper class="sticky__box fbh" next-margin="50px" autoplay>
         <swiper-item
-          class="sticky__isSticky"
+          :class="['sticky__isSticky', { 'acticv-sticky': index === items.length - 1 }]"
           v-for="(item, index) in items"
           :key="index"
           @click="handleClick(item._jv.id)"
@@ -17,6 +17,24 @@
             </view>
             <view class="stick-content">
               {{ item.title ? item.firstPost.summaryText : null }}
+            </view>
+            <view class="meta fbh">
+              <view class="meta-item fbh">
+                <qui-icon
+                  class="qui-icon"
+                  name="icon-dianzan"
+                  size="24"
+                  v-if="item.firstPost.isLiked"
+                ></qui-icon>
+                <qui-icon class="qui-icon" name="icon-dianzan_2" size="28" v-else></qui-icon>
+                <view class="meta-item-count">{{ item.firstPost.likeCount || '' }}</view>
+              </view>
+              <view class="meta-item fbh">
+                <qui-icon class="qui-icon" name="icon-pinglun" size="28"></qui-icon>
+                <view class="meta-item-count">
+                  {{ item.postCount || '' }}
+                </view>
+              </view>
             </view>
           </view>
         </swiper-item>
@@ -65,12 +83,14 @@ export default {
   height: 180rpx;
   // width: 80%;
 }
-
+.sticky__isSticky {
+  position: relative;
+}
 .stick-head {
   line-height: 40rpx;
 }
 .stick-badge {
-  background: #1878f3;
+  background: --color(--qui-BG-HIGH-LIGHT);
   font-size: 20rpx;
   padding: 0rpx 10rpx;
   border-radius: 10rpx;
@@ -80,6 +100,9 @@ export default {
 }
 .stick-title {
   font-size: 28rpx;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 .ec-sticky-box {
   box-sizing: border-box;
@@ -87,11 +110,44 @@ export default {
   box-shadow: 0 0 10rpx #00000010;
   border: 1rpx solid #00000010;
   padding: 20rpx;
-  background: #fff;
+  background: --color(--qui-BG-40);
   height: 180rpx;
   .stick-content {
     font-size: 24rpx;
     color: #999;
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    display: -webkit-box;
+
+    -webkit-line-clamp: 2;
+
+    overflow: hidden;
+
+    /*! autoprefixer: off */
+
+    -webkit-box-orient: vertical;
+  }
+}
+.acticv-sticky {
+  background: brown;
+  overflow: visible;
+  .ec-sticky-box {
+    margin-right: -50px;
+  }
+}
+
+.meta {
+  position: absolute;
+  bottom: 5rpx;
+  left: 30rpx;
+  &-item {
+    margin-right: 20rpx;
+    &-count {
+      font-size: 24rpx;
+      padding: 5rpx 10rpx;
+    }
   }
 }
 </style>

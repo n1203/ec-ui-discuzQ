@@ -3,7 +3,7 @@
     <view class="search-box">
       <view class="search-box__content">
         <view class="icon-content-search">
-          <qui-icon name="icon-search" size="30" color="#bbb"></qui-icon>
+          <qui-icon name="icon-sousuo" size="30" color="#bbb"></qui-icon>
         </view>
         <input
           type="text"
@@ -14,7 +14,7 @@
           :value="searchValue"
         />
         <view @tap="clearSearch" v-if="searchValue" class="search-box__content-delete">
-          <qui-icon name="icon-close1" size="32" color="#ccc"></qui-icon>
+          <qui-icon name="icon-cuo" size="32" color="#ccc"></qui-icon>
         </view>
       </view>
       <view class="search-box__cancel" v-if="searchValue" @tap="clearSearch">
@@ -34,7 +34,12 @@
         :key="index"
         @tap="toProfile(item.id)"
       >
-        <qui-avatar class="search-item__users__avatar" :user="item" size="70" />
+        <qui-avatar
+          class="search-item__users__avatar"
+          :user="item"
+          size="70"
+          :is-real="item.isReal"
+        />
         <qui-cell-item :title="item.username" arrow :addon="item.groupName"></qui-cell-item>
       </view>
       <qui-load-more :status="loadingType" :show-icon="false" v-if="loadingType"></qui-load-more>

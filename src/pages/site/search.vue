@@ -3,7 +3,7 @@
     <view class="search-box">
       <view class="search-box__content">
         <view class="icon-content-search">
-          <qui-icon name="icon-search" size="30" color="#bbb"></qui-icon>
+          <qui-icon name="icon-sousuo" size="30" color="#bbb"></qui-icon>
         </view>
         <input
           type="text"
@@ -11,14 +11,42 @@
           placeholder-class="input-placeholder"
           :placeholder="i18n.t('search.searchkeywords')"
           @input="searchInput"
+          @blur="searchDone"
           :value="searchValue"
         />
+        <!-- <view class="search-item">
+          <view class="search-item__head">
+            <view>历史搜索</view>
+            <view class="search-item__head-more" @tap="searchHistryClear">
+              清空历史
+            </view>
+          </view>
+          <view class="historyContainer fbh">
+            <view class="hostryItem" v-for="item in searchHistory" :key="item">
+              {{ item }}
+            </view>
+          </view>
+        </view> -->
         <view @tap="clearSearch" v-if="searchValue" class="search-box__content-delete">
-          <qui-icon name="icon-close1" size="32" color="#ccc"></qui-icon>
+          <qui-icon name="icon-cuo" size="32" color="#ccc"></qui-icon>
         </view>
       </view>
       <view class="search-box__cancel" v-if="searchValue" @tap="clearSearch">
         <text>{{ i18n.t('search.cancel') }}</text>
+      </view>
+    </view>
+    <view class="search-item">
+      <view class="search-item__head">
+        <view>历史搜索</view>
+        <view class="search-item__head-more" @tap="searchHistryClear">
+          <qui-icon class="icon delete" name="icon-lajitong" size="30"></qui-icon>
+          清空历史
+        </view>
+      </view>
+      <view class="historyContainer fbh">
+        <view class="hostryItem" v-for="(item, index) in searchHistory" :key="index">
+          {{ item }}
+        </view>
       </view>
     </view>
     <view class="search-item" v-if="searchValue">
@@ -34,7 +62,12 @@
         :key="index"
         @tap="toProfile(item.id)"
       >
-        <qui-avatar class="search-item__users__avatar" :user="item" size="70" />
+        <qui-avatar
+          class="search-item__users__avatar"
+          :user="item"
+          size="70"
+          :is-real="item.isReal"
+        />
         <qui-cell-item
           :title="item.username"
           arrow
@@ -75,6 +108,7 @@ export default {
   data() {
     return {
       searchValue: '',
+      searchHistory: '',
       userList: [],
       themeList: [],
       userTotal: null,
@@ -85,6 +119,12 @@ export default {
   },
   onShow() {
     this.uploadItem();
+    try {
+      this.searchHistory = uni.getStorageSync('searchHistory');
+      console.log('⭐️ SouWind ⭐️:: onShow -> this.searchHistory', this.searchHistory);
+    } catch (err) {
+      console.log(`Search error: ${err}`);
+    }
   },
   methods: {
     toTopic(id) {
@@ -97,6 +137,18 @@ export default {
         this.getUserList(e.target.value);
         this.getThemeList(e.target.value);
       }, 250);
+    },
+    searchDone() {
+      if (!this.searchValue) return '';
+      // todo 删除超出部分
+      if (this.searchHistory.length >= 10) {
+        this.searchHistory = this.searchHistory.slice(0, 9);
+      }
+      uni.setStorageSync('searchHistory', [this.searchValue, ...this.searchHistory]);
+    },
+    searchHistryClear() {
+      uni.clearStorageSync('searchHistory');
+      this.searchHistory = [];
     },
 
     // 获取用户列表
@@ -201,6 +253,7 @@ export default {
 }
 .search-item {
   padding-left: 40rpx;
+  padding-bottom: 20rpx;
   margin-bottom: 30rpx;
   border-bottom: 2rpx solid --color(--qui-BOR-ED);
 }
@@ -242,7 +295,7 @@ export default {
 /deep/ .themeCount .themeItem {
   padding-left: 0;
   margin: 0;
-  border-top: 0;
+  border: 0;
   box-shadow: none;
 }
 /deep/ .themeCount .themeItem__footer {
@@ -261,5 +314,23 @@ export default {
 }
 /deep/ .themeCount .addFine {
   display: none;
+}
+.historyContainer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding-left: 8rpx;
+}
+.hostryItem {
+  padding: 9rpx 21rpx;
+  background: rgb(242, 242, 242);
+  border-radius: 29rpx;
+  margin-bottom: 16rpx;
+  margin-right: 16rpx;
+  font-weight: 400;
+  font-size: 10px;
+}
+.delete {
+  padding-right: 10rpx;
 }
 </style>

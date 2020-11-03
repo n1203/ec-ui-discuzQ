@@ -125,10 +125,10 @@ export default {
       current: 0, // 当前标签页
       total: 0, // 邀请链接的总数
       tabList: [
-        { id: 1, title: '未使用', status: 1 },
-        { id: 2, title: '已使用', status: 2 },
-        { id: 3, title: '已过期', status: 3 },
-        { id: 4, title: '已失效', status: 0 },
+        { id: 1, title: this.i18n.t('manage.nouse'), status: 1 },
+        { id: 2, title: this.i18n.t('manage.used'), status: 2 },
+        { id: 3, title: this.i18n.t('manage.overdue'), status: 3 },
+        { id: 4, title: this.i18n.t('manage.invalid'), status: 0 },
       ], // 邀请链接的类型列表
       role: '', // 用户角色
       status: 1, // 邀请链接的类型
@@ -149,13 +149,17 @@ export default {
     // #ifdef H5
     this.isWeixin = appCommonH.isWeixin().isWeixin;
     // #endif
+    // #ifdef MP-WEIXIN
+    wx.showShareMenu({
+      withShareTicket: true,
+      menus: ['shareAppMessage', 'shareTimeline'],
+    });
+    // #endif
   },
   // 唤起小程序原生分享
   onShareAppMessage(res) {
-    console.log('唤起小程序原生分享', res);
     // 来自页面内分享按钮
     if (res.from === 'button') {
-      console.log('res.from为button');
       return {
         title: this.forums.set_site.site_name,
         path: `/pages/site/partner-invite?code=${this.code}`,
@@ -177,7 +181,6 @@ export default {
     // 获取当前登录的id
     currentLoginId() {
       const userId = this.$store.getters['session/get']('userId');
-      console.log('获取当前登录的id', userId);
       return parseInt(userId, 10);
     },
     // 获取管理邀请列表（非管理员无的邀请链接无管理）
@@ -185,8 +188,6 @@ export default {
       const list = [];
       const inviteList = this.$store.getters['jv/get']('invite');
       const groupList = this.$store.getters['jv/get']('groups');
-      console.log('会话列表接口的响应：', inviteList);
-      console.log('用户组接口的响应：', groupList);
       const inviteListKeys = Object.keys(inviteList);
       const groupListKeys = Object.keys(groupList);
       if (inviteList && inviteListKeys.length > 0) {
@@ -194,9 +195,9 @@ export default {
           const inviteListValue = inviteList[inviteListKeys[i]];
           const day = timestamp2day(inviteListValue.endtime);
           if (inviteListValue.status === 1) {
-            inviteListValue.time = `有效期剩余${day}天`;
+            inviteListValue.time = this.i18n.t('manage.remainDay', { day });
           } else {
-            inviteListValue.time = `有效期剩余0天`;
+            inviteListValue.time = this.i18n.t('manage.remain0Day');
           }
           if (groupListKeys && groupListKeys.length > 0) {
             for (let j = 0; j < groupListKeys.length; j += 1) {
@@ -209,19 +210,16 @@ export default {
           list.push(inviteListValue);
         }
       }
-      console.log('allInviteList', list);
       return list;
     },
     // 获取用户组列表
     groupList() {
       const groups = this.$store.getters['jv/get']('groups');
-      console.log('groups', groups);
       const list = [];
       const array = Object.keys(groups);
       for (let i = 0; i < array.length; i += 1) {
         list.push(groups[array[i]]);
       }
-      console.log('groupList', list);
       return list;
     },
     // 获取用户角色
@@ -238,7 +236,6 @@ export default {
       this.$store.commit('jv/clearRecords', { _jv: { type: 'invite' } });
       this.$store.dispatch('jv/get', ['invite', { params }]).then(res => {
         this.total = res._jv.json.meta.total;
-        console.log('获取管理邀请列表', res);
       });
     },
     // 调用 获取所有用户组 接口
@@ -248,7 +245,6 @@ export default {
       };
       this.$store.commit('jv/clearRecords', { _jv: { type: 'groups' } });
       this.$store.dispatch('jv/get', ['groups', { params }]);
-      console.log('获取所有用户组');
     },
     // 改变标签页
     onClickItem(e) {
@@ -260,12 +256,10 @@ export default {
     },
     // 生成邀请链接弹窗
     generate() {
-      console.log('生成邀请链接弹窗');
       this.$refs.popup.open();
     },
     // 生成 合伙人/嘉宾/成员 邀请链接
     generateUrl(item) {
-      console.log('生成邀请链接：', item);
       const adminParams = {
         _jv: {
           type: 'invite',
@@ -288,7 +282,6 @@ export default {
           .dispatch('jv/post', adminParams)
           .then(res => {
             if (res) {
-              console.log('管理员生成邀请链接res：', res);
               this.$refs.popup.close();
               this.getInviteList(1);
             }
@@ -302,7 +295,6 @@ export default {
           .dispatch('jv/post', userParams)
           .then(res => {
             if (res) {
-              console.log('生成邀请链接res：', res);
               this.$refs.popup.close();
               this.getInviteList(1);
             }
@@ -315,11 +307,10 @@ export default {
     // 删除链接
     setInvalid(id) {
       this.$store.dispatch('jv/delete', `invite/${id}`).then(res => {
-        console.log('设为无效', res);
         if (res) {
           this.getInviteList(this.status);
           uni.showToast({
-            title: '该链接已失效',
+            title: this.i18n.t('manage.invalidLink'),
             duration: 2000,
           });
         }
@@ -328,7 +319,6 @@ export default {
     // 分享
     share(code) {
       this.code = code;
-      console.log('分享');
       // #ifdef MP-WEIXIN
       this.$refs.popupShare.open();
       // #endif
@@ -341,12 +331,10 @@ export default {
     },
     // 取消分享
     cancelShare() {
-      console.log('取消分享');
       this.$refs.popupShare.close();
     },
     // 取消修改用户组
     cancelModify() {
-      console.log('取消修改用户组');
       this.$refs.popup.close();
     },
   },

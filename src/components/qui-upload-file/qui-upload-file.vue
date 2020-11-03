@@ -70,6 +70,7 @@ export default {
     return {
       fileList: [],
       showAdd,
+      currentIndex: 0,
     };
   },
   watch: {
@@ -112,6 +113,7 @@ export default {
         return;
       }
       if (!this.verificateFile(file, this)) {
+        input.value = '';
         return;
       }
       // 上传前的其他校验
@@ -179,7 +181,6 @@ export default {
     },
     // 文件校验
     verificateFile(file, el) {
-      // console.log(file);
       const fileName = file.name;
       const fileFormat = fileName.substring(fileName.lastIndexOf('.') + 1);
       if (el.fileFormat && this.fileFormat.indexOf(fileFormat) === -1) {
@@ -199,8 +200,11 @@ export default {
       return true;
     },
     deleteItem(index, id) {
-      this.fileList.splice(index, 1);
+      this.currentIndex = index;
       this.$emit('deleteItem', id);
+    },
+    deleteSure() {
+      this.fileList.splice(this.currentIndex, 1);
     },
     getValue() {
       return this.fileList;

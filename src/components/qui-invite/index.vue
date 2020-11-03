@@ -2,7 +2,7 @@
   <view class="invite-con">
     <!-- 记录数 -->
     <view class="invite-con-total">
-      <text>共有 {{ total }} 条记录</text>
+      <text>{{ i18n.t('manage.total', { total }) }}</text>
     </view>
     <!-- 邀请列表 -->
     <view class="invite-con-list">
@@ -20,7 +20,7 @@
         <view class="invite-con-list-line"></view>
         <view class="invite-con-list-share" @click="share(item.code)">
           {{ i18n.t('manage.share') }}
-          <qui-icon name="icon-share1" class="share-icon"></qui-icon>
+          <qui-icon name="icon-fenxiang" class="share-icon"></qui-icon>
         </view>
       </qui-cell-item>
     </view>

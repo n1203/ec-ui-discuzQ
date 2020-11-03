@@ -102,6 +102,14 @@ export default {
       const postphon = status.run(() => this.$store.dispatch('jv/patch', params));
       postphon
         .then(res => {
+          const promsget = {
+            _jv: {
+              type: 'users',
+              id: this.userid,
+            },
+            // include: 'groups',
+          };
+          this.$store.dispatch('jv/get', promsget).then(() => {});
           const pages = getCurrentPages();
           if (res) {
             uni.showToast({
@@ -183,9 +191,13 @@ export default {
 @import '@/styles/base/variable/global.scss';
 @import '@/styles/base/theme/fn.scss';
 .page-paypwd /deep/ {
+  background-color: --color(--qui-BG-2);
+  box-sizing: border-box;
   .setpw {
     width: 100vw;
+    /* #ifndef H5 */
     height: 100vh;
+    /* #endif */
     background-color: --color(--qui-BG-2);
     box-sizing: border-box;
   }

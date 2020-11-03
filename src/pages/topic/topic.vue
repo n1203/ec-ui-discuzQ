@@ -77,6 +77,9 @@ export default {
         } else {
           this.topics = data;
         }
+        if (this.topics === []) {
+          this.shouldShow = false;
+        }
 
         if (!data.length) {
           this.shouldShow = true;

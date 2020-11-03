@@ -7,7 +7,7 @@
         <view class="search-box">
           <view class="search-box__content">
             <view class="icon-content-search">
-              <qui-icon name="icon-search" size="30" color="#bbb"></qui-icon>
+              <qui-icon name="icon-sousuo" size="30" color="#bbb"></qui-icon>
             </view>
             <input
               type="text"
@@ -18,7 +18,7 @@
               :value="searchText"
             />
             <view @tap="cancelSearch" v-if="searchText" class="search-box__content-delete">
-              <qui-icon name="icon-close1" size="32" color="#ccc"></qui-icon>
+              <qui-icon name="icon-cuo" size="32" color="#ccc"></qui-icon>
             </view>
           </view>
           <view class="search-box__cancel" v-if="searchText" @tap="cancelSearch">
@@ -39,6 +39,7 @@
               :title="user.username"
               :value="user.groups[Object.keys(user.groups || {})[0]].name"
               :icon="user.avatarUrl"
+              :is-real="user.isReal"
               @click="jumpUserPage(user.id)"
             ></qui-avatar-cell>
           </view>
@@ -55,7 +56,7 @@
         <view class="search-box">
           <view class="search-box__content">
             <view class="icon-content-search">
-              <qui-icon name="icon-search" size="30" color="#bbb"></qui-icon>
+              <qui-icon name="icon-sousuo" size="30" color="#bbb"></qui-icon>
             </view>
             <input
               type="text"
@@ -66,7 +67,7 @@
               :value="searchText"
             />
             <view @tap="cancelSearch" v-if="searchText" class="search-box__content-delete">
-              <qui-icon name="icon-close1" size="32" color="#ccc"></qui-icon>
+              <qui-icon name="icon-cuo" size="32" color="#ccc"></qui-icon>
             </view>
           </view>
           <view class="search-box__cancel" v-if="searchText" @tap="cancelSearch">
@@ -87,6 +88,7 @@
               :title="user.username"
               :value="user.groups[Object.keys(user.groups || {})[0]].name"
               :icon="user.avatarUrl"
+              :is-real="user.isReal"
               @click="jumpUserPage(user.id)"
             ></qui-avatar-cell>
           </view>
@@ -131,7 +133,6 @@ export default {
     // 跳转到个人主页
     jumpUserPage(userId) {
       if (userId) {
-        console.log('点击头像到个人主页', userId);
         uni.navigateTo({
           url: `/pages/profile/index?userId=${userId}`,
         });
@@ -161,7 +162,6 @@ export default {
       };
       if (this.searchText === '') {
         this.$store.dispatch('jv/get', ['users', { params }]).then(res => {
-          console.log('内容为空的搜索：', res);
           if (res) {
             if (res._jv) {
               delete res._jv;
@@ -177,7 +177,6 @@ export default {
       } else {
         params['page[number]'] = this.searchPageNum;
         this.$store.dispatch('jv/get', ['users', { params }]).then(res => {
-          console.log('搜索res：', res);
           if (res) {
             if (res._jv) {
               delete res._jv;
@@ -199,7 +198,6 @@ export default {
         this.pageNum += 1;
       }
       this.searchUser(this.searchText);
-      console.log('页码', this.pageNum);
     },
   },
 };

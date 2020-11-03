@@ -20,8 +20,11 @@
 </template>
 
 <script>
+import user from '@/mixin/user';
+
 export default {
   name: 'QuiTabs',
+  mixins: [user],
   props: {
     current: {
       type: Number,
@@ -41,6 +44,11 @@ export default {
       type: String,
       default: '#1878F3',
     },
+    // 隐藏border
+    hideBorder: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -55,7 +63,9 @@ export default {
     },
   },
   created() {
-    this.currentIndex = this.current;
+    // console.log('user', this.user);
+    // debugger;
+    // this.currentIndex = this.current;
   },
   methods: {
     onClick(index) {
@@ -85,7 +95,6 @@ export default {
   align-items: center;
   justify-content: center;
   padding: 30rpx;
-  border-bottom: 4rpx solid --color(--qui-FC-FFF);
   box-sizing: border-box;
 }
 .qui-tabs__item__brief {
@@ -98,7 +107,15 @@ export default {
   color: --color(--qui-FC-AAA);
 }
 .qui-tabs__item--active {
-  border-bottom: 4rpx solid;
+  position: relative;
+  &:after {
+    position: absolute;
+    bottom: -2rpx;
+    width: 100%;
+    height: 4rpx;
+    background: --color(--qui-MAIN);
+    content: '';
+  }
 }
 .qui-tabs__item--active .qui-tabs__item__title {
   font-weight: bold;

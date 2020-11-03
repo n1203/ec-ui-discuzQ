@@ -6,6 +6,7 @@
       :currentindex="index"
       :thread="item"
       :scroll-top="scrollTopPosition"
+      :is-visible="false"
       @toTopic="toTopic"
       @greatCallBack="greatCallBack"
       @handleClickShare="handleClickShare"
@@ -26,6 +27,10 @@ export default {
     scrollTop: {
       type: Number,
       default: 0,
+    },
+    isVisible: {
+      type: Boolean,
+      default: true,
     },
   },
   data() {
@@ -64,8 +69,13 @@ export default {
     handleClickShare(id) {
       this.$emit('handleClickShare', id);
     },
+    pullDownRefresh() {
+      this.pageNum = 1;
+      this.data = [];
+      this.loadThreads('pullDownRefresh');
+    },
     // 加载当前主题数据
-    loadThreads() {
+    loadThreads(type) {
       this.loadingType = 'loading';
       const params = {
         'filter[isDeleted]': 'no',
@@ -90,6 +100,9 @@ export default {
           }
           this.loadingType = res.length === this.pageSize ? 'more' : 'nomore';
           this.data = [...this.data, ...res];
+          if (type && type === 'pullDownRefresh') {
+            uni.stopPullDownRefresh();
+          }
         });
     },
     toTopic(id) {

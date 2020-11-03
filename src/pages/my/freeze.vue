@@ -99,7 +99,7 @@ export default {
 @import '@/styles/base/variable/global.scss';
 @import '@/styles/base/theme/fn.scss';
 .freeze /deep/ {
-  min-height: auto;
+  min-height: 100vh;
   .cell-item {
     padding-right: 40rpx;
   }

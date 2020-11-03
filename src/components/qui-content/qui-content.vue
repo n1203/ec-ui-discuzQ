@@ -35,6 +35,7 @@
               <text
                 v-if="isAdmin && themeType == '1'"
                 class="themeItem__header__title__isAdmin badge"
+                v-show="userGroups == '' ? !isBadge : isBadge"
               >
                 <text v-for="(item, index) in userGroups" :key="index" :class="[[name]]">
                   {{ item.isDisplay ? `${item.name}` : '' }}
@@ -507,6 +508,7 @@ export default {
       imageStatus: true,
       currentTop: 0,
       currentBottom: 0,
+      isBadge: true,
       name: '普通会员', // 角色
       isClose: true,
     };

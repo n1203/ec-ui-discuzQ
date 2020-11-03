@@ -18,6 +18,7 @@
               class="themeItem__header__title__isAdmin badge"
               v-for="(group, index) in userRole"
               :key="index"
+              v-show="userRole == '' ? !isBadge : isBadge"
             >
               {{ group.isDisplay ? `${group.name}` : '' }}
             </text>
@@ -186,6 +187,7 @@ export default {
       isAdmin: true,
       isGreat: false,
       imageStatus: true,
+      isBadge: true,
     };
   },
   computed: {

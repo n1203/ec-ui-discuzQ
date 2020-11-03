@@ -11,6 +11,7 @@
             class="themeItem__header__title__isAdmin"
             v-for="(group, index) in userRole"
             :key="index"
+            v-show="userRole == '' ? !isBadge : isBadge"
           >
             {{ group.isDisplay ? `${group.name}` : '' }}
           </text>
@@ -400,6 +401,7 @@ export default {
       selectActive: false,
       imageStatus: true, // 头像地址错误时显示默认头像
       // topicStatus: '',
+      isBadge: true,
     };
   },
   onLoad() {},

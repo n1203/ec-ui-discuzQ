@@ -18,8 +18,11 @@
               class="themeItem__header__title__isAdmin badge"
               v-for="(group, index) in userRole"
               :key="index"
+              v-show="userRole == '' ? !isBadge : isBadge"
             >
-              {{ group.isDisplay ? `${group.name}` : '' }}
+              <text>
+                {{ group.isDisplay ? `${group.name}` : '' }}
+              </text>
             </text>
           </view>
           <view class="themeItem__header__title__time">{{ localTime }}</view>
@@ -186,6 +189,7 @@ export default {
       isAdmin: true,
       isGreat: false,
       imageStatus: true,
+      isBadge: true,
     };
   },
   computed: {

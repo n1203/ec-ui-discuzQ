@@ -22,7 +22,10 @@
             <view class="fbv fbjc">
               <view class="my-info__box__detail-username">
                 {{ userInfo.username }}
-                <view :class="['badge', [userInfo.groupsName]]">
+                <view
+                  :class="['badge', [userInfo.groupsName]]"
+                  v-if="userInfo.groupsName == '' ? !isBadge : isBadge"
+                >
                   {{ userInfo.groupsName }}
                 </view>
               </view>
@@ -238,6 +241,7 @@ export default {
       register_type: 0, // 注册模式
       site_mode: '', // 站点模式
       lang: false,
+      isBadge: true,
       username: '',
       userGroupName: '',
     };

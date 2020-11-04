@@ -128,14 +128,14 @@
               size="28"
               style="padding-left: 8rpx;"
             ></qui-icon> -->
-            <navigator class="navPost fbv">
+            <view class="navPost fbv">
               <h4 class="navPost_title">
                 {{ themeContent }}
               </h4>
               <p class="navPost_text">
                 {{ thread.firstPost.content }}
               </p>
-            </navigator>
+            </view>
           </view>
           <!-- <rich-text :nodes="themeContent" v-else></rich-text> -->
           <qui-uparse :content="themeContent" v-else></qui-uparse>

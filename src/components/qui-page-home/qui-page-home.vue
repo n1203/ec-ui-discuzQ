@@ -117,7 +117,7 @@
         <qui-icon class="icon" name="icon-huatibang" size="70" color="#f99020"></qui-icon>
         <view class="new fbv">
           <h3 class="newtitle">最新动态</h3>
-          <p class="newtext">EC-UI 贴心为您服务</p>
+          <p class="newtext">这里是最新动态</p>
         </view>
       </view>
     </view>

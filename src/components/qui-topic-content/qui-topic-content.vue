@@ -164,11 +164,63 @@
           :src="mediaUrl"
           :style="videoWidth >= videoHeight ? 'width:100%' : 'max-width: 50%'"
         ></video>
-        <qui-image
+        <!-- <qui-image
           :images-list="imagesList"
           :preview-status="videoStatus"
           @previewPicture="previewPicture"
-        ></qui-image>
+        ></qui-image> -->
+        <!-- 图片区域 -->
+        <view v-if="imagesList.length == 1">
+          <view class="themeItem__content__imgone">
+            <image
+              class="themeItem__content__imgone__item"
+              v-for="(image, index) in imagesList"
+              :key="index"
+              :mode="modeVal"
+              :src="image.thumbUrl"
+              @click="previewPicture(index)"
+              @click.stop=""
+              lazy-load
+              alt
+            ></image>
+          </view>
+        </view>
+        <view v-if="imagesList.length == 2">
+          <view class="themeItem__content__imgtwo">
+            <image
+              class="themeItem__content__imgtwo__item"
+              v-for="(image, index) in imagesList"
+              :key="index"
+              :mode="modeVal"
+              :src="image.thumbUrl"
+              @click="previewPicture(index)"
+              @click.stop=""
+              lazy-load
+              alt
+            ></image>
+          </view>
+        </view>
+        <view v-if="imagesList.length >= 3">
+          <view class="themeItem__content__imgmore">
+            <image
+              class="themeItem__content__imgmore__item"
+              v-for="(image, index) in imagesList"
+              :key="index"
+              :mode="modeVal"
+              :src="image.thumbUrl"
+              @click="previewPicture(index)"
+              @click.stop=""
+              lazy-load
+              alt
+            ></image>
+            <view
+              class="themeItem__content__imgmore__item"
+              v-if="imagesList.length % 3 != 0"
+              @click.stop=""
+              lazy-load
+            ></view>
+          </view>
+        </view>
         <view
           v-if="!payStatus && threadPrice > 0 && themeType == 1"
           class="themeItem__content__con__cover"
@@ -358,11 +410,11 @@ export default {
         return [];
       },
     },
-    // // 图片裁剪、缩放的模式
-    // modeVal: {
-    //   type: String,
-    //   default: 'aspectFill',
-    // },
+    // 图片裁剪、缩放的模式
+    modeVal: {
+      type: String,
+      default: 'aspectFill',
+    },
     // 视频宽度
     videoWidth: {
       type: Number,
@@ -499,6 +551,92 @@ export default {
   width: 100%;
   background: --color(--qui-BG-2);
 
+  &__content {
+    &__text {
+      // padding-bottom: 10rpx;
+      overflow: hidden;
+      font-family: $font-family;
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 45rpx;
+      color: --color(--qui-FC-333);
+      word-wrap: break-word;
+      &__longessay {
+        display: flex;
+        line-height: 30px;
+        text-indent: 16px;
+        // background: #0001;
+        word-break: break-all;
+        border-radius: 5px;
+      }
+    }
+    &__reply {
+      width: 670rpx;
+      height: 145rpx;
+      background: --color(--qui-BOR-ED);
+      border-radius: 7rpx;
+    }
+    &__imgone {
+      display: flex;
+      justify-content: flex-start;
+      line-height: 0;
+      &__item {
+        max-width: 80%;
+        max-height: 80%;
+        border-radius: 20rpx;
+      }
+    }
+    &__imgtwo {
+      display: flex;
+      justify-content: space-between;
+      line-height: 0;
+      &__item {
+        display: block;
+        width: 49.3%;
+        height: 211rpx;
+        margin-bottom: 10rpx;
+        background: #fff;
+        border-radius: 20rpx;
+      }
+    }
+    &__imgmore {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-content: flex-start;
+      flex-wrap: wrap;
+      line-height: 0;
+      &__item {
+        display: block;
+        width: 32%;
+        height: 211rpx;
+        margin-right: 1.33%;
+        margin-bottom: 10rpx;
+        background: #fff;
+        border-radius: 20rpx;
+      }
+    }
+
+    &__tags {
+      display: flex;
+      flex-wrap: wrap;
+
+      &__item {
+        height: 50rpx;
+        padding: 0 20rpx;
+        margin: 0rpx 10rpx 8rpx 0;
+        margin-bottom: 8rpx;
+        font-family: $font-family;
+        font-size: $fg-f24;
+        font-weight: 400;
+        line-height: 50rpx;
+        color: rgba(119, 119, 119, 1);
+        text-align: center;
+        background: rgba(247, 247, 247, 1);
+        border-radius: 6rpx;
+      }
+    }
+  }
   &__header {
     display: flex;
     flex-direction: row;
@@ -585,7 +723,7 @@ export default {
     &__con {
       padding-bottom: 20rpx;
       &__title {
-        padding-bottom: 40rpx;
+        padding-bottom: 20rpx;
         font-size: 30rpx;
         font-weight: 600;
         line-height: 160%;

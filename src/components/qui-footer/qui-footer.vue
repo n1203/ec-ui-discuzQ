@@ -16,7 +16,7 @@
           class="ft-box-icon"
           @click="select(item, index)"
           :name="item.tabsIcon"
-          size="50"
+          size="40"
           v-if="item.tabsName"
           :class="{ select: true, active: index === footerIndex }"
         ></qui-icon>

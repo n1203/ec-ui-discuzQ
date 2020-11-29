@@ -4,11 +4,11 @@
     <view class="header_box fbh">
       <view class="ipt" @click="onHandleClickSearch">
         <qui-icon class="search_icon" name="icon-sousuo_2" size="30" />
-        <span>在这里搜索</span>
+        <span style="font-size:20rpx">在这里搜索</span>
       </view>
       <view class="fbh fabu_box" @click="footerOpen">
-        <qui-icon name="icon-bianji_5" size="38" color="#fff" />
-        <p>发布</p>
+        <qui-icon name="icon-bianji_5" size="30" color="#fff" />
+        <p class="fabu_text">发布</p>
       </view>
     </view>
     <!-- 弹出发帖框 -->
@@ -278,8 +278,9 @@ export default {
     background: var(--qui-TAB);
     padding: 10rpx 20rpx 10rpx 20rpx;
     border-radius: 50px;
-    p {
+    .fabu_text {
       color: #fff;
+      font-size: 20rpx;
       margin-left: 10rpx;
     }
   }

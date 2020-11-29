@@ -47,5 +47,5 @@
   },
   "stylelint.enable": true,
   "stylelint.configOverrides": null,
-  "eggHelper.serverPort": 35684
+  "eggHelper.serverPort": 42918
 }

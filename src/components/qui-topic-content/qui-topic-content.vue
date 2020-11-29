@@ -72,6 +72,7 @@
             class="themeItem__header__title__isAdmin badge"
             v-for="(group, index) in userRole"
             :key="index"
+            v-show="userRole == '' ? !isBadge : isBadge"
           >
             <text class="identity">
               {{ group.isDisplay ? `${group.name}` : '' }}

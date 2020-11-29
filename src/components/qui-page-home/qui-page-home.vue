@@ -114,10 +114,10 @@
     <!-- 置顶帖 -->
     <view class="fbh updata_box">
       <view class="fbh dynamic">
-        <qui-icon class="icon" name="icon-huatibang" size="70" color="#f99020"></qui-icon>
+        <qui-icon class="icon" name="icon-huatibang" size="90" color="#f99020"></qui-icon>
         <view class="new fbv">
           <h3 class="newtitle">最新动态</h3>
-          <p class="newtext">EC-UI 贴心为您服务</p>
+          <p class="newtext">下面是最新动态</p>
         </view>
       </view>
     </view>
@@ -1205,16 +1205,16 @@ $padding-bottom: 160rpx;
   .dynamic {
     padding: 6rpx 20rpx 10rpx 20rpx;
     .new {
-      padding-top: 7rpx;
+      padding-top: 10rpx;
       padding-left: 10rpx;
       .newtext {
-        margin-top: 12rpx;
-        font-size: 14rpx;
+        // padding-top: 7rpx;
+        font-size: 10rpx;
         color: rgb(184, 184, 184);
-        padding-left: 2rpx;
+        // padding-left: 2rpx;
       }
       .newtitle {
-        font-size: 30rpx;
+        font-size: 28rpx;
       }
     }
   }

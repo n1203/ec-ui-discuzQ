@@ -18,15 +18,16 @@
       </view>
     </view> -->
     <view class="topic_list">
-      <view class="fbv topic_center">
-        <view class="topic_zhuanshi">
+      <view class="fbv topic_center" v-for="(item, i) in modeArray" :key="i">
+        <image src="../../static/topic.jpg" :mode="item.mode"></image>
+        <!-- <view class="topic_zhuanshi">
           <qui-icon name="icon-zhuanshi" size="190" color="#f99020"></qui-icon>
         </view>
         <view class="fbh topic_text">
           <qui-icon name="icon-star" class="icon-star" size="55"></qui-icon>
           <h2>话题风云榜单</h2>
           <qui-icon name="icon-star" class="icon-star" size="55"></qui-icon>
-        </view>
+        </view> -->
       </view>
     </view>
     <view class="topic-list-page">
@@ -38,6 +39,7 @@
           <h2 class="txt fbh">{{ i18n.t('topic.topicList') }}</h2>
         </view>
         <view class="topic-list-page-header_sortBox fbh" @click="toggleDropDown">
+          <!-- 排序 -->
           <view>
             <qui-icon class="icon-sort" name="icon-jiangxu2" size="30"></qui-icon>
             <text>{{ i18n.t('core.sort') }}</text>
@@ -82,18 +84,18 @@
             /> -->
               <!-- <view class="topic-page-list-item_details_username">{{ item.user.username }}</view> -->
               <!-- 获取数组下标，得到排名序号 -->
-              <view class="ranking">
+              <!-- <view class="ranking">
                 <view class="figure" v-if="i > 2">
                   <h3>{{ i + 1 }}</h3>
                 </view>
-              </view>
-              <qui-icon
+              </view> -->
+              <!-- <qui-icon
                 v-if="i < 3"
                 :name="arr[i].name"
                 :style="{ color: arr[i].color, left: arr[i].left, top: arr[i].top }"
                 class="ranking ranking_tothree"
                 size="75"
-              ></qui-icon>
+              ></qui-icon> -->
               <!-- 获取用户头像 -->
               <view class="user_img" size="80" :user="{ avatarUrl: item.user.avatarUrl }">
                 <image
@@ -102,8 +104,17 @@
                   @error="error"
                 ></image>
               </view>
+              <!-- 话题 -->
               <view class="fbv">
-                <h4># {{ item.content }} #</h4>
+                <view class="fbh">
+                  <view class="figure" v-if="i < 3" :style="{ background: arr[i].background }">
+                    <p>NO.{{ i + 1 }}</p>
+                  </view>
+                  <view class="figure" v-if="i > 2">
+                    <p>NO.{{ i + 1 }}</p>
+                  </view>
+                  <h4># {{ item.content }} #</h4>
+                </view>
                 <navigator :url="'/pages/topic/index?id=' + item.lastThread[0]._jv.id">
                   <qui-uparse
                     class="topic-page-list-item_details_text"
@@ -173,6 +184,7 @@
 <script>
 import user from '@/mixin/user';
 import stringToColor from '@/utils/stringToColor';
+// import TopicImg from '../../static/topic.jpg';
 
 let timer = null;
 let currentPage = 1;
@@ -193,6 +205,7 @@ export default {
   },
   data() {
     return {
+      modeArray: [{ mode: 'aspectFill' }],
       dropDownShow: false,
       topicData: [],
       meta: {}, // 接口返回meta值
@@ -205,19 +218,21 @@ export default {
       arr: [
         {
           name: 'icon-guanjun1',
-          color: 'red',
+          // backgroundColor: 'rgb(5,32,157)',
+          background: 'linear-gradient(to left, rgb(53,141,246), rgb(5,32,157))',
           left: '-1.3%',
           top: '-6%',
         },
         {
           name: 'icon-yajun',
-          color: '#f8af2a',
+          // background: 'rgb(80,103,188)',
+          background: 'linear-gradient(to left, rgb(112,175,250), rgb(80,103,188))',
           left: '-1.3%',
           top: '-6%',
         },
         {
           name: 'icon-jijun',
-          color: '#b7804d',
+          background: 'rgb(128,179,255)',
           left: '-1.3%',
           top: '-6%',
         },
@@ -476,8 +491,13 @@ $otherHeight: 292rpx;
       margin-left: 20rpx;
     }
     h4 {
-      padding-left: 10rpx;
-      padding-bottom: 10rpx;
+      padding-left: 15rpx;
+      padding-bottom: 8rpx;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
     }
     &_text {
       margin-left: 10rpx;
@@ -508,18 +528,22 @@ $otherHeight: 292rpx;
 .ranking {
   position: absolute;
   z-index: 10;
-  .figure {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 50rpx;
-    height: 50rpx;
-    border-radius: 15rpx;
-    background-color: #ccc;
-    color: #fff;
-    top: 10%;
-    font-size: 26rpx;
-  }
+}
+.figure {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  // width: 50rpx;
+  // height: 40rpx;
+  padding: 0 10rpx;
+  border-radius: 10rpx;
+  background-color: rgb(143, 140, 140);
+  color: #fff;
+  transform: scale3d(0.85, 0.75, 0.75);
+  -webkit-transform: scale3d(0.85, 0.75, 0.75); /*兼容-webkit-引擎浏览器*/
+  -moz-transform: scale3d(0.85, 0.75, 0.75); /*兼容-moz-引擎浏览器*/
+  top: 10%;
+  font-size: 26rpx;
 }
 .topic-content-item {
   position: relative;
@@ -616,9 +640,11 @@ $otherHeight: 292rpx;
   height: 100%;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(to top, #f57c1a, rgb(243, 243, 3) 70%);
+  // background: linear-gradient(to top, #f57c1a, rgb(243, 243, 3) 70%);
   .topic_center {
-    padding: 50rpx;
+    // padding: 50rpx;
+    width: 100vw;
+    height: 100%;
     align-items: center;
     justify-content: center;
     .topic_zhuanshi {

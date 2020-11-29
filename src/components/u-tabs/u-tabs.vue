@@ -152,8 +152,8 @@ export default {
     // 移动bar的样式
     tabBarStyle() {
       const style = {
-        width: `${this.barWidth}px`,
-        transform: `translate(${this.scrollBarLeft}px)`,
+        width: `${this.barWidth+5}px`,
+        transform: `translate(${this.scrollBarLeft-5}px)`,
         'transition-duration': `${this.duration}s`,
         // 'background-color': this.activeColor,
         height: `${this.barHeight}rpx`,
@@ -173,7 +173,7 @@ export default {
           'line-height': `${this.height}rpx`,
           'font-size': `${this.fontSize}rpx`,
           'transition-duration': `${this.duration}s`,
-          padding: this.isScroll ? `0 ${this.gutter}rpx` : '',
+          padding: this.isScroll ? `0 ${this.gutter-16}rpx` : '',
           flex: this.isScroll ? 'auto' : '1',
         };
         // 字体加粗

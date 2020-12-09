@@ -19,8 +19,10 @@
     </view> -->
     <view class="topic_list">
       <view class="fbv topic_center" v-for="(item, i) in modeArray" :key="i">
+        <!-- 话题风云榜image -->
         <image src="../../static/topic.jpg" :mode="item.mode"></image>
-        <!-- <view class="topic_zhuanshi">
+      </view>
+      <!-- <view class="topic_zhuanshi">
           <qui-icon name="icon-zhuanshi" size="190" color="#f99020"></qui-icon>
         </view>
         <view class="fbh topic_text">
@@ -28,6 +30,9 @@
           <h2>话题风云榜单</h2>
           <qui-icon name="icon-star" class="icon-star" size="55"></qui-icon>
         </view> -->
+      <!-- 活动规则 -->
+      <view class="active-rules bodrc" @click="activeClick">
+        <h4 class="fs20 fw4 ctw">活动规则</h4>
       </view>
     </view>
     <view class="topic-list-page">
@@ -205,7 +210,7 @@ export default {
   },
   data() {
     return {
-      modeArray: [{ mode: 'aspectFill' }],
+      modeArray: [{ mode: 'aspectFit' }],
       dropDownShow: false,
       topicData: [],
       meta: {}, // 接口返回meta值
@@ -313,6 +318,11 @@ export default {
     //     return 'icon-jijun';
     //   }
     // },
+    activeClick() {
+      uni.navigateTo({
+        url: '../../pages/topic/active-rules/active-rules',
+      });
+    },
     style() {
       const color = stringToColor(this.usernameAt);
       return `background-color: #${color};${sizes[this.size]}`;
@@ -384,9 +394,11 @@ export default {
 <style lang="scss" scoped>
 @import '@/styles/base/theme/fn.scss';
 @import '@/styles/base/variable/global.scss';
+
+// 排序
 .dropDownBox {
   position: absolute;
-  top: 430rpx;
+  top: 540rpx;
   right: 20rpx;
   z-index: 10;
   width: 140rpx;
@@ -435,9 +447,13 @@ $otherHeight: 292rpx;
   font-size: 32rpx;
   color: #333;
 }
+
+// 话题榜
 .topic-list-page-header {
   align-items: center;
   justify-content: space-between;
+  background: white;
+  padding: 10rpx;
   &_title {
     align-items: center;
     margin: 20rpx;
@@ -634,6 +650,8 @@ $otherHeight: 292rpx;
 .topic-page-list-item_details_text {
   text-align: justify;
 }
+
+// 话题风云榜
 .topic_list {
   display: flex;
   width: 100vw;
@@ -641,12 +659,24 @@ $otherHeight: 292rpx;
   align-items: center;
   justify-content: center;
   // background: linear-gradient(to top, #f57c1a, rgb(243, 243, 3) 70%);
+  .active-rules {
+    position: absolute;
+    top: 50rpx;
+    right: -20rpx;
+    padding: 10rpx 30rpx 10rpx 30rpx;
+    letter-spacing: 2px;
+    background: #3d8ef7;
+  }
   .topic_center {
     // padding: 50rpx;
     width: 100vw;
     height: 100%;
     align-items: center;
     justify-content: center;
+    image {
+      width: 100vw;
+      height: 454rpx;
+    }
     .topic_zhuanshi {
       margin-top: 40rpx;
     }

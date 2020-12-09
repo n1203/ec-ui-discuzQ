@@ -93,6 +93,13 @@
       }
     },
     {
+      "path": "pages/topic/active-rules/active-rules",
+      "style": {
+        "navigationBarTitleText": "活动规则",
+        "enablePullDownRefresh": true
+      }
+    },
+    {
       "path": "pages/topic/comment",
       "style": {
         "navigationBarTitleText": "评论详情页",

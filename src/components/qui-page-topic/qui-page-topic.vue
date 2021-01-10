@@ -31,9 +31,9 @@
           <qui-icon name="icon-star" class="icon-star" size="55"></qui-icon>
         </view> -->
       <!-- 活动规则 -->
-      <view class="active-rules bodrc" @click="activeClick">
+      <!-- <view class="active-rules bodrc" @click="activeClick">
         <h4 class="fs20 fw4 ctw">活动规则</h4>
-      </view>
+      </view> -->
     </view>
     <view class="topic-list-page">
       <view class="topic-list-page-header fbh">
@@ -111,7 +111,7 @@
               </view>
               <!-- 话题 -->
               <view class="fbv">
-                <view class="fbh">
+                <view class="fbh topic-pad">
                   <view class="figure" v-if="i < 3" :style="{ background: arr[i].background }">
                     <p>NO.{{ i + 1 }}</p>
                   </view>
@@ -500,6 +500,7 @@ $otherHeight: 292rpx;
     margin: 10rpx 0;
     // background: --color(--qui-BG-ED);
     padding: 10rpx 10rpx 10rpx 20rpx;
+    border-bottom: 1px solid var(--qui-BOR-ED);
     position: relative;
     &_username {
       font-size: 24rpx;
@@ -522,9 +523,10 @@ $otherHeight: 292rpx;
       text-overflow: ellipsis;
       overflow: hidden;
       display: -webkit-box;
-      -webkit-line-clamp: 3;
+      -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
       text-align: justify;
+      letter-spacing: 2px;
       font-size: 18rpx;
       color: --color(--qui-FC-333);
     }
@@ -726,5 +728,8 @@ $otherHeight: 292rpx;
   color: #fff;
   text-align: center;
   background-color: #e7edf3;
+}
+.topic-pad {
+  padding-bottom: 10rpx;
 }
 </style>

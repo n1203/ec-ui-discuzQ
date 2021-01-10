@@ -61,7 +61,7 @@
             >
               <view slot="follow" :key="followStatus" v-if="thread.user.follow != null">
                 <view
-                  class="themeItem__header__follow"
+                  class="themeItem__header__follow profile-bord"
                   @tap="
                     thread.user.follow === 0 ? addFollow(thread.user) : deleteFollow(thread.user)
                   "
@@ -79,10 +79,11 @@
                   ></qui-icon> -->
                   <qui-icon
                     class="icon-guanzhu"
+                    size="18"
                     :name="thread.user.follow === 0 ? 'icon-guanzhu' : 'icon-guanzhu_ed'"
-                    :color="thread.user.follow === 0 ? '#777' : '#ff8888'"
+                    :color="thread.user.follow === 0 ? 'rgb(24,120,243)' : '#333'"
                   ></qui-icon>
-                  <text>
+                  <text :style="{color:thread.user.follow == 0 ? 'rgb(24,120,243)' : '#333'}">
                     {{
                       thread.user.follow === 0
                         ? i18n.t('profile.following')
@@ -2421,7 +2422,6 @@ page {
   .det-hd-management {
     display: flex;
     flex-direction: row;
-    line-height: 1;
     .icon-management {
       margin-right: 7rpx;
       font-size: 26rpx;
@@ -2887,15 +2887,21 @@ page {
 }
 .themeItem__header__follow {
   align-self: flex-start;
-  width: 168rpx;
-  line-height: 1;
+  // width: 168rpx;
+  // line-height: 1;
   text-align: right;
   flex-shrink: 0;
+  font-size: 13px;
   .icon-guanzhu {
-    margin-right: 7rpx;
-    font-size: $fg-f26;
+    margin-right: 4rpx;
+    // font-size: $fg-f14;
     color: red;
   }
+}
+.profile-bord {
+  border-radius: 25rpx;
+  padding: 4rpx 8rpx;
+  border: 1px solid --color(--qui-TAB-BAR);
 }
 // .scroll-y {
 //   max-height: 100vh;

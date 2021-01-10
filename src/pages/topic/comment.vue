@@ -33,7 +33,7 @@
               >
                 <view slot="follow" :key="followStatus" v-if="post.user.follow != null">
                   <view
-                    class="themeItem__header__follow"
+                    class="themeItem__header__follow profile-bord"
                     @tap="post.user.follow === 0 ? addFollow(post.user) : deleteFollow(post.user)"
                   >
                     <qui-icon
@@ -41,13 +41,13 @@
                       :name="post.user.follow === 0 ? 'icon-guanzhu' : 'icon-guanzhu_ed'"
                       :color="
                         post.user.follow === 0
-                          ? '#777'
+                          ? 'rgb(24,120,243)'
                           : post.user.follow === 1
                           ? themeColor
-                          : '#ff8888'
+                          : '#333'
                       "
                     ></qui-icon>
-                    <text>
+                    <text :style="{color:userInfo.follow == 0 ? 'rgb(24,120,243)' : '#333'}">
                       {{
                         post.user.follow === 0
                           ? i18n.t('profile.following')
@@ -1144,7 +1144,7 @@ page {
   .det-hd-management {
     display: flex;
     flex-direction: row;
-    line-height: 1;
+    // line-height: 1;
     .icon-management {
       margin-right: 7rpx;
       font-size: 26rpx;
@@ -1593,5 +1593,10 @@ page {
     margin-right: 7rpx;
     font-size: $fg-f26;
   }
+}
+.profile-bord {
+  border-radius: 25rpx;
+  padding: 4rpx 8rpx;
+  border: 1px solid --color(--qui-TAB-BAR);
 }
 </style>

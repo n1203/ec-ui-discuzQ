@@ -15,7 +15,7 @@
               >
                 <view v-if="userId != currentLoginId">
                   <view
-                    class="profile-info__box__detail-operate"
+                    class="profile-info__box__detail-operate profile-colr"
                     @tap="chat"
                     v-if="can_create_dialog"
                   >
@@ -29,22 +29,22 @@
                   </view>
                   <!-- follow 关注状态 0：未关注 1：已关注 2：互相关注 -->
                   <view
-                    class="profile-info__box__detail-operate"
+                    class="profile-info__box__detail-operate profile-bord"
                     @tap="userInfo.follow == 0 ? addFollow(userInfo) : deleteFollow(userInfo)"
                   >
                     <qui-icon
                       class="text"
                       :name="userInfo.follow == 0 ? 'icon-guanzhu' : 'icon-guanzhu_ed'"
-                      size="28"
+                      size="18"
                       :color="
                         userInfo.follow == 0
-                          ? '#777'
+                          ? 'rgb(24,120,243)'
                           : userInfo.follow == 1
                           ? themeColor
-                          : '#ff8888'
+                          : '#333'
                       "
                     ></qui-icon>
-                    <text>
+                    <text :style="{color:userInfo.follow == 0 ? 'rgb(24,120,243)' : '#333'}">
                       {{
                         userInfo.follow == 0
                           ? i18n.t('profile.following')
@@ -343,7 +343,7 @@ export default {
 
 .profile {
   .qui-icon {
-    margin-right: 14rpx;
+    margin-right: 4rpx;
   }
   /deep/ .qui-tabs__item__brief {
     font-weight: bold;
@@ -387,7 +387,16 @@ export default {
 .profile-info__box__detail-operate {
   display: inline-block;
   margin-left: 42rpx;
+  font-size: 13px;
+}
+.profile-colr {
   color: --color(--qui-FC-333);
+}
+.profile-bord {
+  border-radius: 25rpx;
+  padding: 4rpx 8rpx;
+  border: 1px solid --color(--qui-TAB-BAR);
+  // color: --color(--qui-TAB-BAR);
 }
 .profile-tabs__content {
   padding-top: 30rpx;

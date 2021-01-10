@@ -1015,11 +1015,11 @@ export default {
   margin-left: 2px;
 }
 .navPost_title {
-  font-size: 17px;
+  font-size: 14px;
   text-overflow: ellipsis;
   overflow: hidden;
   display: -webkit-box;
-  -webkit-line-clamp: 1;
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   text-align: justify;
   text-justify: inter-ideograph;
@@ -1030,8 +1030,8 @@ export default {
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
-  text-align: justify;
+  // text-align: justify;
   text-justify: inter-ideograph;
-  font-size: 14px;
+  font-size: 12px;
 }
 </style>

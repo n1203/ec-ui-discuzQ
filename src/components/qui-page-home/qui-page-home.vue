@@ -112,7 +112,7 @@
           v-if="sticky.length > 0"
         > -->
     <!-- 置顶帖 -->
-    <view class="fbh updata_box">
+    <!-- <view class="fbh updata_box">
       <view class="fbh dynamic">
         <qui-icon class="icon" name="icon-huatibang" size="90" color="#f99020"></qui-icon>
         <view class="new fbv">
@@ -120,7 +120,7 @@
           <p class="newtext">下面是最新动态</p>
         </view>
       </view>
-    </view>
+    </view> -->
     <ec-sticky :items="sticky" :handle-click="stickyClick" />
     <!-- <view class="sticky" v-if="sticky.length > 0">
         <scroll-view scroll-x="true">
@@ -447,6 +447,7 @@ export default {
     },
   },
   created() {
+    console.log(this.user)
     // console.log('user', this.user);
     // if (['http://localhost:8080/', 'https://q.e-spy.cn/'].indexOf(window.location.href) !== -1) {
     //   this.isPublish = true;

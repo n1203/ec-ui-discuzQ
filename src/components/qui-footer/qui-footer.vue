@@ -309,7 +309,7 @@ export default {
 .ft {
   // position: absolute;
   position: fixed;
-  bottom: 0;
+  bottom: 0rpx;
   z-index: 20;
   display: flex;
   width: 100%;

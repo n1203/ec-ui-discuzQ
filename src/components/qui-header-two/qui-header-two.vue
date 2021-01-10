@@ -320,7 +320,7 @@ export default {
 .solt {
   // background: rgba(0, 0, 0, 0.2);
   background: #fff;
-  backdrop-filter: saturate(180%) blur(20px);
+  // backdrop-filter: saturate(180%) blur(20px);
 }
 .iconMenu {
   width: 80rpx;

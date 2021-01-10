@@ -348,6 +348,10 @@ export default {
       type: Function,
       default: () => {},
     },
+    followShow: {
+      type: Boolean,
+      default: true,
+    },
   },
   data() {
     return {
@@ -992,6 +996,48 @@ export default {
       this.loadThreadsSticky();
       // 首页主题内容列表
       this.loadThreads();
+    },
+     // 添加关注
+    addFollow(userInfo) {
+      if (!this.$store.getters['session/get']('isLogin')) {
+        // #ifdef MP-WEIXIN
+        this.$store.getters['session/get']('auth').open();
+        // #endif
+        // #ifdef H5
+        if (!this.handleLogin(this.curUrl)) {
+          return;
+        }
+        // #endif
+        return;
+      }
+      const originUser = this.$store.getters['jv/get'](`users/${userInfo.id}`);
+      const params = {
+        _jv: {
+          type: 'follow',
+        },
+        type: 'user_follow',
+        to_user_id: userInfo.id,
+      };
+      this.$store.dispatch('jv/post', params).then(res => {
+        if (res.is_mutual == 0) {
+          this.item.user.follow = 1;
+          originUser.follow = 1;
+          this.followStatus = 1;
+        } else {
+          this.item.user.follow = 2;
+          originUser.follow = 2;
+          this.followStatus = 2;
+        }
+      });
+    },
+    // 取消关注
+    deleteFollow(userInfo) {
+      const originUser = this.$store.getters['jv/get'](`users/${userInfo.id}`);
+      this.$store.dispatch('jv/delete', `follow/${userInfo.id}/1`).then(() => {
+        this.item.user.follow = 0;
+        originUser.follow = 0;
+        this.followStatus = 0;
+      });
     },
   },
 };

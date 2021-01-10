@@ -1,6 +1,7 @@
 <template>
   <view ref="themeCount" class="themeCount" v-if="!isDeleted" v-show="isClose">
     <!-- 删除列表块 -->
+    <slot name="follow"></slot>
     <qui-icon
       class="qui-icon close_icon"
       name="icon-cuo"
@@ -88,11 +89,23 @@
         <!-- follow 关注状态 0：未关注 1：已关注 2：互相关注 -->
         <!-- <view
           v-if="isAttentionVisible"
-          class="themeItem__attention"
-          @click="addFollow"
-          @click.stop=""
+          @tap="thread.follow == 0 ? addFollow(thread) : deleteFollow(thread)"
         >
-          关注 {{item.user.canFollow}}
+           <qui-icon
+              class="text"
+              :name="thread.follow == 0 ? 'icon-guanzhu' : 'icon-guanzhu_ed'"
+              size="28"
+              :color="thread.follow == 0? '#777': thread.follow == 1? themeColor: '#ff8888'"
+           ></qui-icon>
+           <text>
+             {{
+               thread.follow == 0
+               ? i18n.t('profile.following')
+               : thread.follow == 1
+               ? i18n.t('profile.followed')
+               : i18n.t('profile.mutualfollow')
+              }}
+            </text>
         </view> -->
       </view>
 
@@ -504,6 +517,7 @@ export default {
       // isGreat: false,
       preid: 0,
       currentid: 0,
+      userId: 0,
       categoryShow: true,
       imageStatus: true,
       isBadge: true,
@@ -666,6 +680,89 @@ export default {
     //   this.isClose = !this.isClose;
     //   console.log(this.isClose);
     // },
+    // 获取用户信息
+    getUserInfo(userId) {
+      const params = {
+        include: ['groups', 'dialog'],
+      };
+      this.$store
+        .dispatch('jv/get', [`users/${userId}`, { params }])
+        .then(res => {
+          if (res.isDeleted) {
+            this.$store.dispatch('forum/setError', {
+              code: 'user_deleted',
+              status: 500,
+            });
+            this.loaded = false;
+          } else {
+            this.loaded = true;
+            this.dialogId = res.dialog ? res.dialog._jv.id : 0;
+            res.groupsName = res.groups ? res.groups[0].name : '';
+            this.setNum(res);
+            this.userInfo = res;
+            uni.setNavigationBarTitle({
+              title: `${res.username}${this.i18n.t('profile.personalhomepage')}`,
+            });
+          }
+        })
+        .catch(err => {
+          this.loaded = false;
+          if (err.statusCode === 404) {
+            this.$store.dispatch('forum/setError', {
+              code: 'user_deleted',
+              status: 500,
+            });
+          }
+        });
+    },
+    // 添加关注
+    addFollow(thread) {
+      if (!this.$store.getters['session/get']('isLogin')) {
+        // #ifdef MP-WEIXIN
+        this.$store.getters['session/get']('auth').open();
+        // #endif
+        // #ifdef H5
+        if (!this.handleLogin(getCurUrl())) {
+          return;
+        }
+        // #endif
+        return;
+      }
+      const params = {
+        _jv: {
+          type: 'follow',
+        },
+        type: 'user_follow',
+        to_user_id: userInfo.id,
+      };
+      status
+        .run(() => this.$store.dispatch('jv/post', params))
+        .then(() => {
+          this.getUserInfo(this.userId);
+          if (this.$refs.followers) this.$refs.followers.getFollowerList('change');
+        });
+    },
+    // 取消关注
+    deleteFollow(thread) {
+      if (!this.$store.getters['session/get']('isLogin')) {
+        // #ifdef MP-WEIXIN
+        this.$store.getters['session/get']('auth').open();
+        // #endif
+        // #ifdef H5
+        if (!this.handleLogin(getCurUrl())) {
+          return;
+        }
+        // #endif
+        return;
+      }
+      this.$store.dispatch('jv/delete', `follow/${thread.id}/1`).then(() => {
+        this.getUserInfo(this.userId);
+        if (this.$refs.followers) this.$refs.followers.getFollowerList('change');
+      });
+    },
+     changeFollow(e) {
+      this.getUserInfo(e.userId);
+    },
   },
 };
 </script>
@@ -692,7 +789,7 @@ export default {
   box-sizing: border-box;
   &__attention {
     height: fit-content;
-    padding: 0 10px;
+    padding: 10rpx 80rpx;
     color: $uni-color-primary;
     border: 1px solid $uni-color-primary;
     border-radius: 4px;

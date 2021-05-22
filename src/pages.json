@@ -20,7 +20,7 @@
         "navigationStyle": "default",
         "enablePullDownRefresh": true
       }
-    }, 
+    },
     {
       "path": "pages/topic/list",
       "style": {
@@ -30,7 +30,7 @@
         "navigationStyle": "default",
         "enablePullDownRefresh": true
       }
-    }, 
+    },
     {
       "path": "pages/topic/topic",
       "style": {
@@ -176,7 +176,7 @@
       }
     },
     {
-      "path": "pages/site/payH5",
+      "path": "pages/site/payh5",
       "style": {
         "navigationBarTitleText": "站点信息"
       }

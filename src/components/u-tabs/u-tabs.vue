@@ -325,7 +325,7 @@ scroll-view /deep/ ::-webkit-scrollbar {
 $screen: 80rpx;
 .u-scroll-view {
   width: calc(100vw - #{$screen});
-  height: 100rpx;
+  height: fit-content;
   white-space: nowrap;
   position: relative;
 }

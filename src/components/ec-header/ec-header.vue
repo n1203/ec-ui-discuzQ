@@ -1,10 +1,10 @@
 <!-- 使用方法： 只需要传递一个name：管理员、成员....即可 -->
 <template>
   <view class="header fbh">
-    <view class="header_box fbh">
-      <view class="ipt" @click="onHandleClickSearch">
+    <view class="header_box fbh fbac">
+      <view class="ipt fb1" @click="onHandleClickSearch">
         <qui-icon class="search_icon" name="icon-sousuo_2" size="30" />
-        <span style="font-size:20rpx">在这里搜索</span>
+        <span>在这里搜索</span>
       </view>
       <view class="fbh fabu_box" @click="footerOpen">
         <qui-icon name="icon-bianji_5" size="30" color="#fff" />
@@ -215,7 +215,6 @@ export default {
 @import '@/styles/base/theme/fn.scss';
 
 .header {
-  padding: 8rpx 20rpx 8rpx 0;
   background: --color(--qui-BG-40);
 }
 .fixed {
@@ -260,27 +259,34 @@ export default {
   width: 75%;
   align-items: center;
   background-color: rgba(104, 96, 96, 0.05);
-  border-radius: 50px;
+  border-radius: 100rpx;
   padding: 10rpx;
+  height: 72rpx;
+  box-sizing: border-box;
   font-size: 10px;
   font-weight: 300;
+  margin-right: 16rpx;
   span {
-    font-size: 20rpx;
+    font-size: 28rpx;
   }
 }
 .header_box {
   width: 100vw;
-  padding: 20rpx 0 20rpx 20rpx;
-  justify-content: space-between;
+  padding: 0 20rpx;
+  height: 120rpx;
+  box-sizing: border-box;
+  border-bottom: 1px solid #ccc5;
   .fabu_box {
     display: flex;
     align-items: center;
     background: var(--qui-TAB);
     padding: 10rpx 20rpx 10rpx 20rpx;
-    border-radius: 50px;
+    border-radius: 200rpx;
+    height: 72rpx;
+    box-sizing: border-box;
     .fabu_text {
       color: #fff;
-      font-size: 20rpx;
+      font-size: 28rpx;
       margin-left: 10rpx;
     }
   }

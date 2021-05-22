@@ -32,7 +32,7 @@
 .wxParse .p {
   padding-bottom: 0.2em;
   clear: both;
-  text-indent: 1em;
+  text-indent: 0em;
 }
 .wxParse .inline {
   display: inline;

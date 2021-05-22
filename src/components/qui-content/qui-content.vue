@@ -1074,12 +1074,11 @@ export default {
   // color: yellow;
   border-radius: 10px;
   font-size: 24rpx;
-  margin-left: -14rpx;
-  margin-bottom: 12rpx;
   padding: 8rpx 16rpx;
   border: #ccc 1px solid;
   color: #ccc;
   transform: scale(0.5);
+  transform-origin: 0%;
 }
 // .管理员 {
 //   border: #1878f3 1px solid;
@@ -1104,9 +1103,8 @@ export default {
 .attention_ivtion {
   display: flex;
   align-items: center;
-  font-size: 10px;
+  font-size: 24rpx;
   font-weight: 400;
-  padding-top: 0.2rem;
   color: var(--qui-FC-AAA);
   transition: 0.5s;
   margin-left: 2px;

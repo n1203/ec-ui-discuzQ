@@ -1071,6 +1071,7 @@ $padding-bottom: 160rpx;
   // border-bottom: 2rpx solid --color(--qui-BOR-ED);
   /* #endif */
   transition: box-shadow 0.2s, -webkit-transform 0.2s;
+  border-bottom: 1rpx solid #ccc5;
 
   &__box {
     position: absolute;
@@ -1240,8 +1241,9 @@ $padding-bottom: 160rpx;
 }
 .icon_screen {
   position: absolute;
-  top: 14%;
-  right: 2%;
+  top: 50%;
+  right: 20rpx;
+  transform: translateY(-50%);
 }
 
 .updata_box {

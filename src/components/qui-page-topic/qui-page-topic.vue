@@ -111,7 +111,7 @@
               </view>
               <!-- 话题 -->
               <view class="fbv">
-                <view class="fbh topic-pad">
+                <view class="fbh fbac topic-pad">
                   <view class="figure" v-if="i < 3" :style="{ background: arr[i].background }">
                     <p>NO.{{ i + 1 }}</p>
                   </view>
@@ -125,6 +125,28 @@
                     class="topic-page-list-item_details_text"
                     :content="item.lastThread[0].firstPost.summary"
                   ></qui-uparse>
+                  <view class="topic-page-list-item_other">
+                    <view class="topic-page-list-item_heat">
+                      <text>
+                        {{
+                          item.view_count > 10000
+                            ? Number(item.view_count / 10000) + i18n.t('core.thousand')
+                            : item.view_count
+                        }}
+                      </text>
+                      {{ i18n.t('topic.hot') }}
+                    </view>
+                    <view class="topic-page-list-item_content">
+                      <text>
+                        {{
+                          item.thread_count > 1000
+                            ? Number(item.thread_count / 1000) + 'k'
+                            : item.thread_count
+                        }}
+                      </text>
+                      {{ i18n.t('core.content') }}
+                    </view>
+                  </view>
                 </navigator>
               </view>
             </view>
@@ -133,28 +155,6 @@
               :images-list="item.lastThread[0].firstPost.images"
               v-if="item.lastThread[0].firstPost.images.length"
             ></qui-image>
-            <view class="topic-page-list-item_other">
-              <view class="topic-page-list-item_heat">
-                <text>
-                  {{
-                    item.view_count > 10000
-                      ? Number(item.view_count / 10000) + i18n.t('core.thousand')
-                      : item.view_count
-                  }}
-                </text>
-                {{ i18n.t('topic.hot') }}
-              </view>
-              <view class="topic-page-list-item_content">
-                <text>
-                  {{
-                    item.thread_count > 1000
-                      ? Number(item.thread_count / 1000) + 'k'
-                      : item.thread_count
-                  }}
-                </text>
-                {{ i18n.t('core.content') }}
-              </view>
-            </view>
           </view>
           <!-- <view class="topic-page-list-item_other" style="padding-left: 0.5rem;">
           <view class="topic-page-list-item_heat">
@@ -475,7 +475,6 @@ $otherHeight: 292rpx;
   }
 }
 .topic-page-list-item {
-  padding: 10rpx 30rpx;
   margin: 20rpx 0;
   background: --color(--qui-BG-2);
   border-top-left-radius: 25rpx;
@@ -483,7 +482,7 @@ $otherHeight: 292rpx;
   box-shadow: 0 4rpx 8rpx rgba(255, 255, 255, 0.05);
   box-sizing: border-box;
   &_title {
-    font-size: 35rpx;
+    font-size: 32rpx;
     font-weight: 700;
     word-break: break-all;
     &_icon {
@@ -497,9 +496,8 @@ $otherHeight: 292rpx;
     }
   }
   &_details {
-    margin: 10rpx 0;
     // background: --color(--qui-BG-ED);
-    padding: 10rpx 10rpx 10rpx 20rpx;
+    padding: 16rpx;
     border-bottom: 1px solid var(--qui-BOR-ED);
     position: relative;
     &_username {
@@ -517,16 +515,13 @@ $otherHeight: 292rpx;
       -webkit-box-orient: vertical;
     }
     &_text {
-      margin-left: 10rpx;
-      width: 100%;
-      height: 100%;
       text-overflow: ellipsis;
       overflow: hidden;
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
       text-align: justify;
-      letter-spacing: 2px;
+      letter-spacing: 0px;
       font-size: 18rpx;
       color: --color(--qui-FC-333);
     }
@@ -540,7 +535,6 @@ $otherHeight: 292rpx;
   }
   &_other {
     display: flex;
-    padding-top: 5rpx;
   }
 }
 .ranking {
@@ -553,7 +547,7 @@ $otherHeight: 292rpx;
   justify-content: center;
   // width: 50rpx;
   // height: 40rpx;
-  padding: 0 10rpx;
+  padding: 10rpx;
   border-radius: 10rpx;
   background-color: rgb(143, 140, 140);
   color: #fff;
@@ -650,7 +644,16 @@ $otherHeight: 292rpx;
 }
 
 .topic-page-list-item_details_text {
-  text-align: justify;
+  // text-align: justify;
+  font-size: 24rpx;
+  text-indent: 0;
+  color: --color(--qui-FC-777);
+}
+
+.user_img {
+  margin-right: 16rpx;
+  width: 140rpx;
+  height: 140rpx;
 }
 
 // 话题风云榜
@@ -691,7 +694,7 @@ $otherHeight: 292rpx;
       }
       h2 {
         padding: 0 10rpx 0 10rpx;
-        font-size: 70rpx;
+        font-size: 36rpx;
         color: #fff;
         letter-spacing: 10rpx;
       }

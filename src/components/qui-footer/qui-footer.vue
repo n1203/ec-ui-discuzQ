@@ -323,7 +323,6 @@ export default {
   display: flex;
   width: 20%;
   // height: 90rpx;
-  margin-top: 10rpx;
   flex-direction: column;
   justify-content: center;
   align-content: center;
@@ -339,7 +338,7 @@ export default {
 .ft-box-content {
   align-self: center;
   margin-top: 8rpx;
-  font-size: 16rpx;
+  font-size: 24rpx;
   line-height: 26rpx;
   color: --color(--qui-FC-777);
   text-align: center;

@@ -20,7 +20,7 @@
     <view class="topic_list">
       <view class="fbv topic_center" v-for="(item, i) in modeArray" :key="i">
         <!-- 话题风云榜image -->
-        <image src="../../static/topic.jpg" :mode="item.mode"></image>
+        <image src="../../static/topic.png" :mode="item.mode"></image>
       </view>
       <!-- <view class="topic_zhuanshi">
           <qui-icon name="icon-zhuanshi" size="190" color="#f99020"></qui-icon>
@@ -36,15 +36,14 @@
       </view> -->
     </view>
     <view class="topic-list-page">
-      <view class="topic-list-page-header fbh">
+      <!-- <view v-if="false" class="topic-list-page-header fbh">
         <view class="topic-list-page-header_title fbh">
           <view class="fbh">
             <qui-icon name="icon-xunzhang3" size="60" color="#f99020"></qui-icon>
           </view>
-          <h2 class="txt fbh">{{ i18n.t('topic.topicList') }}</h2>
+          <view class="txt fbh">{{ i18n.t('topic.topicList') }}</view>
         </view>
         <view class="topic-list-page-header_sortBox fbh" @click="toggleDropDown">
-          <!-- 排序 -->
           <view>
             <qui-icon class="icon-sort" name="icon-jiangxu2" size="30"></qui-icon>
             <text>{{ i18n.t('core.sort') }}</text>
@@ -58,7 +57,7 @@
             </view>
           </view>
         </view>
-      </view>
+      </view> -->
       <!-- <view style="clear: both;"></view> -->
       <view class="topic-page-list-item">
         <view v-for="(item, i) in topicData" :key="i">
@@ -102,7 +101,12 @@
                 size="75"
               ></qui-icon> -->
               <!-- 获取用户头像 -->
-              <view class="user_img" size="80" :user="{ avatarUrl: item.user.avatarUrl }">
+              <view
+                v-if="item.user.avatarUrl"
+                class="user_img"
+                size="80"
+                :user="{ avatarUrl: item.user.avatarUrl }"
+              >
                 <image
                   :src="item.user.avatarUrl"
                   :class="'qui-ava qui-avatar-' + size"
@@ -497,7 +501,7 @@ $otherHeight: 292rpx;
   }
   &_details {
     // background: --color(--qui-BG-ED);
-    padding: 16rpx;
+    padding: 32rpx;
     border-bottom: 1px solid var(--qui-BOR-ED);
     position: relative;
     &_username {
@@ -651,7 +655,7 @@ $otherHeight: 292rpx;
 }
 
 .user_img {
-  margin-right: 16rpx;
+  margin-right: 32rpx;
   width: 140rpx;
   height: 140rpx;
 }
@@ -733,6 +737,6 @@ $otherHeight: 292rpx;
   background-color: #e7edf3;
 }
 .topic-pad {
-  padding-bottom: 10rpx;
+  // padding-bottom: 10rpx;
 }
 </style>

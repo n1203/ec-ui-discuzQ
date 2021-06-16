@@ -77,6 +77,7 @@
             </view>
             <text># {{ item.content }} #</text>
           </view>
+<<<<<<< HEAD
         </navigator> -->
 
           <view class="topic-page-list-item_details" v-if="item.lastThread.length">
@@ -161,6 +162,26 @@
             ></qui-image>
           </view>
           <!-- <view class="topic-page-list-item_other" style="padding-left: 0.5rem;">
+=======
+        </navigator>
+        <view class="topic-page-list-item_details" v-if="item.lastThread.length">
+          <!-- <view class="fbh fbac">
+            <view class="topic-page-list-item_details_username">{{ item.user.username }}</view>
+          </view> -->
+          <navigator :url="'/pages/topic/index?id=' + item.lastThread[0]._jv.id">
+            <qui-uparse
+              class="topic-page-list-item_details_text"
+              :content="item.lastThread[0].firstPost.summary"
+            ></qui-uparse>
+          </navigator>
+          <qui-image
+            class="topic-page-list-item_details_image"
+            :images-list="item.lastThread[0].firstPost.images"
+            v-if="item.lastThread[0].firstPost.images.length"
+          ></qui-image>
+        </view>
+        <view class="topic-page-list-item_other">
+>>>>>>> f2716da572ba502403af5825d11319df64203fcb
           <view class="topic-page-list-item_heat">
             <text>
               {{

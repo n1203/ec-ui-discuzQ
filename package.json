@@ -120,7 +120,7 @@
     "prettier-eslint": "^9.0.2",
     "prettier-stylelint": "^0.4.2",
     "sass-loader": "^8.0.2",
-    "standard-version": "^7.1.0",
+    "standard-version": "^8.0.1",
     "stylelint": "^13.5.0",
     "stylelint-config-prettier": "^8.0.1",
     "stylelint-config-standard": "^20.0.0",

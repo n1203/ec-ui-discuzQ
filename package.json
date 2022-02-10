@@ -115,7 +115,7 @@
     "lint-staged": "^10.2.7",
     "mini-types": "^0.1.2",
     "miniprogram-api-typings": "^2.11.0",
-    "node-sass": "^4.14.1",
+    "node-sass": "^7.0.0",
     "postcss-comment": "^2.0.0",
     "prettier-eslint": "^9.0.2",
     "prettier-stylelint": "^0.4.2",
